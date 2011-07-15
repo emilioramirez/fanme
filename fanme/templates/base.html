@@ -1,0 +1,24 @@
+<html>
+    <head>
+    <title>{% block title %}FanME{% endblock %}</title>
+    </head>
+    <body>
+        <!-- Begin Conteiner -->
+        <div class='conteiner'>
+
+            <!-- Begin Conteiner -->
+            <div class='header'>{% block header %}Dashboad | Logbook | Topicos{% endblock%}</div>
+
+                <!-- Begin Content -->
+                <div class='content'>
+                    {% block content %}{% endblock%}
+                    <div class='register-form'>{% block AccountRegisterForm %}{% endblock%}</div>
+                <!-- End Content -->
+                </div>
+
+
+            <div class='footer'>{% block footer %}Dashboad | Logbook | Topicos{% endblock%}</div>
+        <!-- End Conteiner -->
+        </div>
+    </body>
+</html>
