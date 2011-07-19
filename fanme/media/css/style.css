@@ -9,41 +9,26 @@ html{
 head{}
 body{}
 
-.conteiner{
-}
+/* Begin Conteiner */
+.conteiner{}
+    /* Begin Header */
     .header {
         background: #ECECEC;
         border-bottom: 1px solid #979797;
         overflow: hidden;
         box-shadow: 0 1px 1px #979797;-webkit-box-shadow: 0 1px 1px #979797;-moz-box-shadow: 0 1px 1px #979797;
     }
-        .accounts-header-image {
-            float: left;
-            margin: 5px 0 1px 30px;
-        }
-        .accounts-header-login{
-            float: left;
-            margin: 18px 0 0 500px;
-        }
-    .content{
-        overflow: hidden;
-        margin: 0 auto;
-        width: 870px;
-    }
-        .accounts-register-welcome-image{
-            float: left;
-/*
-            margin: 90px 0 0 50px;
-*/
-            padding: 80px 0 0 20px;
-        }
-        .accounts-register-form{
-            float: left;
-/*
-            margin: 115px 0 0 50px;
-*/
-            padding: 100px 35px;
-        }
+        .accounts-header-image { float: left; margin: 5px 0 1px 30px; }
+        /* Begin for Header Register */
+        .accounts-header-login{ float: left; margin: 18px 0 0 500px; }
+        /* End for Header Register */
+    /* End Header */
+
+    /* Begin Content */
+    .content{ overflow: hidden; margin: 0 auto; width: 880px; }
+        /* Begin for Content Register */
+        .accounts-register-welcome-image{ float: left; padding: 80px 0 0 20px; }
+        .accounts-register-form{ float: left; padding: 100px 35px; }
             .accounts-register-form-title {
                 color: #E44D24;
                 font-size: 15px;
@@ -51,22 +36,14 @@ body{}
                 background: url("/mymedia/images/register-form-title-shadow.png") no-repeat center bottom;
                 height: 35px;
             }
-                .form-title{
-                    background: white;
-                    height: 31px;
-                }
+                .form-title{ background: white; height: 31px; }
+        /* End for Content Register */
+    /* End Content */
 
-    .footer{
-        margin: 100px 0 0 0px;
-    }
-        .footer-line-divisor{
-            text-align: center;
-        }
-        .footer-links{
-            margin: 10px 0 0 0;
-            text-align: center;
-        }
-            .footer-links a {
-                text-decoration: none;
-                color: black;
-            }
+    /* Begin Footer */
+    .footer{ margin: 15px 0 0 0px; }
+        .footer-line-divisor{ text-align: center; }
+        .footer-links{ margin: 10px 0 0 0; text-align: center; }
+            .footer-links a { text-decoration: none; color: black; }
+    /* End Footer */
+/* End Conteiner */
