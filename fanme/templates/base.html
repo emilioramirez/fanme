@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <link rel="stylesheet" href="/mymedia/css/style.css" type="text/css" />
+        <title>{% block title %}FanME{% endblock %}</title>
+    </head>
+    <body>
+        <!-- Begin Conteiner -->
+        <div class='conteiner'>
+            <!-- Begin Content -->
+            <div class='header'>
+                <div class="accounts-header-image">
+                    <img src="/mymedia/images/logo.png" alt="Logo" />
+                </div>
+                {% block header %}{% endblock%}
+            </div>
+            <!-- Begin Content -->
+            <div class='content'>
+                {% block content %}{% endblock%}
+            <!-- End Content -->
+            </div>
+            <!-- Begin Footer -->
+            <div class='footer'>
+                {% block footer %}
+                    <div class="footer-line-divisor">
+                        <img src="/mymedia/images/footer-line-divisor.png" alt="Footer Line Divisor" />
+                    </div>
+                    <!-- Eso deberia ser dinamico -->
+                    <div class="footer-links">
+                        <a href="#">Ayuda</a> |
+                        <a href="#">Sobre Nosotros</a> |
+                        <a href="#">Condiciones</a> |
+                        <a href="#">Copyright</a>
+                    </div>
+                {% endblock%}
+            <!-- End Footer -->
+            </div>
+        <!-- End Conteiner -->
+        </div>
+    </body>
+</html>

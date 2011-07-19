@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Registrate en FanME{% endblock title %}
+
+{% block header %}
+    {% block header_login %}
+        <div class="accounts-header-login">Login</div>
+    {% endblock header_login %}
+{% endblock header %}
+
+{% block content %}
+    <div class="accounts-register-welcome-image">
+        <img src="/mymedia/images/register-welcome-image.png" alt="Register Welcome Image" />
+    </div>
+    <div class="accounts-register-form">
+        {% block register_form %}{% endblock register_form %}
+    </div>
+{% endblock content%}
+
