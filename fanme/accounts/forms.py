@@ -1,6 +1,6 @@
 #~ Definition of the accounts forms
 from django import forms
-from django.contrib.auth.models import User
+#~ from django.contrib.auth.models import User
 
 class UserRegisterForm(forms.Form):
     username = forms.CharField(initial='Nombre de usuario', required=True)

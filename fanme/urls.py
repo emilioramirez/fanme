@@ -14,8 +14,14 @@ urlpatterns = patterns('',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
+    (r'^$', views.redirect),
     (r'^admin/', include(admin.site.urls)),
-    (r'home', views.home),
-    (r'^dashboard', views.dashboard),
     (r'^register', accounts_views.register),
 )
+
+from django.conf import settings
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^mymedia/(?P<path>.*)$', 'django.views.static.serve',
+         {'document_root': settings.MEDIA_ROOT}),
+    )

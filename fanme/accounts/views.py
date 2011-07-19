@@ -6,6 +6,7 @@ from fanme.accounts.forms import UserRegisterForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 
+
 def register(request):
     if request.method == 'POST': # If the form has been submitted...
         form = UserRegisterForm(request.POST) # A form bound to the POST data
@@ -20,6 +21,5 @@ def register(request):
     else:
         form = UserRegisterForm() # An unbound form
 
-    return render_to_response('accounts/accounts_registration.html', { 'form': form, },
-                                context_instance=RequestContext(request)
-                             )
+    return render_to_response('accounts/register_form.html', {'form': form, },
+                              context_instance=RequestContext(request))
