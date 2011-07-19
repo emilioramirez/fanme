@@ -4,18 +4,11 @@
     <head>
         <meta http-equiv="content-type" content="text/html;charset=utf-8" />
         <link rel="stylesheet" href="/mymedia/css/style.css" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/dhtmlxcalendar.css"></link>
-        <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
-        <script src="/mymedia/js/codebase/dhtmlxcalendar.js"></script>
-        <script>
-            var myCalendar;
-function doOnLoad() {
-    myCalendar = new dhtmlXCalendarObject(["id_birthDate", "arbol"]);
-}
-        </script>
         <title>{% block title %}FanME{% endblock %}</title>
+        {% block mystylesheet %}{% endblock %}
+        {% block myjavascript %}{% endblock %}
     </head>
-    <body onload="doOnLoad();">
+    <body {% block bodystaff %}{% endblock%}>
         <!-- Begin Conteiner -->
         <div class='conteiner'>
             <!-- Begin Content -->
