@@ -27,26 +27,34 @@ body{}
         }
     .content{
         overflow: hidden;
+        margin: 0 auto;
+        width: 870px;
     }
         .accounts-register-welcome-image{
             float: left;
+/*
             margin: 90px 0 0 50px;
-        }
-        .accounts-register-form-title {
-            color: #E44D24;
-            font-size: 15px;
-            font-weight: bold;
-            background: url("/mymedia/images/register-form-title-shadow.png") no-repeat center bottom;
-            height: 35px;
-        }
-        .form-title{
-            background: white;
-            height: 31px;
+*/
+            padding: 80px 0 0 20px;
         }
         .accounts-register-form{
-            float: right;
+            float: left;
+/*
             margin: 115px 0 0 50px;
+*/
+            padding: 100px 35px;
         }
+            .accounts-register-form-title {
+                color: #E44D24;
+                font-size: 15px;
+                font-weight: bold;
+                background: url("/mymedia/images/register-form-title-shadow.png") no-repeat center bottom;
+                height: 35px;
+            }
+                .form-title{
+                    background: white;
+                    height: 31px;
+                }
 
     .footer{
         margin: 100px 0 0 0px;
@@ -58,7 +66,7 @@ body{}
             margin: 10px 0 0 0;
             text-align: center;
         }
-        .footer-links a {
-            text-decoration: none;
-            color: black;
-        }
+            .footer-links a {
+                text-decoration: none;
+                color: black;
+            }
