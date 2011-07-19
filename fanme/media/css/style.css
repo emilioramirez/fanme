@@ -22,7 +22,8 @@ body{}
             margin: 5px 0 1px 30px;
         }
         .accounts-header-login{
-            float: right;
+            float: left;
+            margin: 18px 0 0 500px;
         }
     .content{
         overflow: hidden;
@@ -44,17 +45,18 @@ body{}
         }
         .accounts-register-form{
             float: right;
-            margin: 140px 100px 0 0;
+            margin: 115px 0 0 50px;
         }
 
     .footer{
-        margin: 100px 0 0 80px;
+        margin: 100px 0 0 0px;
     }
         .footer-line-divisor{
-
+            text-align: center;
         }
         .footer-links{
-            margin: 12px 0 0 209px;
+            margin: 10px 0 0 0;
+            text-align: center;
         }
         .footer-links a {
             text-decoration: none;
