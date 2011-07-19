@@ -1,0 +1,11 @@
+{% extends "accounts/base_accounts.html" %}
+
+{% block register_form %}
+    <div class="accounts-register-form-title">
+        <div class="form-title">Crear una cuenta de Usuario</div>
+    </div>
+    <form action="/register/" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock %}

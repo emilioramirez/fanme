@@ -1,0 +1,62 @@
+/**
+ * CSS - Stylistic CSS Styles
+ */
+
+/* General */
+html{
+    font-size: 12px;
+}
+head{}
+body{}
+
+.conteiner{
+}
+    .header {
+        background: #ECECEC;
+        border-bottom: 1px solid #979797;
+        overflow: hidden;
+        box-shadow: 0 1px 1px #979797;-webkit-box-shadow: 0 1px 1px #979797;-moz-box-shadow: 0 1px 1px #979797;
+    }
+        .accounts-header-image {
+            float: left;
+            margin: 5px 0 1px 30px;
+        }
+        .accounts-header-login{
+            float: right;
+        }
+    .content{
+        overflow: hidden;
+    }
+        .accounts-register-welcome-image{
+            float: left;
+            margin: 90px 0 0 50px;
+        }
+        .accounts-register-form-title {
+            color: #E44D24;
+            font-size: 15px;
+            font-weight: bold;
+            background: url("/mymedia/images/register-form-title-shadow.png") no-repeat center bottom;
+            height: 35px;
+        }
+        .form-title{
+            background: white;
+            height: 31px;
+        }
+        .accounts-register-form{
+            float: right;
+            margin: 140px 100px 0 0;
+        }
+
+    .footer{
+        margin: 100px 0 0 80px;
+    }
+        .footer-line-divisor{
+
+        }
+        .footer-links{
+            margin: 12px 0 0 209px;
+        }
+        .footer-links a {
+            text-decoration: none;
+            color: black;
+        }
