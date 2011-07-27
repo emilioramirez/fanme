@@ -12,14 +12,14 @@
 <script>
     var myCalendar;
     function doOnLoad() {
-        myCalendar = new dhtmlXCalendarObject(["id_birthDate"]);
+        myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
         myCalendar.setDateFormat("%d/%m/%Y");
     }
 </script>
 {% endblock %}
 
-{% block bodystaff %}
-onload="doOnLoad();"
+{% block bodystuff %}
+    onload="doOnLoad();"
 {% endblock %}
 
 {% block header %}

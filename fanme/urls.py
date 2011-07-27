@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     (r'^$', views.redirect),
     (r'^admin/', include(admin.site.urls)),
     (r'^register', accounts_views.register),
+    (r'^dashboard', accounts_views.dashboard),
 )
 
 from django.conf import settings
