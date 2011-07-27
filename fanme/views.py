@@ -8,3 +8,4 @@ def redirect(request):
 
 def dashboard(request):
     return render_to_response('dashboard.html')
+

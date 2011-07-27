@@ -11,6 +11,7 @@ body{}
 
 /* Begin Conteiner */
 .conteiner{}
+
     /* Begin Header */
     .header {
         background: #ECECEC;
@@ -19,13 +20,16 @@ body{}
         box-shadow: 0 1px 1px #979797;-webkit-box-shadow: 0 1px 1px #979797;-moz-box-shadow: 0 1px 1px #979797;
     }
         .accounts-header-image { float: left; margin: 5px 0 1px 30px; }
+
         /* Begin for Header Register */
         .accounts-header-login{ float: left; margin: 18px 0 0 500px; }
+
         /* End for Header Register */
     /* End Header */
 
     /* Begin Content */
     .content{ overflow: hidden; margin: 0 auto; width: 880px; }
+
         /* Begin for Content Register */
         .accounts-register-welcome-image{ float: left; padding: 80px 0 0 20px; }
         .accounts-register-form{ float: left; padding: 100px 35px; }
@@ -37,7 +41,23 @@ body{}
                 height: 35px;
             }
                 .form-title{ background: white; height: 31px; }
+            .accounts-register-form-field { width: 100%; }
+            .accounts-register-form .errorlist {
+                list-style: none;
+                padding: 0px;
+                font-size: 10px;
+                color: red;
+                margin-bottom: -10px;
+            }
+            .accounts-register-form .submit {
+                float: right;
+                border: none;
+                padding: 8px 6px;
+                color: white;
+                background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+            }
         /* End for Content Register */
+
     /* End Content */
 
     /* Begin Footer */
@@ -46,4 +66,5 @@ body{}
         .footer-links{ margin: 10px 0 0 0; text-align: center; }
             .footer-links a { text-decoration: none; color: black; }
     /* End Footer */
+
 /* End Conteiner */
