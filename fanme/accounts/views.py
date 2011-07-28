@@ -28,7 +28,7 @@ def register_user(request):
             profile.sexo = sex
             user.save()
             profile.save()
-            return HttpResponseRedirect('/thanks/') # Redirect after POST
+            return HttpResponseRedirect('/accounts/thanks/') # Redirect after POST
         #~ elif form_login.is_valid(): # All validation rules pass
             #~ return HttpResponseRedirect('/dashboard/') # Redirect after POST
     else:
@@ -61,7 +61,7 @@ def register_company(request):
             profile.save()
             profile.rubro.add(Rubro.objects.get(nombre=rubro))
             profile.save()
-            return HttpResponseRedirect('/thanks/') # Redirect after POST
+            return HttpResponseRedirect('/accounts/thanks/') # Redirect after POST
     else:
         form = CompanyRegisterForm() # An unbound form
         form_login = UserLogin() # An unbound form
