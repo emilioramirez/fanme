@@ -4,7 +4,6 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-#from django.contrib.auth.forms import AuthenticationForm
 from fanme.accounts.forms import UserRegisterForm, CompanyRegisterForm, UserLogin
 from fanme.accounts.models import Persona, Empresa
 from fanme.soport.models import Rubro

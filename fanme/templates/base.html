@@ -17,7 +17,24 @@
                 <div class="accounts-header-image">
                     <img src="/mymedia/images/logo.png" alt="Logo" />
                 </div>
-                {% block header %}{% endblock%}
+                {% block header %}
+                    <div class="header-login-form">
+                        {% if user.is_authenticated %}
+                            <div class="logged-user">
+                                Hola {{ user.username }}, <a href='/logout/'>Salir</a>
+                            </div>
+                        {% else %}
+                            {% block header_login %}
+                                <form action="/accounts/login/" method="post">{% csrf_token %}
+                                    <ul>
+                                        {{ form_login.as_ul }}
+                                    </ul>
+                                    <input type="submit" value="Ingresar" class="submit"/>
+                                </form>
+                            {% endblock header_login %}
+                        {% endif %}
+                    </div>
+                {% endblock%}
             <div class="clear"></div>
             <!-- End Header -->
             </div>
