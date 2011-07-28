@@ -16,11 +16,11 @@ def register_user(request):
         form_login = UserLogin(request.POST) # A form bound to the POST data
         if form_register.is_valid(): # All validation rules pass
             # Process the data in form.cleaned_data
-            username = form.cleaned_data['username']
-            birth_date = form.cleaned_data['birth_date']
-            sex = form.cleaned_data['sex']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
+            username = form_register.cleaned_data['username']
+            birth_date = form_register.cleaned_data['birth_date']
+            sex = form_register.cleaned_data['sex']
+            email = form_register.cleaned_data['email']
+            password = form_register.cleaned_data['password']
             user = User.objects.create_user(username, email, password)
             profile = Persona()
             profile.user = user
@@ -41,17 +41,17 @@ def register_user(request):
 
 def register_company(request):
     if request.method == 'POST': # If the form has been submitted...
-        form = CompanyRegisterForm(request.POST) # A form bound to the POST data
+        form_register = CompanyRegisterForm(request.POST) # A form bound to the POST data
         form_login = UserLogin(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             # Process the data in form.cleaned_data
-            username = form.cleaned_data['username']
-            razon_social = form.cleaned_data['razon_social']
-            direccion = form.cleaned_data['direccion']
-            rubro = form.cleaned_data['rubro']
-            url = form.cleaned_data['url']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
+            username = form_register.cleaned_data['username']
+            razon_social = form_register.cleaned_data['razon_social']
+            direccion = form_register.cleaned_data['direccion']
+            rubro = form_register.cleaned_data['rubro']
+            url = form_register.cleaned_data['url']
+            email = form_register.cleaned_data['email']
+            password = form_register.cleaned_data['password']
             user = User.objects.create_user(username, email, password)
             profile = Empresa()
             profile.user = user
