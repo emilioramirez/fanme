@@ -8,25 +8,35 @@
 {% endblock %}
 
 {% block myjavascript %}
-<script src="/mymedia/js/codebase/dhtmlxcalendar.js"></script>
-<script>
-    var myCalendar;
-    function doOnLoad() {
-        myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
-        myCalendar.setDateFormat("%d/%m/%Y");
-    }
-</script>
+    <script src="/mymedia/js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+    <script>
+        var myCalendar;
+        function doOnLoad() {
+            myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
+            myCalendar.setDateFormat("%d/%m/%Y");
+        }
+    </script>
 {% endblock %}
+
+{% block header %}
+    {% block header_login %}
+        <div class="header-login-form">
+            <form action="/accounts/login/" method="post">{% csrf_token %}
+                <ul>
+                    {{ form_login.as_ul }}
+                </ul>
+                <input type="submit" value="Ingresar" class="submit"/>
+            </form>
+        </div>
+    {% endblock header_login %}
+{% endblock header %}
 
 {% block bodystuff %}
     onload="doOnLoad();"
 {% endblock %}
 
-{% block header %}
-    {% block header_login %}
-        <div class="accounts-header-login">Login</div>
-    {% endblock header_login %}
-{% endblock header %}
+
 
 {% block content %}
     <div class="accounts-register-welcome-image">

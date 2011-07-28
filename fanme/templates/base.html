@@ -5,22 +5,26 @@
         <meta http-equiv="content-type" content="text/html;charset=utf-8" />
         <link rel="stylesheet" href="/mymedia/css/style.css" type="text/css" />
         <title>{% block title %}FanME{% endblock %}</title>
+        <script language="javascript" src="/mymedia/js/jquery-1.6.2.min.js"></script>
         {% block mystylesheet %}{% endblock %}
         {% block myjavascript %}{% endblock %}
     </head>
     <body {% block bodystuff %}{% endblock%}>
         <!-- Begin Conteiner -->
         <div class='conteiner'>
-            <!-- Begin Content -->
+            <!-- Begin Header -->
             <div class='header'>
                 <div class="accounts-header-image">
                     <img src="/mymedia/images/logo.png" alt="Logo" />
                 </div>
                 {% block header %}{% endblock%}
+            <div class="clear"></div>
+            <!-- End Header -->
             </div>
             <!-- Begin Content -->
             <div class='content'>
                 {% block content %}{% endblock%}
+            <div class="clear"></div>
             <!-- End Content -->
             </div>
             <!-- Begin Footer -->
@@ -37,9 +41,12 @@
                         <a href="#">Copyright</a>
                     </div>
                 {% endblock%}
+            <div class="clear"></div>
             <!-- End Footer -->
             </div>
+        <div class="clear"></div>
         <!-- End Conteiner -->
         </div>
+        <div class="clear"></div>
     </body>
 </html>

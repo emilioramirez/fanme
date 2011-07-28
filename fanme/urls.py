@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 import views
-from fanme.accounts import views as accounts_views
+#~ from fanme.accounts import views as accounts_views
+import fanme
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -15,9 +16,10 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     (r'^$', views.redirect),
+    (r'^dashboard/', views.dashboard),
     (r'^admin/', include(admin.site.urls)),
-    (r'^register', accounts_views.register),
-    (r'^dashboard', accounts_views.dashboard),
+    (r'^accounts/', include('fanme.accounts.urls')),
+    #~ (r'^accounts/login/$', 'django.contrib.auth.views.login'),
 )
 
 from django.conf import settings

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from fanme.soport.models import Rubro
 
 
 # Create your models here.
@@ -17,14 +18,19 @@ class AbstractProfile(models.Model):
     class Meta:
         abstract = True
 
+    def __unicode__(self):
+        return 'Perfil de {0}'.format(self.user.username)
+
 
 class Persona(AbstractProfile):
     fecha_nacimiento = models.DateField()
-    sexo = models.TextField()
+    sexo = models.CharField(max_length=20)
+
+
 
 
 class Empresa(AbstractProfile):
-    razon_social = models.TextField()
-    #rubro = models.OneToOneField(Rubro)
+    razon_social = models.CharField(max_length=40)
+    rubros = models.ManyToManyField(Rubro)
     site = models.URLField(verify_exists=False)
 
