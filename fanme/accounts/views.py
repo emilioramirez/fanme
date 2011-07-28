@@ -85,3 +85,9 @@ def login_user(request):
     else:
         # Return an 'invalid login' error message.
         return HttpResponseRedirect('/error/')
+
+def thanks(request):
+	form_login = UserLogin(request.POST) # A form bound to the POST data
+	
+	return render_to_response('accounts/thanks.html',
+							 {'form_login': form_login })
