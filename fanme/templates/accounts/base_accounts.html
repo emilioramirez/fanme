@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Registrate en FanME{% endblock title %}
+
+{% block mystylesheet %}
+<link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/dhtmlxcalendar.css"></link>
+<link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+{% endblock %}
+
+{% block myjavascript %}
+    <script src="/mymedia/js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+    <script>
+        var myCalendar;
+        function doOnLoad() {
+            myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
+            myCalendar.setDateFormat("%d/%m/%Y");
+        }
+    </script>
+{% endblock %}
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="accounts-register-welcome-image">
+        <img src="/mymedia/images/register-welcome-image.png" alt="Register Welcome Image" />
+    </div>
+    <div class="accounts-register-form">
+        {% block register_form %}{% endblock register_form %}
+    </div>
+{% endblock content%}
+
