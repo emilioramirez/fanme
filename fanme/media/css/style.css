@@ -83,6 +83,9 @@ body{}
                 color: white;
                 background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
             }
+            .accounts-thanks-welcome-image{ text-align: center; }
+            .accounts-thanks{ color: gray; margin: 50px; text-align: center;}
+            
         /* End for Content Register */
 
     /* End Content */
