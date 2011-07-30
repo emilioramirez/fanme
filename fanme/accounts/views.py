@@ -2,11 +2,11 @@
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from fanme.accounts.forms import UserRegisterForm, CompanyRegisterForm, UserLogin
 from fanme.accounts.models import Persona, Empresa
-from fanme.soport.models import Rubro
+from fanme.support.models import Rubro
 
 
 def register_user(request):
@@ -15,12 +15,16 @@ def register_user(request):
         form_login = UserLogin(request.POST) # A form bound to the POST data
         if form_register.is_valid(): # All validation rules pass
             # Process the data in form.cleaned_data
-            username = form_register.cleaned_data['username']
+            #~ username = form_register.cleaned_data['username']
+            first_name = form_register.cleaned_data['first_name']
+            last_name = form_register.cleaned_data['last_name']
             birth_date = form_register.cleaned_data['birth_date']
             sex = form_register.cleaned_data['sex']
             email = form_register.cleaned_data['email']
             password = form_register.cleaned_data['password']
-            user = User.objects.create_user(username, email, password)
+            user = User.objects.create_user(email, email, password)
+            user.first_name = first_name
+            user.last_name = last_name
             profile = Persona()
             profile.user = user
             profile.fecha_nacimiento = birth_date
@@ -42,9 +46,9 @@ def register_company(request):
     if request.method == 'POST': # If the form has been submitted...
         form_register = CompanyRegisterForm(request.POST) # A form bound to the POST data
         form_login = UserLogin(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
+        if form_register.is_valid(): # All validation rules pass
             # Process the data in form.cleaned_data
-            username = form_register.cleaned_data['username']
+            username = form_register.cleaned_data['email']
             razon_social = form_register.cleaned_data['razon_social']
             direccion = form_register.cleaned_data['direccion']
             rubro = form_register.cleaned_data['rubro']
@@ -62,11 +66,11 @@ def register_company(request):
             profile.save()
             return HttpResponseRedirect('/accounts/thanks/') # Redirect after POST
     else:
-        form = CompanyRegisterForm() # An unbound form
+        form_register = CompanyRegisterForm() # An unbound form
         form_login = UserLogin() # An unbound form
 
     return render_to_response('accounts/register_company_form.html',
-                             {'form': form, 'form_login': form_login },
+                             {'form': form_register, 'form_login': form_login },
                               context_instance=RequestContext(request))
 
 def login_user(request):
@@ -85,8 +89,13 @@ def login_user(request):
         # Return an 'invalid login' error message.
         return HttpResponseRedirect('/error/')
 
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect('/accounts/user/')
+
+
 def thanks(request):
-	form_login = UserLogin(request.POST) # A form bound to the POST data
-	
-	return render_to_response('accounts/thanks.html',
-							 {'form_login': form_login })
+    form_login = UserLogin(request.POST) # A form bound to the POST data
+
+    return render_to_response('accounts/thanks.html',
+                             {'form_login': form_login })
