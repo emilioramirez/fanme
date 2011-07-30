@@ -26,14 +26,30 @@ body{}
 /*
         .accounts-header-login{ float: left; margin: 18px 0 0 500px; }
 */
-        .header-login-form { margin-left: 550px; margin-top: 17px;}
-        .header-login-form ul li { float: left; list-style: none; margin-right: 10px;}
-        .header-login-form ul li input {
-            border: 1px solid #BBBBBB;
-            color: #BBBBBB;
-            height: 26px;
-        }
-        .header-login-form .submit { height: 29px; }
+        .header-menu-area { margin-left: 560px; height: 40px;}
+            .header-login-form { margin: 0px; }
+            .header-login-form ul li { float: left; list-style: none; margin-right: 10px;}
+            .header-login-form ul li input {
+                border: 1px solid #BBBBBB;
+                color: #BBBBBB;
+                height: 26px;
+            }
+            .header-login-form .submit { height: 29px; }
+            .logged-user {
+                color: #4F4F4F;
+                float: right;
+                font-weight: bold;
+                margin: 15px 10px;
+            }
+            .logged-user a{ text-decoration: none; color: #4f4f4f; font-weight: normal;}
+            .menu-options ul {
+                list-style: none;
+            }
+            .menu-options ul li {
+                float: left;
+                margin-right: 15px;
+                Background: green;
+            }
 
 
         /* End for Header Register */
@@ -85,7 +101,7 @@ body{}
             }
             .accounts-thanks-welcome-image{ text-align: center; }
             .accounts-thanks{ color: gray; margin: 50px; text-align: center;}
-            
+
         /* End for Content Register */
 
     /* End Content */
