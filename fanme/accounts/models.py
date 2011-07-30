@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from fanme.soport.models import Rubro
+from fanme.support.models import Rubro, Topico
 
 
 # Create your models here.
@@ -14,6 +14,7 @@ class AbstractProfile(models.Model):
     #evento = models.OneToOneField(Evento)
     #localizacion = models.OneToOneField(Localizacion)
     #imagen = models.ImageField(blank=True)
+    topicos = models.ManyToManyField(Topico, null=True, blank=True)
 
     class Meta:
         abstract = True
