@@ -19,7 +19,6 @@ urlpatterns = patterns('',
     (r'^dashboard/', views.dashboard),
     (r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('fanme.accounts.urls')),
-    (r'^logout/$', views.logout_view),
 )
 
 from django.conf import settings
