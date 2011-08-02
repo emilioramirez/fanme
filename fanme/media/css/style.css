@@ -23,34 +23,53 @@ body{}
 
 
         /* Begin for Header Register */
-/*
-        .accounts-header-login{ float: left; margin: 18px 0 0 500px; }
-*/
-        .header-menu-area { margin-left: 560px; height: 40px;}
-            .header-login-form { margin: 0px; }
+        .header-menu-area { float: left;}
+            /* Begin Login form */
+            .header-login-form { margin: 0 0 0 420px; width: 450px;}
             .header-login-form ul li { float: left; list-style: none; margin-right: 10px;}
-            .header-login-form ul li input {
-                border: 1px solid #BBBBBB;
-                color: #BBBBBB;
-                height: 26px;
+            .header-login-form ul li input {border: 1px solid #BBBBBB;color: #BBBBBB;height: 26px;}
+            .header-login-form ul li ul.errorlist {
+                font-size: 10px;
+                color: red;
+                margin-top: -11px;
             }
+            .header-login-form ul li:first-child ul.errorlist { margin: -12px -184px 0 0; }
             .header-login-form .submit { height: 29px; }
+            /* End Login form */
+            /* User Logged */
             .logged-user {
                 color: #4F4F4F;
-                float: right;
+                float: left;
                 font-weight: bold;
-                margin: 15px 10px;
+                margin: 19px 0 0 190px;
             }
             .logged-user a{ text-decoration: none; color: #4f4f4f; font-weight: normal;}
-            .menu-options ul {
-                list-style: none;
-            }
-            .menu-options ul li {
-                float: left;
-                margin-right: 15px;
-                Background: green;
-            }
-
+            /* begin to delete */
+/*
+            .menu-options ul { list-style: none; }
+            .menu-options ul li { float: left; margin-right: 15px; Background: green;}
+            .menu-options ul li a{ text-decoration: none;}
+*/
+            /* end to delete */
+            .header-search-box{ float: left; margin: 0px 0px 0px 35px;}
+                .header-seach-form-field{
+                    background: url("/mymedia/images/header-searchbox-lupa.png") no-repeat 229px 6px white;
+                    border: 1px solid grey;
+                    height: 26px;
+                    width: 250px;
+                }
+            .header-menu-options{ float: left; }
+                .menu-options{ list-style: none;}
+                .menu-options li{ float: left; height: 22px; width: 80px; padding: 7px 0 0 6px;}
+                .menu-options li a{ text-decoration: none; }
+                    .menu-item-selected{
+                        background: url("/mymedia/images/header-menu-item-selected.png") no-repeat scroll 0 0 transparent;
+                    }
+                    .menu-item-selected a{ color: white; font-weight: bold;}
+                    li.menu-item-selected a{ color: white;}
+                    .menu-item{}
+                    li.menu-item a { color: #4F4F4F; }
+            /* End User Logged */
 
         /* End for Header Register */
     /* End Header */
@@ -100,10 +119,14 @@ body{}
                 background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
             }
             .accounts-thanks-welcome-image{ text-align: center; }
-            .accounts-thanks{ color: gray; margin: 50px; text-align: center;}
-
+            .accounts-thanks{ color: gray; font-size: 15px; margin: 16px 10px; text-align: center;}
         /* End for Content Register */
-
+        /* Begin Dashboard */
+        .content-dashboard{}
+        /* End Content Dashboard */
+        /* Begin Sidebar */
+        .content-sidebar{}
+        /* End Sidebar */
     /* End Content */
 
     /* Begin Footer */
