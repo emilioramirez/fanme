@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block myjavascript %}
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+{% endblock myjavascript %}
+
 {% block searchBox %}
     <div class="header-search-box">
         <form action="/dash/results/" method="post">{% csrf_token %}

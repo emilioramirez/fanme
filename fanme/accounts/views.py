@@ -74,8 +74,6 @@ def login_user(request):
     if request.method == 'POST': # If the form has been submitted...
         form_login = UserLogin(request.POST) # A form bound to the POST data
         if form_login.is_valid(): # All validation rules pass
-            print "cleanedata"
-            print form_login.cleaned_data
             post_user = form_login.cleaned_data['login_username']
             post_pass = form_login.cleaned_data['login_password']
             user = authenticate(username=post_user, password=post_pass)
