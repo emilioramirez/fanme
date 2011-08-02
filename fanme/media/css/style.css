@@ -60,7 +60,7 @@ body{}
                 }
             .header-menu-options{ float: left; }
                 .menu-options{ list-style: none;}
-                .menu-options li{ float: left; height: 22px; width: 80px; padding: 7px 0 0 6px;}
+                .menu-options li{ float: left; height: 22px; width: 86px; padding: 7px 0 0 0; text-align: center;}
                 .menu-options li a{ text-decoration: none; }
                     .menu-item-selected{
                         background: url("/mymedia/images/header-menu-item-selected.png") no-repeat scroll 0 0 transparent;
