@@ -103,5 +103,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'fanme.accounts',
     'fanme.support',
+    'fanme.dash',
     'south',
 )

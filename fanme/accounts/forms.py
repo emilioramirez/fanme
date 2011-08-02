@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-#~ Definition of the accounts forms
 from django import forms
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from fanme.support.models import Rubro
 
@@ -9,20 +9,46 @@ TYPES_OF_SEX = (('','Sexo'),('M', 'Masculino'), ('F', 'Femenino'))
 class UserLogin(forms.Form):
     login_username = forms.CharField(label='',
                                initial='Email',
-                               required=False)
+                               required=True,
+                               error_messages={'required': 'Es necesario su Email'},
+                               widget=forms.TextInput(attrs={'class': 'accounts-register-form-field'}))
     login_password = forms.CharField(label='',
                                initial='Password',
-                               required=False,
-                               widget=forms.PasswordInput())
+                               required=True,
+                               widget=forms.PasswordInput(attrs={'class': 'accounts-register-form-field'}),
+                               error_messages={'required': 'Es necesario una Password'})
+
+    def clean(self):
+        login_username = self.cleaned_data.get('login_username')
+        login_password = self.cleaned_data.get('login_password')
+        if login_username and login_password:
+            user = authenticate(username=login_username, password=login_password)
+            if user is None:
+                raise forms.ValidationError("Usuario o Password no valido")
+            elif not user.is_active:
+                raise forms.ValidationError("Esta cuenta esta desactivada")
+        return self.cleaned_data
 
     #~ def clean_login_username(self):
         #~ data = self.cleaned_data['login_username']
         #~ try:
-            #~ user = User.objects.get(login_username=data)
-            #~ pass
+            #~ user = User.objects.get(email=data)
         #~ except User.DoesNotExist:
-            #~ raise forms.ValidationError("Este usuario no existe")
+            #~ raise forms.ValidationError("Usuario no valido")
         #~ return data
+#~
+    #~ def clean_login_password(self):
+        #~ login_username = self.cleaned_data.get('login_username')
+        #~ login_password = self.cleaned_data['login_password']
+        #~ try:
+            #~ user = authenticate(username=login_username, password=login_password)
+            #~ if user is None:
+                #~ raise forms.ValidationError("Password no valido")
+            #~ elif not user.is_active:
+                #~ raise forms.ValidationError("Esta cuenta esta desactivada")
+        #~ except User.DoesNotExist:
+            #~ pass
+        #~ return login_password
 
 
 class UserRegisterForm(forms.Form):

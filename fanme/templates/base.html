@@ -15,33 +15,27 @@
             <!-- Begin Header -->
             <div class='header'>
                 <div class="accounts-header-image">
-                    <img src="/mymedia/images/logo.png" alt="Logo" />
+                    <a href="/"><img src="/mymedia/images/logo.png" alt="Logo" /></a>
                 </div>
                 {% block header %}
-                    {% block searchBox %}{% endblock searchBox %}
                     {% block menuArea %}
                         <div class="header-menu-area">
+                            {% block searchBox %}{% endblock searchBox %}
                             {% if user.is_authenticated %}
-                                <div class="menu-options">
-                                    <ul>
-                                        <li>Dashboard</li>
-                                        <li>Logbook</li>
-                                        <li>Topicos</li>
-                                    </ul>
-                                </div>
+                                {% block menuOptions %}{% endblock menuOptions %}
                                 <div class="logged-user">
                                     {{ user.username }} <a href='/accounts/logout/'>salir</a>
                                 </div>
                             {% else %}
                                 {% block header_login %}
-                                <div class="header-login-form">
-                                    <form action="/accounts/login/" method="post">{% csrf_token %}
-                                        <ul>
-                                            {{ form_login.as_ul }}
-                                        </ul>
-                                        <input type="submit" value="Ingresar" class="submit"/>
-                                    </form>
-                                </div>
+                                    <div class="header-login-form">
+                                        <form action="/accounts/login/" method="post">{% csrf_token %}
+                                            <ul>
+                                                {{ form_login.as_ul }}
+                                            </ul>
+                                            <input type="submit" value="Ingresar" class="submit"/>
+                                        </form>
+                                    </div>
                                 {% endblock header_login %}
                             {% endif %}
                         </div>

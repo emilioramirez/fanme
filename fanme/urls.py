@@ -16,9 +16,10 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     (r'^$', views.redirect),
-    (r'^dashboard/', views.dashboard),
+    #~ (r'^dashboard/', views.dashboard),
     (r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('fanme.accounts.urls')),
+    (r'^dash/', include('fanme.dash.urls')),
 )
 
 from django.conf import settings

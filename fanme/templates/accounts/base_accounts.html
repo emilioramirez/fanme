@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 
+
 {% block title %}Registrate en FanME{% endblock title %}
 
+
 {% block mystylesheet %}
-<link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/dhtmlxcalendar.css"></link>
-<link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
-{% endblock %}
+    <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+{% endblock mystylesheet %}
+
 
 {% block myjavascript %}
     <script src="/mymedia/js/codebase/dhtmlxcalendar.js"></script>
@@ -17,12 +20,12 @@
             myCalendar.setDateFormat("%d/%m/%Y");
         }
     </script>
-{% endblock %}
+{% endblock myjavascript %}
+
 
 {% block bodystuff %}
     onload="doOnLoad();"
 {% endblock %}
-
 
 
 {% block content %}
