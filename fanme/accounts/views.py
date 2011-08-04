@@ -60,7 +60,7 @@ def register_company(request):
             profile.site = url
             user.save()
             profile.save()
-            profile.rubro.add(Rubro.objects.get(nombre=rubro))
+            profile.rubros.add(Rubro.objects.get(nombre=rubro))
             profile.save()
             return HttpResponseRedirect('/accounts/thanks/') # Redirect after POST
     else:
