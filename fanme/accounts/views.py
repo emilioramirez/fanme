@@ -95,3 +95,10 @@ def thanks(request):
     form_login = UserLogin() # A form bound to the POST data
     return render_to_response('accounts/thanks.html',
                              {'form_login': form_login })
+                             
+
+def topicsChoisses(request):
+    form_login = UserLogin() # A form bound to the POST data
+
+    return render_to_response('accounts/topicsChoisses.html',
+                             {'form_login': form_login }) 
