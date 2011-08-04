@@ -25,7 +25,7 @@ body{}
         /* Begin for Header Register */
         .header-menu-area { float: left;}
             /* Begin Login form */
-            .header-login-form { margin: 0 0 0 420px; width: 450px;}
+            .header-login-form { margin: 0 0 0 385px; width: 480px;}
             .header-login-form ul li { float: left; list-style: none; margin-right: 10px;}
             .header-login-form ul li input {border: 1px solid #BBBBBB;color: #BBBBBB;height: 26px;}
             .header-login-form ul li ul.errorlist {
@@ -39,24 +39,19 @@ body{}
             /* User Logged */
             .logged-user {
                 color: #4F4F4F;
-                float: left;
+                float: right;
                 font-weight: bold;
-                margin: 19px 0 0 190px;
+                margin: 19px 0 0 100px;
             }
             .logged-user a{ text-decoration: none; color: #4f4f4f; font-weight: normal;}
-            /* begin to delete */
-/*
-            .menu-options ul { list-style: none; }
-            .menu-options ul li { float: left; margin-right: 15px; Background: green;}
-            .menu-options ul li a{ text-decoration: none;}
-*/
-            /* end to delete */
             .header-search-box{ float: left; margin: 0px 0px 0px 35px;}
                 .header-seach-form-field{
-                    background: url("/mymedia/images/header-searchbox-lupa.png") no-repeat 229px 6px white;
+                    background: url("/mymedia/images/header-searchbox-lupa.png") no-repeat 240px 6px white;
                     border: 1px solid grey;
                     height: 26px;
                     width: 250px;
+                    color: #BBBBBB;
+                    padding-left: 10px;
                 }
             .header-menu-options{ float: left; }
                 .menu-options{ list-style: none;}
@@ -93,6 +88,7 @@ body{}
                 color: #BBBBBB;
                 height: 26px;
                 width: 100%;
+                padding-left: 5px;
             }
             .accounts-register-form-field:focus { box-shadow: 0px 0px 6px #ff6600; }
             .accounts-register-form .errorlist {
