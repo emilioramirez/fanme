@@ -11,11 +11,9 @@ from fanme.support.models import Rubro
 
 
 def register_user(request):
-    if request.method == 'POST': # If the form has been submitted...
-        form_register = UserRegisterForm(request.POST) # A form bound to the POST data
-        if form_register.is_valid(): # All validation rules pass
-            # Process the data in form.cleaned_data
-            #~ username = form_register.cleaned_data['username']
+    if request.method == 'POST':
+        form_register = UserRegisterForm(request.POST)
+        if form_register.is_valid():
             first_name = form_register.cleaned_data['first_name']
             last_name = form_register.cleaned_data['last_name']
             birth_date = form_register.cleaned_data['birth_date']
@@ -31,21 +29,21 @@ def register_user(request):
             profile.sexo = sex
             user.save()
             profile.save()
-            return HttpResponseRedirect('/accounts/thanks/') # Redirect after POST
+            return HttpResponseRedirect('/accounts/thanks/')
         #~ elif form_login.is_valid(): # All validation rules pass
             #~ return HttpResponseRedirect('/dashboard/') # Redirect after POST
     else:
-        form_register = UserRegisterForm() # An unbound form
-    form_login = UserLogin() # An unbound form
+        form_register = UserRegisterForm()
+    form_login = UserLogin()
     return render_to_response('accounts/register_user_form.html',
-                            {'form_register': form_register, 'form_login': form_login },
-                            context_instance=RequestContext(request))
+        {'form_register': form_register, 'form_login': form_login},
+        context_instance=RequestContext(request))
+
 
 def register_company(request):
-    if request.method == 'POST': # If the form has been submitted...
-        form_register = CompanyRegisterForm(request.POST) # A form bound to the POST data
-        if form_register.is_valid(): # All validation rules pass
-            # Process the data in form.cleaned_data
+    if request.method == 'POST':
+        form_register = CompanyRegisterForm(request.POST)
+        if form_register.is_valid():
             username = form_register.cleaned_data['email']
             razon_social = form_register.cleaned_data['razon_social']
             direccion = form_register.cleaned_data['direccion']
@@ -62,29 +60,31 @@ def register_company(request):
             profile.save()
             profile.rubros.add(Rubro.objects.get(nombre=rubro))
             profile.save()
-            return HttpResponseRedirect('/accounts/thanks/') # Redirect after POST
+            return HttpResponseRedirect('/accounts/thanks/')
     else:
-        form_register = CompanyRegisterForm() # An unbound form
-    form_login = UserLogin() # An unbound form
+        form_register = CompanyRegisterForm()
+    form_login = UserLogin()
     return render_to_response('accounts/register_company_form.html',
-                             {'form': form_register, 'form_login': form_login },
-                              context_instance=RequestContext(request))
+        {'form': form_register, 'form_login': form_login},
+        context_instance=RequestContext(request))
+
 
 def login_user(request):
-    if request.method == 'POST': # If the form has been submitted...
-        form_login = UserLogin(request.POST) # A form bound to the POST data
-        if form_login.is_valid(): # All validation rules pass
+    if request.method == 'POST':
+        form_login = UserLogin(request.POST)
+        if form_login.is_valid():
             post_user = form_login.cleaned_data['login_username']
             post_pass = form_login.cleaned_data['login_password']
             user = authenticate(username=post_user, password=post_pass)
             login(request, user)
-            return HttpResponseRedirect('/dash/dashboard/') # Redirect after POST
+            return HttpResponseRedirect('/dash/dashboard/')
     else:
-        form_login = UserLogin() # An unbound form
-    form_register = UserRegisterForm() # An unbound form
+        form_login = UserLogin()
+    form_register = UserRegisterForm()
     return render_to_response('accounts/register_user_form.html',
-                            {'form_register': form_register, 'form_login': form_login },
-                            context_instance=RequestContext(request))
+        {'form_register': form_register, 'form_login': form_login},
+        context_instance=RequestContext(request))
+
 
 def logout_user(request):
     logout(request)
@@ -92,6 +92,6 @@ def logout_user(request):
 
 
 def thanks(request):
-    form_login = UserLogin() # A form bound to the POST data
-    return render_to_response('accounts/thanks.html',
-                             {'form_login': form_login })
+    form_login = UserLogin()
+    return render_to_response('accounts/thanks.html', {'form_login': form_login},
+        context_instance=RequestContext(request))

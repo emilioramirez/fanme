@@ -6,7 +6,8 @@ from fanme.support.models import Rubro, Topico
 # Create your models here.
 class AbstractProfile(models.Model):
     #Mandatory field
-    user = models.OneToOneField( User, related_name='%(class)s', verbose_name=u'Django user', unique=True,)
+    user = models.OneToOneField(User, related_name='%(class)s',
+        verbose_name=u'Django user', unique=True,)
     #Common fields
     #rol = models.TextField()
     #credibilidad = models.OneToOneField(Credibilidad)
@@ -26,8 +27,6 @@ class AbstractProfile(models.Model):
 class Persona(AbstractProfile):
     fecha_nacimiento = models.DateField()
     sexo = models.CharField(max_length=20)
-
-
 
 
 class Empresa(AbstractProfile):
