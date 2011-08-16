@@ -118,7 +118,69 @@ body{}
             .accounts-thanks{ color: gray; font-size: 15px; margin: 16px 10px; text-align: center;}
         /* End for Content Register */
         /* Begin Dashboard */
-        .content-dashboard{}
+        .content-dashboard{width: 550px;}
+            .content-list-of-topics{
+                border: 1px solid #BBBBBB;
+                margin: 30px 0;
+                overflow: hidden;
+            }
+                .list-of-topics{list-style: none;}
+                .list-of-topics li{float: left; margin-right: 10px;}
+            /* Begin Item List */
+            .content-items-list{}
+                /* Begin Item content */
+                .item-content{
+                    border: 1px solid #BBBBBB;
+                    margin: 10px 0;
+                    height: 250px;
+                }
+                    .item-header{
+                        background: #ECECEC;
+                        border-bottom: 1px solid #BBBBBB;
+                        height: 38px;
+                        overflow: hidden;
+                    }
+                        .item-topico-tecnologia{
+                            background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px 0 transparent;
+                            float: left;
+                            height: 34px;
+                            margin: 2px 19px;
+                            width: 34px;
+                        }
+                        .item-topico-juegos{
+                            background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -35px transparent;
+                            float: left;
+                            height: 34px;
+                            margin: 2px 19px;
+                            width: 34px;
+                        }
+                        .item-topico-peliculas{
+                            background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -70px transparent;
+                            float: left;
+                            height: 34px;
+                            margin: 2px 19px;
+                            width: 34px;
+                        }
+                        .item-topico-libros{
+                            background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -175px transparent;
+                            float: left;
+                            height: 34px;
+                            margin: 2px 19px;
+                            width: 34px;
+                        }
+                        .item-nombre{
+                            color: #646464;
+                            float: left;
+                            font-size: 18px;
+                            font-weight: bold;
+                            margin: 9px 0px;
+                        }
+                        .item-score{float: right;margin: 12px 30px;}
+                    .item-body{}
+                        .item-descripcion{}
+                    .item-footer{}
+                /* End Item content */
+            /* End Item List */
         /* End Content Dashboard */
         /* Begin Sidebar */
         .content-sidebar{}

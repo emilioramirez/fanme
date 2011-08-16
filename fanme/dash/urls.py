@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     (r'^logbook/', views.logbook),
     (r'^topicos/', views.topicos),
     (r'^results/', views.results),
+    (r'^empresa/', views.empresa),
 )

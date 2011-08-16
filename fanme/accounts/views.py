@@ -1,4 +1,3 @@
-# Views
 from django.http import HttpResponseRedirect
 from django import forms
 from django.template import RequestContext
@@ -77,7 +76,12 @@ def login_user(request):
             post_pass = form_login.cleaned_data['login_password']
             user = authenticate(username=post_user, password=post_pass)
             login(request, user)
-            return HttpResponseRedirect('/dash/dashboard/')
+            user = User.objects.get(id=request.user.id)
+            try:
+                profile = user.persona
+                return HttpResponseRedirect('/dash/dashboard/')
+            except Persona.DoesNotExist:
+                return HttpResponseRedirect('/dash/empresa/')
     else:
         form_login = UserLogin()
     form_register = UserRegisterForm()
