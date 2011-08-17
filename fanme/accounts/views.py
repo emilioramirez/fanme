@@ -99,3 +99,9 @@ def thanks(request):
     form_login = UserLogin()
     return render_to_response('accounts/thanks.html',
         {'form_login': form_login}, context_instance=RequestContext(request))
+
+
+def topicsChoisses(request):
+    form_login = UserLogin()
+    return render_to_response('accounts/topicsChoisses.html',
+        {'form_login': form_login}, context_instance=RequestContext(request))
