@@ -18,8 +18,9 @@ class UserLogin(forms.Form):
         label='',
         initial='Password',
         required=True,
-        widget=forms.PasswordInput(attrs={'class': 'accounts-register-form-field'}),
-        error_messages={'required': 'Es necesario una Password'})
+        widget=forms.PasswordInput(
+            attrs={'class': 'accounts-register-form-field'}),
+            error_messages={'required': 'Es necesario una Password'})
 
     def clean(self):
         login_username = self.cleaned_data.get('login_username')
@@ -78,7 +79,7 @@ class UserRegisterForm(forms.Form):
     def clean_username(self):
         data = self.cleaned_data['email']
         try:
-            user = User.objects.get(email=data)
+            User.objects.get(email=data)
             raise forms.ValidationError("Este usuario ya existe")
         except User.DoesNotExist:
             pass
@@ -134,13 +135,14 @@ class CompanyRegisterForm(forms.Form):
         label='',
         initial='Password',
         min_length=6,
-        widget=forms.PasswordInput(attrs={'class': 'accounts-register-form-field'}),
-        error_messages={'required': 'Es necesario una Password'})
+        widget=forms.PasswordInput(
+            attrs={'class': 'accounts-register-form-field'}),
+            error_messages={'required': 'Es necesario una Password'})
 
     def clean_username(self):
         data = self.cleaned_data['email']
         try:
-            user = User.objects.get(email=data)
+            User.objects.get(email=data)
             raise forms.ValidationError("Este usuario ya existe")
         except User.DoesNotExist:
             pass

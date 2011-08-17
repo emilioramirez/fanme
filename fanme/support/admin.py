@@ -1,5 +1,6 @@
 from django.contrib import admin
-from fanme.support.models import Rubro, Topico, Item, Pais, Provincia, Localidad, Marca, Localizacion
+from fanme.support.models import Rubro, Topico, Item, Pais
+from fanme.support.models import Provincia, Localidad, Marca, Localizacion
 
 
 admin.site.register(Rubro)

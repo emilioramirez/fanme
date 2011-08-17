@@ -24,7 +24,7 @@
                             {% if user.is_authenticated %}
                                 {% block menuOptions %}{% endblock menuOptions %}
                                 <div class="logged-user">
-                                    {{ user.username }} <a href='/accounts/logout/'>salir</a>
+                                    {{ user.first_name }} <a href='/accounts/logout/'>salir</a>
                                 </div>
                             {% else %}
                                 {% block header_login %}
