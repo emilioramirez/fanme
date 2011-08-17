@@ -4,7 +4,8 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from fanme.accounts.forms import UserRegisterForm, CompanyRegisterForm, UserLogin
+from fanme.accounts.forms import UserRegisterForm, CompanyRegisterForm
+from fanme.accounts.forms import UserLogin
 from fanme.accounts.models import Persona, Empresa
 from fanme.support.models import Rubro
 
@@ -45,7 +46,6 @@ def register_company(request):
         if form_register.is_valid():
             username = form_register.cleaned_data['email']
             razon_social = form_register.cleaned_data['razon_social']
-            direccion = form_register.cleaned_data['direccion']
             rubro = form_register.cleaned_data['rubro']
             url = form_register.cleaned_data['url']
             email = form_register.cleaned_data['email']
@@ -97,5 +97,5 @@ def logout_user(request):
 
 def thanks(request):
     form_login = UserLogin()
-    return render_to_response('accounts/thanks.html', {'form_login': form_login},
-        context_instance=RequestContext(request))
+    return render_to_response('accounts/thanks.html',
+        {'form_login': form_login}, context_instance=RequestContext(request))

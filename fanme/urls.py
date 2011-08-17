@@ -1,6 +1,5 @@
 from django.conf.urls.defaults import *
 import views
-import fanme
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin

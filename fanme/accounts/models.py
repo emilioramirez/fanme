@@ -33,4 +33,3 @@ class Empresa(AbstractProfile):
     razon_social = models.CharField(max_length=40)
     rubros = models.ManyToManyField(Rubro)
     site = models.URLField(verify_exists=False)
-
