@@ -8,5 +8,5 @@ urlpatterns = patterns('',
     (r'^login/', views.login_user),
     (r'^logout/$', views.logout_user),
     (r'^thanks/', views.thanks),
-#    (r'^topicsChoisses/', views.topicsChoisses),
+    (r'^topicsChoisses/', views.topicsChoisses),
 )
