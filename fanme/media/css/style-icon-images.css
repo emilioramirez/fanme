@@ -1,0 +1,37 @@
+/**
+ * CSS - Stylistic CSS Styles
+ */
+
+/* Icons for dashboard topics */
+.item-topico-tecnologia{
+    background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px 0 transparent;
+    float: left;
+    height: 34px;
+    margin: 2px 19px;
+    width: 34px;
+}
+.item-topico-juegos{
+    background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -35px transparent;
+    float: left;
+    height: 34px;
+    margin: 2px 19px;
+    width: 34px;
+}
+.item-topico-peliculas{
+    background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -70px transparent;
+    float: left;
+    height: 34px;
+    margin: 2px 19px;
+    width: 34px;
+}
+.item-topico-libros{
+    background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -175px transparent;
+    float: left;
+    height: 34px;
+    margin: 2px 19px;
+    width: 34px;
+}
+
+
+
+/* Icons for topic list */
