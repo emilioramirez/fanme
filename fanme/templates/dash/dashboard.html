@@ -2,6 +2,9 @@
 
 {% load dash_filters %}
 
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/style-icon-images.css" type="text/css" />
+{% endblock mystylesheet%}
 
 {% block menuOptionsSelected %}
     <ul class="menu-options">
@@ -13,14 +16,17 @@
 
 
 {% block dashboard %}
-    <div class="content-list-of-topics">
-        <ul class="list-of-topics">
+    <div class="dashboard-list-topics">
+        <ul class="list-topics">
+<!--
             {% for topic in profile.topicos.all %}
                 <li>{{ topic.nombre }}</li>
             {% endfor %}
+-->
+            <li ></li>
         </ul>
     </div>
-    <div class="content-items-list">
+    <div class="dashboard-list-items">
         {% for topic in items %}
             {% for item in topic %}
                 <div class="item-content">
@@ -40,7 +46,7 @@
                     </div>
                     <div class="item-footer">
                         <div class="item-topico">{{ item.topico }}</div>
-                        <div class="item-button">
+                        <div class="item-buttons">
                             <a href="#" ><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
                             <a href="#" ><img src="/mymedia/images/item-button-recomendar.png" alt="Recomendar" /></a>
                         </div>
@@ -49,22 +55,37 @@
                 </div>
             {% endfor %}
         {% endfor %}
-<!--
-        ---------------------------------------------------------
-        {{ example }}
-        {% for k, v in example %}
-            <p>Topico: {{ k }}</p>
-            <ul>
-                {% for item in v %}
-                    <li>{{ item }}</li>
-                {% endfor %}
-            </ul>
-            +++++++
-        {% endfor %}
--->
     </div>
-
 {% endblock dashboard %}
 
 {% block sidebar %}
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+            <div class="user-stars">* * * * *</div>
+        </div>
+        <div class="sidebar-stadistic">
+            <div class="stadistic-fan sidebar-stadistic-item">
+                <div class="stadistic-num">##</div>
+                <div class="stadistic-nom">Fan</div>
+            </div>
+            <div class="stadistic-recomendations sidebar-stadistic-item">
+                <div class="stadistic-num">##</div>
+                <div class="stadistic-nom">Recomendaciones</div>
+            </div>
+            <div class="stadistic-comments sidebar-stadistic-item">
+                <div class="stadistic-num">##</div>
+                <div class="stadistic-nom">Comentarios</div>
+            </div>
+        </div>
+        <div class="sidebar-menu-indicators">
+            <div class="menu-indicators">Mensajes (#)</div>
+            <div class="menu-indicators">Eventos (#)</div>
+            <div class="menu-indicators">Notificaciones (#)</div>
+        </div>
+        <div class="sidebar-new-item">
+            <a href="#"><div class="new-item-buttom">Crear Item</div></a>
+        </div>
+        <div class="clear"></div>
+    </div>
 {% endblock sidebar %}

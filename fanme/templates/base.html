@@ -14,7 +14,7 @@
         <div class='conteiner'>
             <!-- Begin Header -->
             <div class='header'>
-                <div class="accounts-header-image">
+                <div class="header-logo">
                     <a href="/"><img src="/mymedia/images/logo.png" alt="Logo" /></a>
                 </div>
                 {% block header %}
@@ -24,7 +24,11 @@
                             {% if user.is_authenticated %}
                                 {% block menuOptions %}{% endblock menuOptions %}
                                 <div class="logged-user">
-                                    {{ user.first_name }} <a href='/accounts/logout/'>salir</a>
+                                    <div class="logged-user-name">{{ user.first_name }}</div>
+                                    <div class="logged-user-menu">
+                                        <a href='/accounts/logout/'>salir</a>
+                                    </div>
+                                    <div class="logged-user-photo"></div>
                                 </div>
                             {% else %}
                                 {% block header_login %}
@@ -41,7 +45,7 @@
                         </div>
                     {% endblock menuArea %}
                 {% endblock header%}
-            <div class="clear"></div>
+                <div class="clear"></div>
             <!-- End Header -->
             </div>
             <!-- Begin Content -->
@@ -64,10 +68,10 @@
                         <a href="#">Copyright</a>
                     </div>
                 {% endblock%}
-            <div class="clear"></div>
+                <div class="clear"></div>
             <!-- End Footer -->
             </div>
-        <div class="clear"></div>
+            <div class="clear"></div>
         <!-- End Conteiner -->
         </div>
         <div class="clear"></div>

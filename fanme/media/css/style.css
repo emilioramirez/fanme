@@ -19,13 +19,17 @@ body{}
         overflow: hidden;
         box-shadow: 0 1px 1px #979797;-webkit-box-shadow: 0 1px 1px #979797;-moz-box-shadow: 0 1px 1px #979797;
     }
-        .accounts-header-image { float: left; margin: 5px 0 1px 30px; }
+        .header-logo { float: left; margin: 5px 0 1px 30px; }
 
 
         /* Begin for Header Register */
-        .header-menu-area { float: left;}
+        .header-menu-area { overflow: hidden; }
             /* Begin Login form */
-            .header-login-form { margin: 0 0 0 385px; width: 480px;}
+            .header-login-form {
+                float: right;
+                margin-right: 30px;
+            }
+            .header-login-form ul { float: left;}
             .header-login-form ul li { float: left; list-style: none; margin-right: 10px;}
             .header-login-form ul li input {border: 1px solid #BBBBBB;color: #BBBBBB;height: 26px;}
             .header-login-form ul li ul.errorlist {
@@ -34,16 +38,27 @@ body{}
                 margin-top: -11px;
             }
             .header-login-form ul li:first-child ul.errorlist { margin: -12px -184px 0 0; }
-            .header-login-form .submit { height: 29px; }
+            .header-login-form .submit { height: 29px; float: left; margin-top: 13px;}
             /* End Login form */
             /* User Logged */
             .logged-user {
                 color: #4F4F4F;
                 float: right;
                 font-weight: bold;
-                margin: 19px 0 0 100px;
+/*
+                margin: 19px 0 0 0px;
+*/
             }
-            .logged-user a{ text-decoration: none; color: #4f4f4f; font-weight: normal;}
+                .logged-user-name{ float: left; margin: 19px 10px 0 0;}
+                .logged-user-photo{
+                    box-shadow: 2px 2px 3px 2px;-webkit-box-shadow: 2px 2px 3px 2px;-moz-box-shadow: 2px 2px 3px 2px;
+                    float: left;
+                    height: 50px;
+                    margin: 1px 30px 0 0;
+                    width: 50px;
+                }
+                .logged-user-menu{float: left; margin: 19px 10px 0 0;}
+                    .logged-user-menu a{ text-decoration: none; color: #4f4f4f; font-weight: normal;}
             .header-search-box{ float: left; margin: 0px 0px 0px 35px;}
                 .header-seach-form-field{
                     background: url("/mymedia/images/header-searchbox-lupa.png") no-repeat 240px 6px white;
@@ -118,16 +133,18 @@ body{}
             .accounts-thanks{ color: gray; font-size: 15px; margin: 16px 10px; text-align: center;}
         /* End for Content Register */
         /* Begin Dashboard */
-        .content-dashboard{width: 550px;}
-            .content-list-of-topics{
+        .content-dashboard{width: 565px; float: left;}
+            .dashboard-list-topics{
                 border: 1px solid #BBBBBB;
-                margin: 30px 0;
+                border-radius: 7px 7px 7px 7px;
+                height: 48px;
+                margin: 20px 0;
                 overflow: hidden;
             }
-                .list-of-topics{list-style: none;}
-                .list-of-topics li{float: left; margin-right: 10px;}
+                .list-topics{list-style: none;}
+                .list-topics li{float: left; margin-right: 10px;}
             /* Begin Item List */
-            .content-items-list{}
+            .dashboard-list-items{}
                 /* Begin Item content */
                 .item-content{
                     border: 1px solid #BBBBBB;
@@ -140,34 +157,6 @@ body{}
                         height: 38px;
                         overflow: hidden;
                     }
-                        .item-topico-tecnologia{
-                            background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px 0 transparent;
-                            float: left;
-                            height: 34px;
-                            margin: 2px 19px;
-                            width: 34px;
-                        }
-                        .item-topico-juegos{
-                            background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -35px transparent;
-                            float: left;
-                            height: 34px;
-                            margin: 2px 19px;
-                            width: 34px;
-                        }
-                        .item-topico-peliculas{
-                            background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -70px transparent;
-                            float: left;
-                            height: 34px;
-                            margin: 2px 19px;
-                            width: 34px;
-                        }
-                        .item-topico-libros{
-                            background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -175px transparent;
-                            float: left;
-                            height: 34px;
-                            margin: 2px 19px;
-                            width: 34px;
-                        }
                         .item-nombre{
                             color: #646464;
                             float: left;
@@ -200,14 +189,67 @@ body{}
                         .item-topico{
                             float: left;
                         }
-                        .item-button{
+                        .item-buttons{
                             float: right;
                         }
                 /* End Item content */
             /* End Item List */
         /* End Content Dashboard */
         /* Begin Sidebar */
-        .content-sidebar{}
+        .content-sidebar{
+            float: left;
+            margin: 90px 0 0 82px;
+            width: 230px;
+            height: 356px;
+            background: #ECECEC;
+            border-radius: 7px 7px 7px 7px;
+        }
+            .sidebar-content{}
+                .sidebar-user{
+                    float: right;
+                    margin: 17px 17px 0 0;
+                }
+                    .user-name{
+                        color: #646464;
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+                    .user-stars{ float: right; }
+                .sidebar-stadistic{
+                    float: left;
+                    margin: 40px 15px 0;
+                    width: 200px;
+                }
+                    .sidebar-stadistic-item{
+                        background: none repeat scroll 0 0 #F6F4F4;
+                        border-radius: 5px 5px 5px 5px;
+                        height: 22px;
+                        margin: 10px 0;
+                    }
+                    .stadistic-fan{}
+                    .stadistic-recomendations{}
+                    .stadistic-comments{}
+                        .stadistic-num{ color: #646464;
+                            float: left;
+                            font-size: 20px;
+                            font-weight: bold;
+                            margin: 0 8px;
+                        }
+                        .stadistic-nom{ color: #646464; font-size: 14px; padding: 3px;}
+                .sidebar-menu-indicators{ float: left; margin: 10px 30px;}
+                    .menu-indicators{ color: #646464; margin: 6px 0;}
+                .sidebar-new-item{}
+                    .new-item-buttom{
+                        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+                        color: white;
+                        float: left;
+                        font-size: 14px;
+                        font-weight: bold;
+                        height: 36px;
+                        margin: 18px;
+                        padding: 10px 59px;
+                        width: 186px;
+                    }
         /* End Sidebar */
     /* End Content */
 
