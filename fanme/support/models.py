@@ -9,7 +9,7 @@ class Rubro(models.Model):
     def __unicode__(self):
         return self.nombre
 
-
+#eliminar
 class Topico(models.Model):
     nombre = models.CharField(max_length=20)
     descripcion = models.CharField(max_length=100)
@@ -23,7 +23,7 @@ class Topico(models.Model):
 
         return self.nombre
 
-
+#eliminar
 class Item(models.Model):
     nombre = models.CharField(max_length=20)
     descripcion = models.TextField(max_length=300)
@@ -55,7 +55,7 @@ class Localidad(models.Model):
     def __unicode__(self):
         return self.nombre
 
-
+#eliminar
 class Marca(models.Model):
     nombre = models.CharField(max_length=20)
 

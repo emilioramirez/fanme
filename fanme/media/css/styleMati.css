@@ -2,14 +2,6 @@
  * CSS - Stylistic CSS Styles
  */
 
-/* General */
-html{
-    font-size: 12px;
-}
-head{}
-body{}
-
-
 /* Begin div that contain the topics images */
 .drag-and-drop-topics {
         border: 2px solid #979797;
@@ -98,3 +90,12 @@ body{}
                 float: left;
         }
         /*End of images*/
+    .topic-choisses-form{}
+    .topic-choisses-form .submit{
+        float: right;
+        border: none;
+        padding: 8px 7px 8px;
+        color: white;
+        background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+    }
+
