@@ -12,90 +12,89 @@ body{}
 
 /* Begin div that contain the topics images */
 .drag-and-drop-topics {
-	border: 2px solid #979797;
-	text-align: center;
-	height: 256px;
-	margin: 24px 99px 28px;
-	width: 232px;
-	float:left;
-}
-	/*Begin images*/
-	.imagen-electrodomesticos{
-		background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px 0 transparent;
-		height: 25px;
-		width: 34px;
-		margin: 15px;
-		float: left;
-	}
-	.imagen-juegos{
-		background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -35px transparent;
-		height: 25px;
-		width: 34px;
-		margin: 15px;
-		float: left;
-	}
-	.imagen-cine{
-		background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -70px transparent;
-		height: 25px;
-		width: 34px;
-		margin: 15px;
-		float: left;
-	}
-	.imagen-ropaMujer{
-		background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -105px transparent;
-		height: 25px;
-		width: 34px;
-		margin: 15px;
-		float: left;
-	}
-	.imagen-hogar{
-		background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -140px transparent;
-		height: 25px;
-		width: 34px;
-		margin: 15px;
-		float: left;
-	}
-	.imagen-libros{
-		background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -175px transparent;
-		height: 25px;
-		width: 34px;
-		margin: 15px;
-		float: left;
-	}
-	.imagen-musica{
-		background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -210px transparent;
-		height: 25px;
-		width: 34px;
-		margin: 15px;
-		float: left;
-	}
-	.imagen-arte{
-		background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -245px transparent;
-		height: 25px;
-		width: 34px;
-		margin: 15px;
-		float: left;
-	}
-	.imagen-comida{
-		background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -280px transparent;
-		height: 25px;
-		width: 34px;
-		margin: 15px;
-		float: left;
-	}
-	.imagen-ropaHombre{
-		background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -315px transparent;
-		height: 25px;
-		width: 34px;
-		margin: 15px;
-		float: left;
-	}
-	.imagen-viajes{
-		background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -350px transparent;
-		height: 25px;
-		width: 34px;
-		margin: 15px;
-		float: left;
-	}
-	/*End of images*/
-
+        border: 2px solid #979797;
+        text-align: center;
+        height: 256px;
+        margin: 24px 99px 28px;
+        width: 232px;
+        float:left;
+    }
+        /*Begin images*/
+        .imagen-electrodomesticos{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px 0 transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-juegos{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -35px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-cine{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -70px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-ropaMujer{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -105px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-hogar{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -140px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-libros{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -175px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-musica{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -210px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-arte{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -245px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-comida{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -280px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-ropaHombre{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -315px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-viajes{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -350px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        /*End of images*/
