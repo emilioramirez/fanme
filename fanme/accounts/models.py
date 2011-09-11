@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from fanme.support.models import Rubro, Topico
+from fanme.support.models import Rubro
+from fanme.segmentation.models import Topico
 
 
 # Create your models here.

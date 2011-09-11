@@ -106,5 +106,9 @@ INSTALLED_APPS = (
     'fanme.accounts',
     'fanme.support',
     'fanme.dash',
+    'fanme.bussiness',
+    'fanme.segmentation',
+    'fanme.items',
+    'fanme.social',
     'south',
 )
