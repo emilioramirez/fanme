@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 from fanme.accounts.forms import UserRegisterForm, CompanyRegisterForm
 from fanme.accounts.forms import UserLogin
 from fanme.accounts.models import Persona, Empresa
-from fanme.support.models import Rubro, Topico
+from fanme.support.models import Rubro
+from fanme.segmentation.models import Topico
 
 
 def register_user(request):

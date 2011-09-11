@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from fanme.dash.forms import SearchBox
-from fanme.support.models import Item
+from fanme.items.models import Item
 from fanme.accounts.models import Persona
 
 
