@@ -9,29 +9,6 @@ class Rubro(models.Model):
     def __unicode__(self):
         return self.nombre
 
-#eliminar
-class Topico(models.Model):
-    nombre = models.CharField(max_length=20)
-    descripcion = models.CharField(max_length=100)
-    padre = models.ForeignKey('self', null=True, blank=True)
-
-    def __unicode__(self):
-        if (self.padre != None):
-            return '{0} | {1}'.format(self.padre.__unicode__(), self.nombre)
-        else:
-            return self.nombre
-
-        return self.nombre
-
-#eliminar
-class Item(models.Model):
-    nombre = models.CharField(max_length=20)
-    descripcion = models.TextField(max_length=300)
-    topico = models.ForeignKey(Topico)
-
-    def __unicode__(self):
-        return self.nombre
-
 
 class Pais(models.Model):
     nombre = models.CharField(max_length=20)
@@ -51,13 +28,6 @@ class Provincia(models.Model):
 class Localidad(models.Model):
     nombre = models.CharField(max_length=20)
     provincia = models.ForeignKey(Provincia)
-
-    def __unicode__(self):
-        return self.nombre
-
-#eliminar
-class Marca(models.Model):
-    nombre = models.CharField(max_length=20)
 
     def __unicode__(self):
         return self.nombre
