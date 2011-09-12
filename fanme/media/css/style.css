@@ -255,7 +255,7 @@ body{}
                     }
         /* End Sidebar */
         /* Begin Item */
-        .content-item{}
+        .content-item{ margin: 36px 0 0; }
             /* item-body */
                 .item-image-big{
                     border: 1px solid #9F9F9F;
@@ -265,18 +265,81 @@ body{}
                     float: left;
                 }
                 .item-descripcion-big{
+/*
                     border: 1px solid;
+*/
                     float: left;
                     height: 122px;
-                    margin: 30px 0 0;
+                    margin: 30px 0 0 0px;
                     text-align: justify;
                     width: 544px;
                 }
-                .item-image-all{}
+                .item-image-all{
+                    border: 1px solid #9B9B9B;
+                    float: left;
+                    height: 90px;
+                    margin: 30px 0 0 40px;
+                    width: 467px;
+                    background: none repeat scroll 0 0 #ECECEC;
+                }
+                    .image-list{ list-style: none outside none; }
+                        .image-little{
+                            border: 2px solid #9B9B9B;
+                            float: left;
+                            height: 64px;
+                            margin: 0 5px 0 0;
+                            width: 64px;
+                        }
             /* item-footer */
                 .item-details{ width: 244px; }
         .content-extra{}
+            .extra-tags{
+                border: 1px solid #9B9B9B;
+                height: 160px;
+                width: 261px;
+                float: left;
+            }
+            .extra-links{
+                border: 1px solid #9B9B9B;
+                float: left;
+                height: 160px;
+                margin: 0 0 0 30px;
+                width: 585px;
+            }
+            .extra-links p {
+                margin: 5px 0 0 10px;
+            }
         .content-comments{}
+                .list-comment{}
+                    .comment{
+                        background: none repeat scroll 0 0 #E3F1F1;
+                        border: 1px solid #9B9B9B;
+                        height: 155px;
+                        margin: 20px 0 0;
+                    }
+                        .comment-user-image{
+                            background: none repeat scroll 0 0 white;
+                            border: 2px solid #9B9B9B;
+                            float: left;
+                            height: 112px;
+                            margin: 23px 0 0 17px;
+                            width: 115px;
+                        }
+                        .comment-user{
+/*
+                            border: 1px solid;
+*/
+                            float: left;
+                            height: 112px;
+                            margin: 23px 0 0 20px;
+                            width: 570px;
+                        }
+                            .comment-username{}
+                            .comment-text{
+                                background: none repeat scroll 0 0 white;
+                                height: 60px;
+                            }
+                        .comment-options{}
         /* End Item */
     /* End Content */
 
