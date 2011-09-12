@@ -1,5 +1,8 @@
 {% extends "dash/base_dash.html" %}
 
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock %}
 
 {% block menuOptionsSelected %}
     <ul class="menu-options">
@@ -9,10 +12,56 @@
     </ul>
 {% endblock menuOptionsSelected %}
 
-
-{% block dashboard %}
-    <h1>Seccion Resultados en construccion</h1>
-{% endblock dashboard %}
-
-{% block sidebar %}
-{% endblock sidebar %}
+{% block content %}
+    {% block dashboard %}
+    <div class="result-result">
+        <div class="result-text">
+            <p>Resultados</p>
+        </div>
+        <div class="result-content">
+            <div class="result-header">
+                <div class="result-name">Productos</div>
+            </div>
+            {% for items in result %}
+                <div class="result-body">
+                    <div class="result-image"></div>
+                    <div class="result-descripcion">{{ items.razon_social|lower }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="result-content">
+            <div class="result-header">
+                <div class="result-name">Usuarios</div>
+            </div>
+            {% for items in result.all %}
+                <div class="result-body">
+                    <div class="result-image"></div>
+                    <div class="result-descripcion" {{ items.razon_social|lower }}></div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="result-content">
+            <div class="result-header">
+                <div class="result-name">Empresas</div>
+            </div>
+            {% for items in result.all %}
+                <div class="result-body">
+                    <div class="result-image"></div>
+                    <div class="result-descripcion" {{ items.razon_social|lower }}></div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="result-content">
+            <div class="result-header">
+                <div class="result-name">Tópicos</div>
+            </div>
+            {% for items in result.all %}
+                <div class="result-body">
+                    <div class="result-image"></div>
+                    <div class="result-descripcion" {{ items.razon_social|lower }}></div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock dashboard %}
+{% endblock %}
