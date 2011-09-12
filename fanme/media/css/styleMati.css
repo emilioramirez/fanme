@@ -98,4 +98,22 @@
         color: white;
         background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
     }
+.logbook_follow{
+    color: gray;
+    font-size: 20px;
+    margin: 91px 10px;
+    text-align: center;
+}
+sidebar-follow-user{}
+    .follow-buttom-mati{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 36px;
+        margin: 18px;
+        padding: 10px 50px;
+        width: 186px;
+    }
 

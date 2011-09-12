@@ -53,3 +53,10 @@ def empresa(request):
     searchbox = SearchBox()
     return render_to_response('dash/empresa.html', {'form_search': searchbox},
         context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def logbook_follow_user(request):
+    searchbox = SearchBox()
+    return render_to_response('dash/follow.html', {'form_search': searchbox},
+        context_instance=RequestContext(request))
