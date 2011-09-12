@@ -102,7 +102,7 @@ def thanks(request):
         {'form_login': form_login}, context_instance=RequestContext(request))
 
 
-def topicsChoisses(request):
+def my_topics(request):
     if request.method == 'POST':
         topicos = request.POST.getlist('listaSeleccionados')
         user = User.objects.get(id=request.user.id)
@@ -115,5 +115,5 @@ def topicsChoisses(request):
             return HttpResponseRedirect('/dash/dashboard/')
         except Persona.DoesNotExist:
                 return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('accounts/topicsChoisses.html',
+    return render_to_response('accounts/my_topics.html',
         context_instance=RequestContext(request))
