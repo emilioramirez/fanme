@@ -98,4 +98,69 @@
         color: white;
         background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
     }
-
+.logbook_follow{
+    color: gray;
+    font-size: 20px;
+    margin: 91px 10px;
+    text-align: center;
+}
+sidebar-follow-user{}
+    .follow-buttom-mati{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 36px;
+        margin: 18px;
+        padding: 10px 50px;
+        width: 186px;
+    }
+.result-result{
+   // margin-top: 20px;
+}
+    .result-text{
+        color: gray;
+        font-size: 20px;
+        margin-top: 50px;
+//        margin: 50px 10px;
+        text-align: left;
+    }
+    .result-content{
+        border: 1px solid #BBBBBB;
+        margin: 30px 0;
+        overflow: hidden;
+    }
+        .result-header{
+            background: #ECECEC;
+            border-bottom: 1px solid #BBBBBB;
+            height: 38px;
+            overflow: hidden;
+        }
+            .result-name{
+                color: #646464;
+                float: left;
+                font-size: 18px;
+                font-weight: bold;
+                margin: 9px 9px;
+            }
+        .result-body{}
+            .result-image{
+                border: 1px solid #9F9F9F;
+                height: 50px;
+                width: 50px;
+                margin: 15px 40px 0 20px;
+                float: left;
+            }
+            .result-descripcion{
+                float: left;
+    /*
+                border: 1px dashed;
+    */
+                float: left;
+                height: 50px;
+                margin: 30px -5px 0 -15px
+                overflow: hidden;
+                text-align: justify;
+                width: 340px;
+            }

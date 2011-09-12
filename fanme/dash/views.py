@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from fanme.dash.forms import SearchBox
 from fanme.items.models import Item
-from fanme.accounts.models import Persona
+from fanme.accounts.models import Persona, Empresa
 
 
 @login_required(login_url='/accounts/user/')
@@ -43,13 +43,30 @@ def topicos(request):
 
 @login_required(login_url='/accounts/user/')
 def results(request):
-    searchbox = SearchBox()
-    return render_to_response('dash/results.html', {'form_search': searchbox},
-        context_instance=RequestContext(request))
+    searchbox = SearchBox(request.POST)
+    if searchbox.is_valid():
+        search = searchbox.cleaned_data['string']
+        result = Empresa.objects.filter(razon_social__icontains=search)
+        for items in result:
+            print items.razon_social
+    return render_to_response('dash/results.html', {'form_search': searchbox,
+    'result': result},
+    context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def empresa(request):
     searchbox = SearchBox()
     return render_to_response('dash/empresa.html', {'form_search': searchbox},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def logbook_follow_user(request):
+    searchbox = SearchBox()
+    result = User.objects.filter(first_name__icontains="Mati")
+    for items in result:
+        print items.first_name
+    return render_to_response('dash/follow.html', {'form_search': searchbox,
+    'result': items},
         context_instance=RequestContext(request))
