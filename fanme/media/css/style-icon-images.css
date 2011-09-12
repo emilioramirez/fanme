@@ -31,6 +31,35 @@
     margin: 2px 19px;
     width: 34px;
 }
+.item-topico-ropa{
+    background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -105px transparent;
+    float: left;
+    height: 34px;
+    margin: 2px 19px;
+    width: 34px;
+}
+.item-topico-hogar{
+    background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -140px transparent;
+    float: left;
+    height: 34px;
+    margin: 2px 19px;
+    width: 34px;
+}
+.item-topico-musica{
+    background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px -210px transparent;
+    float: left;
+    height: 34px;
+    margin: 2px 19px;
+    width: 34px;
+}
+.item-topico-restaurantes{
+    background: url("/mymedia/images/iconos-topicos.png") repeat scroll 117px 208px transparent;
+    float: left;
+    height: 34px;
+    margin: 2px 19px;
+    width: 34px;
+}
+
 
 
 

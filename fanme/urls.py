@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('fanme.accounts.urls')),
     (r'^dash/', include('fanme.dash.urls')),
+    (r'^items/', include('fanme.items.urls')),
 )
 
 from django.conf import settings
