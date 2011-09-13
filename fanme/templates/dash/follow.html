@@ -1,0 +1,53 @@
+{% extends "dash/base_dash.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/style-icon-images.css" type="text/css" />
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+
+{% block dashboard %}
+    <div class="logbook_follow">
+        <p>Solicitar seguimiento de Usuario para poder visualizar la actividad del mismo.</p>
+    </div>
+
+{% endblock dashboard %}
+
+{% block sidebar %}
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">{{ result.first_name }} {{ result.last_name }}</div>
+            <!--<div class="user-name"></div>-->
+            <div class="user-stars">* * * * *</div>
+        </div>
+        <div class="sidebar-stadistic">
+            <div class="stadistic-fan sidebar-stadistic-item">
+                <div class="stadistic-num">##</div>
+                <div class="stadistic-nom">Fan</div>
+            </div>
+            <div class="stadistic-recomendations sidebar-stadistic-item">
+                <div class="stadistic-num">##</div>
+                <div class="stadistic-nom">Recomendaciones</div>
+            </div>
+            <div class="stadistic-comments sidebar-stadistic-item">
+                <div class="stadistic-num">##</div>
+                <div class="stadistic-nom">Comentarios</div>
+            </div>
+        </div>
+        <div class="sidebar-follow-user">
+            <a href="#"><div class="follow-buttom-mati">Seguir Usuario</div></a>
+            <!--<a href="#"><div class="follow-buttom">Seguir Usuario</div></a>-->
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}

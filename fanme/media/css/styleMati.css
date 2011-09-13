@@ -1,0 +1,170 @@
+/**
+ * CSS - Stylistic CSS Styles
+ */
+
+/* Begin div that contain the topics images */
+.drag-and-drop-topics {
+        border: 2px solid #979797;
+        text-align: center;
+        height: 256px;
+        margin: 24px 99px 28px;
+        width: 232px;
+        float:left;
+    }
+        /*Begin images*/
+        .imagen-electrodomesticos{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px 0 transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-juegos{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -35px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-cine{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -70px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-ropaMujer{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -105px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-hogar{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -140px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-libros{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -175px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-musica{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -210px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-arte{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -245px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-comida{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -280px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-ropaHombre{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -315px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-viajes{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -350px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        /*End of images*/
+    .topic-choisses-form{}
+    .topic-choisses-form .submit{
+        float: right;
+        border: none;
+        padding: 8px 7px 8px;
+        color: white;
+        background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+    }
+.logbook_follow{
+    color: gray;
+    font-size: 20px;
+    margin: 91px 10px;
+    text-align: center;
+}
+sidebar-follow-user{}
+    .follow-buttom-mati{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 36px;
+        margin: 18px;
+        padding: 10px 50px;
+        width: 186px;
+    }
+.result-result{
+   // margin-top: 20px;
+}
+    .result-text{
+        color: gray;
+        font-size: 20px;
+        margin-top: 50px;
+//        margin: 50px 10px;
+        text-align: left;
+    }
+    .result-content{
+        border: 1px solid #BBBBBB;
+        margin: 30px 0;
+        overflow: hidden;
+    }
+        .result-header{
+            background: #ECECEC;
+            border-bottom: 1px solid #BBBBBB;
+            height: 38px;
+            overflow: hidden;
+        }
+            .result-name{
+                color: #646464;
+                float: left;
+                font-size: 18px;
+                font-weight: bold;
+                margin: 9px 9px;
+            }
+        .result-body{}
+            .result-hit{ float: left; }
+                .result-image{
+                    border: 1px solid #9F9F9F;
+                    height: 50px;
+                    width: 50px;
+                    //margin: 15px 40px 15px 20px;
+                    margin: 15px 32px 15px 20px;
+                    float: left;
+                }
+                .result-descripcion{
+                    float: left;
+                    height: 50px;
+                    //margin: 15px -5px 0 -30px;
+                    margin: 15px -5px 19px -30px;
+                    overflow: hidden;
+                    text-align: justify;
+                    width: 150px;
+                }
+                .result-hit a{
+                    color: #646464;
+                    font-weight: bold;
+                    text-decoration: none;
+                }
