@@ -28,45 +28,69 @@
             <div class="result-header">
                 <div class="result-name">Productos ({{ items_result|length }})</div>
             </div>
-            {% for items in items_result %}
-                <div class="result-body">
-                    <div class="result-image"></div>
-                    <div class="result-descripcion"><a href="/items/item/{{ items.id }}">{{ items.nombre }}</a></div>
-                </div>
-            {% endfor %}
+            <div class="result-body">
+                {% for items in items_result %}
+                    <div class="result-hit">
+                        <a href="/items/item/{{ items.id }}">
+                            <div class="result-image"></div>
+                        </a>
+                        <a href="/items/item/{{ items.id }}">
+                            <div class="result-descripcion">{{ items.nombre }}</div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
         <div class="result-content">
             <div class="result-header">
                 <div class="result-name">Usuarios ({{ users_result|length }})</div>
             </div>
-            {% for users in users_result %}
-                <div class="result-body">
-                    <div class="result-image"></div>
-                    <div class="result-descripcion"><a href="/dash/follow/{{ users.id }}">{{ users.first_name }} {{ users.last_name }}</a></div>
-                </div>
-            {% endfor %}
+            <div class="result-body">
+                {% for users in users_result %}
+                    <div class="result-hit">
+                        <a href="/dash/follow/{{ users.id }}">
+                            <div class="result-image"></div>
+                        </a>
+                        <a href="/dash/follow/{{ users.id }}">
+                            <div class="result-descripcion">{{ users.first_name }} {{ users.last_name }}</div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
         <div class="result-content">
             <div class="result-header">
                 <div class="result-name">Empresas ({{ organizations_result|length }})</div>
             </div>
-            {% for organizations in organizations_result %}
-                <div class="result-body">
-                    <div class="result-image"></div>
-                    <div class="result-descripcion" >{{ organizations.razon_social }}</div>
-                </div>
-            {% endfor %}
+            <div class="result-body">
+                {% for organizations in organizations_result %}
+                    <div class="result-hit">
+                        <a href="/items/empresa/{{ organizations.id }}">
+                            <div class="result-image"></div>
+                        </a>
+                        <a href="/items/empresa/{{ organizations.id }}">
+                            <div class="result-descripcion" >{{ organizations.razon_social }}</a></div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
         <div class="result-content">
             <div class="result-header">
                 <div class="result-name">Tópicos ({{ topics_result|length }})</div>
             </div>
-            {% for topics in topics_result %}
-                <div class="result-body">
-                    <div class="result-image"></div>
-                    <div class="result-descripcion">{{ topics.nombre }}</div>
-                </div>
-            {% endfor %}
+            <div class="result-body">
+                {% for topics in topics_result %}
+                    <div class="result-hit">
+                        <a href="#">
+                            <div class="result-image"></div>
+                        </a>
+                        <a href="#">
+                            <div class="result-descripcion"><a href="#">{{ topics.nombre }}</a></div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
     {% endblock dashboard %}
