@@ -51,10 +51,9 @@ def results(request):
         search = searchbox.cleaned_data['string']
         items_result = Item.objects.filter(nombre__icontains=search)
         users_result = User.objects.filter(
-            Q(first_name__icontains=search) | Q(last_name__icontains=search)
-        )
+            Q(first_name__icontains=search) | Q(last_name__icontains=search))
         organizations_result = Empresa.objects.filter(
-        razon_social__icontains=search)
+            razon_social__icontains=search)
         topics_result = Topico.objects.filter(nombre__icontains=search)
     else:
         return render_to_response('dash/results.html',
