@@ -68,6 +68,12 @@ body{}
                     color: #BBBBBB;
                     padding-left: 10px;
                 }
+                .header-search-box ul.errorlist {
+                    color: red;
+                    font-size: 10px;
+                    list-style: none outside none;
+                    margin: 0 0 -12px;
+                }
             .header-menu-options{ float: left; }
                 .menu-options{ list-style: none;}
                 .menu-options li{ float: left; height: 22px; width: 86px; padding: 7px 0 0 0; text-align: center;}
