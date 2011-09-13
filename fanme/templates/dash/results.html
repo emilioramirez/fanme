@@ -22,10 +22,10 @@
             <div class="result-header">
                 <div class="result-name">Productos</div>
             </div>
-            {% for items in result %}
+            {% for items in items_result %}
                 <div class="result-body">
                     <div class="result-image"></div>
-                    <div class="result-descripcion">{{ items.razon_social|lower }}</div>
+                    <div class="result-descripcion"><a href="/items/item/{{ items.id }}">{{ items.nombre }}</a></div>
                 </div>
             {% endfor %}
         </div>
@@ -33,10 +33,10 @@
             <div class="result-header">
                 <div class="result-name">Usuarios</div>
             </div>
-            {% for items in result.all %}
+            {% for users in users_result %}
                 <div class="result-body">
                     <div class="result-image"></div>
-                    <div class="result-descripcion" {{ items.razon_social|lower }}></div>
+                    <div class="result-descripcion"><a href="/follow/{{ users.id }}">{{ users.first_name }} {{ users.last_name }}</a></div>
                 </div>
             {% endfor %}
         </div>
@@ -44,10 +44,10 @@
             <div class="result-header">
                 <div class="result-name">Empresas</div>
             </div>
-            {% for items in result.all %}
+            {% for organizations in organizations_result %}
                 <div class="result-body">
                     <div class="result-image"></div>
-                    <div class="result-descripcion" {{ items.razon_social|lower }}></div>
+                    <div class="result-descripcion" >{{ organizations.razon_social }}</div>
                 </div>
             {% endfor %}
         </div>
@@ -55,10 +55,10 @@
             <div class="result-header">
                 <div class="result-name">Tópicos</div>
             </div>
-            {% for items in result.all %}
+            {% for topics in topics_result %}
                 <div class="result-body">
                     <div class="result-image"></div>
-                    <div class="result-descripcion" {{ items.razon_social|lower }}></div>
+                    <div class="result-descripcion">{{ topics.nombre }}</div>
                 </div>
             {% endfor %}
         </div>

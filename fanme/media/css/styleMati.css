@@ -149,18 +149,16 @@ sidebar-follow-user{}
                 border: 1px solid #9F9F9F;
                 height: 50px;
                 width: 50px;
-                margin: 15px 40px 0 20px;
+                //margin: 15px 40px 15px 20px;
+                margin: 15px 32px 15px 20px;
                 float: left;
             }
             .result-descripcion{
                 float: left;
-    /*
-                border: 1px dashed;
-    */
-                float: left;
                 height: 50px;
-                margin: 30px -5px 0 -15px
+                //margin: 15px -5px 0 -30px;
+                margin: 15px -5px 19px -30px;
                 overflow: hidden;
                 text-align: justify;
-                width: 340px;
+                width: 150px;
             }
