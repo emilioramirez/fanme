@@ -9,5 +9,5 @@ urlpatterns = patterns('',
     (r'^topicos/', views.topicos),
     (r'^results/', views.results),
     (r'^empresa/', views.empresa),
-    (r'^follow/', views.logbook_follow_user),
+    (r'^follow/(?P<user_id>\d+)$', views.logbook_follow_user),
 )

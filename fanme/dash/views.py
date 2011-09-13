@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
@@ -7,6 +8,9 @@ from django.contrib.auth.decorators import login_required
 from fanme.dash.forms import SearchBox
 from fanme.items.models import Item
 from fanme.accounts.models import Persona, Empresa
+from fanme.segmentation.models import Topico
+from django.db.models import Q
+
 
 
 @login_required(login_url='/accounts/user/')
@@ -46,11 +50,18 @@ def results(request):
     searchbox = SearchBox(request.POST)
     if searchbox.is_valid():
         search = searchbox.cleaned_data['string']
-        result = Empresa.objects.filter(razon_social__icontains=search)
-        for items in result:
-            print items.razon_social
+        items_result = Item.objects.filter(nombre__icontains=search)
+        users_result = User.objects.filter(first_name__icontains=search)
+#        users_result = User.objects.get(
+#             Q(first_name__icontains=search)
+#              | Q(last_name__icontains=search))
+        organizations_result = Empresa.objects.filter(
+            razon_social__icontains=search)
+        topics_result = Topico.objects.filter(nombre__icontains=search)
     return render_to_response('dash/results.html', {'form_search': searchbox,
-    'result': result},
+    'items_result': items_result, 'users_result': users_result,
+    'organizations_result': organizations_result,
+    'topics_result': topics_result},
     context_instance=RequestContext(request))
 
 
@@ -62,11 +73,12 @@ def empresa(request):
 
 
 @login_required(login_url='/accounts/user/')
-def logbook_follow_user(request):
+def logbook_follow_user(request, user_id):
     searchbox = SearchBox()
-    result = User.objects.filter(first_name__icontains="Mati")
-    for items in result:
-        print items.first_name
+    try:
+        user = User.objects.get(pk=user_id)
+    except Item.DoesNotExist:
+        raise Http404
     return render_to_response('dash/follow.html', {'form_search': searchbox,
-    'result': items},
+    'result': user},
         context_instance=RequestContext(request))
