@@ -145,20 +145,26 @@ sidebar-follow-user{}
                 margin: 9px 9px;
             }
         .result-body{}
-            .result-image{
-                border: 1px solid #9F9F9F;
-                height: 50px;
-                width: 50px;
-                //margin: 15px 40px 15px 20px;
-                margin: 15px 32px 15px 20px;
-                float: left;
-            }
-            .result-descripcion{
-                float: left;
-                height: 50px;
-                //margin: 15px -5px 0 -30px;
-                margin: 15px -5px 19px -30px;
-                overflow: hidden;
-                text-align: justify;
-                width: 150px;
-            }
+            .result-hit{ float: left; }
+                .result-image{
+                    border: 1px solid #9F9F9F;
+                    height: 50px;
+                    width: 50px;
+                    //margin: 15px 40px 15px 20px;
+                    margin: 15px 32px 15px 20px;
+                    float: left;
+                }
+                .result-descripcion{
+                    float: left;
+                    height: 50px;
+                    //margin: 15px -5px 0 -30px;
+                    margin: 15px -5px 19px -30px;
+                    overflow: hidden;
+                    text-align: justify;
+                    width: 150px;
+                }
+                .result-hit a{
+                    color: #646464;
+                    font-weight: bold;
+                    text-decoration: none;
+                }
