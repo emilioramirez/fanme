@@ -15,18 +15,18 @@
 {% block content %}
     {% block dashboard %}
     <div class="result-result">
-        {% if error_busqueda %}
-            <div class="result-text">
-                <p>Debe ingresar una palabra</p>
-            </div>
-        {% else %}
-            <div class="result-text">
-                    <p>Resultados</p>
-            </div>
-        {% endif %}
+        <div class="result-text">
+            {% with userlen=users_result|length %}
+            {% with orglen=organizations_result|length  %}
+            {% with toplen=topics_result|length %}
+                <p>Resultados ({{ items_result|length|add:userlen|add:orglen|add:toplen }})</p>
+            {% endwith %}
+            {% endwith %}
+            {% endwith %}
+        </div>
         <div class="result-content">
             <div class="result-header">
-                <div class="result-name">Productos</div>
+                <div class="result-name">Productos ({{ items_result|length }})</div>
             </div>
             {% for items in items_result %}
                 <div class="result-body">
@@ -37,7 +37,7 @@
         </div>
         <div class="result-content">
             <div class="result-header">
-                <div class="result-name">Usuarios</div>
+                <div class="result-name">Usuarios ({{ users_result|length }})</div>
             </div>
             {% for users in users_result %}
                 <div class="result-body">
@@ -48,7 +48,7 @@
         </div>
         <div class="result-content">
             <div class="result-header">
-                <div class="result-name">Empresas</div>
+                <div class="result-name">Empresas ({{ organizations_result|length }})</div>
             </div>
             {% for organizations in organizations_result %}
                 <div class="result-body">
@@ -59,7 +59,7 @@
         </div>
         <div class="result-content">
             <div class="result-header">
-                <div class="result-name">Tópicos</div>
+                <div class="result-name">Tópicos ({{ topics_result|length }})</div>
             </div>
             {% for topics in topics_result %}
                 <div class="result-body">

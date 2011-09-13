@@ -12,7 +12,6 @@ from fanme.segmentation.models import Topico
 from django.db.models import Q
 
 
-
 @login_required(login_url='/accounts/user/')
 def dashboard(request):
     searchbox = SearchBox()
@@ -51,16 +50,16 @@ def results(request):
     if searchbox.is_valid():
         search = searchbox.cleaned_data['string']
         items_result = Item.objects.filter(nombre__icontains=search)
-        users_result = User.objects.filter(first_name__icontains=search)
-        #users_result = User.objects.get(
-            #Q(first_name__icontains=search)
-            #| Q(last_name__icontains=search))
+        users_result = User.objects.filter(
+            Q(first_name__icontains=search) | Q(last_name__icontains=search)
+        )
         organizations_result = Empresa.objects.filter(
         razon_social__icontains=search)
         topics_result = Topico.objects.filter(nombre__icontains=search)
     else:
-        return render_to_response('dash/results.html', {'form_search': searchbox},
-        context_instance=RequestContext(request))
+        return render_to_response('dash/results.html',
+            {'form_search': searchbox},
+            context_instance=RequestContext(request))
     return render_to_response('dash/results.html',
         {'form_search': searchbox,
             'items_result': items_result,
