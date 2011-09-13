@@ -52,17 +52,22 @@ def results(request):
         search = searchbox.cleaned_data['string']
         items_result = Item.objects.filter(nombre__icontains=search)
         users_result = User.objects.filter(first_name__icontains=search)
-#        users_result = User.objects.get(
-#             Q(first_name__icontains=search)
-#              | Q(last_name__icontains=search))
+        #users_result = User.objects.get(
+            #Q(first_name__icontains=search)
+            #| Q(last_name__icontains=search))
         organizations_result = Empresa.objects.filter(
-            razon_social__icontains=search)
+        razon_social__icontains=search)
         topics_result = Topico.objects.filter(nombre__icontains=search)
-    return render_to_response('dash/results.html', {'form_search': searchbox,
-    'items_result': items_result, 'users_result': users_result,
-    'organizations_result': organizations_result,
-    'topics_result': topics_result},
-    context_instance=RequestContext(request))
+    else:
+        return render_to_response('dash/results.html', {'form_search': searchbox},
+        context_instance=RequestContext(request))
+    return render_to_response('dash/results.html',
+        {'form_search': searchbox,
+            'items_result': items_result,
+            'users_result': users_result,
+            'organizations_result': organizations_result,
+            'topics_result': topics_result},
+        context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
@@ -77,7 +82,7 @@ def logbook_follow_user(request, user_id):
     searchbox = SearchBox()
     try:
         user = User.objects.get(pk=user_id)
-    except Item.DoesNotExist:
+    except User.DoesNotExist:
         raise Http404
     return render_to_response('dash/follow.html', {'form_search': searchbox,
     'result': user},

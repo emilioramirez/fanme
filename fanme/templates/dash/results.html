@@ -15,9 +15,15 @@
 {% block content %}
     {% block dashboard %}
     <div class="result-result">
-        <div class="result-text">
-            <p>Resultados</p>
-        </div>
+        {% if error_busqueda %}
+            <div class="result-text">
+                <p>Debe ingresar una palabra</p>
+            </div>
+        {% else %}
+            <div class="result-text">
+                    <p>Resultados</p>
+            </div>
+        {% endif %}
         <div class="result-content">
             <div class="result-header">
                 <div class="result-name">Productos</div>
@@ -36,7 +42,7 @@
             {% for users in users_result %}
                 <div class="result-body">
                     <div class="result-image"></div>
-                    <div class="result-descripcion"><a href="/follow/{{ users.id }}">{{ users.first_name }} {{ users.last_name }}</a></div>
+                    <div class="result-descripcion"><a href="/dash/follow/{{ users.id }}">{{ users.first_name }} {{ users.last_name }}</a></div>
                 </div>
             {% endfor %}
         </div>
