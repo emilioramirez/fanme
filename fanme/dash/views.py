@@ -49,12 +49,17 @@ def results(request):
     searchbox = SearchBox(request.POST)
     if searchbox.is_valid():
         search = searchbox.cleaned_data['string']
+        user = User.objects.get(id=request.user.id)
         items_result = Item.objects.filter(nombre__icontains=search)
-        users_result = User.objects.filter(
+        users_result_intermediate = User.objects.filter(
             Q(first_name__icontains=search) | Q(last_name__icontains=search))
         organizations_result = Empresa.objects.filter(
-            razon_social__icontains=search)
+        razon_social__icontains=search)
         topics_result = Topico.objects.filter(nombre__icontains=search)
+        users_result = []
+        for users in users_result_intermediate:
+            if user.id != users.id:
+                users_result.append(users)
     else:
         return render_to_response('dash/results.html',
             {'form_search': searchbox},
@@ -64,7 +69,8 @@ def results(request):
             'items_result': items_result,
             'users_result': users_result,
             'organizations_result': organizations_result,
-            'topics_result': topics_result},
+            'topics_result': topics_result,
+            'user': user},
         context_instance=RequestContext(request))
 
 

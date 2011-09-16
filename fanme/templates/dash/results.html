@@ -47,14 +47,14 @@
             </div>
             <div class="result-body">
                 {% for users in users_result %}
-                    <div class="result-hit">
-                        <a href="/dash/follow/{{ users.id }}">
-                            <div class="result-image"></div>
-                        </a>
-                        <a href="/dash/follow/{{ users.id }}">
-                            <div class="result-descripcion">{{ users.first_name }} {{ users.last_name }}</div>
-                        </a>
-                    </div>
+                        <div class="result-hit">
+                            <a href="/dash/follow/{{ users.id }}">
+                                <div class="result-image"></div>
+                            </a>
+                            <a href="/dash/follow/{{ users.id }}">
+                                <div class="result-descripcion">{{ users.first_name }} {{ users.last_name }}</div>
+                            </a>
+                        </div>
                 {% endfor %}
             </div>
         </div>
