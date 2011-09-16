@@ -6,4 +6,5 @@ urlpatterns = patterns('',
     #(r'^user/', views.register_user),
     (r'^item/(?P<item_id>\d+)$', views.item),
     (r'^empresa/(?P<empresa_id>\d+)$', views.empresa),
+    (r'^register_item/', views.register_item),
 )

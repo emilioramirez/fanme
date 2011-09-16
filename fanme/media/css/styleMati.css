@@ -175,10 +175,9 @@ sidebar-follow-user{}
         float: left;
         font-size: 14px;
         font-weight: bold;
-        height: 36px;
+        height: 15px;
         padding: 8px 5px;
-        width: 300px;
-        background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+        background: url("/mymedia/images/consulta-empresa.png") no-repeat scroll 0 0 transparent;
     }
     .items-empresa{}
         .items-content{
