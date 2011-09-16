@@ -169,15 +169,26 @@ sidebar-follow-user{}
                     text-decoration: none;
                 }
 /*Begin items-empresa*/
-.items-empresa{}
-    .items-content{
-        border: 1px solid #9B9B9B;
-        height: 160px;
-        width: 878px;
+.empresa{}
+    .empresa-consulta {
+        color: white;
         float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 36px;
+        padding: 8px 5px;
+        width: 300px;
+        background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
     }
-    .items-header-text{
-        font-size: 15px;
-        margin: 10px;
-    }
-    .items-list{}
+    .items-empresa{}
+        .items-content{
+            border: 1px solid #9B9B9B;
+            height: 160px;
+            width: 878px;
+            float: left;
+        }
+        .items-header-text{
+            font-size: 15px;
+            margin: 10px;
+        }
+        .items-list{}
