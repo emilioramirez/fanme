@@ -17,8 +17,8 @@ def item(request, item_id):
         raise Http404
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item}, context_instance=RequestContext(request))
-        
- 
+
+
 @login_required(login_url='/accounts/user/')
 def empresa(request, empresa_id):
     searchbox = SearchBox()
@@ -28,3 +28,11 @@ def empresa(request, empresa_id):
         raise Http404
     return render_to_response('items/empresa.html', {'form_search': searchbox,
         'empresa': empresa}, context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def register_item(request):
+    searchbox = SearchBox()
+    return render_to_response('items/register_item.html',
+        {'form_search': searchbox},
+        context_instance=RequestContext(request))
