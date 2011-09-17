@@ -24,7 +24,7 @@
             <div class="clear"></div>
         </div>
         <div class="item-body">
-            <div class="item-image-big"></div>
+            <!--<div class="item-image-big"></div>
             <div class="item-descripcion-big"></div>
             <div class="item-image-all">
                 <ul class="image-list">
@@ -33,35 +33,16 @@
                     <li class="image-little"></li>
                 </ul>
             </div>
-            <div class="clear"></div>
-        </div>
-        <div class="item-footer">
-            <div class="item-details">
-                <div class="stadistic-fan sidebar-stadistic-item">
-                    <div class="stadistic-num">##</div>
-                    <div class="stadistic-nom">Fan</div>
-                </div>
-                <div class="stadistic-fan sidebar-stadistic-item">
-                    <div class="stadistic-num">##</div>
-                    <div class="stadistic-nom">Recomendaciones</div>
-                </div>
+            <div class="clear"></div>-->
+            <div class="item-registration">
+                <form action="/items/register_item/" method="post">{% csrf_token %}
+                    {{ form_register.as_p }}
+                    <p>
+                        <input id="password-clear" type="text" value="Password" autocomplete="off" class="accounts-register-form-field"/>
+                    </p>
+                    <input type="submit" value="Crear Item" class="submit"/>
+                </form>
             </div>
-            <div class="clear"></div>
         </div>
     </div>
 {% endblock item %}
-
-{% block extra %}
-    <div class="extra-tags"></div>
-    <div class="extra-links">
-        <p>Lo podés conseguir en:</p>
-        <div class="item-image-all">
-            <ul class="image-list">
-                <li class="image-little"></li>
-                <li class="image-little"></li>
-                <li class="image-little"></li>
-            </ul>
-        </div>
-    </div>
-    <div class="clear"></div>
-{% endblock extra %}
