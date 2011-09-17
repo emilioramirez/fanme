@@ -191,3 +191,12 @@ sidebar-follow-user{}
             margin: 10px;
         }
         .items-list{}
+/*Begin item registration*/
+.item-registration{}
+    .item-register-name-field {
+                border: 1px solid #BBBBBB;
+                color: #BBBBBB;
+                height: 26px;
+                width: 100%;
+                padding-left: 20px;
+            }
