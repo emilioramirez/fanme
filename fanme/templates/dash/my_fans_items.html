@@ -22,7 +22,7 @@
         {% endfor %}
     </div>
     <div class="dashboard-list-items">
-        {% for item in profile.items.all %}
+        {% for item in user.persona.items.all %}
             <div class="item-content">
                 <div class="item-header">
                     <div class="item-topico-{{ item.topico|unicode|split:" "|first|lower }}"></div>
@@ -61,7 +61,7 @@
         <div class="sidebar-stadistic">
             <a href="/dash/fans/">
                 <div class="stadistic-fan sidebar-stadistic-item">
-                    <div class="stadistic-num">{{ profile.items.count }}</div>
+                    <div class="stadistic-num">{{ user.persona.items.count }}</div>
                     <div class="stadistic-nom">Fan</div>
                 </div>
             </a>

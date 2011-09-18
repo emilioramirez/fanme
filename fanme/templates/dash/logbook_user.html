@@ -17,7 +17,7 @@
 
 {% block dashboard %}
     <div class="logbook_follow">
-        <p>Solicitar seguimiento de Usuario para poder visualizar la actividad del mismo.</p>
+        <p>Enhorabuena, ya estas siguiendo a este usuario.</p>
     </div>
 
 {% endblock dashboard %}
@@ -25,13 +25,13 @@
 {% block sidebar %}
     <div class="sidebar-content">
         <div class="sidebar-user">
-            <div class="user-name">{{ user_to_follow.first_name }} {{ user_to_follow.last_name }}</div>
+            <div class="user-name">{{ user_logbook.first_name }} {{ user_logbook.last_name }}</div>
             <!--<div class="user-name"></div>-->
             <div class="user-stars">* * * * *</div>
         </div>
         <div class="sidebar-stadistic">
             <div class="stadistic-fan sidebar-stadistic-item">
-                <div class="stadistic-num">{{ user_to_follow.persona.items.count }}</div>
+                <div class="stadistic-num">{{ user_logbook.persona.items.count }}</div>
                 <div class="stadistic-nom">Fan</div>
             </div>
             <div class="stadistic-recomendations sidebar-stadistic-item">
@@ -42,10 +42,6 @@
                 <div class="stadistic-num">##</div>
                 <div class="stadistic-nom">Comentarios</div>
             </div>
-        </div>
-        <div class="sidebar-follow-user">
-            <a href="/dash/follow/request/{{ user_to_follow.id }}"><div class="follow-buttom-mati">Seguir Usuario</div></a>
-            <!--<a href="#"><div class="follow-buttom">Seguir Usuario</div></a>-->
         </div>
         <div class="clear"></div>
     </div>

@@ -30,6 +30,8 @@ class Persona(AbstractProfile):
     fecha_nacimiento = models.DateField()
     sexo = models.CharField(max_length=20)
     items = models.ManyToManyField(Item, null=True, blank=True)
+    following = models.ManyToManyField(User, null=True, blank=True,
+        related_name='followers')
 
 
 class Empresa(AbstractProfile):
