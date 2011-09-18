@@ -261,6 +261,12 @@ body{}
                     }
         /* End Sidebar */
         /* Begin Item */
+        .item-messages{}
+            .message{
+                color: #E64224;
+                font-size: 23px;
+                font-weight: bold;
+            }
         .content-item{ margin: 36px 0 0; }
             /* item-body */
                 .item-image-big{
@@ -347,6 +353,10 @@ body{}
                             }
                         .comment-options{}
         /* End Item */
+        /* Begin My Fans Items */
+        .my-fans-items{}
+            .fan-item{}
+        /* End My Fans Items */
     /* End Content */
 
     /* Begin Footer */

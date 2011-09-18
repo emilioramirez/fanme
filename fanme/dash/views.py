@@ -111,9 +111,25 @@ def empresa(request):
 def logbook_follow_user(request, user_id):
     searchbox = SearchBox()
     try:
-        user = User.objects.get(pk=user_id)
-    except User.DoesNotExist:
-        raise Http404
+        user = User.objects.get(id=user_id)
+        profile = user.persona
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/follow.html', {'form_search': searchbox,
-    'result': user},
+    'result': user, 'profile': profile},
         context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def my_fans_items(request):
+    searchbox = SearchBox()
+    messages = []
+    try:
+        user = User.objects.get(id=request.user.id)
+        profile = user.persona
+        messages.append("Sos fan de")
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('dash/my_fans_items.html',
+        {'form_search': searchbox, 'user': user, 'profile': profile,
+        'messages': messages}, context_instance=RequestContext(request))
