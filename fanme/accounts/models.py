@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from fanme.support.models import Rubro
 from fanme.segmentation.models import Topico
+from fanme.items.models import Item
 
 
 # Create your models here.
@@ -28,6 +29,7 @@ class AbstractProfile(models.Model):
 class Persona(AbstractProfile):
     fecha_nacimiento = models.DateField()
     sexo = models.CharField(max_length=20)
+    items = models.ManyToManyField(Item, null=True, blank=True)
 
 
 class Empresa(AbstractProfile):
