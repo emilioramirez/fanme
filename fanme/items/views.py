@@ -66,8 +66,8 @@ def fan(request, item_id):
     messages = []
     try:
         item = Item.objects.get(pk=item_id)
-        user = User.objects.get(pk=request.user.id)
-        persona = user.persona
+#        user = User.objects.get(pk=request.user.id)
+        persona = request.user.persona
         is_fan = persona.items.filter(nombre=item.nombre)
         if is_fan:
             messages.append("Ya sos fan de {0}".format(item.nombre))

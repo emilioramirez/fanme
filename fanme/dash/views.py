@@ -16,17 +16,16 @@ from django.db.models import Q
 def dashboard(request):
     searchbox = SearchBox()
     try:
-        user = User.objects.get(id=request.user.id)
-        profile = user.persona
+        my_profile = request.user.persona
         items_by_topics = []
         item_topic = {}
-        for topic in profile.topicos.all():
+        for topic in my_profile.topicos.all():
             item_topic[topic] = Item.objects.filter(topico__exact=topic)
             items_by_topics.append(Item.objects.filter(topico__exact=topic))
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/dashboard.html', {'form_search': searchbox,
-        'profile': profile, 'items': items_by_topics, 'example': item_topic},
+        'items': items_by_topics, 'example': item_topic},
         context_instance=RequestContext(request))
 
 
@@ -108,15 +107,48 @@ def empresa(request):
 
 
 @login_required(login_url='/accounts/user/')
-def logbook_follow_user(request, user_id):
+def follow_user(request, user_id):
     searchbox = SearchBox()
     try:
-        user = User.objects.get(id=user_id)
-        profile = user.persona
+        user_to_follow = User.objects.get(id=user_id)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/follow.html', {'form_search': searchbox,
-    'result': user, 'profile': profile},
+        'user_to_follow': user_to_follow},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def follow_request(request, user_id):
+    try:
+        user_to_follow = User.objects.get(id=user_id)
+        my_profile = request.user.persona
+        i_follow = my_profile.following.filter(id=user_id)
+        if i_follow:
+            return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
+        else:
+            my_profile.following.add(user_to_follow)
+            return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
+    except User.DoesNotExist:
+        raise Http404
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa.html/')
+    return render_to_response('dash/dashboad.html',
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def logbook_user(request, user_id):
+    searchbox = SearchBox()
+    try:
+        user_logbook = User.objects.get(id=user_id)
+        my_profile = request.user.persona
+        if not my_profile.following.filter(id=user_logbook.id):
+            return HttpResponseRedirect('/dash/follow/{0}'.format(user_id))
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('dash/logbook_user.html',
+        {'form_search': searchbox, 'user_logbook': user_logbook},
         context_instance=RequestContext(request))
 
 
@@ -125,11 +157,10 @@ def my_fans_items(request):
     searchbox = SearchBox()
     messages = []
     try:
-        user = User.objects.get(id=request.user.id)
-        profile = user.persona
+        request.user.persona
         messages.append("Sos fan de")
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+            return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/my_fans_items.html',
-        {'form_search': searchbox, 'user': user, 'profile': profile,
-        'messages': messages}, context_instance=RequestContext(request))
+        {'form_search': searchbox, 'messages': messages},
+        context_instance=RequestContext(request))
