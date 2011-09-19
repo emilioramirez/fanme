@@ -51,11 +51,14 @@ def register_item(request):
             nombre = form_register.cleaned_data['nombre']
             descripcion = form_register.cleaned_data['descripcion']
             topico = form_register.cleaned_data['topico']
+            marca = form_register.cleaned_data['marca']
             item = Item()
             item.nombre = nombre
             item.descripcion = descripcion
             item.topico = Topico.objects.get(nombre=topico)
+#            item.marca = Marca.objects.get(nombre=marca)
             item.save()
+            return HttpResponseRedirect('/dash/dashboard/')
     else:
         form_register = ItemRegisterForm()
     return render_to_response('items/register_item.html',
