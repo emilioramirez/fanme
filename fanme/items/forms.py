@@ -8,29 +8,32 @@ from fanme.segmentation.models import Topico
 class ItemRegisterForm(forms.Form):
     nombre = forms.CharField(
         label='Nombre',
-        initial='Nombre',
+        initial='',
         required=True,
         error_messages={'required': 'Es necesario un Nombre'},
-        widget=forms.TextInput(attrs={'class': 'item-register-name-field'}))
+        widget=forms.TextInput(attrs={'class': 'item-registration-name-field'}))
     descripcion = forms.CharField(
-        label='Descripción',
-        initial='Descripción',
+        label='Descripción (máx. 300 caracteres)',
+        initial='',
         required=True,
         error_messages={'required': 'Es necesario una descripción'},
-        widget=forms.TextInput(attrs={'class': 'item-register-name-field'}))
+        widget=forms.Textarea
+            (attrs={'class': 'item-registration-description-field',
+                'cols': 80, 'rows': 4}))
     topico = forms.ModelChoiceField(
-        label='',
+        label='Tópico',
         empty_label="Tópico",
         queryset=Topico.objects.all(),
         error_messages={'required': 'Es necesario un Tópico',
             'invalid_choice': 'Opcion no valida'},
-        widget=forms.Select(attrs={'class': 'accounts-register-form-field'}))
-#    marca = forms.ModelChoiceField(
-#        label='',
-#        empty_label="Marca",
-#        queryset=Marca.objects.all(),
-#        error_messages={'invalid_choice': 'Opcion no valida'},
-#        widget=forms.Select(attrs={'class': 'accounts-register-form-field'}))
+        widget=forms.Select(attrs={'class': 'item-registration-combo-field'}))
+    marca = forms.ModelChoiceField(
+        label='Marca',
+        empty_label="Marca",
+        queryset=Marca.objects.all(),
+        required=False,
+        error_messages={'invalid_choice': 'Opcion no valida'},
+        widget=forms.Select(attrs={'class': 'item-registration-combo-field'}))
 
     def clean_nombre(self):
         data = self.cleaned_data['nombre']
