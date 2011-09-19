@@ -18,6 +18,7 @@ class AbstractProfile(models.Model):
     #localizacion = models.OneToOneField(Localizacion)
     #imagen = models.ImageField(blank=True)
     topicos = models.ManyToManyField(Topico, null=True, blank=True)
+    is_first_time = models.BooleanField()
 
     class Meta:
         abstract = True

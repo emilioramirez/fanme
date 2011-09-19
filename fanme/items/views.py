@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
 from fanme.dash.forms import SearchBox
-from fanme.items.models import Item, Comentario
+from fanme.items.models import Item, Comentario, Marca
 from fanme.items.forms import ItemRegisterForm, CommentForm
 from fanme.accounts.models import Empresa, Persona
 from fanme.segmentation.models import Topico

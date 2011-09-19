@@ -1,3 +1,4 @@
+# -*- coding: utf-8 *-*
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
@@ -52,7 +53,7 @@ class UserRegisterForm(forms.Form):
         initial='Fecha de Nacimiento',
         input_formats=['%d/%m/%Y'],
         error_messages={'required': 'Es necesaria su Fecha de Nacimiento',
-            'invalid': 'Fecha invalida, ingrese de la forma Día/Mes/Año'},
+            'invalid': u'Fecha invalida, ingrese de la forma Día/Mes/Año'},
         widget=forms.DateInput(attrs={'class': 'accounts-register-form-field'}))
     sex = forms.ChoiceField(
         label='',
