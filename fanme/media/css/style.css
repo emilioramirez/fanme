@@ -57,8 +57,9 @@ body{}
                     margin: 1px 30px 0 0;
                     width: 50px;
                 }
-                .logged-user-menu{float: left; margin: 19px 10px 0 0;}
+                .logged-user-menu{float: left; margin: 19px 10px 0 0; }
                     .logged-user-menu a{ text-decoration: none; color: #4f4f4f; font-weight: normal;}
+                    .logged-user-menu a:hover { text-decoration: underline; }
             .header-search-box{ float: left; margin: 0px 0px 0px 35px;}
                 .header-seach-form-field{
                     background: url("/mymedia/images/header-searchbox-lupa.png") no-repeat 240px 6px white;
@@ -85,6 +86,16 @@ body{}
                     li.menu-item-selected a{ color: white;}
                     .menu-item{}
                     li.menu-item a { color: #4F4F4F; }
+                    li.menu-item:hover{
+                        background: #49ABD5;
+                        border-radius: 8px;
+                        box-shadow: 0px 0px 3px;
+                    }
+                    li.menu-item a:hover {
+                        background: #49ABD5;
+                        border-radius: 8px;
+                        color: white;
+                    }
             /* End User Logged */
 
         /* End for Header Register */
@@ -173,6 +184,7 @@ body{}
                             margin: 9px 0px;
                         }
                         .item-nombre a {text-decoration: none; color: #646464;}
+                        .item-nombre a:hover { text-shadow: 1px 4px 4px;}
                         .item-score{float: right;margin: 12px 30px;}
                     .item-body{}
                         .item-image{
@@ -229,11 +241,21 @@ body{}
                     margin: 40px 15px 0;
                     width: 200px;
                 }
+                .sidebar-stadistic a{ text-decoration: none;}
                     .sidebar-stadistic-item{
                         background: none repeat scroll 0 0 #F6F4F4;
                         border-radius: 5px 5px 5px 5px;
                         height: 22px;
                         margin: 10px 0;
+                        box-shadow: 0px 0px 3px;
+                        color: #646464;
+                    }
+                    .sidebar-stadistic-item:hover {
+                        box-shadow: 0px 0px 8px;
+/*
+                        text-shadow: 1px 1px 6px;
+*/
+                        color: #646464;
                     }
                     .stadistic-fan{}
                     .stadistic-recomendations{}
@@ -248,6 +270,7 @@ body{}
                 .sidebar-menu-indicators{ float: left; margin: 10px 30px;}
                     .menu-indicators{ color: #646464; margin: 6px 0;}
                 .sidebar-new-item{}
+                    .sidebar-new-item a{ text-decoration: none;}
                     .new-item-buttom{
                         background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
                         color: white;
@@ -370,3 +393,7 @@ body{}
 .clear{
     clear: both;
 }
+
+/* Others */
+.result-descripcion:hover { text-shadow: 0 0 6px;}
+.result-image:hover { box-shadow: 0 0 6px;}

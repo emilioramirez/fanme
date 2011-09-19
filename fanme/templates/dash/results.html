@@ -29,13 +29,13 @@
                 <div class="result-name">Productos ({{ items_result|length }})</div>
             </div>
             <div class="result-body">
-                {% for items in items_result %}
+                {% for item in items_result %}
                     <div class="result-hit">
-                        <a href="/items/item/{{ items.id }}">
+                        <a href="/items/item/{{ item.id }}">
                             <div class="result-image"></div>
                         </a>
-                        <a href="/items/item/{{ items.id }}">
-                            <div class="result-descripcion">{{ items.nombre }}</div>
+                        <a href="/items/item/{{ item.id }}">
+                            <div class="result-descripcion">{{ item.nombre }}</div>
                         </a>
                     </div>
                 {% endfor %}
@@ -46,13 +46,13 @@
                 <div class="result-name">Usuarios ({{ users_result|length }})</div>
             </div>
             <div class="result-body">
-                {% for users in users_result %}
+                {% for user in users_result %}
                         <div class="result-hit">
-                            <a href="/dash/logbook/{{ users.id }}">
+                            <a href="/dash/logbook/{{ user.id }}">
                                 <div class="result-image"></div>
                             </a>
-                            <a href="/dash/logbook/{{ users.id }}">
-                                <div class="result-descripcion">{{ users.first_name }} {{ users.last_name }}</div>
+                            <a href="/dash/logbook/{{ user.id }}">
+                                <div class="result-descripcion">{{ user.first_name }} {{ user.last_name }}</div>
                             </a>
                         </div>
                 {% endfor %}
@@ -63,13 +63,13 @@
                 <div class="result-name">Empresas ({{ organizations_result|length }})</div>
             </div>
             <div class="result-body">
-                {% for organizations in organizations_result %}
+                {% for organization in organizations_result %}
                     <div class="result-hit">
-                        <a href="/items/empresa/{{ organizations.id }}">
+                        <a href="/items/empresa/{{ organization.id }}">
                             <div class="result-image"></div>
                         </a>
-                        <a href="/items/empresa/{{ organizations.id }}">
-                            <div class="result-descripcion" >{{ organizations.razon_social }}</a></div>
+                        <a href="/items/empresa/{{ organization.id }}">
+                            <div class="result-descripcion" >{{ organization.razon_social }}</a></div>
                         </a>
                     </div>
                 {% endfor %}
@@ -80,13 +80,13 @@
                 <div class="result-name">Tópicos ({{ topics_result|length }})</div>
             </div>
             <div class="result-body">
-                {% for topics in topics_result %}
+                {% for topic in topics_result %}
                     <div class="result-hit">
                         <a href="#">
                             <div class="result-image"></div>
                         </a>
                         <a href="#">
-                            <div class="result-descripcion"><a href="#">{{ topics.nombre }}</a></div>
+                            <div class="result-descripcion"><a href="#">{{ topic.nombre }}</a></div>
                         </a>
                     </div>
                 {% endfor %}

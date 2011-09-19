@@ -164,3 +164,22 @@ def my_fans_items(request):
     return render_to_response('dash/my_fans_items.html',
         {'form_search': searchbox, 'messages': messages},
         context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def following(request):
+    searchbox = SearchBox()
+    messages = ['Estas siguiendo a estos usuarios']
+    return render_to_response('dash/following.html',
+        {'form_search': searchbox, 'messages': messages},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def followers(request):
+    searchbox = SearchBox()
+    print request.user.followers.all()
+    messages = ['Estos usuarios te estan siguiendo']
+    return render_to_response('dash/followers.html',
+        {'form_search': searchbox, 'messages': messages},
+        context_instance=RequestContext(request))

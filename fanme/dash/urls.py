@@ -13,4 +13,6 @@ urlpatterns = patterns('',
     (r'^fans/', views.my_fans_items),
     (r'^logbook/(?P<user_id>\d+)$', views.logbook_user),
     (r'^follow/request/(?P<user_id>\d+)$', views.follow_request),
+    (r'^following/$', views.following),
+    (r'^followers/$', views.followers),
 )

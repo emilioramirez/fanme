@@ -17,9 +17,7 @@ def item(request, item_id):
     searchbox = SearchBox()
     try:
         item = Item.objects.get(pk=item_id)
-        user = User.objects.get(pk=request.user.id)
-        persona = user.persona
-        is_fan = persona.items.filter(nombre=item.nombre)
+        is_fan = request.user.persona.items.filter(nombre=item.nombre)
     except Item.DoesNotExist:
         raise Http404
     return render_to_response('items/item.html', {'form_search': searchbox,
@@ -66,13 +64,11 @@ def fan(request, item_id):
     messages = []
     try:
         item = Item.objects.get(pk=item_id)
-#        user = User.objects.get(pk=request.user.id)
-        persona = request.user.persona
-        is_fan = persona.items.filter(nombre=item.nombre)
+        is_fan = request.user.persona.items.filter(nombre=item.nombre)
         if is_fan:
             messages.append("Ya sos fan de {0}".format(item.nombre))
         else:
-            persona.items.add(item)
+            request.user.persona.items.add(item)
             is_fan = True
             messages.append("Te has hecho fan de {0}".format(item.nombre))
     except Item.DoesNotExist:
@@ -90,9 +86,7 @@ def unfan(request, item_id):
     messages = []
     try:
         item = Item.objects.get(pk=item_id)
-        user = User.objects.get(pk=request.user.id)
-        persona = user.persona
-        persona.items.remove(item)
+        request.user.persona.items.remove(item)
         messages.append("Ya no sos fan de {0}".format(item.nombre))
     except Item.DoesNotExist:
         raise Http404
