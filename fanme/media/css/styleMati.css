@@ -192,11 +192,69 @@ sidebar-follow-user{}
         }
         .items-list{}
 /*Begin item registration*/
+.item-content-mati2{}
+    .item-content-mati{
+        border: 1px solid #BBBBBB;
+        margin: 10px 130px;
+    }
 .item-registration{}
-    .item-register-name-field {
-                border: 1px solid #BBBBBB;
-                color: #BBBBBB;
-                height: 26px;
-                width: 100%;
-                padding-left: 20px;
-            }
+    .item-registration p{
+        margin-left: 20px;
+        width: 579px;
+    }
+    .item-registration-name-field {
+        border: 1px solid #BBBBBB;
+        color: #BBBBBB;
+        height: 26px;
+        width: 150px;
+        padding: 1px;
+    }
+    .item-registration-description-field{
+        border: 1px solid #BBBBBB;
+        color: #BBBBBB;
+        padding: 1px;
+    }
+    .item-registration-combo-field{
+        border: 1px solid #BBBBBB;
+        color: #BBBBBB;
+        height: 26px;
+        width: 150px;
+        padding: 1px;
+    }
+    .item-registration-submit{
+        border: none;
+        padding: 7px 10px 15px 6px;
+        color: white;
+        margin-left: 515px;
+        background: url("/mymedia/images/crear-item.png") no-repeat scroll 0 0 transparent;
+    }
+    .item-registration ul.errorlist{
+        color: red;
+        font-size: 10px;
+        list-style: none outside none;
+        margin: 5px 0px -10px 39px;
+    }
+/*Begin empresa dashboard*/
+.sidebar-new-item-mati{}
+    .new-item-buttom-mati{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 17px;
+        margin: 18px;
+        padding: 10px 59px;
+        width: 85px;
+    }
+    .new-link-buttom-mati{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 17px;
+        margin: 18px;
+        padding: 10px 59px;
+        width: 85px;
+    }
