@@ -1,5 +1,6 @@
 from django.db import models
 from fanme.segmentation.models import Topico
+from django.contrib.auth.models import User
 
 
 class Item(models.Model):
@@ -16,4 +17,7 @@ class Marca(models.Model):
 
 
 class Comentario(models.Model):
-    pass
+    comentario = models.TextField(max_length=300)
+    fecha = models.DateTimeField()
+    item = models.ForeignKey(Item)
+    user = models.ForeignKey(User)

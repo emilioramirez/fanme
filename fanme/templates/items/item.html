@@ -83,15 +83,28 @@
 
 {% block comments %}
     <div class="list-comment">
-        {#% for comment in comments %#}
+        {% for comment in comments %}
             <div class="comment">
                 <div class="comment-user-image"></div>
                 <div class="comment-user">
-                    <p class="comment-username">##########</p>
-                    <p class="comment-text">###########################################</p>
+                    <p class="comment-username">
+                        {{ comment.user.first_name }} {{ comment.user.last_name }} - <span class="coment-date">{{ comment.fecha }}</span>
+                    </p>
+                    <p class="comment-text">{{ comment.comentario }}</p>
                 </div>
                 <div class="comment-options"></div>
             </div>
-        {#% endfor %#}
+        {% endfor %}
+        <div class="comment-add">
+                <div class="comment-user-image-add"></div>
+                <div class="comment-user-add">
+                    <p class="comment-username-add">{{ user.first_name }} {{ user.last_name }}</p>
+                        <form action="/items/comment/{{ item.id }}" method="post">{% csrf_token %}
+                            {{ comment_form.as_p }}
+                            <input type="submit" value="Enviar" class="submit"/>
+                        </form>
+                </div>
+                <div class="comment-options-add"></div>
+            </div>
     </div>
 {% endblock comments %}

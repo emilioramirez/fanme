@@ -178,7 +178,6 @@ def following(request):
 @login_required(login_url='/accounts/user/')
 def followers(request):
     searchbox = SearchBox()
-    print request.user.followers.all()
     messages = ['Estos usuarios te estan siguiendo']
     return render_to_response('dash/followers.html',
         {'form_search': searchbox, 'messages': messages},

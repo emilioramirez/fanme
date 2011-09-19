@@ -369,12 +369,49 @@ body{}
                             margin: 23px 0 0 20px;
                             width: 570px;
                         }
-                            .comment-username{}
+                            .comment-username{ margin: 0; }
+                            .coment-date{ font-size: 10px; font-style: italic;}
                             .comment-text{
-                                background: none repeat scroll 0 0 white;
+                                background: none repeat scroll 0 0 #F7F7F7;
+                                box-shadow: 0 0 3px;
+                                color: #333333;
+                                font-style: italic;
                                 height: 60px;
+                                padding: 5px;
+                                width: 500px;
                             }
                         .comment-options{}
+                .list-comment-add{}
+                    .comment-add{
+                        background: none repeat scroll 0 0 #E3F1F1;
+                        border: 1px solid #9B9B9B;
+                        height: 155px;
+                        margin: 20px 0 0;
+                    }
+                        .comment-user-image-add{
+                            background: none repeat scroll 0 0 white;
+                            border: 2px solid #9B9B9B;
+                            float: left;
+                            height: 112px;
+                            margin: 23px 0 0 17px;
+                            width: 115px;
+                        }
+                        .comment-user-add{
+/*
+                            border: 1px solid;
+*/
+                            float: left;
+                            height: 112px;
+                            margin: 23px 0 0 20px;
+                            width: 570px;
+                        }
+                            .comment-username-add{ margin: 0; }
+                            .comment-text-add{
+                                height: 60px;
+                                margin: 0;
+                                width: 500px;
+                            }
+                        .comment-options-add{}
         /* End Item */
         /* Begin My Fans Items */
         .my-fans-items{}

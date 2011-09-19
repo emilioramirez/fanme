@@ -43,3 +43,12 @@ class ItemRegisterForm(forms.Form):
         if data == 'Descripcion':
             raise forms.ValidationError("Es necesario una descripción")
         return data
+
+
+class CommentForm(forms.Form):
+    texto = forms.CharField(
+        label='',
+        initial='Ingrese su comentario aquí',
+        required=True,
+        error_messages={'required': 'Es necesario un comentario'},
+        widget=forms.Textarea(attrs={'class': 'comment-text-add'}))

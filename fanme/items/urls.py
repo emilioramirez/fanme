@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     (r'^register_item/', views.register_item),
     (r'^fan/(?P<item_id>\d+)$', views.fan),
     (r'^unfan/(?P<item_id>\d+)$', views.unfan),
+    (r'^comment/(?P<item_id>\d+)$', views.comment),
 )
