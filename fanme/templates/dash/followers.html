@@ -1,5 +1,8 @@
 {% extends "dash/base_dash.html" %}
 
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock %}
 
 {% block menuOptionsSelected %}
     <ul class="menu-options">
@@ -11,7 +14,32 @@
 
 
 {% block dashboard %}
-    <h1>Seccion Logbook en construccion</h1>
+    <div class="item-messages">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
+    <div class="result-result">
+        <div class="result-content">
+<!--
+            <div class="result-header">
+                <div class="result-name">Usuarios ({{ user.persona.following.count }})</div>
+            </div>
+-->
+            <div class="result-body">
+                {% for user_profile in user.followers.all %}
+                        <div class="result-hit">
+                            <a href="/dash/logbook/{{ user_profile.user.id }}">
+                                <div class="result-image"></div>
+                            </a>
+                            <a href="/dash/logbook/{{ user_profile.user.id }}">
+                                <div class="result-descripcion">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</div>
+                            </a>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock dashboard %}
 
 {% block sidebar %}
@@ -39,7 +67,6 @@
                         <div class="stadistic-nom">Seguidores</div>
                     </div>
                 </a>
-            </div>
             <div class="sidebar-menu-indicators">
                 <div class="menu-indicators">Mensajes (#)</div>
                 <div class="menu-indicators">Eventos (#)</div>
