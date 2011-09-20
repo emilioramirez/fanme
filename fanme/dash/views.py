@@ -134,8 +134,24 @@ def my_fans_items(request):
         messages.append("Sos fan de")
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/my_fans_items.html',
-        {'form_search': searchbox, 'messages': messages},
+    return render_to_response('dash/my_stuff.html',
+        {'form_search': searchbox, 'messages': messages,
+        'items': request.user.persona.items.all()},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def my_comments_items(request):
+    searchbox = SearchBox()
+    messages = []
+    try:
+        request.user.persona
+        messages.append("Has comentado los siguientes items")
+    except Persona.DoesNotExist:
+            return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('dash/my_stuff.html',
+        {'form_search': searchbox, 'messages': messages,
+        'items': request.user.item_set.all().distinct()},
         context_instance=RequestContext(request))
 
 
