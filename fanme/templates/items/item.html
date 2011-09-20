@@ -87,7 +87,17 @@
     <div class="list-comment">
         {% for comment in comments %}
             <div class="comment">
-                <div class="comment-user-image"></div>
+                <div class="comment-user-image">
+                    {% if comment.user.persona %}
+                        {% if comment.user.persona.sexo == "M" %}
+                            <img src="/mymedia/images/avatar-male-big.png" alt="Logo" />
+                        {% else %}
+                            <img src="/mymedia/images/avatar-famale-big.png" alt="Logo" />
+                        {% endif%}
+                    {% else %}
+                            <img src="/mymedia/images/020.png" alt="Logo" />
+                    {% endif%}
+                </div>
                 <div class="comment-user">
                     <p class="comment-username">
                         {{ comment.user.first_name }} {{ comment.user.last_name }} - <span class="coment-date">{{ comment.fecha }}</span>
@@ -98,7 +108,17 @@
             </div>
         {% endfor %}
         <div class="comment-add">
-                <div class="comment-user-image-add"></div>
+                <div class="comment-user-image-add">
+                    {% if user.persona %}
+                        {% if user.persona.sexo == "M" %}
+                            <img src="/mymedia/images/avatar-male-big.png" alt="Logo" />
+                        {% else %}
+                            <img src="/mymedia/images/avatar-famale-big.png" alt="Logo" />
+                        {% endif%}
+                    {% else %}
+                            <img src="/mymedia/images/020.png" alt="Logo" />
+                    {% endif%}
+                </div>
                 <div class="comment-user-add">
                     <p class="comment-username-add">{{ user.first_name }} {{ user.last_name }}</p>
                         <form action="/items/comment/{{ item.id }}" method="post">{% csrf_token %}
