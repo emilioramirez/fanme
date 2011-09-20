@@ -117,9 +117,9 @@ def comment(request, item_id):
     except Item.DoesNotExist:
         raise Http404
     if request.method == 'POST':
-        form_comment = CommentForm(request.POST)
-        if form_comment.is_valid():
-            comentario_text = form_comment.cleaned_data['texto']
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comentario_text = comment_form.cleaned_data['texto']
             comentario = Comentario()
             comentario.comentario = comentario_text
             comentario.item = item
@@ -128,9 +128,9 @@ def comment(request, item_id):
             comentario.save()
             messages.append("Has comentado el producto {0}".format(item.nombre))
             comment_form = CommentForm()
-            comments = item.comentario_set.all().order_by('fecha')
     else:
         comment_form = CommentForm()
+    comments = item.comentario_set.all().order_by('fecha')
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item, 'comment_form': comment_form, 'messages': messages,
         'comments': comments},

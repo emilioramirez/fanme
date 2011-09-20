@@ -37,9 +37,13 @@
                 <div class="item-footer">
                     <div class="item-topico">{{ item.topico }}</div>
                     <div class="item-buttons">
-                        <a href="/items/fan/{{ item.id }}" ><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
+                        {% if not is_fan %}
+                            <a href="/items/fan/{{ item.id }}" ><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
+                        {% endif %}
                         <a href="#" ><img src="/mymedia/images/item-button-recomendar.png" alt="Recomendar" /></a>
-                        <a href="/items/unfan/{{ item.id }}" ><img src="/mymedia/images/item-buttom-unFan.png" alt="Unfan" /></a>
+                        {% if is_fan %}
+                            <a href="/items/unfan/{{ item.id }}" ><img src="/mymedia/images/item-buttom-unFan.png" alt="Unfan" /></a>
+                        {% endif %}
                     </div>
                     <div class="clear"></div>
                 </div>

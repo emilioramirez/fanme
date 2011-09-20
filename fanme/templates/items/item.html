@@ -46,7 +46,7 @@
             <div class="item-details">
                 <div class="stadistic-fan sidebar-stadistic-item">
                     <div class="stadistic-num">{{ item.persona_set.count }}</div>
-                    <div class="stadistic-nom">Fan</div>
+                    <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
                 </div>
                 <div class="stadistic-fan sidebar-stadistic-item">
                     <div class="stadistic-num">##</div>

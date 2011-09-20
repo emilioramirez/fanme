@@ -30,13 +30,25 @@
                 <a href="/dash/following/">
                     <div class="stadistic-recomendations sidebar-stadistic-item">
                         <div class="stadistic-num">{{ user.persona.following.count }}</div>
-                        <div class="stadistic-nom">Seguidos</div>
+                        <div class="stadistic-nom">
+                            {% if user.persona.following.count > 1 %}
+                                Usuarios sigo
+                            {% else %}
+                                Usuario sigo
+                            {% endif %}
+                        </div>
                     </div>
                 </a>
                 <a href="/dash/followers/">
                     <div class="stadistic-comments sidebar-stadistic-item">
                         <div class="stadistic-num">{{ user.followers.count }}</div>
-                        <div class="stadistic-nom">Seguidores</div>
+                        <div class="stadistic-nom">
+                            {% if user.followers.count > 1 %}
+                                Usuarios me siguen
+                            {% else %}
+                                Usuario me sigue
+                            {% endif %}
+                        </div>
                     </div>
                 </a>
             </div>
@@ -46,7 +58,7 @@
                 <div class="menu-indicators">Notificaciones (#)</div>
             </div>
             <div class="sidebar-new-item">
-                <a href="#"><div class="new-item-buttom">Crear Item</div></a>
+                <a href="/items/item/register/"><div class="new-item-buttom">Crear Item</div></a>
             </div>
             <div class="clear"></div>
         </div>
