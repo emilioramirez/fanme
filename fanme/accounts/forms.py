@@ -70,6 +70,7 @@ class UserRegisterForm(forms.Form):
     password = forms.CharField(
         label='',
         initial='Password',
+        required=True,
         min_length=6,
         widget=forms.PasswordInput(
             attrs={'class': 'accounts-register-form-field'}),
