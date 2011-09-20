@@ -112,26 +112,23 @@ def unfan(request, item_id):
 def comment(request, item_id):
     searchbox = SearchBox()
     messages = []
+    try:
+        item = Item.objects.get(pk=item_id)
+    except Item.DoesNotExist:
+        raise Http404
     if request.method == 'POST':
         form_comment = CommentForm(request.POST)
         if form_comment.is_valid():
-            try:
-                item = Item.objects.get(pk=item_id)
-                comentario_text = form_comment.cleaned_data['texto']
-                comentario = Comentario()
-                comentario.comentario = comentario_text
-                comentario.item = item
-                comentario.user = request.user
-                comentario.fecha = datetime.now()
-                comentario.save()
-                messages.append("Has comentado el producto {0}".format(
-                    item.nombre))
-                comment_form = CommentForm()
-                comments = item.comentario_set.all().order_by('fecha')
-            except Item.DoesNotExist:
-                raise Http404
-            except Persona.DoesNotExist:
-                return HttpResponseRedirect('/dash/empresa.html/')
+            comentario_text = form_comment.cleaned_data['texto']
+            comentario = Comentario()
+            comentario.comentario = comentario_text
+            comentario.item = item
+            comentario.user = request.user
+            comentario.fecha = datetime.now()
+            comentario.save()
+            messages.append("Has comentado el producto {0}".format(item.nombre))
+            comment_form = CommentForm()
+            comments = item.comentario_set.all().order_by('fecha')
     else:
         comment_form = CommentForm()
     return render_to_response('items/item.html', {'form_search': searchbox,

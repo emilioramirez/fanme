@@ -54,7 +54,9 @@
                 </div>
             </div>
             <div class="item-buttons">
-                <a href="/items/fan/{{ item.id }}" ><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
+                {% if not is_fan %}
+                    <a href="/items/fan/{{ item.id }}" ><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
+                {% endif %}
                 <a href="#" ><img src="/mymedia/images/item-button-recomendar.png" alt="Recomendar" /></a>
                 <a href="#" ><img src="/mymedia/images/item-button-denunciar.png" alt="Denunciar" /></a>
                 {% if is_fan %}
@@ -101,7 +103,7 @@
                     <p class="comment-username-add">{{ user.first_name }} {{ user.last_name }}</p>
                         <form action="/items/comment/{{ item.id }}" method="post">{% csrf_token %}
                             {{ comment_form.as_p }}
-                            <input type="submit" value="Enviar" class="submit"/>
+                            <input type="submit" value="Comentar" class="submit"/>
                         </form>
                 </div>
                 <div class="comment-options-add"></div>
