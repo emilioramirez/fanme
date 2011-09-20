@@ -1,0 +1,87 @@
+{% extends "dash/base_dash.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+{% endblock mystylesheet%}
+
+{% block myjavascript %}
+    <script src="/mymedia/js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+    <script>
+        var myCalendar;
+        function doOnLoad() {
+            myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
+            myCalendar.setDateFormat("%d/%m/%Y");
+        }
+    </script>
+{% endblock myjavascript %}
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block content %}
+    <div class="item-messages">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
+    <div class="edit-text">
+        <p>Datos de la cuenta</p>
+    </div>
+    <div class="edit-account">
+        <div class="edit-account-content">
+            <div class="edit-account-form">
+                <form action="/dash/edit_account/" method="post">{% csrf_token %}
+                    <div class="edit-account-content-label">
+                        {{ form_update.first_name.errors }}
+                        <label for="id_first_name" class="edit-account-content-label">Nombre:</label>
+                        {{ form_update.first_name }}
+                    </div>
+                    <div class="edit-account-content-label">
+                        {{ form_update.last_name.errors }}
+                        <label for="id_last_name">Apellido:</label>
+                        {{ form_update.last_name }}
+                    </div>
+                    <div class="edit-account-content-label">
+                        {{ form_update.sex.errors }}
+                        <label for="id_sex">Sexo:</label>
+                        {{ form_update.sex }}
+                    </div>
+                    <div class="edit-account-content-label">
+                        {{ form_update.email.errors }}
+                        <label for="id_email">Email:</label>
+                        {{ form_update.email }}
+                    </div>
+                    <div class="edit-account-content-label">
+                        <div class="edit-account-label-birth_date-error">
+                            {{ form_update.birth_date.errors }}
+                        </div>
+                        <label for="id_birth_date">Fecha de Nacimiento:</label>
+                        {{ form_update.birth_date }}
+                    </div>
+                    <input type="submit" value="Guardar" class="edit-save"/>
+                </form>
+            </div>
+            <div class="edit-account-photo">
+                <div class="edit-account-photo-square"></div>
+                <input type="submit" value="Cambiar" class="edit-save"/>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock sidebar %}

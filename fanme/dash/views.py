@@ -4,6 +4,8 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from fanme.accounts.forms import UserRegisterForm
+from fanme.dash.forms import UserUpdateForm
 
 from fanme.dash.forms import SearchBox
 from fanme.items.models import Item
@@ -155,4 +157,44 @@ def followers(request):
     messages = ['Estos usuarios te estan siguiendo']
     return render_to_response('dash/followers.html',
         {'form_search': searchbox, 'messages': messages},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def edit_account(request):
+    searchbox = SearchBox()
+    messages = []
+    try:
+        data = {'first_name': request.user.first_name,
+                    'last_name': request.user.last_name,
+                    'sex': request.user.persona.sexo,
+                    'email': request.user.email,
+                    'birth_date': request.user.persona.fecha_nacimiento}
+        form_update = UserUpdateForm(data)
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+        #Hacer algo
+    if request.method == 'POST':
+        form_update = UserUpdateForm(request.POST)
+        if form_update.is_valid():
+            first_name = form_update.cleaned_data['first_name']
+            last_name = form_update.cleaned_data['last_name']
+            birth_date = form_update.cleaned_data['birth_date']
+            sex = form_update.cleaned_data['sex']
+            email = form_update.cleaned_data['email']
+            user = request.user
+            user.first_name = first_name
+            user.last_name = last_name
+            user.email = email
+            user.username = email
+            profile = request.user.persona
+            profile.fecha_nacimiento = birth_date
+            profile.sexo = sex
+            user.save()
+            profile.save()
+            messages.append("Se actualizo correctamente el perfil")
+    return render_to_response('dash/edit_account.html',
+        {'form_update': form_update,
+        'form_search': searchbox,
+        'messages': messages},
         context_instance=RequestContext(request))
