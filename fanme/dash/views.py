@@ -134,7 +134,7 @@ def my_fans_items(request):
             return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/my_stuff.html',
         {'form_search': searchbox, 'messages': messages,
-        'items': request.user.persona.items.all()},
+        'items': request.user.persona.items.all(), 'is_fan': True},
         context_instance=RequestContext(request))
 
 
@@ -149,7 +149,7 @@ def my_comments_items(request):
             return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/my_stuff.html',
         {'form_search': searchbox, 'messages': messages,
-        'items': request.user.item_set.all().distinct()},
+        'items': request.user.item_set.all().distinct(), 'is_fan': False},
         context_instance=RequestContext(request))
 
 

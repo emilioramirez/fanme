@@ -68,7 +68,7 @@
             <a href="/dash/fans/">
                 <div class="stadistic-fan sidebar-stadistic-item">
                     <div class="stadistic-num">{{ user.persona.items.count }}</div>
-                    <div class="stadistic-nom">Fan</div>
+                    <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
                 </div>
             </a>
             <div class="stadistic-recomendations sidebar-stadistic-item">
