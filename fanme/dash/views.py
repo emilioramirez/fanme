@@ -82,6 +82,10 @@ def follow_user(request, user_id):
     searchbox = SearchBox()
     try:
         user_to_follow = User.objects.get(id=user_id)
+        my_profile = request.user.persona
+        i_follow = my_profile.following.filter(id=user_id)
+        if i_follow:
+            return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/follow.html', {'form_search': searchbox,
