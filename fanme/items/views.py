@@ -5,9 +5,11 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+from datetime import datetime
+
 from fanme.dash.forms import SearchBox
-from fanme.items.models import Item, Marca
-from fanme.items.forms import ItemRegisterForm
+from fanme.items.models import Item, Comentario, Marca
+from fanme.items.forms import ItemRegisterForm, CommentForm
 from fanme.accounts.models import Empresa, Persona
 from fanme.segmentation.models import Topico
 
@@ -15,13 +17,16 @@ from fanme.segmentation.models import Topico
 @login_required(login_url='/accounts/user/')
 def item(request, item_id):
     searchbox = SearchBox()
+    comment_form = CommentForm()
     try:
         item = Item.objects.get(pk=item_id)
         is_fan = request.user.persona.items.filter(nombre=item.nombre)
+        comments = item.comentario_set.all().order_by('fecha')
     except Item.DoesNotExist:
         raise Http404
     return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'is_fan': is_fan},
+        'item': item, 'is_fan': is_fan, 'comment_form': comment_form,
+        'comments': comments},
         context_instance=RequestContext(request))
 
 
@@ -67,6 +72,7 @@ def register_item(request):
 @login_required(login_url='/accounts/user/')
 def fan(request, item_id):
     searchbox = SearchBox()
+    comment_form = CommentForm()
     messages = []
     try:
         item = Item.objects.get(pk=item_id)
@@ -82,13 +88,15 @@ def fan(request, item_id):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa.html/')
     return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'messages': messages, 'is_fan': is_fan},
+        'item': item, 'messages': messages, 'is_fan': is_fan,
+        'comment_form': comment_form},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def unfan(request, item_id):
     searchbox = SearchBox()
+    comment_form = CommentForm()
     messages = []
     try:
         item = Item.objects.get(pk=item_id)
@@ -99,5 +107,34 @@ def unfan(request, item_id):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa.html/')
     return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'messages': messages},
+        'item': item, 'messages': messages, 'comment_form': comment_form},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def comment(request, item_id):
+    searchbox = SearchBox()
+    messages = []
+    try:
+        item = Item.objects.get(pk=item_id)
+    except Item.DoesNotExist:
+        raise Http404
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comentario_text = comment_form.cleaned_data['texto']
+            comentario = Comentario()
+            comentario.comentario = comentario_text
+            comentario.item = item
+            comentario.user = request.user
+            comentario.fecha = datetime.now()
+            comentario.save()
+            messages.append("Has comentado el producto {0}".format(item.nombre))
+            comment_form = CommentForm()
+    else:
+        comment_form = CommentForm()
+    comments = item.comentario_set.all().order_by('fecha')
+    return render_to_response('items/item.html', {'form_search': searchbox,
+        'item': item, 'comment_form': comment_form, 'messages': messages,
+        'comments': comments},
         context_instance=RequestContext(request))

@@ -68,17 +68,19 @@
             <a href="/dash/fans/">
                 <div class="stadistic-fan sidebar-stadistic-item">
                     <div class="stadistic-num">{{ user.persona.items.count }}</div>
-                    <div class="stadistic-nom">Fan</div>
+                    <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
                 </div>
             </a>
             <div class="stadistic-recomendations sidebar-stadistic-item">
                 <div class="stadistic-num">##</div>
                 <div class="stadistic-nom">Recomendaciones</div>
             </div>
-            <div class="stadistic-comments sidebar-stadistic-item">
-                <div class="stadistic-num">##</div>
-                <div class="stadistic-nom">Comentarios</div>
-            </div>
+            <a href="/dash/comments/">
+                <div class="stadistic-comments sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ user.comentario_set.count }}</div>
+                    <div class="stadistic-nom">Comentarios</div>
+                </div>
+            </a>
         </div>
         <div class="sidebar-menu-indicators">
             <div class="menu-indicators">Mensajes (#)</div>

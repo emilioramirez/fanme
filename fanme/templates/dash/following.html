@@ -1,4 +1,4 @@
-{% extends "dash/base_dash.html" %}
+{% extends "dash/logbook.html" %}
 
 {% block mystylesheet %}
     <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
@@ -41,41 +41,3 @@
         </div>
     </div>
 {% endblock dashboard %}
-
-{% block sidebar %}
-    <div class="sidebar-content">
-            <div class="sidebar-user">
-                <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
-                <div class="user-stars">* * * * *</div>
-            </div>
-            <div class="sidebar-stadistic">
-                <a href="/dash/fans/">
-                    <div class="stadistic-fan sidebar-stadistic-item">
-                        <div class="stadistic-num">{{ user.persona.items.count }}</div>
-                        <div class="stadistic-nom">Fan</div>
-                    </div>
-                </a>
-                <a href="/dash/following/">
-                    <div class="stadistic-recomendations sidebar-stadistic-item">
-                        <div class="stadistic-num">{{ user.persona.following.count }}</div>
-                        <div class="stadistic-nom">Seguidos</div>
-                    </div>
-                </a>
-                <a href="/dash/followers/">
-                    <div class="stadistic-comments sidebar-stadistic-item">
-                        <div class="stadistic-num">{{ user.followers.count }}</div>
-                        <div class="stadistic-nom">Seguidores</div>
-                    </div>
-                </a>
-            </div>
-            <div class="sidebar-menu-indicators">
-                <div class="menu-indicators">Mensajes (#)</div>
-                <div class="menu-indicators">Eventos (#)</div>
-                <div class="menu-indicators">Notificaciones (#)</div>
-            </div>
-            <div class="sidebar-new-item">
-                <a href="#"><div class="new-item-buttom">Crear Item</div></a>
-            </div>
-            <div class="clear"></div>
-        </div>
-{% endblock sidebar %}

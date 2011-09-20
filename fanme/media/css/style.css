@@ -102,7 +102,7 @@ body{}
     /* End Header */
 
     /* Begin Content */
-    .content{ overflow: hidden; margin: 0 auto; width: 880px; }
+    .content{ /*overflow: hidden;*/ margin: 0 auto; width: 880px; }
 
         /* Begin for Content Register */
         .accounts-register-welcome-image{ float: left; padding: 80px 0 0 20px; }
@@ -218,12 +218,13 @@ body{}
         /* End Content Dashboard */
         /* Begin Sidebar */
         .content-sidebar{
-            float: left;
-            margin: 90px 0 0 82px;
-            width: 230px;
-            height: 356px;
-            background: #ECECEC;
+            background: none repeat scroll 0 0 #ECECEC;
             border-radius: 7px 7px 7px 7px;
+            box-shadow: 0 0 10px;
+            float: left;
+            height: 356px;
+            margin: 90px 0 0 72px;
+            width: 230px;
         }
             .sidebar-content{}
                 .sidebar-user{
@@ -277,10 +278,8 @@ body{}
                         float: left;
                         font-size: 14px;
                         font-weight: bold;
-                        height: 36px;
                         margin: 18px;
-                        padding: 10px 59px;
-                        width: 186px;
+                        padding: 9px 50px;
                     }
         /* End Sidebar */
         /* Begin Item */
@@ -369,12 +368,49 @@ body{}
                             margin: 23px 0 0 20px;
                             width: 570px;
                         }
-                            .comment-username{}
+                            .comment-username{ margin: 0; }
+                            .coment-date{ font-size: 10px; font-style: italic;}
                             .comment-text{
-                                background: none repeat scroll 0 0 white;
+                                background: none repeat scroll 0 0 #F7F7F7;
+                                box-shadow: 0 0 3px;
+                                color: #333333;
+                                font-style: italic;
                                 height: 60px;
+                                padding: 5px;
+                                width: 500px;
                             }
                         .comment-options{}
+                .list-comment-add{}
+                    .comment-add{
+                        background: none repeat scroll 0 0 #E3F1F1;
+                        border: 1px solid #9B9B9B;
+                        height: 155px;
+                        margin: 20px 0 0;
+                    }
+                        .comment-user-image-add{
+                            background: none repeat scroll 0 0 white;
+                            border: 2px solid #9B9B9B;
+                            float: left;
+                            height: 112px;
+                            margin: 23px 0 0 17px;
+                            width: 115px;
+                        }
+                        .comment-user-add{
+/*
+                            border: 1px solid;
+*/
+                            float: left;
+                            height: 112px;
+                            margin: 23px 0 0 20px;
+                            width: 570px;
+                        }
+                            .comment-username-add{ margin: 0; }
+                            .comment-text-add{
+                                height: 60px;
+                                margin: 0;
+                                width: 500px;
+                            }
+                        .comment-options-add{}
         /* End Item */
         /* Begin My Fans Items */
         .my-fans-items{}

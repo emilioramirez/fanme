@@ -20,14 +20,12 @@ def dashboard(request):
     try:
         my_profile = request.user.persona
         items_by_topics = []
-        item_topic = {}
         for topic in my_profile.topicos.all():
-            item_topic[topic] = Item.objects.filter(topico__exact=topic)
             items_by_topics.append(Item.objects.filter(topico__exact=topic))
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/dashboard.html', {'form_search': searchbox,
-        'items': items_by_topics, 'example': item_topic},
+        'items': items_by_topics},
         context_instance=RequestContext(request))
 
 
@@ -136,8 +134,24 @@ def my_fans_items(request):
         messages.append("Sos fan de")
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/my_fans_items.html',
-        {'form_search': searchbox, 'messages': messages},
+    return render_to_response('dash/my_stuff.html',
+        {'form_search': searchbox, 'messages': messages,
+        'items': request.user.persona.items.all(), 'is_fan': True},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def my_comments_items(request):
+    searchbox = SearchBox()
+    messages = []
+    try:
+        request.user.persona
+        messages.append("Has comentado los siguientes items")
+    except Persona.DoesNotExist:
+            return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('dash/my_stuff.html',
+        {'form_search': searchbox, 'messages': messages,
+        'items': request.user.item_set.all().distinct(), 'is_fan': False},
         context_instance=RequestContext(request))
 
 
@@ -153,7 +167,6 @@ def following(request):
 @login_required(login_url='/accounts/user/')
 def followers(request):
     searchbox = SearchBox()
-    print request.user.followers.all()
     messages = ['Estos usuarios te estan siguiendo']
     return render_to_response('dash/followers.html',
         {'form_search': searchbox, 'messages': messages},

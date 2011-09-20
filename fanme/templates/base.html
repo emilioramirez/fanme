@@ -24,11 +24,27 @@
                             {% if user.is_authenticated %}
                                 {% block menuOptions %}{% endblock menuOptions %}
                                 <div class="logged-user">
-                                    <div class="logged-user-name">{{ user.first_name }}</div>
-                                    <div class="logged-user-menu">
-                                        <a href='/accounts/logout/'>salir</a>
+                                    <div class="logged-user-name">
+                                        {% if user.persona %}
+                                            {{ user.first_name }}
+                                        {% else %}
+                                            {{ user.empresa.razon_social }}
+                                        {% endif%}
                                     </div>
-                                    <div class="logged-user-photo"></div>
+                                    <div class="logged-user-menu">
+                                        <a href='/accounts/logout/'>Salir</a>
+                                    </div>
+                                    <div class="logged-user-photo">
+                                        {% if user.persona %}
+                                            {% if user.persona.sexo == "M" %}
+                                                <img src="/mymedia/images/male-avatar.png" alt="Logo" />
+                                            {% else %}
+                                                <img src="/mymedia/images/famale-avatar.png" alt="Logo" />
+                                            {% endif%}
+                                        {% else %}
+                                                <img src="/mymedia/images/020.png" alt="Logo" />
+                                        {% endif%}
+                                    </div>
                                 </div>
                             {% else %}
                                 {% block header_login %}

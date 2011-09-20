@@ -1,5 +1,4 @@
 from django.http import HttpResponseRedirect
-from django import forms
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
@@ -28,6 +27,7 @@ def register_user(request):
             profile.user = user
             profile.fecha_nacimiento = birth_date
             profile.sexo = sex
+            profile.is_first_time = True
             user.save()
             profile.save()
             return HttpResponseRedirect('/accounts/thanks/')
@@ -56,6 +56,7 @@ def register_company(request):
             profile.user = user
             profile.razon_social = razon_social
             profile.site = url
+            profile.is_first_time = True
             user.save()
             profile.save()
             profile.rubros.add(Rubro.objects.get(nombre=rubro))
@@ -77,10 +78,14 @@ def login_user(request):
             post_pass = form_login.cleaned_data['login_password']
             user = authenticate(username=post_user, password=post_pass)
             login(request, user)
-            user = User.objects.get(id=request.user.id)
             try:
-                profile = user.persona
-                return HttpResponseRedirect('/dash/dashboard/')
+                profile = request.user.persona
+                if profile.is_first_time:
+#                    profile.is_first_time = False
+#                    profile.save()
+                    return HttpResponseRedirect('/accounts/topics/')
+                else:
+                    return HttpResponseRedirect('/dash/dashboard/')
             except Persona.DoesNotExist:
                 return HttpResponseRedirect('/dash/empresa/')
     else:
@@ -111,6 +116,7 @@ def my_topics(request):
             for topico in topicos:
                 top = Topico.objects.get(nombre=topico)
                 profile.topicos.add(top)
+            profile.is_first_time = False
             profile.save()
             return HttpResponseRedirect('/dash/dashboard/')
         except Persona.DoesNotExist:
