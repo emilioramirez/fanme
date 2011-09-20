@@ -1,10 +1,6 @@
-{% extends "dash/base_dash.html" %}
+{% extends "dash/dashboard.html" %}
 
 {% load dash_filters %}
-
-{% block mystylesheet %}
-    <link rel="stylesheet" href="/mymedia/css/style-icon-images.css" type="text/css" />
-{% endblock mystylesheet%}
 
 {% block menuOptionsSelected %}
     <ul class="menu-options">
@@ -22,7 +18,7 @@
         {% endfor %}
     </div>
     <div class="dashboard-list-items">
-        {% for item in user.persona.items.all %}
+        {% for item in items %}
             <div class="item-content">
                 <div class="item-header">
                     <div class="item-topico-{{ item.topico|unicode|split:" "|first|lower }}"></div>
@@ -51,37 +47,3 @@
         {% endfor %}
     </div>
 {% endblock dashboard %}
-
-{% block sidebar %}
-    <div class="sidebar-content">
-        <div class="sidebar-user">
-            <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
-            <div class="user-stars">* * * * *</div>
-        </div>
-        <div class="sidebar-stadistic">
-            <a href="/dash/fans/">
-                <div class="stadistic-fan sidebar-stadistic-item">
-                    <div class="stadistic-num">{{ user.persona.items.count }}</div>
-                    <div class="stadistic-nom">Fan</div>
-                </div>
-            </a>
-            <div class="stadistic-recomendations sidebar-stadistic-item">
-                <div class="stadistic-num">##</div>
-                <div class="stadistic-nom">Recomendaciones</div>
-            </div>
-            <div class="stadistic-comments sidebar-stadistic-item">
-                <div class="stadistic-num">##</div>
-                <div class="stadistic-nom">Comentarios</div>
-            </div>
-        </div>
-        <div class="sidebar-menu-indicators">
-            <div class="menu-indicators">Mensajes (#)</div>
-            <div class="menu-indicators">Eventos (#)</div>
-            <div class="menu-indicators">Notificaciones (#)</div>
-        </div>
-        <div class="sidebar-new-item">
-            <a href="#"><div class="new-item-buttom">Crear Item</div></a>
-        </div>
-        <div class="clear"></div>
-    </div>
-{% endblock sidebar %}
