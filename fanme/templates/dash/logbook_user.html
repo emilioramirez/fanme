@@ -25,24 +25,23 @@
 {% block sidebar %}
     <div class="sidebar-content">
         <div class="sidebar-user">
-            <div class="user-name">{{ user_logbook.first_name }} {{ user_logbook.last_name }}</div>
-            <!--<div class="user-name"></div>-->
-            <div class="user-stars">* * * * *</div>
+                <div class="user-name">{{ user_logbook.first_name }} {{ user_logbook.last_name }}</div>
+                <div class="user-stars">* * * * *</div>
+            </div>
+            <div class="sidebar-stadistic">
+                <div class="stadistic-fan sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ user_logbook.persona.items.count }}</div>
+                    <div class="stadistic-nom">Fan{% if user_to_follow.persona.items.count > 1 %}s{% endif %}</div>
+                </div>
+                <div class="stadistic-recomendations sidebar-stadistic-item">
+                    <div class="stadistic-num">##</div>
+                    <div class="stadistic-nom">Recomendaciones</div>
+                </div>
+                <div class="stadistic-comments sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ user_logbook.comentario_set.count }}</div>
+                    <div class="stadistic-nom">Comentario{% if user.comentario_set.count > 1 %}s{% endif %}</div>
+                </div>
+            </div>
+            <div class="clear"></div>
         </div>
-        <div class="sidebar-stadistic">
-            <div class="stadistic-fan sidebar-stadistic-item">
-                <div class="stadistic-num">{{ user_logbook.persona.items.count }}</div>
-                <div class="stadistic-nom">Fan</div>
-            </div>
-            <div class="stadistic-recomendations sidebar-stadistic-item">
-                <div class="stadistic-num">##</div>
-                <div class="stadistic-nom">Recomendaciones</div>
-            </div>
-            <div class="stadistic-comments sidebar-stadistic-item">
-                <div class="stadistic-num">##</div>
-                <div class="stadistic-nom">Comentarios</div>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </div>
 {% endblock sidebar %}
