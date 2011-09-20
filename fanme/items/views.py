@@ -77,6 +77,7 @@ def fan(request, item_id):
     try:
         item = Item.objects.get(pk=item_id)
         is_fan = request.user.persona.items.filter(nombre=item.nombre)
+        comments = item.comentario_set.all().order_by('fecha')
         if is_fan:
             messages.append("Ya sos fan de {0}".format(item.nombre))
         else:
@@ -89,7 +90,7 @@ def fan(request, item_id):
         return HttpResponseRedirect('/dash/empresa.html/')
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item, 'messages': messages, 'is_fan': is_fan,
-        'comment_form': comment_form},
+        'comment_form': comment_form, 'comments': comments},
         context_instance=RequestContext(request))
 
 
