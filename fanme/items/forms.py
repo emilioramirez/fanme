@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 #from django.contrib.auth import authenticate
-from fanme.items.models import Marca
+from fanme.items.models import Marca, Item
 from fanme.segmentation.models import Topico
 
 
@@ -37,8 +37,11 @@ class ItemRegisterForm(forms.Form):
 
     def clean_nombre(self):
         data = self.cleaned_data['nombre']
-        if data == 'Nombre':
-            raise forms.ValidationError("Es necesario un Nombre")
+        try:
+            Item.objects.get(nombre=data)
+            raise forms.ValidationError("Este item ya existe")
+        except Item.DoesNotExist:
+            pass
         return data
 
     def clean_descripcion(self):

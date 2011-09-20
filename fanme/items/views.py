@@ -44,6 +44,7 @@ def empresa(request, empresa_id):
 @login_required(login_url='/accounts/user/')
 def register_item(request):
     searchbox = SearchBox()
+    messages = []
     if request.method == 'POST':
         form_register = ItemRegisterForm(request.POST)
         if form_register.is_valid():
@@ -57,12 +58,14 @@ def register_item(request):
             item.topico = Topico.objects.get(nombre=topico)
 #            item.marca = Marca.objects.get(nombre=marca)
             item.save()
-            return HttpResponseRedirect('/dash/dashboard/')
+            messages.append("Se creo el Item exitosamente")
+            form_register = ItemRegisterForm()
     else:
         form_register = ItemRegisterForm()
     return render_to_response('items/register_item.html',
         {'form_search': searchbox,
-        'form_register': form_register},
+        'form_register': form_register,
+        'messages': messages},
         context_instance=RequestContext(request))
 
 
