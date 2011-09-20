@@ -69,6 +69,7 @@ def register_item(request):
 @login_required(login_url='/accounts/user/')
 def fan(request, item_id):
     searchbox = SearchBox()
+    comment_form = CommentForm()
     messages = []
     try:
         item = Item.objects.get(pk=item_id)
@@ -84,13 +85,15 @@ def fan(request, item_id):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa.html/')
     return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'messages': messages, 'is_fan': is_fan},
+        'item': item, 'messages': messages, 'is_fan': is_fan,
+        'comment_form': comment_form},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def unfan(request, item_id):
     searchbox = SearchBox()
+    comment_form = CommentForm()
     messages = []
     try:
         item = Item.objects.get(pk=item_id)
@@ -101,7 +104,7 @@ def unfan(request, item_id):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa.html/')
     return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'messages': messages},
+        'item': item, 'messages': messages, 'comment_form': comment_form},
         context_instance=RequestContext(request))
 
 
