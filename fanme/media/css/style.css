@@ -201,6 +201,9 @@ body{}
                             margin: 30px 40px 0 20px;
                             float: left;
                         }
+                            .item-image img {
+                                padding: 10px;
+                            }
                         .item-descripcion{
                             float: left;
 /*
