@@ -1,0 +1,51 @@
+{% extends "dash/base_dash.html" %}
+
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item-selected"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+
+{% block dashboard %}
+    <h1>Seccion Logbook en construccion</h1>
+{% endblock dashboard %}
+
+{% block sidebar %}
+<div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">{{ empresa.razon_social }}</div>
+            <div class="user-stars">* * * * *</div>
+        </div>
+        <div class="sidebar-stadistic">
+            <div class="stadistic-fan sidebar-stadistic-item">
+                <div class="stadistic-num">##</div>
+                <div class="stadistic-nom">Fan</div>
+            </div>
+            <div class="stadistic-recomendations sidebar-stadistic-item">
+                <div class="stadistic-num">##</div>
+                <div class="stadistic-nom">Recomendaciones</div>
+            </div>
+            <div class="stadistic-comments sidebar-stadistic-item">
+                <div class="stadistic-num">##</div>
+                <div class="stadistic-nom">Comentarios</div>
+            </div>
+        </div>
+        <!--<div class="sidebar-menu-indicators">
+            <div class="menu-indicators">Mensajes (#)</div>
+            <div class="menu-indicators">Eventos (#)</div>
+            <div class="menu-indicators">Notificaciones (#)</div>
+        </div>-->
+        <div class="sidebar-new-item-mati">
+            <a href="/items/item/register/"><div class="new-item-buttom-mati">Crear Item</div></a>
+            <a href="/items/item/register/"><div class="new-item-buttom-mati">Enlaces</div></a>
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}
