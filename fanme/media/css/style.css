@@ -49,6 +49,13 @@ body{}
                 margin: 19px 0 0 0px;
 */
             }
+            .logged-user a {
+                text-decoration: none;
+                color: #4f4f4f;
+            }
+            .logged-user a:hover {
+                text-decoration: underline;
+            }
                 .logged-user-name{ float: left; margin: 19px 10px 0 0;}
                 .logged-user-photo{
                     box-shadow: 2px 2px 3px 2px;-webkit-box-shadow: 2px 2px 3px 2px;-moz-box-shadow: 2px 2px 3px 2px;
@@ -237,9 +244,15 @@ body{}
                         font-weight: bold;
                     }
                     .user-stars{ float: right; }
+                        .user-stars ul {
+                            list-style: none outside none;
+                        }
+                        .user-stars ul li {
+                            float: left;
+                        }
                 .sidebar-stadistic{
                     float: left;
-                    margin: 40px 15px 0;
+                    margin: 0px 15px 0px;
                     width: 200px;
                 }
                 .sidebar-stadistic a{ text-decoration: none;}

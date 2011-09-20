@@ -26,7 +26,7 @@
                                 <div class="logged-user">
                                     <div class="logged-user-name">
                                         {% if user.persona %}
-                                            {{ user.first_name }}
+                                            <a href="/dash/edit_account/">{{ user.first_name }}</a>
                                         {% else %}
                                             {{ user.empresa.razon_social }}
                                         {% endif%}
