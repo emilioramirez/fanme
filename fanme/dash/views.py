@@ -18,14 +18,12 @@ def dashboard(request):
     try:
         my_profile = request.user.persona
         items_by_topics = []
-        item_topic = {}
         for topic in my_profile.topicos.all():
-            item_topic[topic] = Item.objects.filter(topico__exact=topic)
             items_by_topics.append(Item.objects.filter(topico__exact=topic))
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/dashboard.html', {'form_search': searchbox,
-        'items': items_by_topics, 'example': item_topic},
+        'items': items_by_topics},
         context_instance=RequestContext(request))
 
 

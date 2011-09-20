@@ -81,8 +81,8 @@ def login_user(request):
             try:
                 profile = request.user.persona
                 if profile.is_first_time:
-                    profile.is_first_time = False
-                    profile.save()
+#                    profile.is_first_time = False
+#                    profile.save()
                     return HttpResponseRedirect('/accounts/topics/')
                 else:
                     return HttpResponseRedirect('/dash/dashboard/')
@@ -116,6 +116,7 @@ def my_topics(request):
             for topico in topicos:
                 top = Topico.objects.get(nombre=topico)
                 profile.topicos.add(top)
+            profile.is_first_time = False
             profile.save()
             return HttpResponseRedirect('/dash/dashboard/')
         except Persona.DoesNotExist:
