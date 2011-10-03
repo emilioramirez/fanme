@@ -24,4 +24,6 @@ class Credibilidad(models.Model):
 
 
 class Denuncia(models.Model):
-    pass
+    fecha_denuncia = models.DateTimeField()
+    fecha_resolucion = models.DateTimeField()
+    descripcion = models.TextField(max_length=300)
