@@ -68,3 +68,34 @@ class UserUpdateForm(forms.Form):
         if data == 'Apellido':
             raise forms.ValidationError("Es necesario un Apellido")
         return data
+
+
+class PassUpdateForm(forms.Form):
+    actual_pass = forms.CharField(
+        label='Contraseña Actual',
+        initial='',
+        required=True,
+        min_length=6,
+        widget=forms.PasswordInput(
+            attrs={'class': 'edit-account-form-field'}),
+        error_messages={'required': 'Es necesario una Password',
+            'min_length': 'Debe ingresar minimo 6 caracteres'})
+    new_pass = forms.CharField(
+        label='Contraseña Nueva',
+        initial='',
+        required=True,
+        min_length=6,
+        widget=forms.PasswordInput(
+            attrs={'class': 'edit-account-form-field'}),
+        error_messages={'class': 'errorlist-pass',
+            'required': 'Es necesario una Password',
+            'min_length': 'Debe ingresar minimo 6 caracteres'})
+
+    def clean_new_pass(self):
+        data = self.cleaned_data['new_pass']
+        try:
+            User.objects.get(password=data)
+            raise forms.ValidationError("Este usuario ya existe")
+        except User.DoesNotExist:
+            pass
+        return data
