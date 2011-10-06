@@ -5,13 +5,14 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from fanme.accounts.forms import UserRegisterForm
-from fanme.dash.forms import UserUpdateForm
+from fanme.dash.forms import UserUpdateForm, PassUpdateForm
 
 from fanme.dash.forms import SearchBox
 from fanme.items.models import Item
 from fanme.accounts.models import Persona, Empresa
 from fanme.segmentation.models import Topico
 from django.db.models import Q
+from django import forms
 
 
 @login_required(login_url='/accounts/user/')
@@ -211,6 +212,30 @@ def edit_account(request):
             profile.save()
             messages.append("Se actualizo correctamente el perfil")
     return render_to_response('dash/edit_account.html',
+        {'form_update': form_update,
+        'form_search': searchbox,
+        'messages': messages},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def edit_pass(request):
+    searchbox = SearchBox()
+    messages = []
+    if request.method == 'POST':
+        form_update = PassUpdateForm(request.POST)
+        if form_update.is_valid():
+            actual_pass = form_update.cleaned_data['actual_pass']
+            #new_pass = form_update.cleaned_data['new_pass']
+            if not request.user.check_password(actual_pass):
+                raise forms.ValidationError("La contrasenia no coincide")
+#            user = request.user
+#            user.actual_pass = new_pass
+#            user.save()
+            messages.append("Se actualizo correctamente la contrasenia")
+    else:
+        form_update = PassUpdateForm()
+    return render_to_response('dash/edit_pass.html',
         {'form_update': form_update,
         'form_search': searchbox,
         'messages': messages},

@@ -171,13 +171,13 @@ sidebar-follow-user{}
 /*Begin items-empresa*/
 .empresa{}
     .empresa-consulta {
+        background: url("/mymedia/images/consulta-empresa.png") no-repeat scroll 0 0 transparent;
         color: white;
         float: left;
         font-size: 14px;
         font-weight: bold;
-        height: 15px;
-        padding: 8px 5px;
-        background: url("/mymedia/images/consulta-empresa.png") no-repeat scroll 0 0 transparent;
+        padding: 8px 7px;
+        width: 125px;
     }
     .items-empresa{}
         .items-content{
@@ -359,4 +359,55 @@ sidebar-follow-user{}
         float: left;
         margin: 10px;
      }
+     .edit-pass-content{
+        border: 1px solid #BBBBBB;
+        margin-top: 20px;
+        overflow: hidden;
+        width: 450px;
+         margin-left: 75px;
+    }
+         .edit-pass-form {
+             float: left;
+             width: 100%;
+         }
+             .edit-pass-content-label{
+                width: 410px;
+                padding: 15px 10px 10px;
+            }
+                .edit-pass-content-label1{
+                    margin-right: -20px;
+                    padding: 15px 30px 31px;
+                }
+            .errorlist{
+                color: red;
+                font-size: 10px;
+                list-style: none outside none;
+                margin-left: 122px;
+            }
+            .edit-pass-save {
+                background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+                border: medium none;
+                color: white;
+                float: right;
+                height: 32px;
+                width: 72px;
+                margin: 10px 30px 10px 0;
+            }
+            .edit-pass-form-field{
+                border: 1px solid #BBBBBB;
+                color: #BBBBBB;
+                height: 26px;
+                width: 245px;
+            }
+            .edit-pass-confirm{
+                border: 1px solid #BBBBBB;
+                color: #BBBBBB;
+                height: 26px;
+                width: 245px;
+            }
+            .link-change-pass{
+                font-size: 11px;
+                margin: 8px 0 0 110px;
+                width: 125px;
+            }
 /*End edit account*/
