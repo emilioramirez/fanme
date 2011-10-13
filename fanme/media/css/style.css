@@ -165,8 +165,8 @@ body{}
                 margin: 20px 0;
                 overflow: hidden;
             }
-                .list-topics{list-style: none;}
-                .list-topics li{float: left; margin-right: 10px;}
+                .list-topics{list-style: none; margin: 0; padding: 0;}
+                .list-topics li{float: left; float: left; margin: 7px 11px;}
             /* Begin Item List */
             .dashboard-list-items{}
                 /* Begin Item content */

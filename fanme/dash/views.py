@@ -19,13 +19,39 @@ def dashboard(request):
     searchbox = SearchBox()
     try:
         my_profile = request.user.persona
+        root_topics = Topico.objects.filter(padre=None)
+        topics = {}
         items_by_topics = []
         for topic in my_profile.topicos.all():
-            items_by_topics.append(Item.objects.filter(topico__exact=topic))
+            lista = Item.objects.filter(topico__exact=topic)
+            items_by_topics.append(lista)
+            topics[topic] = lista
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/dashboard.html', {'form_search': searchbox,
-        'items': items_by_topics},
+        'topicos': items_by_topics, 'topics': topics, 'r_topics': root_topics},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def dashboard_topic(request, topic_id):
+    searchbox = SearchBox()
+    lista = []
+    try:
+        root_topics = Topico.objects.filter(padre=None)
+        topico = Topico.objects.get(id=topic_id)
+        yes = request.user.persona.topicos.get(id=topic_id)
+        if yes:
+            lista.append(Item.objects.filter(topico__exact=topico))
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    except Topico.DoesNotExist:
+        return render_to_response('dash/dashboard.html',
+            {'form_search': searchbox, 'topicos': lista,
+                'r_topics': root_topics},
+            context_instance=RequestContext(request))
+    return render_to_response('dash/dashboard.html', {'form_search': searchbox,
+        'topicos': lista, 'r_topics': root_topics},
         context_instance=RequestContext(request))
 
 

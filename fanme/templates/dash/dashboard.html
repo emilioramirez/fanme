@@ -18,20 +18,30 @@
 {% block dashboard %}
     <div class="dashboard-list-topics">
         <ul class="list-topics">
-<!--
-            {% for topic in profile.topicos.all %}
-                <li>{{ topic.nombre }}</li>
+            {% for topic in r_topics %}
+                <li>
+                    <a href="/dash/dashboard/{{ topic.id }}">
+                        {% if topic in user.persona.topicos.all %}
+                            <div class="list-item-topico list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                        {% else %}
+                            <div class="list-item-topico un-list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                        {% endif %}
+                    </a>
+                </li>
             {% endfor %}
--->
-            <li ></li>
+            <li>
+                <a href="/dash/dashboard/">
+                    <div class="list-item-topico list-item-topico-all" title="Todos"></div>
+                </a>
+            </li>
         </ul>
     </div>
     <div class="dashboard-list-items">
-        {% for topic in items %}
-            {% for item in topic %}
+        {% for items in topicos %}
+            {% for item in items %}
                 <div class="item-content">
                     <div class="item-header">
-                        <div class="item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
+                        <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
                         <div class="item-nombre"><a href="/items/item/{{ item.id }}">{{ item }}</a></div>
                         <div class="item-score">
                             <img src="/mymedia/images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
