@@ -5,6 +5,7 @@ from fanme.dash import views
 urlpatterns = patterns('',
     #(r'^user/', views.register_user),
     (r'^dashboard/$', views.dashboard),
+    (r'^dashboard/(?P<topic_id>\d+)$', views.dashboard_topic),
     (r'^logbook/$', views.logbook),
     (r'^topicos/$', views.topicos),
     (r'^results/$', views.results),
