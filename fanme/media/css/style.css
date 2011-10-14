@@ -225,6 +225,23 @@ body{}
                         }
                 /* End Item content */
             /* End Item List */
+            /* Begin Recomend Item */
+            .form-recomend-user{margin: 88px 60px;}
+            .form-recomend-user input{
+                background: url("/mymedia/images/crear-item.png") no-repeat scroll 0 0 transparent;
+                    border: medium none;
+                    color: white;
+                    float: right;
+                    padding: 8px 6px;
+                }
+            }
+                .list-posible-user-recomend{}
+                    .posible-user-recomend{}
+                    .posible-user-recomend.div{}
+                        .user-recomend-name{height: 40px;width: 300px;}
+                        .user-recomend-checkbox{}
+                        .list-item-recomend{float: left; margin: 15px 0;}
+            /* End Recomend Item */
         /* End Content Dashboard */
         /* Begin Sidebar */
         .content-sidebar{
