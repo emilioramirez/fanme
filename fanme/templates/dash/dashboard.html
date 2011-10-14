@@ -20,13 +20,13 @@
         <ul class="list-topics">
             {% for topic in r_topics %}
                 <li>
-                    <a href="/dash/dashboard/{{ topic.id }}">
-                        {% if topic in user.persona.topicos.all %}
+                    {% if topic in user.persona.topicos.all %}
+                        <a href="/dash/dashboard/{{ topic.id }}">
                             <div class="list-item-topico list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
-                        {% else %}
-                            <div class="list-item-topico un-list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
-                        {% endif %}
-                    </a>
+                        </a>
+                    {% else %}
+                        <div class="list-item-topico un-list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                    {% endif %}
                 </li>
             {% endfor %}
             <li>
@@ -60,7 +60,7 @@
                         <div class="item-topico">{{ item.topico }}</div>
                         <div class="item-buttons">
                             <a href="/items/fan/{{ item.id }}" ><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
-                            <a href="#" ><img src="/mymedia/images/item-button-recomendar.png" alt="Recomendar" /></a>
+                            <a href="/items/recomendation/{{ item.id }}" ><img src="/mymedia/images/item-button-recomendar.png" alt="Recomendar" /></a>
                         </div>
                         <div class="clear"></div>
                     </div>
@@ -93,7 +93,7 @@
                 </div>
             </a>
             <div class="stadistic-recomendations sidebar-stadistic-item">
-                <div class="stadistic-num">##</div>
+                <div class="stadistic-num">{{ user.recomendaciones.recomendacion_set.count }}</div>
                 <div class="stadistic-nom">Recomendaciones</div>
             </div>
             <a href="/dash/comments/">
@@ -105,7 +105,9 @@
         </div>
         <div class="sidebar-menu-indicators">
             <div class="menu-indicators">Mensajes (#)</div>
-            <div class="menu-indicators">Eventos (#)</div>
+            <a href="/social/nuevo">
+                <div class="menu-indicators">Eventos (#)</div>
+            </a>
             <div class="menu-indicators">Notificaciones (#)</div>
         </div>
         <div class="sidebar-new-item">
