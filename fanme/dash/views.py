@@ -4,7 +4,6 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from fanme.accounts.forms import UserRegisterForm
 from fanme.dash.forms import UserUpdateForm
 
 from fanme.dash.forms import SearchBox
@@ -46,10 +45,7 @@ def dashboard_topic(request, topic_id):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     except Topico.DoesNotExist:
-        return render_to_response('dash/dashboard.html',
-            {'form_search': searchbox, 'topicos': lista,
-                'r_topics': root_topics},
-            context_instance=RequestContext(request))
+        return HttpResponseRedirect('/dash/dashboard/')
     return render_to_response('dash/dashboard.html', {'form_search': searchbox,
         'topicos': lista, 'r_topics': root_topics},
         context_instance=RequestContext(request))

@@ -49,7 +49,7 @@
                     <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
                 </div>
                 <div class="stadistic-fan sidebar-stadistic-item">
-                    <div class="stadistic-num">##</div>
+                    <div class="stadistic-num">{{ item.recomendacion_set.count }}</div>
                     <div class="stadistic-nom">Recomendaciones</div>
                 </div>
             </div>
