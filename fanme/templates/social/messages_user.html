@@ -1,0 +1,106 @@
+{% extends "social/base_mess_event.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+            <ul class="menu-options">
+                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+            </ul>
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div class="title-messages">Mensajes</div>
+    {% for message in mensajes %}
+        <div class="item-content-mess-event">
+            <div class="message-body">
+                <div class="message-usuario">
+                </div>
+            </div>
+            <div class="message-user-subject">
+                {{ message.user_from.first_name }} dijo:
+            </div>
+            <div class="message-user-fecha">
+                {{ message.fecha }}
+            </div>
+            <div class="message-descripcion">
+                {{ message.mensaje|truncatewords:30 }}
+            </div>
+        </div>
+    {% endfor %}
+    <div class="message-line-response">
+        <hr size=1 class="message-line">
+        <p class="message-answer">Responder:</p>
+    </div>
+    <textarea rows="2" cols="78" style="resize: none; margin-bottom: 5px;"></textarea>
+    <div class="new-message">
+        <form action="/social/messages/">{% csrf_token %}
+            <input type="submit" value="Responder" class="submit"/>
+        </form>
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+            <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar-stadistic">
+            <a href="/dash/fans/">
+                <div class="stadistic-fan sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ user.persona.items.count }}</div>
+                    <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
+                </div>
+            </a>
+            <div class="stadistic-recomendations sidebar-stadistic-item">
+                <div class="stadistic-num">##</div>
+                <div class="stadistic-nom">Recomendaciones</div>
+            </div>
+            <a href="/dash/comments/">
+                <div class="stadistic-comments sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ user.comentario_set.count }}</div>
+                    <div class="stadistic-nom">Comentario{% if user.comentario_set.count > 1 %}s{% endif %}</div>
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-menu-indicators">
+            <div class="menu-indicators">Mensajes (#)</div>
+            <div class="menu-indicators">Eventos (#)</div>
+            <div class="menu-indicators">Notificaciones (#)</div>
+        </div>
+        <div class="sidebar-new-item">
+            <a href="/items/item/register/"><div class="new-item-buttom">Crear Item</div></a>
+        </div>
+        <div class="sidebar-new-message">
+                <a href="/social/messages/"><div class="message">Mensajes</div></a>
+            </div>
+            <div class="sidebar-new-message">
+                <a href="/social/events/"><div class="new-event">Eventos</div></a>
+            </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}
+

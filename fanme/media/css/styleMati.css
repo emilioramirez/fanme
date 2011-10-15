@@ -1,0 +1,537 @@
+/**
+ * CSS - Stylistic CSS Styles
+ */
+
+/* Begin div that contain the topics images */
+.drag-and-drop-topics {
+        border: 2px solid #979797;
+        text-align: center;
+        height: 256px;
+        margin: 24px 99px 28px;
+        width: 232px;
+        float:left;
+    }
+        /*Begin images*/
+        .imagen-electrodomesticos{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px 0 transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-juegos{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -35px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-cine{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -70px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-ropaMujer{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -105px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-hogar{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -140px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-libros{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -175px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-musica{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -210px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-arte{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -245px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-comida{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -280px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-ropaHombre{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -315px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        .imagen-viajes{
+                background: url("/mymedia/images/iconos-topicos.png") repeat scroll 37px -350px transparent;
+                height: 25px;
+                width: 34px;
+                margin: 15px;
+                float: left;
+        }
+        /*End of images*/
+    .topic-choisses-form{}
+    .topic-choisses-form .submit{
+        float: right;
+        border: none;
+        padding: 8px 7px 8px;
+        color: white;
+        background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+    }
+.logbook_follow{
+    color: gray;
+    font-size: 20px;
+    margin: 91px 10px;
+    text-align: center;
+}
+sidebar-follow-user{}
+    .follow-buttom-mati{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 36px;
+        margin: 18px;
+        padding: 10px 50px;
+        width: 186px;
+    }
+.result-result{
+   // margin-top: 20px;
+}
+    .result-text{
+        color: gray;
+        font-size: 20px;
+        margin-top: 50px;
+//        margin: 50px 10px;
+        text-align: left;
+    }
+    .result-content{
+        border: 1px solid #BBBBBB;
+        margin: 30px 0;
+        overflow: hidden;
+    }
+        .result-header{
+            background: #ECECEC;
+            border-bottom: 1px solid #BBBBBB;
+            height: 38px;
+            overflow: hidden;
+        }
+            .result-name{
+                color: #646464;
+                float: left;
+                font-size: 18px;
+                font-weight: bold;
+                margin: 9px 9px;
+            }
+        .result-body{}
+            .result-hit{ float: left; }
+                .result-image{
+                    border: 1px solid #9F9F9F;
+                    height: 50px;
+                    width: 50px;
+                    //margin: 15px 40px 15px 20px;
+                    margin: 15px 32px 15px 20px;
+                    float: left;
+                }
+                .result-descripcion{
+                    float: left;
+                    height: 50px;
+                    //margin: 15px -5px 0 -30px;
+                    margin: 15px -5px 19px -30px;
+                    overflow: hidden;
+                    text-align: justify;
+                    width: 150px;
+                }
+                .result-hit a{
+                    color: #646464;
+                    font-weight: bold;
+                    text-decoration: none;
+                }
+/*Begin items-empresa*/
+.empresa{}
+    .empresa-consulta {
+        background: url("/mymedia/images/consulta-empresa.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 8px 7px;
+        width: 125px;
+    }
+    .items-empresa{}
+        .items-content{
+            border: 1px solid #9B9B9B;
+            height: 160px;
+            width: 878px;
+            float: left;
+        }
+        .items-header-text{
+            font-size: 15px;
+            margin: 10px;
+        }
+        .items-list{}
+/*End items-empresa*/
+/*Begin item registration*/
+.item-content-mati{
+    border: 1px solid #BBBBBB;
+    margin: 10px 130px;
+}
+.item-registration{}
+    .item-registration p{
+        margin-left: 20px;
+        width: 579px;
+    }
+    .item-registration-name-field {
+        border: 1px solid #BBBBBB;
+        color: #BBBBBB;
+        height: 26px;
+        width: 150px;
+        padding: 1px;
+    }
+    .item-registration-description-field{
+        border: 1px solid #BBBBBB;
+        color: #BBBBBB;
+        padding: 1px;
+    }
+    .item-registration-combo-field{
+        border: 1px solid #BBBBBB;
+        color: #BBBBBB;
+        height: 26px;
+        width: 150px;
+        padding: 1px;
+    }
+    .item-registration-submit{
+        border: none;
+        padding: 7px 10px 15px 6px;
+        color: white;
+        margin-left: 515px;
+        background: url("/mymedia/images/crear-item.png") no-repeat scroll 0 0 transparent;
+    }
+    .item-registration ul.errorlist{
+        color: red;
+        font-size: 10px;
+        list-style: none outside none;
+        margin: 5px 0px -10px 39px;
+    }
+/*End item registration*/
+/*Begin empresa dashboard*/
+.sidebar-new-item-mati{}
+    .new-item-buttom-mati{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 17px;
+        margin: 18px;
+        padding: 10px 59px;
+        width: 85px;
+    }
+    .new-link-buttom-mati{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 17px;
+        margin: 18px;
+        padding: 10px 59px;
+        width: 85px;
+    }
+/*End empresa dashboard*/
+/*Begin edit account*/
+.edit-text{
+    color: gray;
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+.edit-account{
+    margin: 0 150px;
+    width: 600px;
+}
+    .edit-account-content{
+        border: 1px solid #BBBBBB;
+        margin-top: 20px;
+        overflow: hidden;
+    }
+        .edit-account-content p{
+            margin-left: 20px;
+            width: 579px;
+        }
+        .edit-account-content-label{
+            width: 307px;
+            padding: 0px 0px 10px 0px;
+        }
+            .errorlist{
+                color: red;
+                font-size: 10px;
+                list-style: none outside none;
+                margin: 5px 0 0px 19px;
+            }
+            .edit-account-label-birth_date-error {
+                color: red;
+                float: right;
+                font-size: 10px;
+                list-style: none outside none;
+                margin-left: -20px;
+                padding: 0 0 0 100px;
+            }
+            .edit-account-label-password-error{
+                color: red;
+                font-size: 10px;
+                list-style: none outside none;
+                margin: 5px 0 0 61px;
+            }
+        .edit-account-form-field{
+            border: 1px solid #BBBBBB;
+            color: #BBBBBB;
+            height: 26px;
+            width: 245px;
+        }
+        .edit-account-combo-field{
+            border: 1px solid #BBBBBB;
+            color: #BBBBBB;
+            height: 26px;
+            margin-left: 22px;
+            width: 245px;
+        }
+        .edit-account-email-field{
+            border: 1px solid #BBBBBB;
+            color: #BBBBBB;
+            height: 26px;
+            margin-left: 17px;
+            width: 245px;
+        }
+        .edit-account-date-field{
+            border: 1px solid #BBBBBB;
+            color: #BBBBBB;
+            height: 26px;
+            width: 166px;
+        }
+        .edit-account-photo{
+            float: left;
+            margin: 10px 30px;
+            width: 200px;
+        }
+            .edit-account-photo-square{
+                border: 1px solid #9F9F9F;
+                height: 183px;
+                margin-bottom: 11px;
+            }
+        .edit-account-pass-field{
+            border: 1px solid #BBBBBB;
+            color: #BBBBBB;
+            height: 26px;
+            //margin-top: 100px;
+            width: 185px;
+        }
+    .edit-save {
+        background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+        border: medium none;
+        color: white;
+        float: right;
+        height: 32px;
+        width: 72px;
+    }
+    .edit-account-form{
+        float: left;
+        margin: 10px;
+     }
+     .edit-pass-content{
+        border: 1px solid #BBBBBB;
+        margin-top: 20px;
+        overflow: hidden;
+        width: 450px;
+         margin-left: 75px;
+    }
+         .edit-pass-form {
+             float: left;
+             width: 100%;
+         }
+             .edit-pass-content-label{
+                width: 410px;
+                padding: 15px 10px 10px;
+            }
+                .edit-pass-content-label1{
+                    margin-right: -20px;
+                    padding: 15px 30px 31px;
+                }
+            .errorlist{
+                color: red;
+                font-size: 10px;
+                list-style: none outside none;
+                margin-left: 122px;
+            }
+            .edit-pass-save {
+                background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+                border: medium none;
+                color: white;
+                float: right;
+                height: 32px;
+                width: 72px;
+                margin: 10px 30px 10px 0;
+            }
+            .edit-pass-form-field{
+                border: 1px solid #BBBBBB;
+                color: #BBBBBB;
+                height: 26px;
+                width: 245px;
+            }
+            .edit-pass-confirm{
+                border: 1px solid #BBBBBB;
+                color: #BBBBBB;
+                height: 26px;
+                width: 245px;
+            }
+            .link-change-pass{
+                font-size: 11px;
+                margin: 8px 0 0 110px;
+                width: 125px;
+            }
+/*End edit account*/
+/*Begin logbook css*/
+.sidebar-new-message{}
+    .message{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 17px;
+         margin: 0 18px 18px;
+        padding: 10px 59px;
+        width: 67px;
+        }
+    .new-event{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 17px;
+        margin: 0 18px 18px;
+        padding: 10px 70px;
+        }
+/*End logbook css*/
+/*Begin css of messages and events base template*/
+.item-content-mess-event{
+    border: 1px solid #BBBBBB;
+    margin: 10px 0;
+    height: 50px;
+}
+.title-messages{
+    color: gray;
+    font-size: 25px;
+    margin-bottom: 25px;
+    margin-top: 35px;
+    text-align: center;
+}
+.write-message{
+    border: 1px solid #9F9F9F;
+    float: left;
+    height: 120px;
+    margin: 30px 40px 10px 20px;
+    width: 541px;
+}
+.header-clean{
+        margin-top: 100px;
+    }
+.message-body{
+    margin: -1px -64px;
+}
+    .message-content-mati{
+        border: 1px solid #BBBBBB;
+        margin-right: 20px;
+    }
+        .message-content-mati-desciption{
+
+        }
+        .message-content-mati-to{
+            margin-left: 9px;
+            width: 574px;
+        }
+        .message-content-label ul.errorlist{
+            color: red;
+            font-size: 10px;
+            list-style: none outside none;
+            margin: 0 0 0 40px;
+        }
+        .message-content-label-to{
+            margin-left: 34px;
+        }
+        .message-content-label-description{
+            float: left;
+            margin: 4px 13px 0 10px;
+        }
+        .message-content-clear{
+            margin-top: 20px;
+        }
+        .enviar{
+            background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+            border: medium none;
+            color: white;
+            margin: 10px 587px;
+            height: 32px;
+            width: 72px;
+        }
+    .item-image{
+        border: 1px solid #9F9F9F;
+        height: 120px;
+        width: 120px;
+        margin: 30px 40px 0 20px;
+        float: left;
+    }
+    .message-usuario{
+        border: 1px solid #9F9F9F;
+        height: 50px;
+        width: 50px;
+    }
+    .message-user-subject{
+        margin: -45px 0 3px 5px;
+        font: 14px bold green;
+        color: #646464;
+    }
+    .message-line-response{}
+        .message-line{
+            color: #9F9F9F;
+        }
+        .message-answer{
+            color: #646464;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+    .message-user-fecha{
+        float: right;
+        margin: -19px 5px 24px 28px;
+        color: #646464;
+    }
+    .message-descripcion{
+        margin: 0px 0 0 5px;
+        width: 560px;
+    }
+.new-message{
+    float: right;
+}
+/* End Content Dashboard */
