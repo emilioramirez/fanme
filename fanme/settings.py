@@ -111,5 +111,5 @@ INSTALLED_APPS = (
     'fanme.items',
     'fanme.social',
     'south',
-    'django_extensions',
+    #'django_extensions',
 )

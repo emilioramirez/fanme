@@ -1,5 +1,8 @@
 {% extends "dash/base_dash.html" %}
 
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
 
 {% block menuOptionsSelected %}
     <ul class="menu-options">
@@ -68,6 +71,12 @@
             </div>
             <div class="sidebar-new-item">
                 <a href="/items/item/register/"><div class="new-item-buttom">Crear Item</div></a>
+            </div>
+            <div class="sidebar-new-message">
+                <a href="/social/messages/"><div class="message">Mensajes</div></a>
+            </div>
+            <div class="sidebar-new-message">
+                <a href="/social/events/"><div class="new-event">Eventos</div></a>
             </div>
             <div class="clear"></div>
         </div>

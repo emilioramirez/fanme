@@ -411,3 +411,127 @@ sidebar-follow-user{}
                 width: 125px;
             }
 /*End edit account*/
+/*Begin logbook css*/
+.sidebar-new-message{}
+    .message{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 17px;
+         margin: 0 18px 18px;
+        padding: 10px 59px;
+        width: 67px;
+        }
+    .new-event{
+        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        height: 17px;
+        margin: 0 18px 18px;
+        padding: 10px 70px;
+        }
+/*End logbook css*/
+/*Begin css of messages and events base template*/
+.item-content-mess-event{
+    border: 1px solid #BBBBBB;
+    margin: 10px 0;
+    height: 50px;
+}
+.title-messages{
+    color: gray;
+    font-size: 25px;
+    margin-bottom: 25px;
+    margin-top: 35px;
+    text-align: center;
+}
+.write-message{
+    border: 1px solid #9F9F9F;
+    float: left;
+    height: 120px;
+    margin: 30px 40px 10px 20px;
+    width: 541px;
+}
+.header-clean{
+        margin-top: 100px;
+    }
+.message-body{
+    margin: -1px -64px;
+}
+    .message-content-mati{
+        border: 1px solid #BBBBBB;
+        margin-right: 20px;
+    }
+        .message-content-mati-desciption{
+
+        }
+        .message-content-mati-to{
+            margin-left: 9px;
+            width: 574px;
+        }
+        .message-content-label ul.errorlist{
+            color: red;
+            font-size: 10px;
+            list-style: none outside none;
+            margin: 0 0 0 40px;
+        }
+        .message-content-label-to{
+            margin-left: 34px;
+        }
+        .message-content-label-description{
+            float: left;
+            margin: 4px 13px 0 10px;
+        }
+        .message-content-clear{
+            margin-top: 20px;
+        }
+        .enviar{
+            background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+            border: medium none;
+            color: white;
+            margin: 10px 587px;
+            height: 32px;
+            width: 72px;
+        }
+    .item-image{
+        border: 1px solid #9F9F9F;
+        height: 120px;
+        width: 120px;
+        margin: 30px 40px 0 20px;
+        float: left;
+    }
+    .message-usuario{
+        border: 1px solid #9F9F9F;
+        height: 50px;
+        width: 50px;
+    }
+    .message-user-subject{
+        margin: -45px 0 3px 5px;
+        font: 14px bold green;
+        color: #646464;
+    }
+    .message-line-response{}
+        .message-line{
+            color: #9F9F9F;
+        }
+        .message-answer{
+            color: #646464;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+    .message-user-fecha{
+        float: right;
+        margin: -19px 5px 24px 28px;
+        color: #646464;
+    }
+    .message-descripcion{
+        margin: 0px 0 0 5px;
+        width: 560px;
+    }
+.new-message{
+    float: right;
+}
+/* End Content Dashboard */
