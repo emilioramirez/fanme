@@ -39,7 +39,7 @@
         </div>
     {% endfor %}
     <div class="new-message">
-        <form action="/social/new_message/">{% csrf_token %}
+        <form action="/social/new_message/">
             <input type="submit" value="Nuevo mensaje" class="submit"/>
         </form>
     </div>
@@ -79,7 +79,7 @@
             </a>
         </div>
         <div class="sidebar-menu-indicators">
-            <div class="menu-indicators">Mensajes (#)</div>
+            <div class="menu-indicators">Mensajes ({{ user.mensajes_recibidos.all.count }})</div>
             <div class="menu-indicators">Eventos (#)</div>
             <div class="menu-indicators">Notificaciones (#)</div>
         </div>

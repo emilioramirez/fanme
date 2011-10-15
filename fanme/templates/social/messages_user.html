@@ -45,10 +45,13 @@
         <hr size=1 class="message-line">
         <p class="message-answer">Responder:</p>
     </div>
-    <textarea rows="2" cols="78" style="resize: none; margin-bottom: 5px;"></textarea>
     <div class="new-message">
-        <form action="/social/messages/">{% csrf_token %}
-            <input type="submit" value="Responder" class="submit"/>
+        <form method="post">{% csrf_token %}
+            <div class="message-content-response">
+                    {{ form_response_message.mensaje.errors }}
+                    {{ form_response_message.mensaje }}
+            </div>
+            <input type="submit" value="Responder" class="message-response-button"/>
         </form>
     </div>
 {% endblock dashboard %}
@@ -87,7 +90,7 @@
             </a>
         </div>
         <div class="sidebar-menu-indicators">
-            <div class="menu-indicators">Mensajes (#)</div>
+            <div class="menu-indicators">Mensajes ({{ user.mensajes_recibidos.all.count }})</div>
             <div class="menu-indicators">Eventos (#)</div>
             <div class="menu-indicators">Notificaciones (#)</div>
         </div>

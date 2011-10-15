@@ -14,5 +14,15 @@ class MessageForm(forms.Form):
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
         widget=forms.Textarea
-            (attrs={'class': 'message-content-mati-desciption',
+            (attrs={'style': 'resize: none;',
             'cols': 80, 'rows': 4}))
+
+
+class MessageResponseForm(forms.Form):
+    mensaje = forms.CharField(
+        label='',
+        required=True,
+        error_messages={'required': 'Es necesario ingresar un mensaje'},
+        widget=forms.Textarea
+            (attrs={'style': 'resize: none;',
+            'cols': 78, 'rows': 2}))
