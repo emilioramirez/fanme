@@ -3,7 +3,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from fanme.social.forms import MessageForm
+from fanme.social.forms import MessageForm, MessageResponseForm
 
 from fanme.dash.forms import SearchBox
 from fanme.accounts.models import Persona
@@ -22,8 +22,6 @@ def messages(request):
         usuarios = []
         for dict in mensajes_recibidos.all():
             usuarios.append(User.objects.get(id=dict['user_from']))
-        for usuario in usuarios:
-            print usuario.first_name
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/messages.html', {'form_search': searchbox,
@@ -44,11 +42,13 @@ def new_message(request):
             message.user_from_id = request.user.id
             message.user_to_id = user_to_id
             message.mensaje = mensaje
-            message.fecha = datetime.date.today()
+            message.fecha = datetime.datetime.now()
             message.save()
             messages.append("Se envio correctamente el mensaje")
             users = User()
             form_new_message = MessageForm()
+        else:
+            users = User.objects.all()
     else:
         form_new_message = MessageForm()
         users = User.objects.all()
@@ -64,17 +64,42 @@ def new_message(request):
 def messages_user(request, user_id):
     searchbox = SearchBox()
     try:
-#        if request.method == 'POST':
-#        else:
+        if request.method == 'POST':
+            form_response_message = MessageResponseForm(request.POST)
+            if form_response_message.is_valid():
+                mensaje = form_response_message.cleaned_data['mensaje']
+                message = Mensaje()
+                message.user_from_id = request.user.id
+                message.user_to_id = user_id
+                message.mensaje = mensaje
+                message.fecha = datetime.datetime.now()
+                message.save()
+                form_response_message = MessageResponseForm()
+                mensajes_recibidos = request.user.mensajes_recibidos.filter(
+                user_from__exact=user_id)
+                mensajes_enviados = request.user.mensajes_enviados.filter(
+                    user_to__exact=user_id)
+                mensajes = sorted(chain(mensajes_enviados, mensajes_recibidos),
+                    key=attrgetter('fecha'))
+            else:
+                mensajes_recibidos = request.user.mensajes_recibidos.filter(
+                user_from__exact=user_id)
+                mensajes_enviados = request.user.mensajes_enviados.filter(
+                    user_to__exact=user_id)
+                mensajes = sorted(chain(mensajes_enviados, mensajes_recibidos),
+                    key=attrgetter('fecha'))
+        else:
             mensajes_recibidos = request.user.mensajes_recibidos.filter(
                 user_from__exact=user_id)
             mensajes_enviados = request.user.mensajes_enviados.filter(
                 user_to__exact=user_id)
             mensajes = sorted(chain(mensajes_enviados, mensajes_recibidos),
                 key=attrgetter('fecha'))
+            form_response_message = MessageResponseForm()
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/messages_user.html', {
         'form_search': searchbox,
+        'form_response_message': form_response_message,
         'mensajes': mensajes},
         context_instance=RequestContext(request))

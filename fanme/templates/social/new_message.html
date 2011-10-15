@@ -4,13 +4,6 @@
 
 {% block myjavascript %}
     <script language="javascript" src="/mymedia/js/myutils.js"></script>
-    <script type="text/javascript">
-        function show_alert()
-        {
-            var a = "{{ first_users.first_name|searchUser:"mu" }}";
-            alert(a);
-        }
-    </script>
 {% endblock myjavascript %}
 
 {% block mystylesheet %}
@@ -33,7 +26,7 @@
     <div class="title-messages">Nuevo mensaje</div>
     <div class="message-body">
         <div class="message-content-mati">
-            <form action="/dash/new_message/" method="post">{% csrf_token %}
+            <form action="/social/new_message/" method="post">{% csrf_token %}
                 <div class="message-content-clear"></div>
                 <div class="message-content-label">
                     {{ form_new_message.user_to_id.errors }}
@@ -86,7 +79,7 @@
             </a>
         </div>
         <div class="sidebar-menu-indicators">
-            <div class="menu-indicators">Mensajes (#)</div>
+            <div class="menu-indicators">Mensajes ({{ user.mensajes_recibidos.all.count }})</div>
             <div class="menu-indicators">Eventos (#)</div>
             <div class="menu-indicators">Notificaciones (#)</div>
         </div>
@@ -94,7 +87,7 @@
             <a href="/items/item/register/"><div class="new-item-buttom">Crear Item</div></a>
         </div>
         <div class="sidebar-new-message">
-                <a href="/dash/messages/"><div class="message">Mensajes</div></a>
+                <a href="/social/messages/"><div class="message">Mensajes</div></a>
             </div>
             <div class="sidebar-new-message">
                 <a href="/items/item/register/"><div class="new-event">Eventos</div></a>

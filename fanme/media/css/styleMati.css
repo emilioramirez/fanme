@@ -465,9 +465,6 @@ sidebar-follow-user{}
         border: 1px solid #BBBBBB;
         margin-right: 20px;
     }
-        .message-content-mati-desciption{
-
-        }
         .message-content-mati-to{
             margin-left: 9px;
             width: 574px;
@@ -477,6 +474,16 @@ sidebar-follow-user{}
             font-size: 10px;
             list-style: none outside none;
             margin: 0 0 0 40px;
+        }
+        .message-content-response ul.errorlist{
+            color: red;
+            font-size: 10px;
+            list-style: none outside none;
+            margin-left: -38px;
+        }
+        .message-response-button{
+            float: right;
+            margin-top: 5px;
         }
         .message-content-label-to{
             margin-left: 34px;
@@ -516,6 +523,7 @@ sidebar-follow-user{}
     .message-line-response{}
         .message-line{
             color: #9F9F9F;
+            margin-bottom: -5px;
         }
         .message-answer{
             color: #646464;
