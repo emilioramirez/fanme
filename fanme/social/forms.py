@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.contrib.auth.models import User
+from fanme.social.models import Evento
 
 
 class MessageForm(forms.Form):
@@ -26,3 +27,16 @@ class MessageResponseForm(forms.Form):
         widget=forms.Textarea
             (attrs={'style': 'resize: none;',
             'cols': 78, 'rows': 2}))
+
+
+class EventoForm(forms.ModelForm):
+
+    class Meta():
+        model = Evento
+        fields = (
+            'fecha_inicio',
+            'fecha_fin',
+            'localizacion',
+            'descripcion',
+            'invitados'
+            )
