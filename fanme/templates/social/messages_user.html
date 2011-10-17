@@ -90,19 +90,15 @@
             </a>
         </div>
         <div class="sidebar-menu-indicators">
-            <div class="menu-indicators">Mensajes ({{ user.mensajes_recibidos.all.count }})</div>
+            <div class="menu-indicators">
+                    <a href="/social/messages/">Mensajes ({{ user.mensajes_recibidos.all.count }})</a>
+            </div>
             <div class="menu-indicators">Eventos (#)</div>
             <div class="menu-indicators">Notificaciones (#)</div>
         </div>
         <div class="sidebar-new-item">
             <a href="/items/item/register/"><div class="new-item-buttom">Crear Item</div></a>
         </div>
-        <div class="sidebar-new-message">
-                <a href="/social/messages/"><div class="message">Mensajes</div></a>
-            </div>
-            <div class="sidebar-new-message">
-                <a href="/social/events/"><div class="new-event">Eventos</div></a>
-            </div>
         <div class="clear"></div>
     </div>
 {% endblock sidebar %}

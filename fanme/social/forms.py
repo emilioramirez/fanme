@@ -5,11 +5,15 @@ from fanme.social.models import Evento
 
 
 class MessageForm(forms.Form):
-    user_to_id = forms.CharField(
-        label='Para',
-        required=True,
-        error_messages={'required': 'Es necesario un Usuario'},
-        widget=forms.TextInput(attrs={'class': 'message-content-mati-to'}))
+#    user_to_id = forms.CharField(
+#        label='Para',
+#        required=True,
+#        error_messages={'required': 'Es necesario un Usuario'},
+#        widget=forms.TextInput(attrs={'class': 'message-content-mati-to'}))
+    user_to_id = forms.ChoiceField(
+        widget=forms.Select(),
+        choices=(),
+        required=True,)
     mensaje = forms.CharField(
         label='Mensaje',
         required=True,
