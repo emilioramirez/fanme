@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
 from fanme.dash.forms import SearchBox
-from fanme.items.models import Item, Comentario, Marca
+from fanme.items.models import Item, Comentario, Marca, Recomendacion
+from fanme.items.models import Recomendaciones
 from fanme.items.forms import ItemRegisterForm, CommentForm
 from fanme.accounts.models import Empresa, Persona
 from fanme.segmentation.models import Topico
@@ -87,7 +88,7 @@ def fan(request, item_id):
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa.html/')
+        return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item, 'messages': messages, 'is_fan': is_fan,
         'comment_form': comment_form, 'comments': comments},
@@ -106,7 +107,7 @@ def unfan(request, item_id):
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa.html/')
+        return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item, 'messages': messages, 'comment_form': comment_form},
         context_instance=RequestContext(request))
@@ -138,4 +139,42 @@ def comment(request, item_id):
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item, 'comment_form': comment_form, 'messages': messages,
         'comments': comments},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def recomendation(request, item_id):
+    searchbox = SearchBox()
+    seguidores = request.user.followers.all()
+    usuarios = []
+    try:
+        item = Item.objects.get(pk=item_id)
+    except Item.DoesNotExist:
+        raise Http404
+    if request.method == 'POST':
+        lista_ids = request.POST.getlist('recomendados')
+        for id in lista_ids:
+            usuarios.append(User.objects.get(id=id))
+        try:
+            request.user.recomendaciones
+        except Recomendaciones.DoesNotExist:
+            recomendaciones = Recomendaciones()
+            recomendaciones.user_origen = request.user
+            recomendaciones.save()
+#            request.user.recomendaciones = recomendaciones
+        for usuario in usuarios:
+            try:
+                request.user.recomendaciones.recomendacion_set.get(
+                    user_destino=usuario.id)
+            except Recomendacion.DoesNotExist:
+                recomendacion = Recomendacion()
+                recomendacion.item = item
+                recomendacion.user_destino = usuario
+                recomendacion.fecha = datetime.now()
+                recomendacion.user_origen = request.user.recomendaciones
+                recomendacion.save()
+
+        return HttpResponseRedirect('/dash/dashboard/')
+    return render_to_response('items/recomendacion.html',
+        {'form_search': searchbox, 'usuarios': seguidores, 'item': item},
         context_instance=RequestContext(request))

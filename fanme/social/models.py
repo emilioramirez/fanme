@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
-from fanme.support .models import Localizacion
+from fanme.support.models import Localizacion
+
+
+class Eventos(models.Model):
+    creador = models.OneToOneField(User)
+
+    def __unicode__(self):
+        return self.creador.username
 
 
 class Evento(models.Model):
@@ -10,7 +17,10 @@ class Evento(models.Model):
     fecha_fin = models.DateTimeField()
     fecha_creacion = models.DateTimeField()
     localizacion = models.ForeignKey(Localizacion)
-    #estado =
+    creador = models.ForeignKey(Eventos)
+
+    def __unicode__(self):
+        return self.descripcion
 
 
 class Mensaje(models.Model):
