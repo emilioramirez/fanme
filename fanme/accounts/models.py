@@ -22,9 +22,12 @@ class AbstractProfile(models.Model):
 
     class Meta:
         abstract = True
+#        verbose_name = ''
+#        verbose_name_plural = "stories"
 
     def __unicode__(self):
-        return 'Perfil de {0}'.format(self.user.username)
+        return u'{0} {1} <{2}>'.format(self.user.first_name,
+            self.user.last_name, self.user.username)
 
 
 class Persona(AbstractProfile):
@@ -34,8 +37,16 @@ class Persona(AbstractProfile):
     following = models.ManyToManyField(User, null=True, blank=True,
         related_name='followers')
 
+    class Meta:
+#        verbose_name = ''
+        verbose_name_plural = "Personas"
+
 
 class Empresa(AbstractProfile):
     razon_social = models.CharField(max_length=40)
     rubros = models.ManyToManyField(Rubro)
     site = models.URLField(verify_exists=False)
+
+    class Meta:
+#        verbose_name = ''
+        verbose_name_plural = "Empresas"

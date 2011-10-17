@@ -30,7 +30,11 @@ class Recomendaciones(models.Model):
     user_origen = models.OneToOneField(User)
 
     def __unicode__(self):
-        return 'De {0}'.format(self.user_origen)
+        return u'De {0}'.format(self.user_origen)
+
+    class Meta:
+#        verbose_name = ''
+        verbose_name_plural = "Recomendaciones por usuario"
 
 
 class Recomendacion(models.Model):
@@ -40,4 +44,9 @@ class Recomendacion(models.Model):
     user_origen = models.ForeignKey(Recomendaciones)
 
     def __unicode__(self):
-        return '{0} para {1}'.format(self.user_origen, self.user_destino)
+        return u'{0} para {1} sobre {2}'.format(self.user_origen,
+            self.user_destino, self.item)
+
+    class Meta:
+#        verbose_name = ''
+        verbose_name_plural = "Recomendaciones"

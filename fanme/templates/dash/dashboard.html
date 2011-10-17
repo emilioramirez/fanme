@@ -92,10 +92,12 @@
                     <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
                 </div>
             </a>
-            <div class="stadistic-recomendations sidebar-stadistic-item">
-                <div class="stadistic-num">{{ user.recomendaciones.recomendacion_set.count }}</div>
-                <div class="stadistic-nom">Recomendaciones</div>
-            </div>
+            <a href="/dash/comments/">
+                <div class="stadistic-recomendations sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ user.recomendaciones.recomendacion_set.count }}</div>
+                    <div class="stadistic-nom">Recomendaciones</div>
+                </div>
+            </a>
             <a href="/dash/comments/">
                 <div class="stadistic-comments sidebar-stadistic-item">
                     <div class="stadistic-num">{{ user.comentario_set.count }}</div>
@@ -105,13 +107,19 @@
         </div>
         <div class="sidebar-menu-indicators">
             <div class="menu-indicators">Mensajes (#)</div>
-            <a href="/social/nuevo">
-                <div class="menu-indicators">Eventos (#)</div>
+            <a href="/social/eventos">
+                <div class="menu-indicators">Eventos
+                    {% if user.evento_set.count > 0 %}
+                        ({{ user.evento_set.count }})
+                    {% endif %}
+                </div>
             </a>
             <div class="menu-indicators">Notificaciones (#)</div>
         </div>
         <div class="sidebar-new-item">
-            <a href="/items/item/register/"><div class="new-item-buttom">Crear Item</div></a>
+            {% block crear %}
+                <a href="/items/item/register/"><div class="new-item-buttom">Crear Item</div></a>
+            {% endblock %}
         </div>
         <div class="clear"></div>
     </div>

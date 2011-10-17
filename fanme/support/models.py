@@ -16,6 +16,10 @@ class Pais(models.Model):
     def __unicode__(self):
         return self.nombre
 
+    class Meta:
+#        verbose_name = ''
+        verbose_name_plural = "Paises"
+
 
 class Provincia(models.Model):
     nombre = models.CharField(max_length=20)
@@ -32,6 +36,10 @@ class Localidad(models.Model):
     def __unicode__(self):
         return self.nombre
 
+    class Meta:
+#        verbose_name = ''
+        verbose_name_plural = "Localidades"
+
 
 class Localizacion(models.Model):
     barrio = models.CharField(max_length=20)
@@ -42,3 +50,7 @@ class Localizacion(models.Model):
 
     def __unicode__(self):
         return self.barrio
+
+    class Meta:
+#        verbose_name = ''
+        verbose_name_plural = "Localizaciones"

@@ -22,6 +22,10 @@ class Tag(models.Model):
 class Credibilidad(models.Model):
     pass
 
+    class Meta:
+#        verbose_name = ''
+        verbose_name_plural = "Credibilidades"
+
 
 class Denuncia(models.Model):
     fecha_denuncia = models.DateTimeField()

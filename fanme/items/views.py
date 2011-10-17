@@ -88,7 +88,7 @@ def fan(request, item_id):
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa.html/')
+        return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item, 'messages': messages, 'is_fan': is_fan,
         'comment_form': comment_form, 'comments': comments},
@@ -107,7 +107,7 @@ def unfan(request, item_id):
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa.html/')
+        return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item, 'messages': messages, 'comment_form': comment_form},
         context_instance=RequestContext(request))
@@ -161,7 +161,7 @@ def recomendation(request, item_id):
             recomendaciones = Recomendaciones()
             recomendaciones.user_origen = request.user
             recomendaciones.save()
-            request.user.recomendaciones = recomendaciones
+#            request.user.recomendaciones = recomendaciones
         for usuario in usuarios:
             try:
                 request.user.recomendaciones.recomendacion_set.get(
