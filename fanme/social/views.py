@@ -127,33 +127,17 @@ def delete_evento(request, evento_id):
 @login_required(login_url='/accounts/user/')
 def messages(request):
     searchbox = SearchBox()
-    if request.method == "POST":
-        form = EventoForm(request.POST)
-        list_ids = request.user.followers.values_list('user', flat=True)
-        users = User.objects.filter(id__in=list_ids)
-        form.fields["invitados"].queryset = users
-        if form.is_valid():
-            evento = form.save(commit=False)
-            try:
-                request.user.eventos
-            except Eventos.DoesNotExist:
-                eventos = Eventos()
-                eventos.creador = request.user
-                eventos.save()
-            creador = request.user.eventos
-            evento.creador = creador
-            evento.fecha_creacion = datetime.now()
-            evento.save()
-            form.save_m2m()
-            return HttpResponseRedirect('/social/eventos/')
-    else:
-        form = EventoForm()
-        list_ids = request.user.followers.values_list('user', flat=True)
-        users = User.objects.filter(id__in=list_ids)
-        form.fields["invitados"].queryset = users
-    template_vars = RequestContext(request, {"form": form,
-        'form_search': searchbox})
-    return render_to_response('social/new_evento.html', template_vars)
+    try:
+        mensajes_recibidos = request.user.mensajes_recibidos.all().values(
+            'user_from').distinct()
+        usuarios = []
+        for dict in mensajes_recibidos.all():
+            usuarios.append(User.objects.get(id=dict['user_from']))
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('social/messages.html', {'form_search': searchbox,
+        'mensajes_recibidos': usuarios},
+        context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
@@ -178,6 +162,9 @@ def new_message(request):
             users = User.objects.all()
     else:
         form_new_message = MessageForm()
+        list_ids = request.user.followers.values_list('user', flat=True)
+        users = User.objects.filter(id__in=list_ids)
+        form_new_message.fields["user_to_id"].queryset = users
         users = User.objects.all()
     return render_to_response('social/new_message.html',
         {'form_new_message': form_new_message,
@@ -202,26 +189,51 @@ def messages_user(request, user_id):
                 message.fecha = datetime.datetime.now()
                 message.save()
                 form_response_message = MessageResponseForm()
-                mensajes_recibidos = request.user.mensajes_recibidos.filter(
-                user_from__exact=user_id)
-                mensajes_enviados = request.user.mensajes_enviados.filter(
-                    user_to__exact=user_id)
-                mensajes = sorted(chain(mensajes_enviados, mensajes_recibidos),
-                    key=attrgetter('fecha'))
+                mensajes = getMensajes(request, user_id)
             else:
-                mensajes_recibidos = request.user.mensajes_recibidos.filter(
-                user_from__exact=user_id)
-                mensajes_enviados = request.user.mensajes_enviados.filter(
-                    user_to__exact=user_id)
-                mensajes = sorted(chain(mensajes_enviados, mensajes_recibidos),
-                    key=attrgetter('fecha'))
+                mensajes = getMensajes(request, user_id)
         else:
-            mensajes_recibidos = request.user.mensajes_recibidos.filter(
-                user_from__exact=user_id)
-            mensajes_enviados = request.user.mensajes_enviados.filter(
-                user_to__exact=user_id)
-            mensajes = sorted(chain(mensajes_enviados, mensajes_recibidos),
-                key=attrgetter('fecha'))
+            mensajes = getMensajes(request, user_id)
+            form_response_message = MessageResponseForm()
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('social/messages_user.html', {
+        'form_search': searchbox,
+        'form_response_message': form_response_message,
+        'mensajes': mensajes},
+        context_instance=RequestContext(request))
+
+
+def getMensajes(request, user_id):
+    mensajes_recibidos = request.user.mensajes_recibidos.filter(
+        user_from__exact=user_id)
+    mensajes_enviados = request.user.mensajes_enviados.filter(
+        user_to__exact=user_id)
+    mensajes = sorted(chain(mensajes_enviados, mensajes_recibidos),
+        key=attrgetter('fecha'))
+    return mensajes
+
+
+@login_required(login_url='/accounts/user/')
+def enterprise_query(request, user_id):
+    searchbox = SearchBox()
+    try:
+        if request.method == 'POST':
+            form_response_message = MessageResponseForm(request.POST)
+            if form_response_message.is_valid():
+                mensaje = form_response_message.cleaned_data['mensaje']
+                message = Mensaje()
+                message.user_from_id = request.user.id
+                message.user_to_id = user_id
+                message.mensaje = mensaje
+                message.fecha = datetime.datetime.now()
+                message.save()
+                form_response_message = MessageResponseForm()
+                mensajes = getMensajes(request, user_id)
+            else:
+                mensajes = getMensajes(request, user_id)
+        else:
+            mensajes = getMensajes(request, user_id)
             form_response_message = MessageResponseForm()
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
