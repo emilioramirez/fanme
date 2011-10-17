@@ -6,6 +6,9 @@ from fanme.support.models import Localizacion
 class Eventos(models.Model):
     creador = models.OneToOneField(User)
 
+    def __unicode__(self):
+        return self.creador.username
+
 
 class Evento(models.Model):
     invitados = models.ManyToManyField(User, null=True, blank=True)
@@ -15,6 +18,9 @@ class Evento(models.Model):
     fecha_creacion = models.DateTimeField()
     localizacion = models.ForeignKey(Localizacion)
     creador = models.ForeignKey(Eventos)
+
+    def __unicode__(self):
+        return self.descripcion
 
 
 class Mensaje(models.Model):

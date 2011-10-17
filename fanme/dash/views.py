@@ -4,8 +4,6 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from fanme.accounts.forms import UserRegisterForm
-from fanme.dash.forms import UserUpdateForm, PassUpdateForm
 
 from fanme.dash.forms import SearchBox
 from fanme.items.models import Item

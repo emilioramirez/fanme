@@ -303,6 +303,7 @@ body{}
                         .stadistic-nom{ color: #646464; font-size: 14px; padding: 3px;}
                 .sidebar-menu-indicators{ float: left; margin: 10px 30px;}
                     .menu-indicators{ color: #646464; margin: 6px 0;}
+                    .menu-indicators:hover { text-shadow: 1px 1px 1px;}
                 .sidebar-new-item{}
                     .sidebar-new-item a{ text-decoration: none;}
                     .new-item-buttom{
@@ -311,8 +312,10 @@ body{}
                         float: left;
                         font-size: 14px;
                         font-weight: bold;
-                        margin: 18px;
-                        padding: 9px 50px;
+                        height: 36px;
+                        margin: 20px 0 0 20px;
+                        padding: 9px 0 0 50px;
+                        width: 184px;
                     }
         /* End Sidebar */
         /* Begin Item */
