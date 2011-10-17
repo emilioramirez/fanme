@@ -225,6 +225,23 @@ body{}
                         }
                 /* End Item content */
             /* End Item List */
+            /* Begin Recomend Item */
+            .form-recomend-user{margin: 88px 60px;}
+            .form-recomend-user input{
+                background: url("/mymedia/images/crear-item.png") no-repeat scroll 0 0 transparent;
+                    border: medium none;
+                    color: white;
+                    float: right;
+                    padding: 8px 6px;
+                }
+            }
+                .list-posible-user-recomend{}
+                    .posible-user-recomend{}
+                    .posible-user-recomend.div{}
+                        .user-recomend-name{height: 40px;width: 300px;}
+                        .user-recomend-checkbox{}
+                        .list-item-recomend{float: left; margin: 15px 0;}
+            /* End Recomend Item */
         /* End Content Dashboard */
         /* Begin Sidebar */
         .content-sidebar{
@@ -286,6 +303,7 @@ body{}
                         .stadistic-nom{ color: #646464; font-size: 14px; padding: 3px;}
                 .sidebar-menu-indicators{ float: left; margin: 10px 30px;}
                     .menu-indicators{ color: #646464; margin: 6px 0;}
+                    .menu-indicators:hover { text-shadow: 1px 1px 1px;}
                 .sidebar-new-item{}
                     .sidebar-new-item a{ text-decoration: none;}
                     .new-item-buttom{
@@ -294,8 +312,10 @@ body{}
                         float: left;
                         font-size: 14px;
                         font-weight: bold;
-                        margin: 18px;
-                        padding: 9px 50px;
+                        height: 36px;
+                        margin: 20px 0 0 20px;
+                        padding: 9px 0 0 50px;
+                        width: 184px;
                     }
         /* End Sidebar */
         /* Begin Item */

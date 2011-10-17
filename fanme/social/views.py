@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from fanme.social.forms import MessageForm, MessageResponseForm
 
@@ -12,9 +13,56 @@ from itertools import chain
 from operator import attrgetter
 import datetime
 
+@login_required(login_url='/accounts/user/')
+def eventos(request):
+    searchbox = SearchBox()
+    try:
+        eventos_creados = request.user.eventos.evento_set.all()
+    except Eventos.DoesNotExist:
+        eventos_creados = []
+    try:
+        eventos_invitado = request.user.evento_set.all()
+    except Eventos.DoesNotExist:
+        eventos_invitado = []
+    temp = RequestContext(request, {'eventos_creados': eventos_creados,
+        'eventos_invitado': eventos_invitado, 'form_search': searchbox})
+    return render_to_response('social/eventos.html', temp)
+
 
 @login_required(login_url='/accounts/user/')
 def messages(request):
+    searchbox = SearchBox()
+    if request.method == "POST":
+        form = EventoForm(request.POST)
+        list_ids = request.user.followers.values_list('user', flat=True)
+        users = User.objects.filter(id__in=list_ids)
+        form.fields["invitados"].queryset = users
+        if form.is_valid():
+            evento = form.save(commit=False)
+            try:
+                request.user.eventos
+            except Eventos.DoesNotExist:
+                eventos = Eventos()
+                eventos.creador = request.user
+                eventos.save()
+            creador = request.user.eventos
+            evento.creador = creador
+            evento.fecha_creacion = datetime.now()
+            evento.save()
+            form.save_m2m()
+            return HttpResponseRedirect('/social/eventos/')
+    else:
+        form = EventoForm()
+        list_ids = request.user.followers.values_list('user', flat=True)
+        users = User.objects.filter(id__in=list_ids)
+        form.fields["invitados"].queryset = users
+    template_vars = RequestContext(request, {"form": form,
+        'form_search': searchbox})
+    return render_to_response('social/new_evento.html', template_vars)
+
+
+@login_required(login_url='/accounts/user/')
+def evento(request, evento_id):
     searchbox = SearchBox()
     try:
         mensajes_recibidos = request.user.mensajes_recibidos.all().values(
