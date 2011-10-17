@@ -143,11 +143,13 @@ def messages(request):
 @login_required(login_url='/accounts/user/')
 def new_message(request):
     searchbox = SearchBox()
-    messages = []
     if request.method == 'POST':
         form_new_message = MessageForm(request.POST)
+        list_ids = request.user.followers.values_list('user', flat=True)
+        users = User.objects.filter(id__in=list_ids)
+        form_new_message.fields["user_to_id"].queryset = users
         if form_new_message.is_valid():
-            user_to_id = form_new_message.cleaned_data['user_to_id']
+            user_to_id = form_new_message.cleaned_data['user_to_id'].id
             mensaje = form_new_message.cleaned_data['mensaje']
             message = Mensaje()
             message.user_from_id = request.user.id
@@ -155,22 +157,15 @@ def new_message(request):
             message.mensaje = mensaje
             message.fecha = datetime.datetime.now()
             message.save()
-            messages.append("Se envio correctamente el mensaje")
-            users = User()
-            form_new_message = MessageForm()
-        else:
-            users = User.objects.all()
+            return HttpResponseRedirect('/social/messages/')
     else:
         form_new_message = MessageForm()
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
         form_new_message.fields["user_to_id"].queryset = users
-        users = User.objects.all()
     return render_to_response('social/new_message.html',
         {'form_new_message': form_new_message,
-        'form_search': searchbox,
-        'users': users,
-        'messages': messages},
+        'form_search': searchbox},
         context_instance=RequestContext(request))
 
 

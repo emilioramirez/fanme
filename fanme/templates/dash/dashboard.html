@@ -106,7 +106,9 @@
             </a>
         </div>
         <div class="sidebar-menu-indicators">
-            <div class="menu-indicators">Mensajes (#)</div>
+            <a href="/social/messages">
+                <div class="menu-indicators">Mensajes ({{ user.mensajes_recibidos.all.count }})</div>
+            </a>
             <a href="/social/eventos">
                 <div class="menu-indicators">Eventos
                     {% if user.evento_set.count > 0 %}

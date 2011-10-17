@@ -10,10 +10,7 @@ class MessageForm(forms.Form):
 #        required=True,
 #        error_messages={'required': 'Es necesario un Usuario'},
 #        widget=forms.TextInput(attrs={'class': 'message-content-mati-to'}))
-    user_to_id = forms.ChoiceField(
-        widget=forms.Select(),
-        choices=(),
-        required=True,)
+    user_to_id = forms.ModelChoiceField(queryset=None)
     mensaje = forms.CharField(
         label='Mensaje',
         required=True,

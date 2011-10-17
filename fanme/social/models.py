@@ -29,6 +29,9 @@ class Mensaje(models.Model):
     mensaje = models.TextField(max_length=300)
     fecha = models.DateTimeField()
 
+    def __unicode__(self):
+        return self.mensaje
+
 
 class Notificacion(models.Model):
     empresa = models.ForeignKey(User, related_name='notificaciones_enviadas')

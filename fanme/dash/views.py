@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from fanme.dash.forms import SearchBox
+from fanme.dash.forms import SearchBox, UserUpdateForm, PassUpdateForm
 from fanme.items.models import Item
 from fanme.accounts.models import Persona, Empresa
 from fanme.segmentation.models import Topico
