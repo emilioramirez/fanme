@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     (r'^dash/', include('fanme.dash.urls')),
     (r'^items/', include('fanme.items.urls')),
     (r'^social/', include('fanme.social.urls')),
+    (r'^bussiness/', include('fanme.social.urls')),
 )
 
 from django.conf import settings

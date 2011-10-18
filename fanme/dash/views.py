@@ -185,6 +185,22 @@ def my_comments_items(request):
 
 
 @login_required(login_url='/accounts/user/')
+def my_recomended_items(request):
+    searchbox = SearchBox()
+    messages = []
+    try:
+        request.user.persona
+        messages.append("Has recomendado los siguientes items")
+    except Persona.DoesNotExist:
+            return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('dash/my_stuff2.html',
+        {'form_search': searchbox, 'messages': messages,
+        'recomendaciones': request.user.recomendaciones.recomendacion_set.all(),
+            'is_fan': False},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
 def following(request):
     searchbox = SearchBox()
     messages = ['Estas siguiendo a estos usuarios']

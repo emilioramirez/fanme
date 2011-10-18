@@ -78,7 +78,7 @@ class Notificacion(models.Model):
     resumen = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return self.descripcion
+        return self.resumen
 
     class Meta:
 #        verbose_name = ''
