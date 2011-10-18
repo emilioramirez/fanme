@@ -65,11 +65,27 @@
                 </a>
             </div>
             <div class="sidebar-menu-indicators">
-                <a href="/social/messages">
-                    <div class="menu-indicators">Mensajes ({{ user.mensajes_recibidos.all.count }})</div>
-                </a>
-                <div class="menu-indicators">Eventos (#)</div>
-                <div class="menu-indicators">Notificaciones (#)</div>
+                <a href="/social/messages/">
+                <div class="menu-indicators">Mensajes
+                    {% if user.mensajes_recibidos.all.count > 0 %}
+                        ({{ user.mensajes_recibidos.all.count }})
+                    {% endif %}
+                </div>
+            </a>
+            <a href="/social/eventos/">
+                <div class="menu-indicators">Eventos
+                    {% if user.evento_set.count > 0 %}
+                        ({{ user.evento_set.count }})
+                    {% endif %}
+                </div>
+            </a>
+            <a href="/social/notificaciones/">
+                <div class="menu-indicators">Notificaciones
+                    {% if user.notificacion_set.count > 0 %}
+                        ({{ user.notificacion_set.count }})
+                    {% endif %}
+                </div>
+            </a>
             </div>
             <div class="sidebar-new-item">
                 <a href="/items/item/register/"><div class="new-item-buttom">Crear Item</div></a>

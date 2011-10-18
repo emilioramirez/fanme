@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -54,3 +55,31 @@ class Localizacion(models.Model):
     class Meta:
 #        verbose_name = ''
         verbose_name_plural = "Localizaciones"
+
+
+class TipoNotificacion(models.Model):
+    nombre = models.CharField(max_length=20)
+    descripcion = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+#        verbose_name = ''
+        verbose_name_plural = "Tipos de Notiticacion"
+
+
+class Notificacion(models.Model):
+    usuario = models.ForeignKey(User)
+    descripcion = models.CharField(max_length=100)
+    url = models.CharField(max_length=100)
+    tipo = models.ForeignKey(TipoNotificacion)
+    leido = models.BooleanField()
+    resumen = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.resumen
+
+    class Meta:
+#        verbose_name = ''
+        verbose_name_plural = "Notificaciones"
