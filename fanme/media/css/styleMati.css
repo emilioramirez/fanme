@@ -284,7 +284,7 @@ sidebar-follow-user{}
             width: 307px;
             padding: 0px 0px 10px 0px;
         }
-            .errorlist{
+            .edit-account-content-label ul.errorlist{
                 color: red;
                 font-size: 10px;
                 list-style: none outside none;
@@ -539,3 +539,9 @@ sidebar-follow-user{}
     float: right;
 }
 /* End Content Dashboard */
+/*Begining of the Company*/
+.menu-indicators-mati{
+    color: #646464;
+    margin: 6px 17px;
+}
+/*End of the Company*/
