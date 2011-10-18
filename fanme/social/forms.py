@@ -30,6 +30,16 @@ class MessageResponseForm(forms.Form):
             'cols': 78, 'rows': 2}))
 
 
+class MessageQueryForm(forms.Form):
+    mensaje = forms.CharField(
+        label='',
+        required=True,
+        error_messages={'required': 'Es necesario ingresar un mensaje'},
+        widget=forms.Textarea
+            (attrs={'style': 'resize: none;  margin: -16px 67px;',
+            'cols': 78, 'rows': 5}))
+
+
 class EventoForm(forms.ModelForm):
 
     class Meta():

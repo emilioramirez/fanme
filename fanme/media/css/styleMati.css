@@ -492,6 +492,17 @@ sidebar-follow-user{}
             float: left;
             margin: 4px 13px 0 10px;
         }
+        .message-content-query{
+            padding: 16px;
+        }
+            .message-content-label-query{
+            }
+            .message-content-query ul.errorlist{
+                color: red;
+                font-size: 10px;
+                list-style: none outside none;
+                margin: 5px 29px;
+            }
         .message-content-clear{
             margin-top: 20px;
         }
@@ -500,6 +511,14 @@ sidebar-follow-user{}
             border: medium none;
             color: white;
             margin: 10px 587px;
+            height: 32px;
+            width: 72px;
+        }
+        .enviar-query{
+            background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+            border: medium none;
+            color: white;
+            margin: 10px 576px;
             height: 32px;
             width: 72px;
         }
