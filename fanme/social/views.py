@@ -13,7 +13,7 @@ from operator import attrgetter
 import datetime
 
 from fanme.social.forms import EventoForm
-from fanme.social.models import Eventos, Evento
+from fanme.social.models import Evento
 from fanme.support.models import Notificacion
 
 
@@ -21,12 +21,12 @@ from fanme.support.models import Notificacion
 def eventos(request):
     searchbox = SearchBox()
     try:
-        eventos_creados = request.user.eventos.evento_set.all()
-    except Eventos.DoesNotExist:
+        eventos_creados = request.user.eventos_creados.all()
+    except Evento.DoesNotExist:
         eventos_creados = []
     try:
-        eventos_invitado = request.user.evento_set.all()
-    except Eventos.DoesNotExist:
+        eventos_invitado = request.user.eventos_invitado.all()
+    except Evento.DoesNotExist:
         eventos_invitado = []
     temp = RequestContext(request, {'eventos_creados': eventos_creados,
         'eventos_invitado': eventos_invitado, 'form_search': searchbox})
@@ -42,25 +42,12 @@ def new_evento(request):
         users = User.objects.filter(id__in=list_ids)
         form.fields["invitados"].queryset = users
         if form.is_valid():
-            usuarios = form.cleaned_data['invitados']
             evento = form.save(commit=False)
-            try:
-                request.user.eventos
-            except Eventos.DoesNotExist:
-                eventos = Eventos()
-                eventos.creador = request.user
-                eventos.save()
-            creador = request.user.eventos
+            creador = request.user
             evento.creador = creador
             evento.fecha_creacion = datetime.datetime.now()
             evento.save()
             form.save_m2m()
-            enviar_notificaciones(usuarios,
-                 "<a href='/dash/logbook/{0}'>{1}</a> ha creado un evento y te ha invitado".format(request.user.id, request.user.first_name+" "+request.user.last_name),
-                 "/social/evento/{0}".format(evento.id),
-                 "Evento",
-                 "Te han invitado a un evento!")
-
             return HttpResponseRedirect('/social/eventos/')
     else:
         form = EventoForm()
@@ -75,11 +62,15 @@ def new_evento(request):
 @login_required(login_url='/accounts/user/')
 def evento(request, evento_id):
     searchbox = SearchBox()
+    creador = False
     try:
         evento = Evento.objects.get(id=evento_id)
+        if (evento.creador == request.user):
+            creador = True
     except Evento.DoesNotExist:
         evento = []
-    temp = RequestContext(request, {'form_search': searchbox, 'evento': evento})
+    temp = RequestContext(request, {'form_search': searchbox, 'evento': evento,
+        'creador': creador})
     return render_to_response('social/evento.html', temp)
 
 
@@ -88,6 +79,8 @@ def edit_evento(request, evento_id):
     searchbox = SearchBox()
     try:
         evento_db = Evento.objects.get(id=evento_id)
+        if not (evento_db.creador == request.user):
+            return HttpResponseRedirect('/social/eventos/')
     except Evento.DoesNotExist:
         return HttpResponseRedirect('/social/eventos/')
     if request.method == "POST":
@@ -96,24 +89,9 @@ def edit_evento(request, evento_id):
         users = User.objects.filter(id__in=list_ids)
         form.fields["invitados"].queryset = users
         if form.is_valid():
-            usuarios = form.cleaned_data['invitados']
             evento = form.save(commit=False)
-            try:
-                request.user.eventos
-            except Eventos.DoesNotExist:
-                eventos = Eventos()
-                eventos.creador = request.user
-                eventos.save()
-#            creador = request.user.eventos
-#            evento.creador = creador
-#            evento.fecha_creacion = datetime.now()
             evento.save()
             form.save_m2m()
-            enviar_notificaciones(usuarios,
-                 "<a href='/dash/logbook/{0}'>{1}</a> ha creado un evento y te ha invitado".format(request.user.id, request.user.first_name+" "+request.user.last_name),
-                 "/social/evento/{0}".format(evento.id),
-                 "Evento",
-                 "Te han invitado a un evento!")
             return HttpResponseRedirect('/social/eventos/')
     else:
         form = EventoForm(instance=evento_db)
@@ -130,7 +108,8 @@ def delete_evento(request, evento_id):
     searchbox = SearchBox()
     try:
         evento_db = Evento.objects.get(id=evento_id)
-        evento_db.delete()
+        if (evento_db.creador == request.user):
+            evento_db.delete()
         return HttpResponseRedirect('/social/eventos/')
     except Evento.DoesNotExist:
         return HttpResponseRedirect('/social/eventos/')
