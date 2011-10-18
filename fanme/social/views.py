@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from fanme.support.models import TipoNotificacion
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from fanme.social.forms import MessageForm, MessageResponseForm
+from fanme.social.forms import MessageForm, MessageResponseForm, MessageQueryForm
 from fanme.dash.forms import SearchBox
 from fanme.accounts.models import Persona
 from fanme.social.models import Mensaje
@@ -225,32 +225,29 @@ def getMensajes(request, user_id):
 
 
 @login_required(login_url='/accounts/user/')
-def enterprise_query(request, user_id):
+def company_query(request, company_id):
     searchbox = SearchBox()
     try:
         if request.method == 'POST':
-            form_response_message = MessageResponseForm(request.POST)
-            if form_response_message.is_valid():
-                mensaje = form_response_message.cleaned_data['mensaje']
+            form_query_message = MessageQueryForm(request.POST)
+            if form_query_message.is_valid():
+                mensaje = form_query_message.cleaned_data['mensaje']
                 message = Mensaje()
                 message.user_from_id = request.user.id
-                message.user_to_id = user_id
+                message.user_to_id = company_id
                 message.mensaje = mensaje
                 message.fecha = datetime.datetime.now()
                 message.save()
-                form_response_message = MessageResponseForm()
-                mensajes = getMensajes(request, user_id)
-            else:
-                mensajes = getMensajes(request, user_id)
+                form_query_message = MessageQueryForm()
+                return HttpResponseRedirect('/social/messages/')
         else:
-            mensajes = getMensajes(request, user_id)
-            form_response_message = MessageResponseForm()
+            form_query_message = MessageQueryForm()
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('social/messages_user.html', {
+    return render_to_response('social/company_query.html', {
         'form_search': searchbox,
-        'form_response_message': form_response_message,
-        'mensajes': mensajes},
+        'company_id': company_id,
+        'form_query_message': form_query_message},
         context_instance=RequestContext(request))
 
 
