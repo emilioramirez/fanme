@@ -57,3 +57,16 @@ class EventoForm(forms.ModelForm):
             'fecha_fin': forms.DateInput(attrs={
                 'class': 'evento-date-form-field'}),
         }
+
+
+class NotificationForm(forms.ModelForm):
+
+    class Meta():
+        model = Evento
+        fields = (
+            'fecha_inicio',
+            'fecha_fin',
+            'localizacion',
+            'descripcion',
+            'invitados'
+            )

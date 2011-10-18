@@ -44,8 +44,8 @@ class UserUpdateForm(forms.Form):
         label='Fecha de Nacimiento',
         initial='',
         input_formats=['%d/%m/%Y'],
-        error_messages={'required': 'Fecha invalida, ingrese de la forma Día/Mes/Año',
-            'invalid': 'Fecha invalida, ingrese de la forma Día/Mes/Año'},
+        error_messages={'required': 'Fecha invalida: Día/Mes/Año',
+            'invalid': 'Fecha invalida: Día/Mes/Año'},
         widget=forms.DateInput(attrs={'class': 'edit-account-date-field'}))
 
     def clean_username(self):

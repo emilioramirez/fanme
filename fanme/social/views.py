@@ -253,19 +253,12 @@ def enviar_notificaciones(usuarios, descripcion, url, tipo, resumen):
 def notificaciones(request):
     searchbox = SearchBox()
     try:
-        notificaciones_leidas = request.user.notificacion_set.filter(leido=True)
-    except Notificacion.DoesNotExist:
-        notificaciones_leidas = []
-    try:
-        notificaciones_nuevas = request.user.notificacion_set.filter(leido=False)
-        for notificacion in notificaciones_nuevas:
-            notificacion.leido = True
-            notificacion.save()
-    except Notificacion.DoesNotExist:
-        notificaciones_nuevas = []
-    temp = RequestContext(request, {'notificaciones_nuevas': notificaciones_nuevas,
-        'notificaciones_leidas': notificaciones_leidas, 'form_search': searchbox})
-    return render_to_response('social/notificaciones.html', temp)
+        notificaciones_enviadas = request.user.notificaciones_enviadas.all()
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('social/notificaciones.html', {'form_search': searchbox,
+        'notificaciones_enviadas': notificaciones_enviadas},
+        context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')

@@ -34,12 +34,15 @@
         </div>
         <div class="clear"></div>
         <a href="/social/company_messages/">
-                <div class="menu-indicators-mati">Mensajes
-                    {% if user.mensajes_recibidos.all.count > 0 %}
-                        ({{ user.mensajes_recibidos.all.count }})
-                    {% endif %}
-                </div>
-            </a>
+            <div class="menu-indicators-mati">Mensajes
+                {% if user.mensajes_recibidos.all.count > 0 %}
+                    ({{ user.mensajes_recibidos.all.count }})
+                {% endif %}
+            </div>
+        </a>
+        <a href="/social/notificaciones/">
+            <div class="menu-indicators-mati">Notificaciones</div>
+        </a>
         <div class="sidebar-new-item-mati">
             <a href="/items/item/register/"><div class="new-item-buttom-mati">Crear Item</div></a>
         </div>
