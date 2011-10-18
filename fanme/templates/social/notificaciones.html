@@ -1,0 +1,53 @@
+{% extends "dash/dashboard.html" %}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class=''>
+        <h1 class=''>Notificaciones nuevas</h1>
+        {% if notificaciones_nuevas %}
+            <div class=''>
+                {% for notificacion in notificaciones_nuevas %}
+                    <a href='{{ notificacion.url|safe }}'>
+                        <div class=''>
+                            {{ notificacion.descripcion }}
+                        </div>
+                        <div class=''>
+                            <a href="/social/notificacion/delete/{{ notificacion.id }}">Eliminar</a>
+                        </div>
+                    </a>
+                {% endfor%}
+            </div>
+        {% else %}
+            <div class=''>No tienes ninguna notificacion</div>
+        {% endif %}
+    </div>
+    <div class=''>
+        <h1 class=''>Notificaciones leidas</h1>
+        {% if notificaciones_leidas %}
+            <div class=''>
+                {% for notificacion in notificaciones_leidas %}
+                    <a href='{{ notificacion.url|safe }}'>
+                        <div class=''>
+                            {{ notificacion.descripcion }}
+                        </div>
+                        <div class=''>
+                            <a href="/social/notificacion/delete/{{ notificacion.id }}">Eliminar</a>
+                        </div>
+                    </a>
+                {% endfor%}
+            </div>
+        {% else %}
+            <div class=''>No tienes ninguna notificacion leida</div>
+        {% endif %}
+    </div>
+{% endblock dashboard %}
+
+{% block crear %}
+{% endblock %}
