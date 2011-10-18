@@ -92,14 +92,10 @@
                     <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
                 </div>
             </a>
-            <a href="/dash/recomendations/">
+            <a href="/dash/recomendated/">
                 <div class="stadistic-recomendations sidebar-stadistic-item">
                     <div class="stadistic-num">
-                        {% if user.recomendaciones.recomendacion_set %}
-                            {{ user.recomendaciones.recomendacion_set.count }}
-                        {% else %}
-                        0
-                        {% endif %}
+                        {{ user.recomendaciones_enviadas.count }}
                     </div>
                     <div class="stadistic-nom">Mis recomendaciones</div>
                 </div>
@@ -114,8 +110,8 @@
         <div class="sidebar-menu-indicators">
             <a href="/social/messages/">
                 <div class="menu-indicators">Mensajes
-                    {% if user.mensajes_recibidos.all.count > 0 %}
-                        ({{ user.mensajes_recibidos.all.count }})
+                    {% if user.mensajes_recibidos.count > 0 %}
+                        ({{ user.mensajes_recibidos.count }})
                     {% endif %}
                 </div>
             </a>
@@ -133,10 +129,10 @@
                     {% endif %}
                 </div>
             </a>
-            <a href="">
+            <a href="/dash/recomendation/">
                 <div class="menu-indicators">Recomendaciones
-                    {% if user.recomendacion_set.count > 0 %}
-                        ({{ user.recomendacion_set.count }})
+                    {% if user.recomendaciones_recibidas.count > 0 %}
+                        ({{ user.recomendaciones_recibidas.count }})
                     {% endif %}
                 </div>
             </a>

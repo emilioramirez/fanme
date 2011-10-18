@@ -411,30 +411,7 @@ sidebar-follow-user{}
                 width: 125px;
             }
 /*End edit account*/
-/*Begin logbook css*/
-.sidebar-new-message{}
-    .message{
-        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
-        color: white;
-        float: left;
-        font-size: 14px;
-        font-weight: bold;
-        height: 17px;
-         margin: 0 18px 18px;
-        padding: 10px 59px;
-        width: 67px;
-        }
-    .new-event{
-        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
-        color: white;
-        float: left;
-        font-size: 14px;
-        font-weight: bold;
-        height: 17px;
-        margin: 0 18px 18px;
-        padding: 10px 70px;
-        }
-/*End logbook css*/
+
 /*Begin css of messages and events base template*/
 .item-content-mess-event{
     border: 1px solid #BBBBBB;

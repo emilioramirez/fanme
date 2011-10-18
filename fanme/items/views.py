@@ -9,7 +9,6 @@ from datetime import datetime
 
 from fanme.dash.forms import SearchBox
 from fanme.items.models import Item, Comentario, Marca, Recomendacion
-from fanme.items.models import Recomendaciones
 from fanme.items.forms import ItemRegisterForm, CommentForm
 from fanme.accounts.models import Empresa, Persona
 from fanme.segmentation.models import Topico
@@ -155,25 +154,24 @@ def recomendation(request, item_id):
         lista_ids = request.POST.getlist('recomendados')
         for id in lista_ids:
             usuarios.append(User.objects.get(id=id))
-        try:
-            request.user.recomendaciones
-        except Recomendaciones.DoesNotExist:
-            recomendaciones = Recomendaciones()
-            recomendaciones.user_origen = request.user
-            recomendaciones.save()
+#        try:
+#            request.user.recomendaciones
+#        except Recomendaciones.DoesNotExist:
+#            recomendaciones = Recomendaciones()
+#            recomendaciones.user_origen = request.user
+#            recomendaciones.save()
 #            request.user.recomendaciones = recomendaciones
         for usuario in usuarios:
             try:
-                request.user.recomendaciones.recomendacion_set.get(
+                request.user.recomendaciones_enviadas.get(
                     user_destino=usuario.id)
             except Recomendacion.DoesNotExist:
                 recomendacion = Recomendacion()
                 recomendacion.item = item
                 recomendacion.user_destino = usuario
                 recomendacion.fecha = datetime.now()
-                recomendacion.user_origen = request.user.recomendaciones
+                recomendacion.user_origen = request.user
                 recomendacion.save()
-
         return HttpResponseRedirect('/dash/dashboard/')
     return render_to_response('items/recomendacion.html',
         {'form_search': searchbox, 'usuarios': seguidores, 'item': item},

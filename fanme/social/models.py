@@ -3,13 +3,6 @@ from django.contrib.auth.models import User
 from fanme.support.models import Localizacion
 
 
-class Eventos(models.Model):
-    creador = models.OneToOneField(User)
-
-    def __unicode__(self):
-        return self.creador.username
-
-
 class Evento(models.Model):
     invitados = models.ManyToManyField(User, null=True, blank=True,
         related_name="eventos_invitado")
