@@ -8,7 +8,7 @@ class Item(models.Model):
     descripcion = models.TextField(max_length=300)
     topico = models.ForeignKey(Topico, null=True, blank=True)
     users_are_comment = models.ManyToManyField(User, through='Comentario')
-#    cantidad_fans =
+    puntaje = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
         return self.nombre
