@@ -1,0 +1,51 @@
+{% extends "dash/dashboard.html" %}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="eventos-content">
+        <h1 class='eventos-titulo'>Eventos creados</h1>
+        {% if eventos_creados %}
+            <div class='eventos-list'>
+                {% for evento in eventos_creados %}
+                    <div class='evento-item'>
+                        <div class="evento-cuerpo">
+                            <a href='/social/evento/{{ evento.id }}'>
+                                {{ evento.descripcion }} el {{ evento.fecha_inicio }} - creado por {{ evento.creador.first_name }}
+                            </a>
+                        </div>
+                        <a href="/social/evento/edit/{{ evento.id }}"><div class="evento-editar">editar</div></a>
+                    </div>
+                {% endfor%}
+            </div>
+        {% else %}
+            <div class='evento-vacio'>No creaste ningun evento</div>
+        {% endif %}
+        <h1 class='eventos-titulo'>Eventos como invitado</h1>
+        {% if eventos_invitado %}
+            <div class='eventos-list'>
+                {% for evento in eventos_invitado %}
+                    <div class='evento-item'>
+                        <div class="evento-cuerpo">
+                            <a href='/social/evento/{{ evento.id }}'>
+                                {{ evento.descripcion }} el {{ evento.fecha_inicio }} - creado por {{ evento.creador.first_name }}
+                            </a>
+                        </div>
+                    </div>
+                {% endfor%}
+            </div>
+        {% else %}
+            <div class='evento-vacio'>No estas ningun evento</div>
+        {% endif %}
+    </div>
+{% endblock dashboard %}
+
+{% block crear %}
+    <a href="/social/nuevo/"><div class="new-item-buttom">Crear Evento</div></a>
+{% endblock %}
