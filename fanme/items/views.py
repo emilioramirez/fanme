@@ -56,6 +56,7 @@ def register_item(request):
             item.nombre = nombre
             item.descripcion = descripcion
             item.topico = Topico.objects.get(nombre=topico)
+            item.cantidad_fans = 0
 #            item.marca = Marca.objects.get(nombre=marca)
             item.save()
             messages.append("Se creo el Item exitosamente")
@@ -105,7 +106,8 @@ def unfan(request, item_id):
     try:
         item = Item.objects.get(pk=item_id)
         request.user.persona.items.remove(item)
-        item.cantidad_fans -= 1
+        if not (item.cantidad_fans < 0):
+            item.cantidad_fans -= 1
         item.save()
         request.user.save()
         messages.append("Ya no sos fan de {0}".format(item.nombre))
@@ -160,13 +162,6 @@ def recomendation(request, item_id):
         lista_ids = request.POST.getlist('recomendados')
         for id in lista_ids:
             usuarios.append(User.objects.get(id=id))
-#        try:
-#            request.user.recomendaciones
-#        except Recomendaciones.DoesNotExist:
-#            recomendaciones = Recomendaciones()
-#            recomendaciones.user_origen = request.user
-#            recomendaciones.save()
-#            request.user.recomendaciones = recomendaciones
         for usuario in usuarios:
             try:
                 request.user.recomendaciones_enviadas.get(
@@ -178,6 +173,8 @@ def recomendation(request, item_id):
                 recomendacion.fecha = datetime.now()
                 recomendacion.user_origen = request.user
                 recomendacion.save()
+                item.cantidad_fans += 1
+                item.save()
         return HttpResponseRedirect('/dash/dashboard/')
     return render_to_response('items/recomendacion.html',
         {'form_search': searchbox, 'usuarios': seguidores, 'item': item},

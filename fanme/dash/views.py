@@ -22,7 +22,8 @@ def dashboard(request):
         topics = {}
         items_by_topics = []
         for topic in my_profile.topicos.all():
-            lista = Item.objects.filter(topico__exact=topic)
+            lista = Item.objects.filter(topico__exact=topic).order_by(
+                '-cantidad_fans')
             items_by_topics.append(lista)
             topics[topic] = lista
     except Persona.DoesNotExist:
@@ -41,7 +42,8 @@ def dashboard_topic(request, topic_id):
         topico = Topico.objects.get(id=topic_id)
         yes = request.user.persona.topicos.get(id=topic_id)
         if yes:
-            lista.append(Item.objects.filter(topico__exact=topico))
+            lista.append(Item.objects.filter(topico__exact=topico).order_by(
+                '-cantidad_fans'))
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     except Topico.DoesNotExist:
