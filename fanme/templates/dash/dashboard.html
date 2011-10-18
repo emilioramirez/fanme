@@ -94,8 +94,14 @@
             </a>
             <a href="/dash/recomendations/">
                 <div class="stadistic-recomendations sidebar-stadistic-item">
-                    <div class="stadistic-num">{{ user.recomendaciones.recomendacion_set.count }}</div>
-                    <div class="stadistic-nom">Recomendaciones</div>
+                    <div class="stadistic-num">
+                        {% if user.recomendaciones.recomendacion_set %}
+                            {{ user.recomendaciones.recomendacion_set.count }}
+                        {% else %}
+                        0
+                        {% endif %}
+                    </div>
+                    <div class="stadistic-nom">Mis recomendaciones</div>
                 </div>
             </a>
             <a href="/dash/comments/">
@@ -124,6 +130,13 @@
                 <div class="menu-indicators">Notificaciones
                     {% if user.notificacion_set.count > 0 %}
                         ({{ user.notificacion_set.count }})
+                    {% endif %}
+                </div>
+            </a>
+            <a href="">
+                <div class="menu-indicators">Recomendaciones
+                    {% if user.recomendacion_set.count > 0 %}
+                        ({{ user.recomendacion_set.count }})
                     {% endif %}
                 </div>
             </a>
