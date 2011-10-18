@@ -82,6 +82,9 @@ def fan(request, item_id):
             messages.append("Ya sos fan de {0}".format(item.nombre))
         else:
             request.user.persona.items.add(item)
+            item.cantidad_fans += 1
+            item.save()
+            request.user.save()
             is_fan = True
             messages.append("Te has hecho fan de {0}".format(item.nombre))
     except Item.DoesNotExist:
@@ -102,6 +105,9 @@ def unfan(request, item_id):
     try:
         item = Item.objects.get(pk=item_id)
         request.user.persona.items.remove(item)
+        item.cantidad_fans -= 1
+        item.save()
+        request.user.save()
         messages.append("Ya no sos fan de {0}".format(item.nombre))
     except Item.DoesNotExist:
         raise Http404
