@@ -1,0 +1,132 @@
+{% extends "items/base_items.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/style-icon-images.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block item %}
+    <div class="item-messages">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
+    <div class="item-content">
+        <div class="item-header">
+            <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
+            <div class="item-nombre">{{ item }}</div>
+            <div class="item-score">
+                <img src="/mymedia/images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
+                {{ item.persona_set.count }}
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="item-body">
+            <div class="item-image-big"></div>
+            <div class="item-descripcion-big">{{ item.descripcion }}</div>
+            <div class="item-image-all">
+                <ul class="image-list">
+                    <li class="image-little"></li>
+                    <li class="image-little"></li>
+                    <li class="image-little"></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="item-footer">
+            <div class="item-details">
+                <div class="stadistic-fan sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ item.persona_set.count }}</div>
+                    <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
+                </div>
+                <div class="stadistic-fan sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ item.recomendacion_set.count }}</div>
+                    <div class="stadistic-nom">Recomendaciones</div>
+                </div>
+            </div>
+            <div class="item-buttons">
+                {% if not is_fan %}
+                    <a href="/items/fan/{{ item.id }}" ><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
+                {% endif %}
+                <a href="#" ><img src="/mymedia/images/item-button-recomendar.png" alt="Recomendar" /></a>
+                <a href="#" ><img src="/mymedia/images/item-button-denunciar.png" alt="Denunciar" /></a>
+                {% if is_fan %}
+                    <a href="/items/unfan/{{ item.id }}" ><img src="/mymedia/images/item-buttom-unFan.png" alt="Unfan" /></a>
+                {% endif %}
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock item %}
+
+{% block extra %}
+    <div class="extra-tags"></div>
+    <div class="extra-links">
+        <p>Lo podés conseguir en:</p>
+        <div class="item-image-all">
+            <ul class="image-list">
+                <li class="image-little"></li>
+                <li class="image-little"></li>
+                <li class="image-little"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="clear"></div>
+{% endblock extra %}
+
+{% block comments %}
+    <div class="list-comment">
+        {% for comment in comments %}
+            <div class="comment">
+                <div class="comment-user-image">
+                    {% if comment.user.persona %}
+                        {% if comment.user.persona.sexo == "M" %}
+                            <img src="/mymedia/images/avatar-male-big.png" alt="Logo" />
+                        {% else %}
+                            <img src="/mymedia/images/avatar-famale-big.png" alt="Logo" />
+                        {% endif%}
+                    {% else %}
+                            <img src="/mymedia/images/020.png" alt="Logo" />
+                    {% endif%}
+                </div>
+                <div class="comment-user">
+                    <p class="comment-username">
+                        {{ comment.user.first_name }} {{ comment.user.last_name }} - <span class="coment-date">{{ comment.fecha }}</span>
+                    </p>
+                    <p class="comment-text">{{ comment.comentario }}</p>
+                </div>
+                <div class="comment-options"></div>
+            </div>
+        {% endfor %}
+        <div class="comment-add">
+                <div class="comment-user-image-add">
+                    {% if user.persona %}
+                        {% if user.persona.sexo == "M" %}
+                            <img src="/mymedia/images/avatar-male-big.png" alt="Logo" />
+                        {% else %}
+                            <img src="/mymedia/images/avatar-famale-big.png" alt="Logo" />
+                        {% endif%}
+                    {% else %}
+                            <img src="/mymedia/images/020.png" alt="Logo" />
+                    {% endif%}
+                </div>
+                <div class="comment-user-add">
+                    <p class="comment-username-add">{{ user.first_name }} {{ user.last_name }}</p>
+                        <form action="/items/comment/{{ item.id }}" method="post">{% csrf_token %}
+                            {{ comment_form.as_p }}
+                            <input type="submit" value="Comentar" class="submit"/>
+                        </form>
+                </div>
+                <div class="comment-options-add"></div>
+            </div>
+    </div>
+{% endblock comments %}

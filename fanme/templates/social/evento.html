@@ -1,0 +1,49 @@
+{% extends "dash/dashboard.html" %}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <h1>Evento</h1>
+    {% if evento %}
+        <div class=''>
+            <div class=''>
+                <div class=''>Fecha inicio</div>
+                <div class=''>{{ evento.fecha_inicio }}</div>
+            </div>
+            <div class=''>
+                <div class=''>Fecha Fin</div>
+                <div class=''>{{ evento.fecha_fin }}</div>
+            </div>
+            <div class=''>
+                <div class=''>Lugar</div>
+                <div class=''>{{ evento.localizacion }}</div>
+            </div>
+            <div class=''>
+                <div class=''>De que se trata?</div>
+                <div class=''>{{ evento.descripcion }}</div>
+            </div>
+            <div class=''>
+                <div class=''>Invitados</div>
+                <div class=''>
+                    {% for invitado in evento.invitados.all %}
+                    <div class=''>
+                        {{ invitado }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div>No existe este evento</div>
+    {% endif %}
+{% endblock dashboard %}
+
+{% block crear %}
+    <a href="/social/nuevo/"><div class="new-item-buttom">Crear Evento</div></a>
+{% endblock %}
