@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from fanme.support.models import TipoNotificacion
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from fanme.social.forms import MessageForm, MessageResponseForm
@@ -13,6 +14,7 @@ import datetime
 
 from fanme.social.forms import EventoForm
 from fanme.social.models import Eventos, Evento
+from fanme.support.models import Notificacion
 
 
 @login_required(login_url='/accounts/user/')
@@ -40,6 +42,7 @@ def new_evento(request):
         users = User.objects.filter(id__in=list_ids)
         form.fields["invitados"].queryset = users
         if form.is_valid():
+            usuarios = form.cleaned_data['invitados']
             evento = form.save(commit=False)
             try:
                 request.user.eventos
@@ -49,9 +52,15 @@ def new_evento(request):
                 eventos.save()
             creador = request.user.eventos
             evento.creador = creador
-            evento.fecha_creacion = datetime.now()
+            evento.fecha_creacion = datetime.datetime.now()
             evento.save()
             form.save_m2m()
+            enviar_notificaciones(usuarios,
+                 "<a href='/dash/logbook/{0}'>{1}</a> ha creado un evento y te ha invitado".format(request.user.id, request.user.first_name+" "+request.user.last_name),
+                 "/social/evento/{0}".format(evento.id),
+                 "Evento",
+                 "Te han invitado a un evento!")
+
             return HttpResponseRedirect('/social/eventos/')
     else:
         form = EventoForm()
@@ -87,6 +96,7 @@ def edit_evento(request, evento_id):
         users = User.objects.filter(id__in=list_ids)
         form.fields["invitados"].queryset = users
         if form.is_valid():
+            usuarios = form.cleaned_data['invitados']
             evento = form.save(commit=False)
             try:
                 request.user.eventos
@@ -99,6 +109,11 @@ def edit_evento(request, evento_id):
 #            evento.fecha_creacion = datetime.now()
             evento.save()
             form.save_m2m()
+            enviar_notificaciones(usuarios,
+                 "<a href='/dash/logbook/{0}'>{1}</a> ha creado un evento y te ha invitado".format(request.user.id, request.user.first_name+" "+request.user.last_name),
+                 "/social/evento/{0}".format(evento.id),
+                 "Evento",
+                 "Te han invitado a un evento!")
             return HttpResponseRedirect('/social/eventos/')
     else:
         form = EventoForm(instance=evento_db)
@@ -237,3 +252,53 @@ def enterprise_query(request, user_id):
         'form_response_message': form_response_message,
         'mensajes': mensajes},
         context_instance=RequestContext(request))
+
+
+def enviar_notificaciones(usuarios, descripcion, url, tipo, resumen):
+    for user in usuarios:
+        notificacion = Notificacion()
+        notificacion.usuario = user
+        notificacion.descripcion = descripcion
+        notificacion.url = url
+        try:
+            notificacion.tipo = TipoNotificacion.objects.get(nombre=tipo)
+        except TipoNotificacion.DoesNotExist:
+            tipo = TipoNotificacion()
+            tipo.nombre = tipo
+            tipo.descripcion = "tipo {0}".format(tipo)
+            tipo.save()
+            notificacion.tipo = tipo
+        notificacion.leido = False
+        notificacion.resumen = resumen
+        notificacion.save()
+
+
+@login_required(login_url='/accounts/user/')
+def notificaciones(request):
+    searchbox = SearchBox()
+    try:
+        notificaciones_leidas = request.user.notificacion_set.filter(leido=True)
+    except Notificacion.DoesNotExist:
+        notificaciones_leidas = []
+    try:
+        notificaciones_nuevas = request.user.notificacion_set.filter(leido=False)
+        for notificacion in notificaciones_nuevas:
+            notificacion.leido = True
+            notificacion.save()
+    except Notificacion.DoesNotExist:
+        notificaciones_nuevas = []
+    temp = RequestContext(request, {'notificaciones_nuevas': notificaciones_nuevas,
+        'notificaciones_leidas': notificaciones_leidas, 'form_search': searchbox})
+    return render_to_response('social/notificaciones.html', temp)
+
+
+@login_required(login_url='/accounts/user/')
+def delete_notificacion(request, notificacion_id):
+    #searchbox = SearchBox()
+    try:
+        notificacion_db = Notificacion.objects.get(id=notificacion_id)
+        notificacion_db.delete()
+        return HttpResponseRedirect('/social/notificaciones/')
+    except Notificacion.DoesNotExist:
+        return HttpResponseRedirect('/social/notificaciones/')
+    return HttpResponseRedirect('/social/notificaciones/')
