@@ -278,3 +278,50 @@ def delete_notificacion(request, notificacion_id):
     except Notificacion.DoesNotExist:
         return HttpResponseRedirect('/social/notificaciones/')
     return HttpResponseRedirect('/social/notificaciones/')
+
+
+@login_required(login_url='/accounts/user/')
+def company_messages(request):
+    searchbox = SearchBox()
+    try:
+        mensajes_recibidos = request.user.mensajes_recibidos.all().values(
+            'user_from').distinct()
+        usuarios = []
+        for dict in mensajes_recibidos.all():
+            usuarios.append(User.objects.get(id=dict['user_from']))
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('social/company_messages.html', {
+        'form_search': searchbox,
+        'mensajes_recibidos': usuarios},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def company_response_message(request, user_id):
+    searchbox = SearchBox()
+    try:
+        if request.method == 'POST':
+            form_response_message = MessageResponseForm(request.POST)
+            if form_response_message.is_valid():
+                mensaje = form_response_message.cleaned_data['mensaje']
+                message = Mensaje()
+                message.user_from_id = request.user.id
+                message.user_to_id = user_id
+                message.mensaje = mensaje
+                message.fecha = datetime.datetime.now()
+                message.save()
+                form_response_message = MessageResponseForm()
+                mensajes = getMensajes(request, user_id)
+            else:
+                mensajes = getMensajes(request, user_id)
+        else:
+            mensajes = getMensajes(request, user_id)
+            form_response_message = MessageResponseForm()
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('social/company_response_message.html', {
+        'form_search': searchbox,
+        'form_response_message': form_response_message,
+        'mensajes': mensajes},
+        context_instance=RequestContext(request))
