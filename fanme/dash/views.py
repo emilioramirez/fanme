@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from fanme.dash.forms import SearchBox, UserUpdateForm, PassUpdateForm
 from fanme.items.models import Item
+from fanme.items.models import Recomendaciones
 from fanme.accounts.models import Persona, Empresa
 from fanme.segmentation.models import Topico
 from django.db.models import Q
@@ -193,9 +194,13 @@ def my_recomended_items(request):
         messages.append("Has recomendado los siguientes items")
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
+    try:
+        recomendaciones = request.user.recomendaciones.recomendacion_set.all()
+    except Recomendaciones.DoesNotExist:
+        recomendaciones = None
     return render_to_response('dash/my_stuff2.html',
         {'form_search': searchbox, 'messages': messages,
-        'recomendaciones': request.user.recomendaciones.recomendacion_set.all(),
+        'recomendaciones': recomendaciones,
             'is_fan': False},
         context_instance=RequestContext(request))
 

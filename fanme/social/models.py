@@ -11,13 +11,14 @@ class Eventos(models.Model):
 
 
 class Evento(models.Model):
-    invitados = models.ManyToManyField(User, null=True, blank=True)
+    invitados = models.ManyToManyField(User, null=True, blank=True,
+        related_name="eventos_invitado")
     descripcion = models.TextField(max_length=300)
-    fecha_inicio = models.DateTimeField()
-    fecha_fin = models.DateTimeField()
-    fecha_creacion = models.DateTimeField()
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField()
+    fecha_creacion = models.DateField()
     localizacion = models.ForeignKey(Localizacion)
-    creador = models.ForeignKey(Eventos)
+    creador = models.ForeignKey(User, related_name="eventos_creados")
 
     def __unicode__(self):
         return self.descripcion
