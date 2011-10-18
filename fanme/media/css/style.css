@@ -242,6 +242,39 @@ body{}
                         .user-recomend-checkbox{}
                         .list-item-recomend{float: left; margin: 15px 0;}
             /* End Recomend Item */
+            /* Begin Eventos */
+            .eventos-content{margin: 90px 10px;}
+                .eventos-titulo{}
+                .eventos-list{}
+                    .evento-item{
+                        border: 1px solid;
+                        margin: 12px 0;
+                        overflow: hidden;
+                        padding: 10px;
+                    }
+                    .evento-item a{ color: black; text-decoration: none; float: right;}
+                    .evento-item a div:hover{ background: #1D9ACD; color: white; }
+                    .evento-cuerpo{ float: left; width: 370px;}
+                    .evento-editar{ border: 1px solid; padding: 5px; float: right; color: black;}
+            .evento-vacio{}
+            .form-nuevo-evento{}
+            .form-nuevo-evento .errorlist {
+                list-style: none;
+                padding: 0px;
+                font-size: 10px;
+                color: red;
+            }
+            .form-nuevo-evento input{}
+
+            .evento{}
+            .evento a{}
+            .evento-fields{margin: 10px;}
+            .evento-fields a div:hover{ background: #1D9ACD; color: white; }
+                .evento-label{float: left; font-weight: bold;}
+                .evento-field{float: left; margin-left: 10px;}
+            .invitados{}
+
+            /* End Eventos */
         /* End Content Dashboard */
         /* Begin Sidebar */
         .content-sidebar{

@@ -9,17 +9,46 @@
     </ul>
 {% endblock menuOptionsSelected %}
 
+
+
+
+{% block mystylesheet %}
+    <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+{% endblock mystylesheet %}
+
+{% block myjavascript %}
+    <script src="/mymedia/js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+    <script>
+        var myCalendar;
+        function doOnLoad() {
+            myCalendar = new dhtmlXCalendarObject(["id_fecha_inicio"]);
+            myCalendar.setDateFormat("%d/%m/%Y");
+            myCalendar2 = new dhtmlXCalendarObject(["id_fecha_fin"]);
+            myCalendar2.setDateFormat("%d/%m/%Y");
+        }
+    </script>
+{% endblock myjavascript %}
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+
+
+
 {% block dashboard %}
-    <a href="/social/evento/delete/{{ evento.id }}">
-        <div class="">Borrar evento</div>
-    </a>
-    <div class="form-nuevo-evento">
-        <form action="/social/evento/edit/{{ evento.id }}" method="post">{% csrf_token %}
-            <table>
-                {{ form.as_table}}
-            </table>
-        <input type="submit" value="Guardar" class="submit"/>
-        </form>
+    <div class="eventos-content">
+        <div class="form-nuevo-evento">
+            <form action="/social/evento/edit/{{ evento.id }}" method="post">{% csrf_token %}
+                <table>
+                    {{ form.as_table}}
+                </table>
+            <input type="submit" value="Guardar" class="submit"/>
+            </form>
+        </div>
+        <a href="/social/evento/delete/{{ evento.id }}"><div class="evento-editar">Borrar</div></a>
     </div>
 {% endblock dashboard %}
 

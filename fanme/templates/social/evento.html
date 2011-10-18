@@ -9,39 +9,56 @@
 {% endblock menuOptionsSelected %}
 
 {% block dashboard %}
-    <h1>Evento</h1>
-    {% if evento %}
-        <div class=''>
-            <div class=''>
-                <div class=''>Fecha inicio</div>
-                <div class=''>{{ evento.fecha_inicio }}</div>
-            </div>
-            <div class=''>
-                <div class=''>Fecha Fin</div>
-                <div class=''>{{ evento.fecha_fin }}</div>
-            </div>
-            <div class=''>
-                <div class=''>Lugar</div>
-                <div class=''>{{ evento.localizacion }}</div>
-            </div>
-            <div class=''>
-                <div class=''>De que se trata?</div>
-                <div class=''>{{ evento.descripcion }}</div>
-            </div>
-            <div class=''>
-                <div class=''>Invitados</div>
-                <div class=''>
-                    {% for invitado in evento.invitados.all %}
-                    <div class=''>
-                        {{ invitado }}
-                    </div>
-                    {% endfor %}
+    <div class="eventos-content">
+        <h1>Evento</h1>
+        {% if evento %}
+            <div class='evento'>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Fecha de inicio:</div>
+                    <div class='evento-field'>{{ evento.fecha_inicio }}</div>
+                    <div class="clear"></div>
                 </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Fecha de fin:</div>
+                    <div class='evento-field'>{{ evento.fecha_fin }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Donde?:</div>
+                    <div class='evento-field'>{{ evento.localizacion }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>De que se trata?:</div>
+                    <div class='evento-field'>{{ evento.descripcion }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Invitados:</div>
+                    <div class='evento-field'>
+                        <ul>
+                        {% for invitado in evento.invitados.all %}
+                            <li>
+                                <div class='invitados'>
+                                    {{ invitado }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                {% if creador %}
+                    <div class='evento-fields'>
+                        <a href="/social/evento/edit/{{ evento.id }}"><div class="evento-editar">editar</div></a>
+                    </div>
+                {% endif %}
             </div>
-        </div>
-    {% else %}
-        <div>No existe este evento</div>
-    {% endif %}
+        {% else %}
+            <div>No existe este evento</div>
+        {% endif %}
+    </div>
 {% endblock dashboard %}
 
 {% block crear %}
