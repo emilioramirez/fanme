@@ -33,4 +33,6 @@ class Notificacion(models.Model):
         related_name='notificaciones_recibidas')
     fecha_expiracion = models.DateTimeField()
     fecha_creacion = models.DateTimeField()
+    descripcion = models.TextField(max_length=300)
+    nombre = models.CharField(max_length=30)
     #estado -> Estado_Noficiacion
