@@ -31,9 +31,15 @@
                     <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
                 </ul>
             </div>
-            <a href="/bussiness/notificacion/nuevo/">Crear una notificacion</a>
         </div>
-
+        <div class="clear"></div>
+        <a href="/social/company_messages/">
+                <div class="menu-indicators-mati">Mensajes
+                    {% if user.mensajes_recibidos.all.count > 0 %}
+                        ({{ user.mensajes_recibidos.all.count }})
+                    {% endif %}
+                </div>
+            </a>
         <div class="sidebar-new-item-mati">
             <a href="/items/item/register/"><div class="new-item-buttom-mati">Crear Item</div></a>
         </div>

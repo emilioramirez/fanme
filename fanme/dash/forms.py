@@ -44,7 +44,7 @@ class UserUpdateForm(forms.Form):
         label='Fecha de Nacimiento',
         initial='',
         input_formats=['%d/%m/%Y'],
-        error_messages={'required': 'Es necesaria su Fecha de Nacimiento',
+        error_messages={'required': 'Fecha invalida, ingrese de la forma Día/Mes/Año',
             'invalid': 'Fecha invalida, ingrese de la forma Día/Mes/Año'},
         widget=forms.DateInput(attrs={'class': 'edit-account-date-field'}))
 
