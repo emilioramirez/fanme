@@ -107,7 +107,10 @@
                     </p>
                     <p class="comment-text">{{ comment.comentario }}</p>
                 </div>
-                <div class="comment-options"></div>
+                <div class="comment-options">
+                    <div class="me-gusta-comentario">{{ comment.me_gusta }}<a href="/items/comment/megusta/{{ comment.id }}"> Me Gusta</a></div>
+                    <div class="denunciar-comentario">{{ comment.denuncias }}<a href="/items/comment/denunciar/{{ comment.id }}"> Denunciar</a></div>
+                </div>
             </div>
         {% endfor %}
         <div class="comment-add">

@@ -179,3 +179,30 @@ def recomendation(request, item_id):
     return render_to_response('items/recomendacion.html',
         {'form_search': searchbox, 'usuarios': seguidores, 'item': item},
         context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def me_gusta_comentario(request, comentario_id):
+    try:
+        comentario = Comentario.objects.get(pk=comentario_id)
+    except Comentario.DoesNotExist:
+        raise Http404
+    comentario.me_gusta += 1
+    comentario.save()
+#    comments = item.comentario_set.all().order_by('fecha')
+    return HttpResponseRedirect('/dash/dashboard/')
+#    return render_to_response('items/item.html', {'form_search': searchbox,
+#        'item': item, 'comment_form': comment_form, 'messages': messages,
+#        'comments': comments},
+#        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def denunciar_comentario(request, comentario_id):
+    try:
+        comentario = Comentario.objects.get(pk=comentario_id)
+    except Comentario.DoesNotExist:
+        raise Http404
+    comentario.denuncias += 1
+    comentario.save()
+    return HttpResponseRedirect('/dash/dashboard/')

@@ -448,7 +448,12 @@ body{}
                                 padding: 5px;
                                 width: 500px;
                             }
-                        .comment-options{}
+                        .comment-options{float: left; margin: 50px 0; color: grey;}
+                        .comment-options a{color: grey;}
+                            .me-gusta-comentario{}
+                            .me-gusta-comentario a{text-decoration: none;}
+                            .denunciar-comentario{}
+                            .denunciar-comentario a{text-decoration: none;}
                 .list-comment-add{}
                     .comment-add{
                         background: none repeat scroll 0 0 #E3F1F1;
