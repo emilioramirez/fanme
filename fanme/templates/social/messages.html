@@ -1,0 +1,51 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+            <ul class="menu-options">
+                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+            </ul>
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div class="title-messages">Mensajes</div>
+    {% for message in mensajes_recibidos %}
+        <div class="item-content-mess-event">
+            <div class="message-body">
+                <div class="message-usuario">
+                </div>
+            </div>
+            <a href="/social/messages_user/{{ message.id }}">
+                <div class="message-user-subject">
+                    {{ message.first_name }}
+                </div>
+            </a>
+            <div class="message-descripcion">
+                {{ message.mensaje|truncatewords:30 }}
+            </div>
+        </div>
+    {% endfor %}
+    <div class="new-message">
+        <form action="/social/new_message/">
+            <input type="submit" value="Nuevo mensaje" class="submit"/>
+        </form>
+    </div>
+{% endblock dashboard %}
+
+
+
