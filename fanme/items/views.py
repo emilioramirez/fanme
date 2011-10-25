@@ -106,7 +106,7 @@ def unfan(request, item_id):
     try:
         item = Item.objects.get(pk=item_id)
         request.user.persona.items.remove(item)
-        if not (item.cantidad_fans < 0):
+        if (item.cantidad_fans > 0):
             item.cantidad_fans -= 1
         item.save()
         request.user.save()
@@ -164,16 +164,17 @@ def recomendation(request, item_id):
             usuarios.append(User.objects.get(id=id))
         for usuario in usuarios:
             try:
-                request.user.recomendaciones_enviadas.get(
-                    user_destino=usuario.id)
+                request.user.recomendaciones_enviadas.filter(
+                    user_destino=usuario.id, item=item)
+                print 'existe'
             except Recomendacion.DoesNotExist:
+                print 'yupi'
                 recomendacion = Recomendacion()
                 recomendacion.item = item
                 recomendacion.user_destino = usuario
                 recomendacion.fecha = datetime.now()
                 recomendacion.user_origen = request.user
                 recomendacion.save()
-                item.cantidad_fans += 1
                 item.save()
         return HttpResponseRedirect('/dash/dashboard/')
     return render_to_response('items/recomendacion.html',

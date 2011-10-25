@@ -17,7 +17,7 @@ body{}
         background: #ECECEC;
         border-bottom: 1px solid #979797;
         overflow: hidden;
-        box-shadow: 0 1px 1px #979797;-webkit-box-shadow: 0 1px 1px #979797;-moz-box-shadow: 0 1px 1px #979797;
+        box-shadow: 0px 1px 1px #979797;-webkit-box-shadow: 0px 1px 1px #979797;-moz-box-shadow: 0px 1px 1px #979797;
     }
         .header-logo { float: left; margin: 5px 0 1px 30px; }
 
@@ -58,7 +58,9 @@ body{}
             }
                 .logged-user-name{ float: left; margin: 19px 10px 0 0;}
                 .logged-user-photo{
-                    box-shadow: 2px 2px 3px 2px;-webkit-box-shadow: 2px 2px 3px 2px;-moz-box-shadow: 2px 2px 3px 2px;
+                    -webkit-box-shadow: 2px 2px 3px 2px;
+                    -moz-box-shadow: 2px 2px 3px 2px;
+                    box-shadow: 2px 2px 3px;
                     float: left;
                     height: 50px;
                     margin: 1px 30px 0 0;
@@ -87,7 +89,7 @@ body{}
                 .menu-options li{ float: left; height: 22px; width: 86px; padding: 7px 0 0 0; text-align: center;}
                 .menu-options li a{ text-decoration: none; }
                     .menu-item-selected{
-                        background: url("/mymedia/images/header-menu-item-selected.png") no-repeat scroll 0 0 transparent;
+                        background: url("/mymedia/images/header-menu-item-selected.png") no-repeat scroll 0px 0px transparent;
                     }
                     .menu-item-selected a{ color: white; font-weight: bold;}
                     li.menu-item-selected a{ color: white;}
@@ -194,6 +196,8 @@ body{}
                         .item-nombre a:hover { text-shadow: 1px 4px 4px;}
                         .item-score{float: right;margin: 12px 30px;}
                     .item-body{}
+                        .recomendacion-destino{margin: 10px;}
+                        .recomendacion-destino a{ color: #646464; font-weight: bold; text-decoration: none;}
                         .item-image{
                             border: 1px solid #9F9F9F;
                             height: 120px;
@@ -229,11 +233,10 @@ body{}
             .form-recomend-user{margin: 88px 60px;}
             .form-recomend-user input{
                 background: url("/mymedia/images/crear-item.png") no-repeat scroll 0 0 transparent;
-                    border: medium none;
-                    color: white;
-                    float: right;
-                    padding: 8px 6px;
-                }
+                border: medium none;
+                color: white;
+                float: right;
+                padding: 8px 6px;
             }
                 .list-posible-user-recomend{}
                     .posible-user-recomend{}
@@ -280,10 +283,10 @@ body{}
         .content-sidebar{
             background: none repeat scroll 0 0 #ECECEC;
             border-radius: 7px 7px 7px 7px;
-            box-shadow: 0 0 10px;
+            box-shadow: 0px 0px 10px;
             float: left;
-            //height: 356px;
-            margin: 90px 0 0 72px;
+            /*height: 356px;*/
+            margin: 90px 0px 0px 72px;
             width: 230px;
         }
             .sidebar-content{}
@@ -313,7 +316,7 @@ body{}
                         background: none repeat scroll 0 0 #F6F4F4;
                         border-radius: 5px 5px 5px 5px;
                         height: 22px;
-                        margin: 10px 0;
+                        margin: 10px 0px;
                         box-shadow: 0px 0px 3px;
                         color: #646464;
                     }
@@ -440,7 +443,7 @@ body{}
                             .comment-username{ margin: 0; }
                             .coment-date{ font-size: 10px; font-style: italic;}
                             .comment-text{
-                                background: none repeat scroll 0 0 #F7F7F7;
+                                background: none repeat scroll 0px 0px #F7F7F7;
                                 box-shadow: 0 0 3px;
                                 color: #333333;
                                 font-style: italic;
@@ -505,5 +508,5 @@ body{}
 }
 
 /* Others */
-.result-descripcion:hover { text-shadow: 0 0 6px;}
-.result-image:hover { box-shadow: 0 0 6px;}
+.result-descripcion:hover { text-shadow: 0px 0px 6px;}
+.result-image:hover { box-shadow: 0px 0px 6px;}
