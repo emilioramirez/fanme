@@ -213,7 +213,7 @@ def recomendaciones_recibidas(request):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     recomendaciones = request.user.recomendaciones_recibidas.all()
-    return render_to_response('dash/my_stuff2.html',
+    return render_to_response('dash/mis_recomendaciones.html',
         {'form_search': searchbox, 'messages': messages,
         'recomendaciones': recomendaciones,
             'is_fan': False},
