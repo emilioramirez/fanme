@@ -18,4 +18,8 @@ urlpatterns = patterns('',
     (r'^company_messages/$', views.company_messages),
     (r'^company_response_message/(?P<user_id>\d+)$',
         views.company_response_message),
+    (r'^new_notification/$', views.new_notification),
+    (r'^user_main_notification/$', views.user_main_view_notifications),
+    (r'^notifications_by_company/(?P<company_id>\d+)$',
+        views.notification_by_company),
 )

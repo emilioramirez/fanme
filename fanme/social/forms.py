@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.contrib.auth.models import User
-from fanme.social.models import Evento
+from fanme.social.models import Evento, Notificacion
 
 
 class MessageForm(forms.Form):
@@ -62,11 +62,19 @@ class EventoForm(forms.ModelForm):
 class NotificationForm(forms.ModelForm):
 
     class Meta():
-        model = Evento
+        model = Notificacion
         fields = (
-            'fecha_inicio',
-            'fecha_fin',
-            'localizacion',
+            'nombre',
+            'fecha_expiracion',
             'descripcion',
-            'invitados'
+            'usuarios_to',
             )
+        widgets = {
+            'nombre': forms.TextInput(attrs={
+                'class': 'notification-name-field'}),
+            'fecha_expiracion': forms.DateInput(attrs={
+                'class': 'notification-name-field'}),
+            'descripcion': forms.Textarea(attrs={
+                'style': 'resize: none;',
+                'cols': 50, 'rows': 4}),
+        }

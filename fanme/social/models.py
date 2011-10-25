@@ -36,3 +36,6 @@ class Notificacion(models.Model):
     descripcion = models.TextField(max_length=300)
     nombre = models.CharField(max_length=30)
     #estado -> Estado_Noficiacion
+
+    def __unicode__(self):
+        return self.descripcion

@@ -79,10 +79,10 @@
                     {% endif %}
                 </div>
             </a>
-            <a href="/social/notificaciones/">
+            <a href="/social/user_main_notification/">
                 <div class="menu-indicators">Notificaciones
-                    {% if user.notificacion_set.count > 0 %}
-                        ({{ user.notificacion_set.count }})
+                    {% if user.notificaciones_recibidas.all.count > 0 %}
+                        ({{ user.notificaciones_recibidas.count }})
                     {% endif %}
                 </div>
             </a>
