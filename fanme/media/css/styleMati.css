@@ -544,4 +544,47 @@ sidebar-follow-user{}
     color: #646464;
     margin: 6px 17px;
 }
+    /*Begining of the new notifications page*/
+    .notifications-content {
+        border: 1px solid #BBBBBB;
+        border-radius: 7px 7px 7px 7px;
+        margin: 20px 0;
+        overflow: hidden;
+    }
+        .content-form-notification{}
+            .new-notification-clear{
+                margin-bottom: 12px;
+            }
+            .notification-name-label{
+                margin-left: 89px;
+            }
+            .notification-name-field{
+                width: 367px;
+            }
+            .notification-date-label{
+                margin-left: 34px;
+            }
+            .notification-description-label{
+                float: left;
+                margin-left: 66px;
+                margin-right: 4px;
+            }
+            .notification-users-label{
+                float: left;
+                margin-left: 84px;
+                margin-right: 5px;
+            }
+            .new-notification{
+                float: right;
+                margin-right: 44px;
+                margin-bottom: 10px;
+            }
+            .content-form-notification ul.errorlist{
+                    color: red;
+                    font-size: 10px;
+                    list-style: none outside none;
+                    margin-left: 110px;
+                    margin-bottom: 0px;
+                }
+    /*End of the new notifications page*/
 /*End of the Company*/

@@ -12,7 +12,7 @@ from itertools import chain
 from operator import attrgetter
 import datetime
 
-from fanme.social.forms import EventoForm
+from fanme.social.forms import EventoForm, NotificationForm
 from fanme.social.models import Evento
 from fanme.support.models import Notificacion
 
@@ -256,7 +256,8 @@ def notificaciones(request):
         notificaciones_enviadas = request.user.notificaciones_enviadas.all()
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('social/notificaciones.html', {'form_search': searchbox,
+    return render_to_response('social/notificaciones.html', {
+        'form_search': searchbox,
         'notificaciones_enviadas': notificaciones_enviadas},
         context_instance=RequestContext(request))
 
@@ -317,4 +318,59 @@ def company_response_message(request, user_id):
         'form_search': searchbox,
         'form_response_message': form_response_message,
         'mensajes': mensajes},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def new_notification(request):
+    searchbox = SearchBox()
+    if request.method == "POST":
+        print "algo"
+        form = NotificationForm(request.POST)
+        list_ids = request.user.followers.values_list('user', flat=True)
+        users = User.objects.filter(id__in=list_ids)
+        form.fields["usuarios_to"].queryset = users
+        if form.is_valid():
+            notification = form.save(commit=False)
+            notification.empresa = request.user
+            notification.save()
+            form.save_m2m()
+            return HttpResponseRedirect('/social/notificaciones/')
+    else:
+        form = NotificationForm()
+        list_ids = request.user.followers.values_list('user', flat=True)
+        users = User.objects.filter(id__in=list_ids)
+        form.fields["usuarios_to"].queryset = users
+    template_vars = RequestContext(request, {"form": form,
+        'form_search': searchbox})
+    return render_to_response('social/new_notification.html', template_vars)
+
+
+@login_required(login_url='/accounts/user/')
+def user_main_view_notifications(request):
+    searchbox = SearchBox()
+    try:
+        notificaciones_recibidas = request.user.notificaciones_recibidas.all().values(
+            'empresa').distinct()
+        usuarios = []
+        for dict in notificaciones_recibidas.all():
+            usuarios.append(User.objects.get(id=dict['empresa']))
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('social/user_main_notification.html', {
+        'form_search': searchbox,
+        'notificaciones_recibidas': usuarios},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def notification_by_company(request, company_id):
+    searchbox = SearchBox()
+    try:
+        notificaciones_recibidas = request.user.notificaciones_recibidas.filter(empresa=company_id)
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('social/notifications_by_company.html', {
+        'form_search': searchbox,
+        'notificaciones_recibidas': notificaciones_recibidas},
         context_instance=RequestContext(request))

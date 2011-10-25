@@ -18,16 +18,16 @@
                 </div>
                 <a href="/social/messages_user/{{ message.id }}">
                     <div class="message-user-subject">
-                        {{ notificaciones.empresa_id }}
+                        {{ notificaciones.nombre }}
                     </div>
                 </a>
                 <div class="message-descripcion">
-                    {{ notificaciones.empresa_id|truncatewords:30 }}
+                    {{ notificaciones.descripcion|truncatewords:30 }}
                 </div>
             </div>
         {% endfor %}
         <div class="new-message">
-        <form action="/social/new_message/">
+        <form action="/social/new_notification/">
             <input type="submit" value="Nueva notificacion" class="submit"/>
         </form>
     </div>
