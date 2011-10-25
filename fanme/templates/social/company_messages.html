@@ -1,0 +1,28 @@
+{% extends "dash/empresa.html" %}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="title-messages">Consultas</div>
+    {% for message in mensajes_recibidos %}
+        <div class="item-content-mess-event">
+            <div class="message-body">
+                <div class="message-usuario">
+                </div>
+            </div>
+            <a href="/social/company_response_message/{{ message.id }}">
+                <div class="message-user-subject">
+                    {{ message.first_name }}
+                </div>
+            </a>
+            <div class="message-descripcion">
+                {{ message.mensaje|truncatewords:30 }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock dashboard %}
