@@ -30,14 +30,17 @@
                     <div class="clear"></div>
                 </div>
                 <div class="item-body">
+                    <div class="recomendacion-destino">Recomendaste este item a <a href="/dash/logbook/{{ recomendation.user_destino.id }}">{{ recomendation.user_destino.first_name }} {{ recomendation.user_destino.last_name }}</a> el {{ recomendation.fecha }}</div>
+<!--
                     <div class="item-image"></div>
                     <div class="item-descripcion">{{ recomendation.item.descripcion|truncatewords:70 }}</div>
                     <div class="clear"></div>
+-->
                 </div>
+<!--
                 <div class="item-footer">
                     <div class="item-topico">{{ recomendation.item.topico }}</div>
                     <div class="item-buttons">
-<!--
                         {% if not is_fan %}
                             <a href="/items/fan/{{ recomendation.item.id }}" ><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
                         {% endif %}
@@ -45,10 +48,10 @@
                         {% if is_fan %}
                             <a href="/items/unfan/{{ recomendation.item.id }}" ><img src="/mymedia/images/item-buttom-unFan.png" alt="Unfan" /></a>
                         {% endif %}
--->
                     </div>
                     <div class="clear"></div>
                 </div>
+-->
             </div>
         {% endfor %}
     </div>

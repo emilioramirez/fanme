@@ -195,8 +195,8 @@ def recomendaciones_enviadas(request):
         messages.append("Has recomendado los siguientes items")
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    recomendaciones = request.user.recomendaciones_enviadas.all()
-    return render_to_response('dash/my_stuff2.html',
+    recomendaciones = request.user.recomendaciones_enviadas.all().order_by('fecha')
+    return render_to_response('dash/mis_recomendaciones.html',
         {'form_search': searchbox, 'messages': messages,
         'recomendaciones': recomendaciones,
             'is_fan': False},
