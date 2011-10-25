@@ -1,0 +1,64 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+    <script type="text/javascript" src="/mymedia/js/Autosuggest/jquery.autoSuggest.js"></script>
+    <script type="text/javascript" src="/mymedia/js/Autosuggest/jquery.autoSuggest.minified.js"></script>
+    <script type="text/javascript" src="/mymedia/js/Autosuggest/jquery.autoSuggest.packed.js"></script>
+    <script language="javascript">
+        $(function(){
+            $("#id_string input").autoSuggest(data);
+        });
+        var data = {items: [
+            {value: "21", name: "Mick Jagger"},
+            {value: "43", name: "Johnny Storm"},
+            {value: "46", name: "Richard Hatch"},
+            {value: "54", name: "Kelly Slater"},
+            {value: "55", name: "Rudy Hamilton"},
+            {value: "79", name: "Michael Jordan"}
+            ]};
+            $("#id_string").autoSuggest(data.items);
+    </script>
+{% endblock myjavascript %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="/mymedia/css/Autosuggest/autoSuggest.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+            <ul class="menu-options">
+                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+            </ul>
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div class="title-messages">Nuevo mensaje</div>
+    <div class="message-body">
+        <div class="message-content-mati">
+            <form action="/social/new_message/" method="post">{% csrf_token %}
+                <div class="message-content-clear"></div>
+                <div class="message-content-label">
+                    {{ form_new_message.user_to_id.errors }}
+                    <label for="nombre" class="notification-name-field">Para:</label>
+                    {{ form_new_message.user_to_id.nombre }}
+                </div>
+                <div class="message-content-clear"></div>
+                <div class="message-content-label">
+                    {{ form_new_message.mensaje.errors }}
+                    <label for="id_mensaje" class="message-content-label-description">Mensaje:</label>
+                    {{ form_new_message.mensaje }}
+                </div>
+                <input type="submit" value="Enviar" class="enviar"/>
+            </form>
+        </div>
+    </div>
+{% endblock dashboard %}

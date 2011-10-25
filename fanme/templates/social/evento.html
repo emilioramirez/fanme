@@ -1,0 +1,66 @@
+{% extends "dash/dashboard.html" %}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="eventos-content">
+        <h1>Evento</h1>
+        {% if evento %}
+            <div class='evento'>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Fecha de inicio:</div>
+                    <div class='evento-field'>{{ evento.fecha_inicio }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Fecha de fin:</div>
+                    <div class='evento-field'>{{ evento.fecha_fin }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Donde?:</div>
+                    <div class='evento-field'>{{ evento.localizacion }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>De que se trata?:</div>
+                    <div class='evento-field'>{{ evento.descripcion }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Invitados:</div>
+                    <div class='evento-field'>
+                        <ul>
+                        {% for invitado in evento.invitados.all %}
+                            <li>
+                                <div class='invitados'>
+                                    {{ invitado }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                {% if creador %}
+                    <div class='evento-fields'>
+                        <a href="/social/evento/edit/{{ evento.id }}"><div class="evento-editar">editar</div></a>
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div>No existe este evento</div>
+        {% endif %}
+    </div>
+{% endblock dashboard %}
+
+{% block crear %}
+    <a href="/social/nuevo/"><div class="new-item-buttom">Crear Evento</div></a>
+{% endblock %}
