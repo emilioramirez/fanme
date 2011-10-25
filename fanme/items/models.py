@@ -23,6 +23,8 @@ class Comentario(models.Model):
     fecha = models.DateTimeField()
     item = models.ForeignKey(Item)
     user = models.ForeignKey(User)
+    me_gusta = models.IntegerField(null=True, blank=True)
+    denuncias = models.IntegerField(null=True, blank=True)
 
 
 class Recomendacion(models.Model):
