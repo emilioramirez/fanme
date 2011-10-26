@@ -17,8 +17,7 @@ body{}
         background: #ECECEC;
         border-bottom: 1px solid #979797;
         overflow: hidden;
-        box-shadow: 0px 1px 1px #979797;-webkit-box-shadow: 0px 1px 1px #979797;-moz-box-shadow: 0px 1px 1px #979797;
-
+        box-shadow: 0px 5px 10px #979797;
         position: fixed;
         width: 100%;
         z-index: 50;
