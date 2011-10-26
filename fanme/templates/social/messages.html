@@ -6,44 +6,44 @@
     <script language="javascript" src="/mymedia/js/myutils.js"></script>
 {% endblock myjavascript %}
 
-{% block mystylesheet %}
+{% block mystylesheet-dashboard %}
     <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
-{% endblock mystylesheet%}
+{% endblock mystylesheet-dashboard%}
 
-{% block menuOptions %}
-    <div class="header-menu-options">
-        {% block menuOptionsSelected %}
-            <ul class="menu-options">
-                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
-                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
-                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
-            </ul>
-        {% endblock menuOptionsSelected %}
-    </div>
-{% endblock menuOptions %}
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
 
 {% block dashboard %}
-    <div class="title-messages">Mensajes</div>
-    {% for message in mensajes_recibidos %}
-        <div class="item-content-mess-event">
-            <div class="message-body">
-                <div class="message-usuario">
-                </div>
-            </div>
-            <a href="/social/messages_user/{{ message.id }}">
-                <div class="message-user-subject">
-                    {{ message.first_name }}
-                </div>
-            </a>
-            <div class="message-descripcion">
-                {{ message.mensaje|truncatewords:30 }}
-            </div>
+    <div class="eventos-content">
+        <div class='eventos-titulo'>Mensajes por usuario</div>
+        <div class="list-content-user-messages">
+            <ul>
+                {% for usuario in usuarios %}
+                    <li class="content-user-messages">
+                        <div class="user-message-image">
+                            {% if usuario.persona.sexo == "M" %}
+                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                            {% else %}
+                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                            {% endif%}
+                        </div>
+                        <div class="user-message-name"><a href="/social/messages_user/{{ usuario.id }}">{{ usuario.first_name }} {{ usuario.last_name }}</a></div>
+                        <div class="user-message-last"></div>
+                        <div class="clear"></div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-    {% endfor %}
-    <div class="new-message">
-        <form action="/social/new_message/">
-            <input type="submit" value="Nuevo mensaje" class="submit"/>
-        </form>
+        <div class="new-message">
+            <form action="/social/new_message/">
+                <input type="submit" value="Nuevo mensaje" class="submit"/>
+            </form>
+        </div>
     </div>
 {% endblock dashboard %}
 

@@ -10,31 +10,31 @@
 
 {% block dashboard %}
     <div class="eventos-content">
-        <h1>Evento</h1>
+        <div class='eventos-titulo'>Evento</div>
         {% if evento %}
             <div class='evento'>
                 <div class='evento-fields'>
-                    <div class='evento-label'>Fecha de inicio:</div>
+                    <div class='evento-label'>¿Cuando es?</div>
                     <div class='evento-field'>{{ evento.fecha_inicio }}</div>
                     <div class="clear"></div>
                 </div>
                 <div class='evento-fields'>
-                    <div class='evento-label'>Fecha de fin:</div>
+                    <div class='evento-label'>¿Cuando termina?</div>
                     <div class='evento-field'>{{ evento.fecha_fin }}</div>
                     <div class="clear"></div>
                 </div>
                 <div class='evento-fields'>
-                    <div class='evento-label'>Donde?:</div>
+                    <div class='evento-label'>¿Donde?</div>
                     <div class='evento-field'>{{ evento.localizacion }}</div>
                     <div class="clear"></div>
                 </div>
                 <div class='evento-fields'>
-                    <div class='evento-label'>De que se trata?:</div>
+                    <div class='evento-label'>¿De que se trata?</div>
                     <div class='evento-field'>{{ evento.descripcion }}</div>
                     <div class="clear"></div>
                 </div>
                 <div class='evento-fields'>
-                    <div class='evento-label'>Invitados:</div>
+                    <div class='evento-label'>Invitados</div>
                     <div class='evento-field'>
                         <ul>
                         {% for invitado in evento.invitados.all %}
@@ -50,7 +50,7 @@
                     <div class="clear"></div>
                 </div>
                 {% if creador %}
-                    <div class='evento-fields'>
+                    <div class='evento-editar-btn'>
                         <a href="/social/evento/edit/{{ evento.id }}"><div class="evento-editar">editar</div></a>
                     </div>
                 {% endif %}

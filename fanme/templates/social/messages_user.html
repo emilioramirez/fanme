@@ -6,9 +6,9 @@
     <script language="javascript" src="/mymedia/js/myutils.js"></script>
 {% endblock myjavascript %}
 
-{% block mystylesheet %}
+{% block mystylesheet-dashboard %}
     <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
-{% endblock mystylesheet%}
+{% endblock mystylesheet-dashboard%}
 
 {% block menuOptions %}
     <div class="header-menu-options">
@@ -23,36 +23,38 @@
 {% endblock menuOptions %}
 
 {% block dashboard %}
-    <div class="title-messages">Mensajes</div>
-    {% for message in mensajes %}
-        <div class="item-content-mess-event">
-            <div class="message-body">
-                <div class="message-usuario">
-                </div>
-            </div>
-            <div class="message-user-subject">
-                {{ message.user_from.first_name }} dijo:
-            </div>
-            <div class="message-user-fecha">
-                {{ message.fecha }}
-            </div>
-            <div class="message-descripcion">
-                {{ message.mensaje|truncatewords:30 }}
-            </div>
+    <div class="eventos-content">
+        <div class='eventos-titulo'>Mensajes de un usuario</div>
+        <div class="list-content-user-messages">
+            <ul>
+                {% for mensage in mensajes %}
+                    <li class="content-user-messages">
+                        <div class="user-message-image">
+                            {% if mensage.user_from.persona.sexo == "M" %}
+                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                            {% else %}
+                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                            {% endif%}
+                        </div>
+                        <div class="user-message-name"><a href="/dash/logbook/{{ usuario.id }}">{{ mensage.user_from.first_name }} {{ mensage.user_from.last_name }}</a></div> {{ message.fecha }}
+                        <div class="user-message-last">{{ mensage.mensaje|truncatewords:30 }}</div>
+                        <div class="clear"></div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-    {% endfor %}
-    <div class="message-line-response">
-        <hr size=1 class="message-line">
-        <p class="message-answer">Responder:</p>
-    </div>
-    <div class="new-message">
-        <form method="post">{% csrf_token %}
-            <div class="message-content-response">
-                    {{ form_response_message.mensaje.errors }}
-                    {{ form_response_message.mensaje }}
-            </div>
-            <input type="submit" value="Responder" class="message-response-button"/>
-        </form>
+        <div class="message-line-response">
+            <p class="message-answer">Responder:</p>
+            <div class="new-message">
+            <form method="post" >{% csrf_token %}
+                <div class="message-content-response">
+                        {{ form_response_message.mensaje.errors }}
+                        {{ form_response_message.mensaje }}
+                </div>
+                <input type="submit" value="Responder" class="message-response-button"/>
+            </form>
+        </div>
+        </div>
     </div>
 {% endblock dashboard %}
 

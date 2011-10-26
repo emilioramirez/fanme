@@ -127,20 +127,20 @@ def messages(request):
         usuarios = []
         for dict in mensajes_recibidos.all():
             usuarios.append(User.objects.get(id=dict['user_from']))
-    except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+    except Persona.DoesNotExist:                                                #Esto para que esta?
+        return HttpResponseRedirect('/dash/empresa/')                           #Esto para que esta?
     return render_to_response('social/messages.html', {'form_search': searchbox,
-        'mensajes_recibidos': usuarios},
+        'usuarios': usuarios},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def new_message(request):
     searchbox = SearchBox()
+    list_ids = request.user.followers.values_list('user', flat=True)
+    users = User.objects.filter(id__in=list_ids)
     if request.method == 'POST':
         form_new_message = MessageForm(request.POST)
-        list_ids = request.user.followers.values_list('user', flat=True)
-        users = User.objects.filter(id__in=list_ids)
         form_new_message.fields["user_to_id"].queryset = users
         if form_new_message.is_valid():
             user_to_id = form_new_message.cleaned_data['user_to_id'].id
@@ -154,8 +154,8 @@ def new_message(request):
             return HttpResponseRedirect('/social/messages/')
     else:
         form_new_message = MessageForm()
-        list_ids = request.user.followers.values_list('user', flat=True)
-        users = User.objects.filter(id__in=list_ids)
+#        list_ids = request.user.followers.values_list('user', flat=True)
+#        users = User.objects.filter(id__in=list_ids)
         form_new_message.fields["user_to_id"].queryset = users
     return render_to_response('social/new_message.html',
         {'form_new_message': form_new_message,
@@ -166,7 +166,7 @@ def new_message(request):
 @login_required(login_url='/accounts/user/')
 def messages_user(request, user_id):
     searchbox = SearchBox()
-    try:
+    try:                                                                        #porque esto?
         if request.method == 'POST':
             form_response_message = MessageResponseForm(request.POST)
             if form_response_message.is_valid():
@@ -184,8 +184,8 @@ def messages_user(request, user_id):
         else:
             mensajes = getMensajes(request, user_id)
             form_response_message = MessageResponseForm()
-    except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+    except Persona.DoesNotExist:                                                #porque esto?
+        return HttpResponseRedirect('/dash/empresa/')                        #porque esto?
     return render_to_response('social/messages_user.html', {
         'form_search': searchbox,
         'form_response_message': form_response_message,

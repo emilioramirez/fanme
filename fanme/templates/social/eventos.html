@@ -1,5 +1,6 @@
 {% extends "dash/dashboard.html" %}
 
+
 {% block menuOptionsSelected %}
     <ul class="menu-options">
         <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
@@ -10,40 +11,34 @@
 
 {% block dashboard %}
     <div class="eventos-content">
-        <h1 class='eventos-titulo'>Eventos creados</h1>
         {% if eventos_creados %}
+            <div class='eventos-titulo'>Eventos creados</div>
             <div class='eventos-list'>
                 {% for evento in eventos_creados %}
-                    <div class='evento-item'>
-                        <div class="evento-cuerpo">
-                            <a href='/social/evento/{{ evento.id }}'>
-                                {{ evento.descripcion }} el {{ evento.fecha_inicio }} - creado por {{ evento.creador.first_name }}
-                            </a>
+                    <div class='i-content'>
+                        <div class="i-title">
+                                {{ evento.fecha_inicio }}
                         </div>
-<!--
-                        <a href="/social/evento/edit/{{ evento.id }}"><div class="evento-editar">editar</div></a>
--->
+                        <div class="i-body">
+                            <a href='/social/evento/{{ evento.id }}'>{{ evento.descripcion }}</a> creado por tí.
+                        </div>
                     </div>
                 {% endfor%}
             </div>
-        {% else %}
-            <div class='evento-vacio'>No creaste ningun evento</div>
         {% endif %}
-        <h1 class='eventos-titulo'>Eventos como invitado</h1>
         {% if eventos_invitado %}
+            <div class='eventos-titulo'>Eventos como invitado</div>
             <div class='eventos-list'>
                 {% for evento in eventos_invitado %}
-                    <div class='evento-item'>
-                        <div class="evento-cuerpo">
-                            <a href='/social/evento/{{ evento.id }}'>
-                                {{ evento.descripcion }} el {{ evento.fecha_inicio }} - creado por {{ evento.creador.first_name }}
-                            </a>
+                    <div class='i-content'>
+                        <div class="i-title"> {{ evento.fecha_inicio }} </div>
+                        <div class="i-body">
+                            <a href='/social/evento/{{ evento.id }}'>{{ evento.descripcion }}</a>
+                             creado por <a href="/dash/logbook/{{ evento.creador.id }}">{{ evento.creador.first_name }} {{ evento.creador.last_name }}</a>.
                         </div>
                     </div>
                 {% endfor%}
             </div>
-        {% else %}
-            <div class='evento-vacio'>No estas ningun evento</div>
         {% endif %}
     </div>
 {% endblock dashboard %}

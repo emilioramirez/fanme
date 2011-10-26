@@ -23,10 +23,10 @@
     </script>
 {% endblock myjavascript %}
 
-{% block mystylesheet %}
+{% block mystylesheet-dashboard %}
     <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
     <link rel="stylesheet" href="/mymedia/css/Autosuggest/autoSuggest.css" type="text/css" />
-{% endblock mystylesheet%}
+{% endblock mystylesheet-dashboard%}
 
 {% block menuOptions %}
     <div class="header-menu-options">
@@ -41,24 +41,24 @@
 {% endblock menuOptions %}
 
 {% block dashboard %}
-    <div class="title-messages">Nuevo mensaje</div>
-    <div class="message-body">
-        <div class="message-content-mati">
-            <form action="/social/new_message/" method="post">{% csrf_token %}
-                <div class="message-content-clear"></div>
-                <div class="message-content-label">
-                    {{ form_new_message.user_to_id.errors }}
-                    <label for="nombre" class="notification-name-field">Para:</label>
-                    {{ form_new_message.user_to_id.nombre }}
-                </div>
-                <div class="message-content-clear"></div>
-                <div class="message-content-label">
-                    {{ form_new_message.mensaje.errors }}
-                    <label for="id_mensaje" class="message-content-label-description">Mensaje:</label>
-                    {{ form_new_message.mensaje }}
-                </div>
-                <input type="submit" value="Enviar" class="enviar"/>
-            </form>
+    <div class="eventos-content">
+        <div class='eventos-titulo'>Nuevo Mensaje</div>
+        <div class="message-body">
+            <div class="message-content-mati">
+                <form action="/social/new_message/" method="post">{% csrf_token %}
+                    <div class="message-content-fields">
+                        <div class="errors">{{ form_new_message.user_to_id.errors }}</div>
+                        <div class="new-message-label"><label for="nombre" class="notification-name-field">Para:</label></div>
+                        <div class="new-message-field">{{ form_new_message.user_to_id }}</div>
+                    </div>
+                    <div class="message-content-fields">
+                        <div class="errors">{{ form_new_message.mensaje.errors }}</div>
+                        <div class="new-message-label"><label for="nombre" class="notification-name-field">Mensaje:</label></div>
+                        <div class="new-message-field">{{ form_new_message.mensaje }}</div>
+                    </div>
+                    <input type="submit" value="Enviar" class="enviar"/>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock dashboard %}

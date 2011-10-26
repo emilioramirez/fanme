@@ -436,11 +436,16 @@ sidebar-follow-user{}
         margin-top: 100px;
     }
 .message-body{
+/*
     margin: -1px -64px;
+*/
 }
     .message-content-mati{
         border: 1px solid #BBBBBB;
+        overflow: hidden;
+/*
         margin-right: 20px;
+*/
     }
         .message-content-mati-to{
             margin-left: 9px;
@@ -487,9 +492,10 @@ sidebar-follow-user{}
             background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
             border: medium none;
             color: white;
-            margin: 10px 587px;
+             margin: 0px 17px 10px 0px;
             height: 32px;
             width: 72px;
+            float: right;
         }
         .enviar-query{
             background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
@@ -536,8 +542,25 @@ sidebar-follow-user{}
         width: 560px;
     }
 .new-message{
-    float: right;
+    border-top: 1px solid grey;
+    margin-top: 20px;
 }
+.new-message input{
+    background: url("/mymedia/images/consulta-empresa.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    color: white;
+    float: right;
+    font-size: 14px;
+    font-weight: bold;
+    height: 35px;
+    margin-top: 5px;
+    width: 135px;
+}
+.message-content-fields{ margin: 15px; }
+    .message-content-fields .errors{}
+    .message-content-fields .errors .errorlist{margin: 0px; padding: 0px;}
+    .new-message-label{}
+    .new-message-field{}
 /* End Content Dashboard */
 /*Begining of the Company*/
 .menu-indicators-mati{

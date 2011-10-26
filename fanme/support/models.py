@@ -27,7 +27,7 @@ class Provincia(models.Model):
     pais = models.ForeignKey(Pais)
 
     def __unicode__(self):
-        return self.nombre
+        return '{0}, {1}'.format(self.nombre, self.pais.__unicode__())
 
 
 class Localidad(models.Model):
@@ -35,7 +35,7 @@ class Localidad(models.Model):
     provincia = models.ForeignKey(Provincia)
 
     def __unicode__(self):
-        return self.nombre
+        return '{0}, {1}'.format(self.nombre, self.provincia.__unicode__())
 
     class Meta:
 #        verbose_name = ''
@@ -50,7 +50,8 @@ class Localizacion(models.Model):
     localidad = models.ForeignKey(Localidad)
 
     def __unicode__(self):
-        return self.barrio
+        return '{0} {1} {2}, {3} '.format(self.barrio, self.calle, self.numero,
+            self.localidad.__unicode__())
 
     class Meta:
 #        verbose_name = ''

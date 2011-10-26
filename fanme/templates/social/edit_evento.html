@@ -9,13 +9,10 @@
     </ul>
 {% endblock menuOptionsSelected %}
 
-
-
-
-{% block mystylesheet %}
+{% block mystylesheet-dashboard %}
     <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/dhtmlxcalendar.css"></link>
     <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
-{% endblock mystylesheet %}
+{% endblock mystylesheet-dashboard %}
 
 {% block myjavascript %}
     <script src="/mymedia/js/codebase/dhtmlxcalendar.js"></script>
@@ -48,7 +45,7 @@
             <input type="submit" value="Guardar" class="submit"/>
             </form>
         </div>
-        <a href="/social/evento/delete/{{ evento.id }}"><div class="evento-editar">Borrar</div></a>
+        <div class="evento-editar"><a href="/social/evento/delete/{{ evento.id }}">Borrar</a></div>
     </div>
 {% endblock dashboard %}
 
