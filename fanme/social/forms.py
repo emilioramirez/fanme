@@ -17,7 +17,7 @@ class MessageForm(forms.Form):
         error_messages={'required': 'Es necesario ingresar un mensaje'},
         widget=forms.Textarea
             (attrs={'style': 'resize: none;',
-            'cols': 80, 'rows': 4}))
+            'cols': 60, 'rows': 4}))
 
 
 class MessageResponseForm(forms.Form):
@@ -27,7 +27,7 @@ class MessageResponseForm(forms.Form):
         error_messages={'required': 'Es necesario ingresar un mensaje'},
         widget=forms.Textarea
             (attrs={'style': 'resize: none;',
-            'cols': 78, 'rows': 2}))
+            'widht': 80, 'rows': 2}))
 
 
 class MessageQueryForm(forms.Form):
@@ -53,9 +53,11 @@ class EventoForm(forms.ModelForm):
             )
         widgets = {
             'fecha_inicio': forms.DateInput(attrs={
-                'class': 'evento-date-form-field'}),
+                'class': 'evento-date-form-field field-evento-new'}),
             'fecha_fin': forms.DateInput(attrs={
-                'class': 'evento-date-form-field'}),
+                'class': 'evento-date-form-field field-evento-new'}),
+            'descripcion': forms.Textarea(attrs={
+                'class': 'evento-date-form-field field-evento-new'}),
         }
 
 

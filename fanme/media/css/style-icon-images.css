@@ -100,3 +100,34 @@
 .un-list-item-topico-all{
     background: url("/mymedia/images/iconos-topicos.png") repeat scroll 77px 68px transparent;
 }
+
+
+/* Mini imgages */
+.mini-img-event{
+    background: url("/mymedia/images/mini-img.png") no-repeat scroll -52px -18px transparent;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    width: 16px;
+}
+.mini-img-msg{
+    background: url("/mymedia/images/mini-img.png") no-repeat scroll -103px -18px transparent;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    width: 16px;
+}
+.mini-img-notify{
+    background: url("/mymedia/images/mini-img.png") no-repeat scroll -81px -1px transparent;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    width: 16px;
+}
+.mini-img-recom{
+    background: url("/mymedia/images/icons-hunch.png") no-repeat scroll -19px -18px transparent;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    width: 17px;
+}
