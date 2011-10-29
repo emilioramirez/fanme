@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from fanme.support.models import Rubro
 from fanme.segmentation.models import Topico
 from fanme.items.models import Item
+from fanme.thumbs import ImageWithThumbsField
 
 
 # Create your models here.
@@ -19,6 +20,9 @@ class AbstractProfile(models.Model):
     #imagen = models.ImageField(blank=True)
     topicos = models.ManyToManyField(Topico, null=True, blank=True)
     is_first_time = models.BooleanField()
+    avatar = ImageWithThumbsField(upload_to='avatares',
+        default='avatares/default.png',
+        sizes=((50, 50), ))
 
     class Meta:
         abstract = True

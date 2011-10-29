@@ -30,10 +30,18 @@
                 {% for mensage in mensajes %}
                     <li class="content-user-messages">
                         <div class="user-message-image">
-                            {% if mensage.user_from.persona.sexo == "M" %}
-                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                            {% if mensage.user_from.persona.avatar %}
+                                <img src="{{ mensage.user_from.persona.avatar.url_50x50 }}" alt="Logo" />
                             {% else %}
-                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                                {% if mensage.user_from.persona %}
+                                    {% if mensage.user_from.persona.sexo == "M" %}
+                                        <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                                    {% else %}
+                                        <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                                    {% endif%}
+                                {% else %}
+                                        <img src="/mymedia/images/020.png" alt="Logo" />
+                                {% endif%}
                             {% endif%}
                         </div>
                         <div class="user-message-name"><a href="/dash/logbook/{{ usuario.id }}">{{ mensage.user_from.first_name }} {{ mensage.user_from.last_name }}</a></div> {{ message.fecha }}
