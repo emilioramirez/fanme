@@ -46,7 +46,7 @@
         <div class="message-line-response">
             <p class="message-answer">Responder:</p>
             <div class="new-message">
-            <form method="post" >{% csrf_token %}
+            <form method="post" action="/social/messages_user/{{ user_id }}">{% csrf_token %}
                 <div class="message-content-response">
                         {{ form_response_message.mensaje.errors }}
                         {{ form_response_message.mensaje }}

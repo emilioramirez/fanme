@@ -189,7 +189,8 @@ def messages_user(request, user_id):
     return render_to_response('social/messages_user.html', {
         'form_search': searchbox,
         'form_response_message': form_response_message,
-        'mensajes': mensajes},
+        'mensajes': mensajes,
+        'user_id': user_id},
         context_instance=RequestContext(request))
 
 
