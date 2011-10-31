@@ -43,3 +43,14 @@ class Recomendacion(models.Model):
     class Meta:
 #        verbose_name = ''
         verbose_name_plural = "Recomendaciones"
+
+
+class ItemImagen(models.Model):
+    item = models.ForeignKey(Item, related_name='mis_imagenes')
+    imagen = models.ImageField(
+        #ImageWithThumbsField(
+        upload_to='items',
+#    avatar = models.ImageField(upload_to='avatares',
+        default='avatares/default.png',
+#        sizes=((50, 50), (100, 100)),
+        null=True, blank=True)
