@@ -247,13 +247,13 @@ def edit_account(request):
                     'last_name': request.user.last_name,
                     'sex': request.user.persona.sexo,
                     'email': request.user.email,
-                    'birth_date': request.user.persona.fecha_nacimiento}
+                    'birth_date': request.user.persona.fecha_nacimiento,
+                    'avatar': request.user.persona.avatar}
         form_update = UserUpdateForm(data)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-        #Hacer algo
     if request.method == 'POST':
-        form_update = UserUpdateForm(request.POST)
+        form_update = UserUpdateForm(request.POST, request.FILES)
         if form_update.is_valid():
             first_name = form_update.cleaned_data['first_name']
             last_name = form_update.cleaned_data['last_name']
@@ -268,6 +268,10 @@ def edit_account(request):
             profile = request.user.persona
             profile.fecha_nacimiento = birth_date
             profile.sexo = sex
+            try:
+                profile.avatar = request.FILES['avatar']
+            except KeyError:
+                print 'no paso nada'
             user.save()
             profile.save()
             messages.append("Se actualizo correctamente el perfil")

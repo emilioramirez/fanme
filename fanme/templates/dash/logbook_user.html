@@ -25,6 +25,21 @@
 {% block sidebar %}
     <div class="sidebar-content">
         <div class="sidebar-user">
+            <div class="">
+                {% if user_logbook.persona.avatar %}
+                    <img src="{{ user_logbook.persona.avatar.url_50x50 }}" alt="Logo" />
+                {% else %}
+                    {% if user_logbook.persona %}
+                        {% if user_logbook.persona.sexo == "M" %}
+                            <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                        {% else %}
+                            <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                        {% endif%}
+                    {% else %}
+                            <img src="/mymedia/images/020.png" alt="Logo" />
+                    {% endif%}
+                {% endif%}
+            </div>
                 <div class="user-name">{{ user_logbook.first_name }} {{ user_logbook.last_name }}</div>
                 <div class="user-stars">
                     <ul>
