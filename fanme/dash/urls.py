@@ -20,5 +20,5 @@ urlpatterns = patterns('',
     (r'^following/$', views.following),
     (r'^followers/$', views.followers),
     (r'^edit_account/$', views.edit_account),
-    (r'^edit_pass/$', views.password_change),
+    (r'^edit_pass/$', views.edit_pass),
 )
