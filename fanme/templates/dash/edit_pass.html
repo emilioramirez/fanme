@@ -11,13 +11,6 @@
 {% block myjavascript %}
     <script src="/mymedia/js/codebase/dhtmlxcalendar.js"></script>
     <script language="javascript" src="/mymedia/js/myutils.js"></script>
-    <script>
-        var myCalendar;
-        function doOnLoad() {
-            myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
-            myCalendar.setDateFormat("%d/%m/%Y");
-        }
-    </script>
     <script language="javascript">
         function comparePass() {
             var new_pass = document.getElementById('id_new_pass').value;
@@ -29,10 +22,6 @@
         }
     </script>
 {% endblock myjavascript %}
-
-{% block bodystuff %}
-    onload="doOnLoad();"
-{% endblock %}
 
 {% block menuOptionsSelected %}
     <ul class="menu-options">
