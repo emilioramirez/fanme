@@ -59,7 +59,16 @@
                     </div>
                     <div class="item-body">
                         <div class="item-image">
-                            <img src="/mymedia/images/298.png" alt="Score">
+                            {% if item.mis_imagenes.count %}
+<!--
+                                {% for itemimagen in item.mis_imagenes.all %}
+                                    <img src="{{ itemimagen.imagen.url_100x100 }}" alt="Score">
+                                {% endfor %}
+-->
+                                <img src="{{ item.first_image }}" alt="Score">
+                            {% else %}
+                                <img src="/mymedia/images/298.png" alt="Score">
+                            {% endif %}
                         </div>
                         <div class="item-descripcion">{{ item.descripcion|truncatewords:70 }}</div>
                         <div class="clear"></div>
