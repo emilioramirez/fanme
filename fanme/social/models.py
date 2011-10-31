@@ -42,3 +42,14 @@ class Notificacion(models.Model):
 
     def __unicode__(self):
         return self.descripcion
+
+
+class Consulta(models.Model):
+    user_to = models.ForeignKey(User, related_name='consultas_recibidos')
+    user_from = models.ForeignKey(User, related_name='consultas_enviados')
+    mensaje = models.TextField(max_length=300)
+    fecha = models.DateTimeField()
+    estado = models.CharField(max_length=30)
+
+    def __unicode__(self):
+        return self.mensaje

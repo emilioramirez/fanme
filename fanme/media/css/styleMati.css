@@ -268,13 +268,14 @@ sidebar-follow-user{}
     text-align: center;
 }
 .edit-account{
-    margin: 0 150px;
-    width: 600px;
+    margin: 0 89px;
+    text-align: center;
 }
     .edit-account-content{
         border: 1px solid #BBBBBB;
         margin-top: 20px;
         overflow: hidden;
+        width: 700px;
     }
         .edit-account-content p{
             margin-left: 20px;
@@ -283,6 +284,11 @@ sidebar-follow-user{}
         .edit-account-content-label{
             width: 307px;
             padding: 0px 0px 10px 0px;
+        }
+        .edit-account-content-label img{
+            border: 1px solid;
+            box-shadow: 0 0 6px black;
+            margin: 5px;
         }
             .edit-account-content-label ul.errorlist{
                 color: red;
@@ -409,6 +415,11 @@ sidebar-follow-user{}
                 font-size: 11px;
                 margin: 8px 0 0 110px;
                 width: 125px;
+            }
+
+            .field-area{
+                float: left;
+                margin: 15px;
             }
 /*End edit account*/
 
