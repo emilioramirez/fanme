@@ -204,13 +204,13 @@ body{}
                         .recomendacion-destino a{ color: #646464; font-weight: bold; text-decoration: none;}
                         .item-image{
                             border: 1px solid #9F9F9F;
-                            height: 120px;
-                            width: 120px;
+                            height: 106px;
+                            width: 106px;
                             margin: 30px 40px 0 20px;
                             float: left;
                         }
                             .item-image img {
-                                padding: 10px;
+                                padding: 3px;
                             }
                         .item-descripcion{
                             float: left;
@@ -441,11 +441,12 @@ body{}
             /* item-body */
                 .item-image-big{
                     border: 1px solid #9F9F9F;
-                    height: 244px;
-                    width: 244px;
+                    height: 206px;
+                    width: 206px;
                     margin: 30px 0px 0 20px;
                     float: left;
                 }
+                .item-image-big img{padding: 3px;}
                 .item-descripcion-big{
 /*
                     border: 1px solid;
@@ -468,10 +469,11 @@ body{}
                         .image-little{
                             border: 2px solid #9B9B9B;
                             float: left;
-                            height: 64px;
-                            margin: 0 5px 0 0;
-                            width: 64px;
+                            height: 54px;
+                            margin: 4px 12px 0px 0px;
+                            width: 54px;
                         }
+                        .image-little img{padding: 2px;}
             /* item-footer */
                 .item-details{ width: 244px; }
         .content-extra{}

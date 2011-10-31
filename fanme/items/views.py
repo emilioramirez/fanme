@@ -10,6 +10,7 @@ from datetime import datetime
 
 from fanme.dash.forms import SearchBox
 from fanme.items.models import Item, Comentario, Marca, Recomendacion
+from fanme.items.models import ItemImagen
 from fanme.items.forms import ItemRegisterForm, CommentForm
 from fanme.accounts.models import Empresa, Persona
 from fanme.segmentation.models import Topico
@@ -47,7 +48,7 @@ def register_item(request):
     searchbox = SearchBox()
     messages = []
     if request.method == 'POST':
-        form_register = ItemRegisterForm(request.POST)
+        form_register = ItemRegisterForm(request.POST, request.FILES)
         if form_register.is_valid():
             nombre = form_register.cleaned_data['nombre']
             descripcion = form_register.cleaned_data['descripcion']
@@ -58,8 +59,20 @@ def register_item(request):
             item.descripcion = descripcion
             item.topico = Topico.objects.get(nombre=topico)
             item.cantidad_fans = 0
+            try:
+                profile.avatar = request.FILES['avatar']
+            except KeyError:
+                print 'Excepcion en social/view.edit_account'
 #            item.marca = Marca.objects.get(nombre=marca)
             item.save()
+            try:
+                imagen = request.FILES['imagen']
+                itemimagen = ItemImagen()
+                itemimagen.item = item
+                itemimagen.imagen = imagen
+                itemimagen.save()
+            except KeyError:
+                print 'Excepcion en items/view.register_item'
             messages.append("Se creo el Item exitosamente")
             form_register = ItemRegisterForm()
     else:
