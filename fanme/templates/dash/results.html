@@ -50,10 +50,18 @@
                         <div class="result-hit">
                             <a href="/dash/logbook/{{ user.id }}">
                                 <div class="result-image">
-                                    {% if user.persona.sexo == "M" %}
-                                        <img src="/mymedia/images/male-avatar.png" alt="Logo" />
+                                    {% if user.persona.avatar %}
+                                        <img src="{{ user.persona.avatar.url_50x50 }}" alt="Logo" />
                                     {% else %}
-                                        <img src="/mymedia/images/famale-avatar.png" alt="Logo" />
+                                        {% if user.persona %}
+                                            {% if user.persona.sexo == "M" %}
+                                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                                            {% else %}
+                                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                                            {% endif%}
+                                        {% else %}
+                                                <img src="/mymedia/images/020.png" alt="Logo" />
+                                        {% endif%}
                                     {% endif%}
                                 </div>
                             </a>

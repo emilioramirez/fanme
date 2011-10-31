@@ -44,11 +44,41 @@
     <div class="edit-account">
         <div class="edit-account-content">
             <div class="edit-account-form">
-                <form action="/dash/edit_account/" method="post">{% csrf_token %}
-                    <div class="edit-account-content-label">
-                        {{ form_update.first_name.errors }}
-                        <label for="id_first_name" class="edit-account-content-label">Nombre:</label>
-                        {{ form_update.first_name }}
+                <form action="/dash/edit_account/" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="field-area">
+                        <div class="edit-account-content-label">
+                            {{ form_update.first_name.errors }}
+                            <label for="id_first_name" class="edit-account-content-label">Nombre:</label>
+                            {{ form_update.first_name }}
+                        </div>
+                        <div class="edit-account-content-label">
+                            {{ form_update.last_name.errors }}
+                            <label for="id_last_name">Apellido:</label>
+                            {{ form_update.last_name }}
+                        </div>
+                        <div class="edit-account-content-label">
+                            {{ form_update.sex.errors }}
+                            <label for="id_sex">Sexo:</label>
+                            {{ form_update.sex }}
+                        </div>
+                        <div class="edit-account-content-label">
+                            {{ form_update.email.errors }}
+                            <label for="id_email">Email:</label>
+                            {{ form_update.email }}
+                        </div>
+                        <div class="edit-account-content-label">
+                            <div class="edit-account-label-birth_date-error">
+                                {{ form_update.birth_date.errors }}
+                            </div>
+                            <label for="id_birth_date">Fecha de Nacimiento:</label>
+                            {{ form_update.birth_date }}
+                        </div>
+                        <div class="edit-account-content-label">
+                            <input type="submit" value="Guardar" class="edit-save"/>
+                        </div>
+                        <div class="edit-account-content-label">
+                                <a href="/dash/edit_pass/">Cambiar contraseña</a>
+                        </div>
                     </div>
                     <div class="edit-account-content-label">
                         {{ form_update.last_name.errors }}

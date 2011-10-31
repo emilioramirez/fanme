@@ -91,14 +91,18 @@
         {% for comment in comments %}
             <div class="comment">
                 <div class="comment-user-image">
-                    {% if comment.user.persona %}
-                        {% if comment.user.persona.sexo == "M" %}
-                            <img src="/mymedia/images/avatar-male-big.png" alt="Logo" />
-                        {% else %}
-                            <img src="/mymedia/images/avatar-famale-big.png" alt="Logo" />
-                        {% endif%}
+                    {% if comment.user.persona.avatar %}
+                        <img src="{{ comment.user.persona.avatar.url_50x50 }}" alt="Logo" />
                     {% else %}
-                            <img src="/mymedia/images/020.png" alt="Logo" />
+                        {% if comment.user.persona %}
+                            {% if comment.user.persona.sexo == "M" %}
+                                <img src="/mymedia/images/avatar-male-big.png" alt="Logo" />
+                            {% else %}
+                                <img src="/mymedia/images/avatar-famale-big.png" alt="Logo" />
+                            {% endif%}
+                        {% else %}
+                                <img src="/mymedia/images/020.png" alt="Logo" />
+                        {% endif%}
                     {% endif%}
                 </div>
                 <div class="comment-user">
@@ -115,14 +119,18 @@
         {% endfor %}
         <div class="comment-add">
                 <div class="comment-user-image-add">
-                    {% if user.persona %}
-                        {% if user.persona.sexo == "M" %}
-                            <img src="/mymedia/images/avatar-male-big.png" alt="Logo" />
-                        {% else %}
-                            <img src="/mymedia/images/avatar-famale-big.png" alt="Logo" />
-                        {% endif%}
+                    {% if user.persona.avatar %}
+                        <img src="{{ user.persona.avatar.url_50x50 }}" alt="Logo" />
                     {% else %}
-                            <img src="/mymedia/images/020.png" alt="Logo" />
+                        {% if user.persona %}
+                            {% if user.persona.sexo == "M" %}
+                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                            {% else %}
+                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                            {% endif%}
+                        {% else %}
+                                <img src="/mymedia/images/020.png" alt="Logo" />
+                        {% endif%}
                     {% endif%}
                 </div>
                 <div class="comment-user-add">

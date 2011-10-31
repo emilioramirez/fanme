@@ -12,6 +12,7 @@ class Evento(models.Model):
     fecha_creacion = models.DateField()
     localizacion = models.ForeignKey(Localizacion)
     creador = models.ForeignKey(User, related_name="eventos_creados")
+    estado = models.CharField(max_length=30)
 
     def __unicode__(self):
         return self.descripcion
@@ -22,6 +23,7 @@ class Mensaje(models.Model):
     user_from = models.ForeignKey(User, related_name='mensajes_enviados')
     mensaje = models.TextField(max_length=300)
     fecha = models.DateTimeField()
+    estado = models.CharField(max_length=30)
 
     def __unicode__(self):
         return self.mensaje
@@ -33,9 +35,21 @@ class Notificacion(models.Model):
         related_name='notificaciones_recibidas')
     fecha_expiracion = models.DateTimeField()
     fecha_creacion = models.DateTimeField()
+    fecha_desde = models.DateTimeField()
     descripcion = models.TextField(max_length=300)
     nombre = models.CharField(max_length=30)
-    #estado -> Estado_Noficiacion
+    estado = models.CharField(max_length=30)
 
     def __unicode__(self):
         return self.descripcion
+
+
+class Consulta(models.Model):
+    user_to = models.ForeignKey(User, related_name='consultas_recibidos')
+    user_from = models.ForeignKey(User, related_name='consultas_enviados')
+    mensaje = models.TextField(max_length=300)
+    fecha = models.DateTimeField()
+    estado = models.CharField(max_length=30)
+
+    def __unicode__(self):
+        return self.mensaje

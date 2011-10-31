@@ -503,9 +503,9 @@ body{}
                             background: none repeat scroll 0 0 white;
                             border: 2px solid #9B9B9B;
                             float: left;
-                            height: 112px;
-                            margin: 23px 0 0 17px;
-                            width: 115px;
+                            height: 50px;
+                            margin: 50px 0 0 17px;
+                            width: 50px;
                         }
                         .comment-user{
 /*
@@ -544,9 +544,9 @@ body{}
                             background: none repeat scroll 0 0 white;
                             border: 2px solid #9B9B9B;
                             float: left;
-                            height: 112px;
-                            margin: 23px 0 0 17px;
-                            width: 115px;
+                            height: 50px;
+                            margin: 50px 0 0 17px;
+                            width: 50px;
                         }
                         .comment-user-add{
 /*

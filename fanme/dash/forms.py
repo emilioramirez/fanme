@@ -47,6 +47,10 @@ class UserUpdateForm(forms.Form):
         error_messages={'required': 'Fecha invalida: Día/Mes/Año',
             'invalid': 'Fecha invalida: Día/Mes/Año'},
         widget=forms.DateInput(attrs={'class': 'edit-account-date-field'}))
+    avatar = forms.ImageField(
+        required=False,
+        label='Imagen de Perfil',
+        )
 
     def clean_username(self):
         data = self.cleaned_data['email']
