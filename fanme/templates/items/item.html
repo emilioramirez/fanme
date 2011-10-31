@@ -31,13 +31,17 @@
             <div class="clear"></div>
         </div>
         <div class="item-body">
-            <div class="item-image-big"><img src="/mymedia/images/2982.png" alt="Score"></div>
+            <div class="item-image-big"><img src="{{ item.first_image_big }}" alt="Score"></div>
             <div class="item-descripcion-big">{{ item.descripcion }}</div>
             <div class="item-image-all">
                 <ul class="image-list">
-                    <li class="image-little"><img src="/mymedia/images/205.png" alt="Score"></li>
+                    {% for itemimage in item.mis_imagenes.all %}
+                        <li class="image-little"><img src="{{ itemimage.imagen.url_50x50 }}" alt="Score"></li>
+<!--
                     <li class="image-little"><img src="/mymedia/images/206.png" alt="Score"></li>
                     <li class="image-little"><img src="/mymedia/images/207.png" alt="Score"></li>
+-->
+                    {% endfor %}
                 </ul>
             </div>
             <div class="clear"></div>

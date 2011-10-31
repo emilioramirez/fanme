@@ -271,7 +271,7 @@ def edit_account(request):
             try:
                 profile.avatar = request.FILES['avatar']
             except KeyError:
-                print 'no paso nada'
+                print 'Excepcion en social/view.edit_account'
             user.save()
             profile.save()
             messages.append("Se actualizo correctamente el perfil")
