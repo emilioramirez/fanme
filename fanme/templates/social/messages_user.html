@@ -1,0 +1,68 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+            <ul class="menu-options">
+                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+            </ul>
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div class="eventos-content">
+        <div class='eventos-titulo'>Mensajes de un usuario</div>
+        <div class="list-content-user-messages">
+            <ul>
+                {% for mensage in mensajes %}
+                    <li class="content-user-messages">
+                        <div class="user-message-image">
+                            {% if mensage.user_from.persona.avatar %}
+                                <img src="{{ mensage.user_from.persona.avatar.url_50x50 }}" alt="Logo" />
+                            {% else %}
+                                {% if mensage.user_from.persona %}
+                                    {% if mensage.user_from.persona.sexo == "M" %}
+                                        <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                                    {% else %}
+                                        <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                                    {% endif%}
+                                {% else %}
+                                        <img src="/mymedia/images/020.png" alt="Logo" />
+                                {% endif%}
+                            {% endif%}
+                        </div>
+                        <div class="user-message-name"><a href="/dash/logbook/{{ usuario.id }}">{{ mensage.user_from.first_name }} {{ mensage.user_from.last_name }}</a></div> {{ message.fecha }}
+                        <div class="user-message-last">{{ mensage.mensaje|truncatewords:30 }}</div>
+                        <div class="clear"></div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="message-line-response">
+            <p class="message-answer">Responder:</p>
+            <div class="new-message">
+            <form method="post" >{% csrf_token %}
+                <div class="message-content-response">
+                        {{ form_response_message.mensaje.errors }}
+                        {{ form_response_message.mensaje }}
+                </div>
+                <input type="submit" value="Responder" class="message-response-button"/>
+            </form>
+        </div>
+        </div>
+    </div>
+{% endblock dashboard %}
+

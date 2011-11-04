@@ -1,0 +1,37 @@
+{% extends "dash/empresa.html" %}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="title-messages">Notificaciones</div>
+        {% for notificaciones in notificaciones_enviadas %}
+            <div class="item-content-mess-event">
+                <div class="message-body">
+                    <div class="message-usuario">
+                    </div>
+                </div>
+                <a href="/social/messages_user/{{ message.id }}">
+                    <div class="message-user-subject">
+                        {{ notificaciones.nombre }}
+                    </div>
+                </a>
+                <div class="message-descripcion">
+                    {{ notificaciones.descripcion|truncatewords:30 }}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="new-message">
+        <form action="/social/new_notification/">
+            <input type="submit" value="Nueva notificacion" class="submit"/>
+        </form>
+    </div>
+{% endblock dashboard %}
+
+{% block crear %}
+{% endblock %}

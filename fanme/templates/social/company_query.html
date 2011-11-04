@@ -1,0 +1,39 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+            <ul class="menu-options">
+                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+            </ul>
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div class="title-messages">Consultas</div>
+    <div class="message-body">
+        <div class="message-content-mati">
+            <form action="/social/company_query/{{ company_id }}" method="post">{% csrf_token %}
+                <div class="message-content-query">
+                    {{ form_query_message.mensaje.errors }}
+                    <label for="id_mensaje" class="message-content-label-query">Consulta:</label>
+                    {{ form_query_message.mensaje }}
+                </div>
+                <input type="submit" value="Enviar" class="enviar-query"/>
+            </form>
+        </div>
+    </div>
+{% endblock dashboard %}
