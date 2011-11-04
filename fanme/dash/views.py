@@ -160,14 +160,19 @@ def logbook_user(request, user_id):
 def my_fans_items(request):
     searchbox = SearchBox()
     messages = []
+    lista = []
     try:
-        request.user.persona
+        items = request.user.persona.items.all()
+        for item in items:
+            lista.append(
+                (item, 0)
+            )
         messages.append("Sos fan de")
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/my_stuff.html',
+    return render_to_response('dash/mi_fanes.html',
         {'form_search': searchbox, 'messages': messages,
-        'items': request.user.persona.items.all(), 'is_fan': True},
+        'items': lista, 'is_fan': True},
         context_instance=RequestContext(request))
 
 
@@ -175,14 +180,22 @@ def my_fans_items(request):
 def my_comments_items(request):
     searchbox = SearchBox()
     messages = []
+    lista = []
     try:
         request.user.persona
+        items = request.user.items_comentados.all().distinct()
+        for item in items:
+            lista.append(
+                (item,
+                request.user.comentarios_realizados.filter(item=item).count()
+                )
+            )
         messages.append("Has comentado los siguientes items")
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/my_stuff.html',
+    return render_to_response('dash/mis_comentarios.html',
         {'form_search': searchbox, 'messages': messages,
-        'items': request.user.item_set.all().distinct(), 'is_fan': False},
+        'items': lista, 'is_fan': False},
         context_instance=RequestContext(request))
 
 
