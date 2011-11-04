@@ -1,4 +1,4 @@
-{% extends "dash/base_dash.html" %}
+{% extends "dash/dashboard.html" %}
 
 {% block myjavascript %}
     <script language="javascript" src="/mymedia/js/myutils.js"></script>
@@ -25,62 +25,27 @@
     </div>
 {% endblock menuOptions %}
 
-{% block content %}
-    <div class="content-dashboard">
-        {% block dashboard %}
-            <div class="form-recomend-user">
-                <form action="/items/recomendation/{{ item.id }}" method="post">{% csrf_token %}
-                    <div class="list-posible-user-recomend">
-                        {% for persona in usuarios %}
-                            <div class="posible-user-recomend">
-                                <div class="logged-user-photo">
-                                    {% if persona.sexo == "M" %}
-                                        <img src="/mymedia/images/avatar-male.png" alt="Logo" />
-                                    {% else %}
-                                        <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
-                                    {% endif%}
-                                </div>
-                                <div class="user-recomend-name list-item-recomend"> {{ persona.user.first_name }} {{ persona.user.last_name }} - {{ persona.user.email }}</div>
-                                <div class="user-recomend-checkbox list-item-recomend"><input type="checkbox" name="recomendados" value="{{ persona.user.id }}" /></div>
-                            </div>
-                            <div class="clear"></div>
-                        {% endfor %}
-
+{% block dashboard %}
+    <div class="form-recomend-user">
+        <form action="/items/recomendation/{{ item.id }}" method="post">{% csrf_token %}
+            <div class="list-posible-user-recomend">
+                {% for persona in usuarios %}
+                    <div class="posible-user-recomend">
+                        <div class="logged-user-photo">
+                            {% if persona.sexo == "M" %}
+                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                            {% else %}
+                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                            {% endif%}
+                        </div>
+                        <div class="user-recomend-name list-item-recomend"> {{ persona.user.first_name }} {{ persona.user.last_name }} - {{ persona.user.email }}</div>
+                        <div class="user-recomend-checkbox list-item-recomend"><input type="checkbox" name="recomendados" value="{{ persona.user.id }}" /></div>
                     </div>
-                    <input type="submit" value="Recomendar" class="submit"/>
-                </form>
+                    <div class="clear"></div>
+                {% endfor %}
+
             </div>
-        {% endblock dashboard %}
-    <div class="clear"></div>
+            <input type="submit" value="Recomendar" class="submit"/>
+        </form>
     </div>
-    <div class="content-sidebar">
-        {% block sidebar %}
-            <div class="sidebar-content">
-        <div class="sidebar-user">
-            <div class="user-name">{{ item.nombre }}</div>
-        </div>
-        <div class="sidebar-stadistic">
-            <a href="/items/item/{{ item.id }}">
-                <div class="stadistic-fan sidebar-stadistic-item">
-                    <div class="stadistic-num">{{ item.persona_set.count }}</div>
-                    <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
-                </div>
-            </a>
-            <a href="/items/item/{{ item.id }}">
-                <div class="stadistic-recomendations sidebar-stadistic-item">
-                    <div class="stadistic-num">{{ item.recomendacion_set.count }}</div>
-                    <div class="stadistic-nom">Recomendaciones</div>
-                </div>
-            </a>
-            <a href="/items/item/{{ item.id }}">
-                <div class="stadistic-comments sidebar-stadistic-item">
-                    <div class="stadistic-num">{{ item.users_are_comment.count }}</div>
-                    <div class="stadistic-nom">Comentario{% if user.comentario_set.count > 1 %}s{% endif %}</div>
-                </div>
-            </a>
-        </div>
-        <div class="clear"></div>
-    </div>
-        {% endblock sidebar %}
-    </div>
-{% endblock%}
+{% endblock dashboard %}

@@ -101,14 +101,17 @@ body{}
                     .menu-item{}
                     li.menu-item a { color: #4F4F4F; }
                     li.menu-item:hover{
+/*
                         background: #49ABD5;
                         border-radius: 8px;
                         box-shadow: 0px 0px 3px #4F4F4F;
+*/
                     }
                     li.menu-item a:hover {
                         background: #49ABD5;
                         border-radius: 8px;
                         color: white;
+                        padding: 5px;
                     }
             /* End User Logged */
 
