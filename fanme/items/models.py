@@ -8,7 +8,8 @@ class Item(models.Model):
     nombre = models.CharField(max_length=20)
     descripcion = models.TextField(max_length=300)
     topico = models.ForeignKey(Topico, null=True, blank=True)
-    users_are_comment = models.ManyToManyField(User, through='Comentario')
+    users_are_comment = models.ManyToManyField(User, through='Comentario',
+        related_name="items_comentados")
     cantidad_fans = models.IntegerField(null=True, blank=True)
     #cantidad_recomendacion = models.IntegerField(null=True, blank=True)
 
@@ -37,8 +38,8 @@ class Marca(models.Model):
 class Comentario(models.Model):
     comentario = models.TextField(max_length=300)
     fecha = models.DateTimeField()
-    item = models.ForeignKey(Item)
-    user = models.ForeignKey(User)
+    item = models.ForeignKey(Item, related_name="comentarios_recibidos")
+    user = models.ForeignKey(User, related_name="comentarios_realizados")
     me_gusta = models.IntegerField(null=True, blank=True)
     denuncias = models.IntegerField(null=True, blank=True)
 
@@ -70,4 +71,4 @@ class ItemImagen(models.Model):
         null=True, blank=True)
 
     def __unicode__(self):
-        return u'imagen de: {0}'.format(self.item)
+        return u'{0} ({1})'.format(self.item, self.imagen.name)

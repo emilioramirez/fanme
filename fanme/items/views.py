@@ -23,7 +23,7 @@ def item(request, item_id):
     try:
         item = Item.objects.get(pk=item_id)
         is_fan = request.user.persona.items.filter(nombre=item.nombre)
-        comments = item.comentario_set.all().order_by('fecha')
+        comments = item.comentarios_recibidos.all().order_by('fecha')
     except Item.DoesNotExist:
         raise Http404
     return render_to_response('items/item.html', {'form_search': searchbox,
