@@ -53,7 +53,7 @@ def register_item(request):
             nombre = form_register.cleaned_data['nombre']
             descripcion = form_register.cleaned_data['descripcion']
             topico = form_register.cleaned_data['topico']
-            marca = form_register.cleaned_data['marca']
+#            marca = form_register.cleaned_data['marca']
             item = Item()
             item.nombre = nombre
             item.descripcion = descripcion
@@ -101,7 +101,7 @@ def fan(request, item_id):
             item.save()
             request.user.save()
             is_fan = True
-            messages.append("Te has hecho fan de {0}".format(item.nombre))
+            messages.append(u"Te has hecho fan de {0}".format(item.nombre))
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
@@ -124,7 +124,7 @@ def unfan(request, item_id):
             item.cantidad_fans -= 1
         item.save()
         request.user.save()
-        messages.append("Ya no sos fan de {0}".format(item.nombre))
+        messages.append(u"Ya no sos fan de {0}".format(item.nombre))
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
@@ -152,7 +152,8 @@ def comment(request, item_id):
             comentario.user = request.user
             comentario.fecha = datetime.now()
             comentario.save()
-            messages.append("Has comentado el producto {0}".format(item.nombre))
+            messages.append(u"Has comentado el producto {0}".format(
+                item.nombre))
             comment_form = CommentForm()
     else:
         comment_form = CommentForm()
@@ -166,7 +167,9 @@ def comment(request, item_id):
 @login_required(login_url='/accounts/user/')
 def recomendation(request, item_id):
     searchbox = SearchBox()
-    seguidores = request.user.followers.all()
+    usuarios_ya_recomendados = request.user.recomendaciones_enviadas.filter(
+        item=item_id).values_list('user_destino', flat=True)
+    seguidores = request.user.followers.exclude(user__in=usuarios_ya_recomendados)
     usuarios = []
     try:
         item = Item.objects.get(pk=item_id)
@@ -178,11 +181,11 @@ def recomendation(request, item_id):
             usuarios.append(User.objects.get(id=id))
         for usuario in usuarios:
             try:
-                request.user.recomendaciones_enviadas.filter(
+                recomendaciones = request.user.recomendaciones_enviadas.filter(
                     user_destino=usuario.id, item=item)
-                print 'existe'
+                if recomendaciones.count() == 0:
+                    raise Recomendacion.DoesNotExist
             except Recomendacion.DoesNotExist:
-                print 'yupi'
                 recomendacion = Recomendacion()
                 recomendacion.item = item
                 recomendacion.user_destino = usuario
@@ -205,7 +208,7 @@ def me_gusta_comentario(request, comentario_id):
     comentario.me_gusta += 1
     comentario.save()
 #    comments = item.comentario_set.all().order_by('fecha')
-    return HttpResponseRedirect('/dash/dashboard/')
+    return HttpResponseRedirect('/items/item/{0}'.format(comentario.item.id))
 #    return render_to_response('items/item.html', {'form_search': searchbox,
 #        'item': item, 'comment_form': comment_form, 'messages': messages,
 #        'comments': comments},
@@ -220,4 +223,4 @@ def denunciar_comentario(request, comentario_id):
         raise Http404
     comentario.denuncias += 1
     comentario.save()
-    return HttpResponseRedirect('/dash/dashboard/')
+    return HttpResponseRedirect('/items/item/{0}'.format(comentario.item.id))

@@ -27,13 +27,13 @@ class ItemRegisterForm(forms.Form):
         error_messages={'required': 'Es necesario un Tópico',
             'invalid_choice': 'Opcion no valida'},
         widget=forms.Select(attrs={'class': 'item-registration-combo-field'}))
-    marca = forms.ModelChoiceField(
-        label='Marca',
-        empty_label="Marca",
-        queryset=Marca.objects.all(),
-        required=False,
-        error_messages={'invalid_choice': 'Opcion no valida'},
-        widget=forms.Select(attrs={'class': 'item-registration-combo-field'}))
+#    marca = forms.ModelChoiceField(
+#        label='Marca',
+#        empty_label="Marca",
+#        queryset=Marca.objects.all(),
+#        required=False,
+#        error_messages={'invalid_choice': 'Opcion no valida'},
+#        widget=forms.Select(attrs={'class': 'item-registration-combo-field'}))
     imagen = forms.ImageField(
         required=True,
         label='Imagen del Item',
@@ -62,3 +62,9 @@ class CommentForm(forms.Form):
         required=True,
         error_messages={'required': 'Es necesario un comentario'},
         widget=forms.Textarea(attrs={'class': 'comment-text-add'}))
+
+    def clean_texto(self):
+        data = self.cleaned_data['texto']
+        if data == u'Ingrese su comentario aquí':
+            raise forms.ValidationError("Es necesario un comentario")
+        return data

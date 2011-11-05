@@ -9,6 +9,7 @@ from fanme.dash.forms import SearchBox, UserUpdateForm, PassUpdateForm
 from fanme.items.models import Item
 from fanme.accounts.models import Persona, Empresa
 from fanme.segmentation.models import Topico
+from fanme.items.models import Recomendacion
 from django.db.models import Q
 from django import forms
 from fanme import recommendations
@@ -228,13 +229,17 @@ def recomendaciones_enviadas(request):
     messages = []
     try:
         request.user.persona
+        items_ids = request.user.recomendaciones_enviadas.all().values_list(
+            'item', flat=True).distinct()
+        items = Item.objects.filter(id__in=items_ids)
         messages.append("Has recomendado los siguientes items")
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    recomendaciones = request.user.recomendaciones_enviadas.all().order_by('fecha')
+    recomendaciones = request.user.recomendaciones_enviadas.all().order_by(
+        'fecha')
     return render_to_response('dash/mis_recomendaciones.html',
         {'form_search': searchbox, 'messages': messages,
-        'recomendaciones': recomendaciones,
+        'recomendaciones': items,
             'is_fan': False},
         context_instance=RequestContext(request))
 
@@ -307,7 +312,7 @@ def edit_account(request):
             try:
                 profile.avatar = request.FILES['avatar']
             except KeyError:
-                print 'Excepcion en social/view.edit_account'
+                pass  # print 'Archivo dash/view.edit_account linea 308'
             user.save()
             profile.save()
             messages.append("Se actualizo correctamente el perfil")

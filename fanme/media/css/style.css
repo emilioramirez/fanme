@@ -416,17 +416,29 @@ body{}
             .sidebar-content{}
                 .sidebar-user{
                     float: right;
-                    margin: 17px 17px 0 0;
+                    margin: 17px 50px 0 0;
                 }
-                    .logbook-user-image{}
+                    .logbook-user-image{
+                        border: 1px solid;
+                        box-shadow: 0 0 5px #000000;
+                        height: 100px;
+                        margin: 4px 5px;
+                        width: 100px;
+                    }
                     .user-name{
                         color: #646464;
                         font-size: 18px;
                         font-weight: bold;
                     }
-                    .user-stars{ float: right; }
+                    .user-stars{
+                        float: right;
+                        margin: 0;
+                        width: 120px;
+                    }
                         .user-stars ul {
                             list-style: none outside none;
+                            margin: 0px;
+                            padding: 0px;
                         }
                         .user-stars ul li {
                             float: left;
@@ -523,6 +535,13 @@ body{}
                             margin: 4px 12px 0px 0px;
                             width: 54px;
                         }
+                        .image-little-ref{
+                            border: 2px solid #9B9B9B;
+                            float: left;
+                            height: 64px;
+                            margin: 4px 12px 0px 0px;
+                            width: 64px;
+                        }
                         .image-little img{padding: 2px;}
             /* item-footer */
                 .item-details{ width: 244px; }
@@ -566,7 +585,9 @@ body{}
                             float: left;
                             height: 112px;
                             margin: 23px 0 0 20px;
+/*
                             width: 570px;
+*/
                         }
                             .comment-username{ margin: 0; }
                             .coment-date{ font-size: 10px; font-style: italic;}
@@ -580,10 +601,30 @@ body{}
                                 width: 500px;
                             }
                         .comment-options{float: left; margin: 50px 0; color: grey;}
+                            .comment-options .num{}
+                            .comment-options .link{}
                         .comment-options a{color: grey;}
-                            .me-gusta-comentario{}
+                            .me-gusta-comentario{ overflow: hidden; }
+                            .me-gusta-comentario div{ float: left; font-size: 20px; margin-left: 5px;}
+                            .me-gusta-img{
+                                background: url("/mymedia/images/mini-imagenes3.png") no-repeat scroll -133px -299px transparent;
+                                height: 18px;
+                                margin: 0;
+                                padding: 0;
+                                width: 16px;
+                            }
+                            .me-gusta-img:hover{background: url("/mymedia/images/mini-imagenes3.png") no-repeat scroll -176px -242px transparent;}
                             .me-gusta-comentario a{text-decoration: none;}
-                            .denunciar-comentario{}
+                            .denunciar-comentario{ overflow: hidden; margin-top: 20px; }
+                            .denunciar-comentario div{ float: left; font-size: 20px; margin-left: 5px;}
+                            .denuncia-comentario-img{
+                                background: url("/mymedia/images/mini-imagenes3.png") no-repeat scroll -137px -38px transparent;
+                                height: 18px;
+                                margin: 0;
+                                padding: 0;
+                                width: 16px;
+                            }
+                            .denuncia-comentario-img:hover{background: url("/mymedia/images/mini-imagenes3.png") no-repeat scroll -115px -271px transparent;}
                             .denunciar-comentario a{text-decoration: none;}
                 .list-comment-add{}
                     .comment-add{
@@ -609,6 +650,13 @@ body{}
                             margin: 23px 0 0 20px;
                             width: 570px;
                         }
+                            .comment-user-add .errorlist {
+                                color: red;
+                                font-size: 10px;
+                                list-style: none outside none;
+                                margin: -13px 0 0 90px;
+                                padding: 0;
+                            }
                             .comment-username-add{ margin: 0; }
                             .comment-text-add{
                                 height: 60px;
