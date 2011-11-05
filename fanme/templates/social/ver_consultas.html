@@ -1,0 +1,33 @@
+{% extends "dash/empresa.html" %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="title-messages">Consultas</div>
+    <div class="list-content-user-messages">
+        <ul>
+            {% for consulta in consultas_recibidas %}
+                <li class="content-user-messages">
+                    <div class="user-message-image">
+                        <a href="/social/company_response_message/{{ message.id }}">
+                            <div class="message-user-subject">
+                                {{ consulta.nombre }}
+                            </div>
+                        </a>
+                    </div>
+                    <div class="user-message-last"></div>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock dashboard %}

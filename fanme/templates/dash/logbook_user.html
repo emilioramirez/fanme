@@ -1,0 +1,71 @@
+{% extends "dash/base_dash.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+
+{% block dashboard %}
+    <div class="logbook_follow">
+        <p>Enhorabuena, ya estas siguiendo a este usuario.</p>
+    </div>
+
+{% endblock dashboard %}
+
+{% block sidebar %}
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="">
+                {% if user_logbook.persona.avatar %}
+                    <img src="{{ user_logbook.persona.avatar.url_50x50 }}" alt="Logo" />
+                {% else %}
+                    {% if user_logbook.persona %}
+                        {% if user_logbook.persona.sexo == "M" %}
+                            <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                        {% else %}
+                            <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                        {% endif%}
+                    {% else %}
+                            <img src="/mymedia/images/020.png" alt="Logo" />
+                    {% endif%}
+                {% endif%}
+            </div>
+                <div class="user-name">{{ user_logbook.first_name }} {{ user_logbook.last_name }}</div>
+                <div class="user-stars">
+                    <ul>
+                        <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sidebar-stadistic">
+                <div class="stadistic-fan sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ user_logbook.persona.items.count }}</div>
+                    <div class="stadistic-nom">Fan{% if user_to_follow.persona.items.count > 1 %}s{% endif %}</div>
+                </div>
+                <div class="stadistic-recomendations sidebar-stadistic-item">
+                    <div class="stadistic-num">##</div>
+                    <div class="stadistic-nom">Recomendaciones</div>
+                </div>
+                <div class="stadistic-comments sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ user_logbook.comentario_set.count }}</div>
+                    <div class="stadistic-nom">Comentario{% if user.comentario_set.count > 1 %}s{% endif %}</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+{% endblock sidebar %}
