@@ -18,10 +18,11 @@
             {% for consulta in consultas_recibidas %}
                 <li class="content-user-messages">
                     <div class="user-message-image">
+                        <img alt="Logo" src="/mymedia/avatares/perfilito.50x50.png">
+                    </div>
+                    <div class="user-message-name">
                         <a href="/social/company_response_message/{{ message.id }}">
-                            <div class="message-user-subject">
-                                {{ consulta.nombre }}
-                            </div>
+                            {{ consulta.nombre }}
                         </a>
                     </div>
                     <div class="user-message-last"></div>
