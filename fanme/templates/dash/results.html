@@ -32,7 +32,18 @@
                 {% for item in items_result %}
                     <div class="result-hit">
                         <a href="/items/item/{{ item.id }}">
-                            <div class="result-image"></div>
+                            <div class="result-image">
+                                {% if item.mis_imagenes.count %}
+<!--
+                                {% for itemimagen in item.mis_imagenes.all %}
+                                    <img src="{{ itemimagen.imagen.url_100x100 }}" alt="Score">
+                                {% endfor %}
+-->
+                                    <img src="{{ item.first_image_little }}" alt="Score">
+                                {% else %}
+                                    <img src="/mymedia/images/298.png" alt="Score">
+                                {% endif %}
+                            </div>
                         </a>
                         <a href="/items/item/{{ item.id }}">
                             <div class="result-descripcion">{{ item.nombre }}</div>

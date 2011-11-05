@@ -2,6 +2,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from fanme.social.models import Evento, Notificacion
+import datetime
 
 
 class MessageForm(forms.Form):
@@ -59,6 +60,18 @@ class EventoForm(forms.ModelForm):
             'descripcion': forms.Textarea(attrs={
                 'class': 'evento-date-form-field field-evento-new'}),
         }
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        fecha_inicio = cleaned_data['fecha_inicio']
+        fecha_fin = cleaned_data['fecha_fin']
+        if fecha_inicio < datetime.date.today():
+            raise forms.ValidationError(
+                'La fecha de inicio es menor que la fecha actual')
+        if fecha_fin < fecha_inicio:
+            raise forms.ValidationError(
+                'La fecha de fin no puede ser menor que la fecha inicio')
+        return cleaned_data
 
 
 class NotificationForm(forms.ModelForm):

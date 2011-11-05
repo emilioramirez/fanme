@@ -26,13 +26,15 @@ def dashboard(request):
         #block recommendation
         root_topics = Topico.objects.filter(padre=None)
         items_by_topics = []
-#        for topic in my_profile.topicos.all():
-#            lista = Item.objects.filter(topico__exact=topic).order_by(
-#                '-cantidad_fans')
-#            items_by_topics.append(lista)
-        for rank, itemname in ranking:
-            lista = Item.objects.filter(nombre=itemname)
-            items_by_topics.append(lista)
+        if ranking == []:
+            for topic in my_profile.topicos.all():
+                lista = Item.objects.filter(topico__exact=topic).order_by(
+                    '-cantidad_fans')
+                items_by_topics.append(lista)
+        else:
+            for rank, itemname in ranking:
+                lista = Item.objects.filter(nombre=itemname)
+                items_by_topics.append(lista)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/dashboard.html', {'form_search': searchbox,
@@ -57,9 +59,13 @@ def dashboard_topic(request, topic_id):
 #            lista.append(Item.objects.filter(topico__exact=topico).order_by(
 #                '-cantidad_fans'))
         if yes:
-            for rank, itemname in ranking:
-                lista.append(Item.objects.filter(nombre=itemname,
-                    topico__exact=topico).order_by('-cantidad_fans'))
+            if ranking != []:
+                for rank, itemname in ranking:
+                    lista.append(Item.objects.filter(nombre=itemname,
+                        topico__exact=topico).order_by('-cantidad_fans'))
+            else:
+                lista.append(Item.objects.filter(topico__exact=topico).order_by(
+                '-cantidad_fans'))
 
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
