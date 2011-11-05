@@ -51,24 +51,33 @@
                     <div class="item-header">
                         <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
                         <div class="item-nombre"><a href="/items/item/{{ item.id }}">{{ item }}</a></div>
-                        <div class="item-score">
+                        <div class="item-score" title="Cantidad de fans">
                             <img src="/mymedia/images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
                             {{ item.cantidad_fans }}
                         </div>
                         <div class="clear"></div>
                     </div>
                     <div class="item-body">
-                        <div class="item-image">
-                            <img src="/mymedia/images/298.png" alt="Score">
+                        <div class="item-image" title="Imagen ilustrativa del item">
+                            {% if item.mis_imagenes.count %}
+<!--
+                                {% for itemimagen in item.mis_imagenes.all %}
+                                    <img src="{{ itemimagen.imagen.url_100x100 }}" alt="Score">
+                                {% endfor %}
+-->
+                                <img src="{{ item.first_image }}" alt="Score">
+                            {% else %}
+                                <img src="/mymedia/images/298.png" alt="Score">
+                            {% endif %}
                         </div>
-                        <div class="item-descripcion">{{ item.descripcion|truncatewords:70 }}</div>
+                        <div class="item-descripcion" title="Descripcion del item">{{ item.descripcion|truncatewords:70 }}</div>
                         <div class="clear"></div>
                     </div>
                     <div class="item-footer">
                         <div class="item-topico">{{ item.topico }}</div>
                         <div class="item-buttons">
-                            <a href="/items/fan/{{ item.id }}" ><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
-                            <a href="/items/recomendation/{{ item.id }}" ><img src="/mymedia/images/item-button-recomendar.png" alt="Recomendar" /></a>
+                            <a href="/items/fan/{{ item.id }}" title="Hazte Fan de este item"><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
+                            <a href="/items/recomendation/{{ item.id }}" title="Recomendá este item a tus seguidores"><img src="/mymedia/images/item-button-recomendar.png" alt="Recomendar" /></a>
                         </div>
                         <div class="clear"></div>
                     </div>
@@ -96,13 +105,13 @@
         </div>
         <div class="sidebar-stadistic">
             <a href="/dash/fans/">
-                <div class="stadistic-fan sidebar-stadistic-item">
+                <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
                     <div class="stadistic-num">{{ user.persona.items.count }}</div>
                     <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
                 </div>
             </a>
             <a href="/dash/recomendated/">
-                <div class="stadistic-recomendations sidebar-stadistic-item">
+                <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
                     <div class="stadistic-num">
                         {{ user.recomendaciones_enviadas.count }}
                     </div>
@@ -110,15 +119,15 @@
                 </div>
             </a>
             <a href="/dash/comments/">
-                <div class="stadistic-comments sidebar-stadistic-item">
-                    <div class="stadistic-num">{{ user.comentario_set.count }}</div>
-                    <div class="stadistic-nom">Comentario{% if user.comentario_set.count > 1 %}s{% endif %}</div>
+                <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
+                    <div class="stadistic-num">{{ user.comentarios_realizados.count }}</div>
+                    <div class="stadistic-nom">Comentario{% if user.comentarios_realizados.count > 1 %}s{% endif %}</div>
                 </div>
             </a>
         </div>
         <div class="sidebar-menu-indicators">
             <a href="/social/messages/">
-                <div class="menu-indicators"><div class="mini-img-msg"></div>Mensajes
+                <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
                     {% if user.mensajes_recibidos.count > 0 %}
                         ({{ user.mensajes_recibidos.count }})
                     {% endif %}
@@ -126,21 +135,21 @@
             </a>
             <a href="/social/eventos/">
 
-                <div class="menu-indicators"><div class="mini-img-event"></div>Eventos
+                <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
                     {% if user.evento_set.count > 0 %}
                         ({{ user.evento_set.count }})
                     {% endif %}
                 </div>
             </a>
             <a href="/social/user_main_notification/">
-                <div class="menu-indicators"><div class="mini-img-notify"></div>Notificaciones
+                <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
                     {% if user.notificaciones_recibidas.all.count > 0 %}
                         ({{ user.notificaciones_recibidas.count }})
                     {% endif %}
                 </div>
             </a>
             <a href="/dash/recomendation/">
-                <div class="menu-indicators"><div class="mini-img-recom"></div>Recomendaciones
+                <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
                     {% if user.recomendaciones_recibidas.count > 0 %}
                         ({{ user.recomendaciones_recibidas.count }})
                     {% endif %}
@@ -149,7 +158,7 @@
         </div>
         <div class="sidebar-new-item">
             {% block crear %}
-                <a href="/items/item/register/"><div class="new-item-buttom">Crear Item</div></a>
+                <a href="/items/item/register/"><div class="new-item-buttom" title="Crea un item del topico que gustes">Crear Item</div></a>
             {% endblock %}
         </div>
         <div class="clear"></div>

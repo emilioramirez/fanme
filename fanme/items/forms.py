@@ -34,6 +34,10 @@ class ItemRegisterForm(forms.Form):
         required=False,
         error_messages={'invalid_choice': 'Opcion no valida'},
         widget=forms.Select(attrs={'class': 'item-registration-combo-field'}))
+    imagen = forms.ImageField(
+        required=True,
+        label='Imagen del Item',
+        )
 
     def clean_nombre(self):
         data = self.cleaned_data['nombre']

@@ -11,6 +11,7 @@ from fanme.accounts.models import Persona, Empresa
 from fanme.segmentation.models import Topico
 from django.db.models import Q
 from django import forms
+from fanme import recommendations
 
 
 @login_required(login_url='/accounts/user/')
@@ -18,18 +19,24 @@ def dashboard(request):
     searchbox = SearchBox()
     try:
         my_profile = request.user.persona
+        #block recommendation
+        recommendations.diccionario = recommendations.getMatrix()
+        ranking = recommendations.getRecommendations(
+            recommendations.diccionario, request.user.username)
+        #block recommendation
         root_topics = Topico.objects.filter(padre=None)
-        topics = {}
         items_by_topics = []
-        for topic in my_profile.topicos.all():
-            lista = Item.objects.filter(topico__exact=topic).order_by(
-                '-cantidad_fans')
+#        for topic in my_profile.topicos.all():
+#            lista = Item.objects.filter(topico__exact=topic).order_by(
+#                '-cantidad_fans')
+#            items_by_topics.append(lista)
+        for rank, itemname in ranking:
+            lista = Item.objects.filter(nombre=itemname)
             items_by_topics.append(lista)
-            topics[topic] = lista
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/dashboard.html', {'form_search': searchbox,
-        'topicos': items_by_topics, 'topics': topics, 'r_topics': root_topics},
+        'topicos': items_by_topics, 'r_topics': root_topics},
         context_instance=RequestContext(request))
 
 
@@ -38,12 +45,22 @@ def dashboard_topic(request, topic_id):
     searchbox = SearchBox()
     lista = []
     try:
+        #block recommendation
+        recommendations.diccionario = recommendations.getMatrix()
+        ranking = recommendations.getRecommendations(
+            recommendations.diccionario, request.user.username)
+        #block recommendation
         root_topics = Topico.objects.filter(padre=None)
         topico = Topico.objects.get(id=topic_id)
         yes = request.user.persona.topicos.get(id=topic_id)
+#        if yes:
+#            lista.append(Item.objects.filter(topico__exact=topico).order_by(
+#                '-cantidad_fans'))
         if yes:
-            lista.append(Item.objects.filter(topico__exact=topico).order_by(
-                '-cantidad_fans'))
+            for rank, itemname in ranking:
+                lista.append(Item.objects.filter(nombre=itemname,
+                    topico__exact=topico).order_by('-cantidad_fans'))
+
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     except Topico.DoesNotExist:
@@ -160,14 +177,19 @@ def logbook_user(request, user_id):
 def my_fans_items(request):
     searchbox = SearchBox()
     messages = []
+    lista = []
     try:
-        request.user.persona
+        items = request.user.persona.items.all()
+        for item in items:
+            lista.append(
+                (item, 0)
+            )
         messages.append("Sos fan de")
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/my_stuff.html',
+    return render_to_response('dash/mi_fanes.html',
         {'form_search': searchbox, 'messages': messages,
-        'items': request.user.persona.items.all(), 'is_fan': True},
+        'items': lista, 'is_fan': True},
         context_instance=RequestContext(request))
 
 
@@ -175,14 +197,22 @@ def my_fans_items(request):
 def my_comments_items(request):
     searchbox = SearchBox()
     messages = []
+    lista = []
     try:
         request.user.persona
+        items = request.user.items_comentados.all().distinct()
+        for item in items:
+            lista.append(
+                (item,
+                request.user.comentarios_realizados.filter(item=item).count()
+                )
+            )
         messages.append("Has comentado los siguientes items")
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/my_stuff.html',
+    return render_to_response('dash/mis_comentarios.html',
         {'form_search': searchbox, 'messages': messages,
-        'items': request.user.item_set.all().distinct(), 'is_fan': False},
+        'items': lista, 'is_fan': False},
         context_instance=RequestContext(request))
 
 
@@ -271,7 +301,7 @@ def edit_account(request):
             try:
                 profile.avatar = request.FILES['avatar']
             except KeyError:
-                print 'no paso nada'
+                print 'Excepcion en social/view.edit_account'
             user.save()
             profile.save()
             messages.append("Se actualizo correctamente el perfil")

@@ -5,6 +5,7 @@
 /* General */
 html{
     font-size: 12px;
+    font-family: Arial, sans-serif;
 }
 head{}
 body{}
@@ -115,7 +116,7 @@ body{}
     /* End Header */
 
     /* Begin Content */
-    .content{ /*overflow: hidden;*/ margin: 0 auto; width: 880px; padding: 46px 0; }
+    .content{ /*overflow: hidden;*/ margin: 0px auto; width: 880px; padding: 60px 0px; min-height: 450px;}
 
         /* Begin for Content Register */
         .accounts-register-welcome-image{ float: left; padding: 80px 0 0 20px; }
@@ -170,6 +171,7 @@ body{}
                 height: 48px;
                 margin: 20px 0;
                 overflow: hidden;
+                box-shadow: 1px 1px 7px #BBBBBB;
             }
                 .list-topics{list-style: none; margin: 0; padding: 0;}
                 .list-topics li{float: left; float: left; margin: 7px 11px;}
@@ -178,7 +180,7 @@ body{}
                 /* Begin Item content */
                 .item-content{
                     border: 1px solid #BBBBBB;
-                    margin: 10px 0;
+                    margin: 25px 0px;
 /*
                     height: 250px;
 */
@@ -204,27 +206,39 @@ body{}
                         .recomendacion-destino a{ color: #646464; font-weight: bold; text-decoration: none;}
                         .item-image{
                             border: 1px solid #9F9F9F;
-                            height: 120px;
-                            width: 120px;
+                            height: 106px;
+                            width: 106px;
                             margin: 30px 40px 0 20px;
                             float: left;
                         }
                             .item-image img {
-                                padding: 10px;
+                                padding: 3px;
                             }
                         .item-descripcion{
+                            background: none repeat scroll 0 0 #ECF7FB;
+                            border: 1px solid #D3DDE0;
+                            border-radius: 5px 5px 5px 5px;
                             float: left;
-/*
-                            border: 1px dashed;
-*/
-                            float: left;
-                            height: 120px;
-                            margin: 30px 0 0 0;
+                            height: 100px;
+                            margin: 30px 0 0;
                             overflow: hidden;
+                            padding: 4px;
                             text-align: justify;
                             width: 340px;
                         }
                     .item-footer{ margin: 30px 20px 10px; }
+                        .item-comment{
+                            float: right;
+                            margin: 0px 25px 0px 0px;
+                            width: 150px;
+                        }
+                            .mini-img-comment{
+                                background: url("/mymedia/images/mini-img.png") no-repeat scroll -16px -1px transparent;
+                                float: left;
+                                height: 16px;
+                                width: 16px;
+                            }
+                            .item-coment-text{margin: 0px 0px 0px 20px;}
                         .item-topico{
                             float: left;
                         }
@@ -359,10 +373,16 @@ body{}
             background: none repeat scroll 0 0 #ECECEC;
             border-radius: 7px 7px 7px 7px;
             box-shadow: 0px 0px 10px #000000;
+/*
             float: left;
-            /*height: 356px;*/
+*/
+            /*height: 356px; no tocar*/
+/*
             margin: 90px 0px 0px 72px;
+*/
+            margin: 90px 0px 0px 650px;
             width: 230px;
+            position: fixed;
         }
             .sidebar-content{}
                 .sidebar-user{
@@ -441,11 +461,12 @@ body{}
             /* item-body */
                 .item-image-big{
                     border: 1px solid #9F9F9F;
-                    height: 244px;
-                    width: 244px;
+                    height: 206px;
+                    width: 206px;
                     margin: 30px 0px 0 20px;
                     float: left;
                 }
+                .item-image-big img{padding: 3px;}
                 .item-descripcion-big{
 /*
                     border: 1px solid;
@@ -468,10 +489,11 @@ body{}
                         .image-little{
                             border: 2px solid #9B9B9B;
                             float: left;
-                            height: 64px;
-                            margin: 0 5px 0 0;
-                            width: 64px;
+                            height: 54px;
+                            margin: 4px 12px 0px 0px;
+                            width: 54px;
                         }
+                        .image-little img{padding: 2px;}
             /* item-footer */
                 .item-details{ width: 244px; }
         .content-extra{}
