@@ -21,11 +21,11 @@ from fanme.support.models import Notificacion
 def eventos(request):
     searchbox = SearchBox()
     try:
-        eventos_creados = request.user.eventos_creados.all()
+        eventos_creados = request.user.eventos_creados.all().order_by('fecha_inicio')
     except Evento.DoesNotExist:
         eventos_creados = []
     try:
-        eventos_invitado = request.user.eventos_invitado.all()
+        eventos_invitado = request.user.eventos_invitado.all().order_by('fecha_inicio')
     except Evento.DoesNotExist:
         eventos_invitado = []
     temp = RequestContext(request, {'eventos_creados': eventos_creados,

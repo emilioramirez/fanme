@@ -31,7 +31,13 @@
             <div class="clear"></div>
         </div>
         <div class="item-body">
-            <div class="item-image-big"><img src="{{ item.first_image_big }}" alt="Score"></div>
+            <div class="item-image-big">
+                {% if item.mis_imagenes.count %}
+                    <img src="{{ item.first_image_big }}" alt="Score">
+                {% else %}
+                    <img src="/mymedia/images/298.png" alt="Score">
+                {% endif %}
+            </div>
             <div class="item-descripcion-big">{{ item.descripcion }}</div>
             <div class="item-image-all">
                 <ul class="image-list">

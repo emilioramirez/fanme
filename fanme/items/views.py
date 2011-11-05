@@ -92,9 +92,9 @@ def fan(request, item_id):
     try:
         item = Item.objects.get(pk=item_id)
         is_fan = request.user.persona.items.filter(nombre=item.nombre)
-        comments = item.comentario_set.all().order_by('fecha')
+        comments = item.comentarios_recibidos.all().order_by('fecha')
         if is_fan:
-            messages.append("Ya sos fan de {0}".format(item.nombre))
+            messages.append(u"Ya sos fan de {0}".format(item.nombre))
         else:
             request.user.persona.items.add(item)
             item.cantidad_fans += 1
@@ -156,7 +156,7 @@ def comment(request, item_id):
             comment_form = CommentForm()
     else:
         comment_form = CommentForm()
-    comments = item.comentario_set.all().order_by('fecha')
+    comments = item.comentarios_recibidos.all().order_by('fecha')
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item, 'comment_form': comment_form, 'messages': messages,
         'comments': comments},

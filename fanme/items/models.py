@@ -16,6 +16,13 @@ class Item(models.Model):
     def __unicode__(self):
         return self.nombre
 
+    def first_image_little(self):
+        try:
+            itemimagen = self.mis_imagenes.latest('imagen')
+            return itemimagen.imagen.url_50x50
+        except:
+            return 'no pibe'
+
     def first_image(self):
         try:
             itemimagen = self.mis_imagenes.latest('imagen')

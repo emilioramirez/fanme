@@ -24,22 +24,22 @@
 
 {% block sidebar %}
     <div class="sidebar-content">
-        <div class="sidebar-user">
-            <div class="">
-                {% if user_logbook.persona.avatar %}
-                    <img src="{{ user_logbook.persona.avatar.url_50x50 }}" alt="Logo" />
-                {% else %}
-                    {% if user_logbook.persona %}
-                        {% if user_logbook.persona.sexo == "M" %}
-                            <img src="/mymedia/images/avatar-male.png" alt="Logo" />
-                        {% else %}
-                            <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
-                        {% endif%}
+            <div class="sidebar-user">
+                <div class="logbook-user-image">
+                    {% if user_logbook.persona.avatar %}
+                        <img src="{{ user_logbook.persona.avatar.url_50x50 }}" alt="Logo" />
                     {% else %}
-                            <img src="/mymedia/images/020.png" alt="Logo" />
+                        {% if user_logbook.persona %}
+                            {% if user_logbook.persona.sexo == "M" %}
+                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                            {% else %}
+                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                            {% endif%}
+                        {% else %}
+                                <img src="/mymedia/images/020.png" alt="Logo" />
+                        {% endif%}
                     {% endif%}
-                {% endif%}
-            </div>
+                </div>
                 <div class="user-name">{{ user_logbook.first_name }} {{ user_logbook.last_name }}</div>
                 <div class="user-stars">
                     <ul>
@@ -53,19 +53,21 @@
                 </div>
             </div>
             <div class="sidebar-stadistic">
-                <div class="stadistic-fan sidebar-stadistic-item">
+                <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
                     <div class="stadistic-num">{{ user_logbook.persona.items.count }}</div>
-                    <div class="stadistic-nom">Fan{% if user_to_follow.persona.items.count > 1 %}s{% endif %}</div>
+                    <div class="stadistic-nom">Fan{% if user_logbook.persona.items.count > 1 %}s{% endif %}</div>
                 </div>
-                <div class="stadistic-recomendations sidebar-stadistic-item">
-                    <div class="stadistic-num">##</div>
-                    <div class="stadistic-nom">Recomendaciones</div>
+                <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
+                    <div class="stadistic-num">
+                        {{ user_logbook.recomendaciones_enviadas.count }}
+                    </div>
+                    <div class="stadistic-nom">Mis recomendaciones</div>
                 </div>
-                <div class="stadistic-comments sidebar-stadistic-item">
-                    <div class="stadistic-num">{{ user_logbook.comentario_set.count }}</div>
-                    <div class="stadistic-nom">Comentario{% if user.comentario_set.count > 1 %}s{% endif %}</div>
+                <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
+                    <div class="stadistic-num">{{ user_logbook.comentarios_realizados.count }}</div>
+                    <div class="stadistic-nom">Comentario{% if user.comentarios_realizados.count > 1 %}s{% endif %}</div>
                 </div>
             </div>
-            <div class="clear"></div>
-        </div>
+        <div class="clear"></div>
+    </div>
 {% endblock sidebar %}

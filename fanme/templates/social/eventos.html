@@ -18,6 +18,10 @@
                     <div class='i-content'>
                         <div class="i-title">
                                 {{ evento.fecha_inicio }}
+                                <div class="i-title-options">
+                                    <a href="/social/evento/edit/{{ evento.id }}" title="Editar este evento"><div class="i-title-options-edit"></div></a>
+                                    <a href="/social/evento/delete/{{ evento.id }}" title="ELIMINAR este evento"><div class="i-title-options-delete"></div></a>
+                                </div>
                         </div>
                         <div class="i-body">
                             <a href='/social/evento/{{ evento.id }}'>{{ evento.descripcion }}</a> creado por tí.
