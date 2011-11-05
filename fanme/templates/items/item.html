@@ -67,7 +67,7 @@
                 {% if not is_fan %}
                     <a href="/items/fan/{{ item.id }}" ><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
                 {% endif %}
-                <a href="#" ><img src="/mymedia/images/item-button-recomendar.png" alt="Recomendar" /></a>
+                <a href="/items/recomendation/{{ item.id }}" ><img src="/mymedia/images/item-button-recomendar.png" alt="Recomendar" /></a>
                 <a href="#" ><img src="/mymedia/images/item-button-denunciar.png" alt="Denunciar" /></a>
                 {% if is_fan %}
                     <a href="/items/unfan/{{ item.id }}" ><img src="/mymedia/images/item-buttom-unFan.png" alt="Unfan" /></a>
@@ -87,9 +87,9 @@
         <p>Lo podés conseguir en:</p>
         <div class="item-image-all">
             <ul class="image-list">
-                <li class="image-little"><img src="/mymedia/images/197.png" alt="Score"></li>
-                <li class="image-little"><img src="/mymedia/images/466.png" alt="Score"></li>
-                <li class="image-little"><img src="/mymedia/images/563.png" alt="Score"></li>
+                <li class="image-little-ref"><img src="/mymedia/images/197.png" alt="Score"></li>
+                <li class="image-little-ref"><img src="/mymedia/images/466.png" alt="Score"></li>
+                <li class="image-little-ref"><img src="/mymedia/images/563.png" alt="Score"></li>
             </ul>
         </div>
     </div>
@@ -122,8 +122,16 @@
                     <p class="comment-text">{{ comment.comentario }}</p>
                 </div>
                 <div class="comment-options">
-                    <div class="me-gusta-comentario">{{ comment.me_gusta }}<a href="/items/comment/megusta/{{ comment.id }}"> Me Gusta</a></div>
-                    <div class="denunciar-comentario">{{ comment.denuncias }}<a href="/items/comment/denunciar/{{ comment.id }}"> Denunciar</a></div>
+                    <div class="me-gusta-comentario">
+                        <div class="num">{{ comment.me_gusta }}</div>
+                        <div class="link"><a href="/items/comment/megusta/{{ comment.id }}" title="Me gusta"><div class="me-gusta-img"></div></a></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="denunciar-comentario">
+                        <div class="num">{{ comment.denuncias }}</div>
+                        <div class="link"><a href="/items/comment/denunciar/{{ comment.id }}" title="Denunciar"><div class="denuncia-comentario-img"></div></a></div>
+                        <div class="clear"></div>
+                    </div>
                 </div>
             </div>
         {% endfor %}

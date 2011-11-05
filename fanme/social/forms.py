@@ -63,8 +63,12 @@ class EventoForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        fecha_inicio = cleaned_data['fecha_inicio']
-        fecha_fin = cleaned_data['fecha_fin']
+        try:
+            fecha_inicio = cleaned_data['fecha_inicio']
+            fecha_fin = cleaned_data['fecha_fin']
+        except KeyError:
+            raise forms.ValidationError(
+                'La fecha de inicio y fin son requeridas')
         if fecha_inicio < datetime.date.today():
             raise forms.ValidationError(
                 'La fecha de inicio es menor que la fecha actual')
