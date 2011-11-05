@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.contrib.auth.models import User
 from fanme.social.models import Evento, Notificacion
+from fanme.items.models import Item
 
 
 class MessageForm(forms.Form):
@@ -31,13 +31,20 @@ class MessageResponseForm(forms.Form):
 
 
 class MessageQueryForm(forms.Form):
-    mensaje = forms.CharField(
+    item = forms.ModelChoiceField(
         label='',
+        empty_label="---",
+        queryset=Item.objects.all(),
+        error_messages={'required': 'Es necesario un Item',
+            'invalid_choice': 'Opcion no valida'},
+        widget=forms.Select(attrs={'class': 'combo-item'}))
+    consulta = forms.CharField(
+        label='Consulta',
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
         widget=forms.Textarea
             (attrs={'style': 'resize: none;  margin: -16px 67px;',
-            'cols': 78, 'rows': 5}))
+            'cols': 60, 'rows': 5}))
 
 
 class EventoForm(forms.ModelForm):

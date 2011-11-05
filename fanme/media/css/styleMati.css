@@ -573,10 +573,19 @@ sidebar-follow-user{}
     .new-message-label{}
     .new-message-field{}
 /* End Content Dashboard */
+/*Begining of the query to the company*/
+.combo-item{
+    margin: 0 0 0 36px;
+}
+/* End of the query to the company */
 /*Begining of the Company*/
 .menu-indicators-mati{
     color: #646464;
     margin: 6px 17px;
+}
+.boton-enviar-query{
+    float: right;
+    margin: 8px 39px 10px 0;
 }
     /*Begining of the new notifications page*/
     .notifications-content {

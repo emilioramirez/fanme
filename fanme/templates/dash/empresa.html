@@ -40,6 +40,16 @@
                 {% endif %}
             </div>
         </a>
+        <a href="/social/ver_consultas/">
+            <div class="menu-indicators-mati">Consultas</div>
+            {% if user.consultas_recibidos.all.count > 0 %}
+                {% for consulta in user.consultas_recibidos.all %}
+                    {% if consulta.estado = "no_leido" %}
+                        ({{ user.consultas_recibidos.all.count }})
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </a>
         <a href="/social/notificaciones/">
             <div class="menu-indicators-mati">Notificaciones</div>
         </a>

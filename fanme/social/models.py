@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from fanme.support.models import Localizacion
+from fanme.items.models import Item
 
 
 class Evento(models.Model):
@@ -45,11 +46,12 @@ class Notificacion(models.Model):
 
 
 class Consulta(models.Model):
-    user_to = models.ForeignKey(User, related_name='consultas_recibidos')
-    user_from = models.ForeignKey(User, related_name='consultas_enviados')
+    user_to = models.ForeignKey(User, related_name='consultas_recibidas')
+    user_from = models.ForeignKey(User, related_name='consultas_enviadas')
     mensaje = models.TextField(max_length=300)
     fecha = models.DateTimeField()
     estado = models.CharField(max_length=30)
+    item = models.ForeignKey(Item, related_name='mis_consultas')
 
     def __unicode__(self):
         return self.mensaje
