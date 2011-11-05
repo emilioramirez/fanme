@@ -1,0 +1,46 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+            <ul class="menu-options">
+                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+            </ul>
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div class="title-messages">Notificaciones</div>
+    {% for notificacion in notificaciones_recibidas %}
+        <div class="item-content-mess-event">
+            <div class="message-body">
+                <div class="message-usuario">
+                </div>
+            </div>
+            <!--<a href="/social/notifications_by_company/{{ notificacion.id }}">-->
+            <div class="message-user-subject">
+                {{ notificacion.nombre }}
+            </div>
+            <!--</a>-->
+            <div class="message-user-fecha">
+                Hasta: {{ notificacion.fecha_expiracion|date:"d/M/Y" }}
+            </div>
+            <div class="message-descripcion">
+                {{ notificacion.descripcion|truncatewords:30 }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock dashboard %}
