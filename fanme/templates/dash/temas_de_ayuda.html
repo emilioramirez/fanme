@@ -1,0 +1,51 @@
+{% extends "dash/base_ayuda.html" %}
+
+{% load dash_filters %}
+
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/style-icon-images.css" type="text/css" />
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block myjavascript %}
+    <script language="javascript">
+    function escribirDashboard()
+    {
+//        document.write('cualquiera');
+        var dashboard = "¿Qué es el Dashboard? <br>"+
+            "\n¿Qué son las recomendaciones?";
+        document.getElementById("content").innerHTML=dashboard;
+    }
+    </script>
+{% endblock myjavascript %}
+
+{% block messages %}
+{% endblock messages %}
+
+{% block body-help %}
+    <div class="help-content-temas">
+        <img src="/mymedia/images/ayuda/dashboard.jpg" width="50" height="50">
+        <div id="dash" class="help-temas-titles" onclick=escribirDashboard()>Dashboard</div>
+    </div>
+    <div class="help-content-temas">
+        <img src="/mymedia/images/ayuda/logbook.jpg" width="50" height="50">
+        <div class="help-temas-titles">Logbook</div>
+    </div>
+    <div class="help-content-temas">
+        <img src="/mymedia/images/ayuda/mensaje.jpg" width="50" height="50">
+        <div class="help-temas-titles">Mensajes</div>
+    </div>
+    <div class="help-content-temas">
+        <img src="/mymedia/images/ayuda/evento.jpg" width="50" height="50">
+        <div class="help-temas-titles">Eventos</div>
+    </div>
+    <div class="help-content-temas">
+        <img src="/mymedia/images/ayuda/mensaje3.jpg" width="50" height="50">
+        <div class="help-temas-titles">Notificaciones</div>
+    </div>
+    <div id="content" class="help-respuestas-temas"></div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock sidebar %}
