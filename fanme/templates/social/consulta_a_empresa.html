@@ -22,13 +22,16 @@
     </div>
 {% endblock menuOptions %}
 
-{% block dashboard %}
-    <div class="title-messages">Consultas</div>
+{% block messages %}
     <div class="item-messages">
         {% for message in messages %}
             <p class="message">{{ message }}</p>
         {% endfor %}
     </div>
+{% endblock messages %}
+
+{% block dashboard %}
+    <div class="title-messages">Consultas</div>
     <div class="message-body">
         <div class="message-content-mati">
             <form action="/social/consulta_a_empresa/{{ company_id }}" method="post">{% csrf_token %}

@@ -1,37 +1,46 @@
-a    {% extends "dash/empresa.html" %}
+{% extends "dash/empresa.html" %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
 
 {% block menuOptionsSelected %}
     <ul class="menu-options">
         <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
-        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
-        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+        <!--<li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>-->
     </ul>
 {% endblock menuOptionsSelected %}
 
 {% block dashboard %}
     <div class="title-messages">Notificaciones</div>
-        {% for notificaciones in notificaciones_enviadas %}
-            <div class="item-content-mess-event">
-                <div class="message-body">
-                    <div class="message-usuario">
+    <div class="list-content-user-messages">
+        <ul>
+            {% for notificaciones in notificaciones_enviadas %}
+                <li class="content-user-messages">
+                    <!--<div class="user-message-image">
+                        {% if consulta.mis_imagenes.count %}
+                            <img src="{{ consulta.first_image }}" alt="Score">
+                        {% else %}
+                            <img src="/mymedia/images/298.png" alt="Score">
+                        {% endif %}
+                    </div>-->
+                    <div class="user-message-name">
+                        <a href="/social/messages_user/{{ message.id }}">
+                            {{ notificaciones.nombre }}
+                        </a>
                     </div>
-                </div>
-                <a href="/social/messages_user/{{ message.id }}">
-                    <div class="message-user-subject">
-                        {{ notificaciones.nombre }}
+                    <div class="user-message-name">
+                        {{ notificaciones.descripcion|truncatewords:30 }}
                     </div>
-                </a>
-                <div class="message-descripcion">
-                    {{ notificaciones.descripcion|truncatewords:30 }}
-                </div>
-            </div>
-        {% endfor %}
-        <div class="new-message">
+                    <div class="user-message-last"></div>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="new-message">
         <form action="/social/new_notification/">
             <input type="submit" value="Nueva notificacion" class="submit"/>
         </form>
     </div>
 {% endblock dashboard %}
-
-{% block crear %}
-{% endblock %}

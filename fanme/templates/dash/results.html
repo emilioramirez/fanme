@@ -80,7 +80,13 @@
                 {% for organization in organizations_result %}
                     <div class="result-hit">
                         <a href="/items/empresa/{{ organization.id }}">
-                            <div class="result-image"><img src="/mymedia/images/020.png" alt="Logo" /></div>
+                            <div class="result-image">
+                                {% if organization.avatar %}
+                                    <img src="{{ organization.avatar.url_50x50 }}" alt="Logo" />
+                                {% else %}
+                                        <img src="/mymedia/images/020.png" alt="Logo" />
+                                {% endif%}
+                            </div>
                         </a>
                         <a href="/items/empresa/{{ organization.id }}">
                             <div class="result-descripcion" >{{ organization.razon_social }}</a></div>

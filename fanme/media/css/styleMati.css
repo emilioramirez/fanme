@@ -571,7 +571,18 @@ sidebar-follow-user{}
     .message-content-fields .errors{}
     .message-content-fields .errors .errorlist{margin: 0px; padding: 0px;}
     .new-message-label{}
-    .new-message-field{}
+    .user-to-field{
+        height: 20px;
+    }
+    .new-message-field{
+        height: 60px;
+        width: 505px;
+    }
+    .response-message-field{
+        width: 541px;
+        height: 50px;
+        margin-top: 10px;
+    }
 /* End Content Dashboard */
 /*Begining of the query to the company*/
 .combo-item{
@@ -585,7 +596,7 @@ sidebar-follow-user{}
 }
 .boton-enviar-query{
     float: right;
-    margin: 8px 39px 10px 0;
+    margin: 8px 36px 10px 0;
 }
     /*Begining of the new notifications page*/
     .notifications-content {
@@ -621,6 +632,10 @@ sidebar-follow-user{}
                 float: right;
                 margin-right: 44px;
                 margin-bottom: 10px;
+            }
+            .new-notification-textarea{
+                height: 50px;
+                width: 366px;
             }
             .content-form-notification ul.errorlist{
                     color: red;

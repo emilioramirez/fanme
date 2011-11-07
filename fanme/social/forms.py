@@ -15,9 +15,8 @@ class MessageForm(forms.Form):
         label='Mensaje',
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
-        widget=forms.Textarea
-            (attrs={'style': 'resize: none;',
-            'cols': 60, 'rows': 4}))
+        widget=forms.Textarea(attrs={
+                'class': 'new-message-field'}))
 
 
 class MessageResponseForm(forms.Form):
@@ -26,8 +25,7 @@ class MessageResponseForm(forms.Form):
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
         widget=forms.Textarea
-            (attrs={'style': 'resize: none;',
-            'widht': 80, 'rows': 2}))
+            (attrs={'class': 'response-message-field'}))
 
 
 class MessageQueryForm(forms.Form):
@@ -42,9 +40,7 @@ class MessageQueryForm(forms.Form):
         label='Consulta',
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
-        widget=forms.Textarea
-            (attrs={'style': 'resize: none;  margin: -16px 67px;',
-            'cols': 60, 'rows': 5}))
+        widget=forms.Textarea(attrs={'class': 'new-message-field'}))
 
 
 class EventoForm(forms.ModelForm):
@@ -84,6 +80,5 @@ class NotificationForm(forms.ModelForm):
             'fecha_expiracion': forms.DateInput(attrs={
                 'class': 'notification-name-field'}),
             'descripcion': forms.Textarea(attrs={
-                'style': 'resize: none;',
-                'cols': 50, 'rows': 4}),
+                'class': 'new-notification-textarea'}),
         }

@@ -23,4 +23,5 @@ urlpatterns = patterns('',
     (r'^notifications_by_company/(?P<company_id>\d+)$',
         views.notification_by_company),
     (r'^ver_consultas/$', views.ver_consultas),
+    (r'^ver_consultas_item/(?P<item_id>\d+)$', views.ver_consultas_item),
 )
