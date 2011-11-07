@@ -4,7 +4,8 @@ from django.shortcuts import render_to_response
 from fanme.support.models import TipoNotificacion
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from fanme.social.forms import MessageForm, MessageResponseForm, MessageQueryForm
+from fanme.social.forms import MessageForm, MessageResponseForm
+from fanme.social.forms import MessageQueryForm
 from fanme.dash.forms import SearchBox
 from fanme.accounts.models import Persona
 from fanme.social.models import Mensaje
@@ -21,11 +22,18 @@ from fanme.support.models import Notificacion
 def eventos(request):
     searchbox = SearchBox()
     try:
-        eventos_creados = request.user.eventos_creados.all().order_by('fecha_inicio')
+        eventos_creados = request.user.eventos_creados.all().order_by(
+            'fecha_inicio')
     except Evento.DoesNotExist:
         eventos_creados = []
     try:
-        eventos_invitado = request.user.eventos_invitado.all().order_by('fecha_inicio')
+        eventos_invitado = request.user.eventos_invitado.all().order_by(
+            'fecha_inicio')
+        eventos_noleidos = request.user.eventos_invitado.filter(
+            estado="noleido")
+        for evento in eventos_noleidos:
+            evento.estado = "leido"
+            evento.save()
     except Evento.DoesNotExist:
         eventos_invitado = []
     temp = RequestContext(request, {'eventos_creados': eventos_creados,
@@ -127,8 +135,12 @@ def messages(request):
         usuarios = []
         for dict in mensajes_recibidos.all():
             usuarios.append(User.objects.get(id=dict['user_from']))
-    except Persona.DoesNotExist:                                                #Esto para que esta?
-        return HttpResponseRedirect('/dash/empresa/')                           #Esto para que esta?
+        msj_noleidos = request.user.mensajes_recibidos.filter(estado="noleido")
+        for msj in msj_noleidos:
+            msj.estado = "leido"
+            msj.save()
+    except Persona.DoesNotExist:  # Esto para que esta?
+        return HttpResponseRedirect('/dash/empresa/')  # Esto para que esta?
     return render_to_response('social/messages.html', {'form_search': searchbox,
         'usuarios': usuarios},
         context_instance=RequestContext(request))
@@ -166,7 +178,7 @@ def new_message(request):
 @login_required(login_url='/accounts/user/')
 def messages_user(request, user_id):
     searchbox = SearchBox()
-    try:                                                                        #porque esto?
+    try:  # porque esto?
         if request.method == 'POST':
             form_response_message = MessageResponseForm(request.POST)
             if form_response_message.is_valid():
@@ -184,8 +196,8 @@ def messages_user(request, user_id):
         else:
             mensajes = getMensajes(request, user_id)
             form_response_message = MessageResponseForm()
-    except Persona.DoesNotExist:                                                #porque esto?
-        return HttpResponseRedirect('/dash/empresa/')                        #porque esto?
+    except Persona.DoesNotExist:  # porque esto?
+        return HttpResponseRedirect('/dash/empresa/')  # porque esto?
     return render_to_response('social/messages_user.html', {
         'form_search': searchbox,
         'form_response_message': form_response_message,
@@ -351,8 +363,8 @@ def new_notification(request):
 def user_main_view_notifications(request):
     searchbox = SearchBox()
     try:
-        notificaciones_recibidas = request.user.notificaciones_recibidas.all().values(
-            'empresa').distinct()
+        notificaciones_recibidas = request.user.notificaciones_recibidas.all(
+            ).values('empresa').distinct()
         usuarios = []
         for dict in notificaciones_recibidas.all():
             usuarios.append(User.objects.get(id=dict['empresa']))
@@ -368,7 +380,8 @@ def user_main_view_notifications(request):
 def notification_by_company(request, company_id):
     searchbox = SearchBox()
     try:
-        notificaciones_recibidas = request.user.notificaciones_recibidas.filter(empresa=company_id)
+        notificaciones_recibidas = request.user.notificaciones_recibidas.filter(
+            empresa=company_id)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/notifications_by_company.html', {

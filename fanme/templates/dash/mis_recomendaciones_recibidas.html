@@ -38,10 +38,12 @@
                         {% endif %}
                     </div>
                     <div class="item-descripcion">
-                        Recomendaste este item a
+                        Te recomendo este item:
                         <ul>
-                            {% for recomendation in item.recomendacion_set.all %}
-                                <li class="recomendacion-destino"><a href="/dash/logbook/{{ recomendation.user_destino.id }}">{{ recomendation.user_destino.first_name }} {{ recomendation.user_destino.last_name }}</a> el {{ recomendation.fecha }}</li>
+                            {% for recomendation in user.recomendaciones_recibidas.all %}
+                                {% if item == recomendation.item %}
+                                    <li class="recomendacion-destino"><a href="/dash/logbook/{{ recomendation.user_origen.id }}">{{ recomendation.user_origen.first_name }} {{ recomendation.user_origen.last_name }}</a> el {{ recomendation.fecha }}</li>
+                                {% endif %}
                             {% endfor %}
                         </ul>
                     </div>

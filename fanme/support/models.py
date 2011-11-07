@@ -71,12 +71,12 @@ class TipoNotificacion(models.Model):
 
 
 class Notificacion(models.Model):
-    usuario = models.ForeignKey(User)
+    usuario = models.ForeignKey(User, related_name="notif_recibidas")
     descripcion = models.CharField(max_length=100)
     url = models.CharField(max_length=100)
     tipo = models.ForeignKey(TipoNotificacion)
     leido = models.BooleanField()
-    resumen = models.CharField(max_length=50)
+    resumen = models.CharField(default=False, max_length=50)
 
     def __unicode__(self):
         return self.resumen

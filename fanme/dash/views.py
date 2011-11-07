@@ -142,7 +142,7 @@ def follow_user(request, user_id):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/follow.html', {'form_search': searchbox,
-        'user_to_follow': user_to_follow},
+        'user_logbook': user_to_follow},
         context_instance=RequestContext(request))
 
 
@@ -237,7 +237,7 @@ def recomendaciones_enviadas(request):
         return HttpResponseRedirect('/dash/empresa/')
     recomendaciones = request.user.recomendaciones_enviadas.all().order_by(
         'fecha')
-    return render_to_response('dash/mis_recomendaciones.html',
+    return render_to_response('dash/mis_recomendaciones_enviadas.html',
         {'form_search': searchbox, 'messages': messages,
         'recomendaciones': items,
             'is_fan': False},
@@ -250,13 +250,19 @@ def recomendaciones_recibidas(request):
     messages = []
     try:
         request.user.persona
+        items_ids = request.user.recomendaciones_recibidas.all().values_list(
+            'item', flat=True).distinct()
+        items = Item.objects.filter(id__in=items_ids)
+        rec = request.user.recomendaciones_recibidas.filter(estado="noleido")
+        for r in rec:
+            r.estado = "leido"
+            r.save()
         messages.append("Te han recomendado los siguientes items")
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    recomendaciones = request.user.recomendaciones_recibidas.all()
-    return render_to_response('dash/mis_recomendaciones.html',
+    return render_to_response('dash/mis_recomendaciones_recibidas.html',
         {'form_search': searchbox, 'messages': messages,
-        'recomendaciones': recomendaciones,
+        'recomendaciones': items,
             'is_fan': False},
         context_instance=RequestContext(request))
 
