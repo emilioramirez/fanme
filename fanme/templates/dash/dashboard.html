@@ -123,31 +123,23 @@
         <div class="sidebar-menu-indicators">
             <a href="/social/messages/">
                 <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
-                    {% if user.mensajes_recibidos.count > 0 %}
-                        ({{ user.mensajes_recibidos.count }})
-                    {% endif %}
+                    {% if mensajes_nolidas > 0 %}({{ mensajes_nolidas }}){% endif %}
                 </div>
             </a>
             <a href="/social/eventos/">
 
                 <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
-                    {% if user.evento_set.count > 0 %}
-                        ({{ user.evento_set.count }})
-                    {% endif %}
+                    {% if eventos_nolidas > 0 %}({{ eventos_nolidas }}){% endif %}
                 </div>
             </a>
             <a href="/social/user_main_notification/">
                 <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
-                    {% if user.notificaciones_recibidas.all.count > 0 %}
-                        ({{ user.notificaciones_recibidas.count }})
-                    {% endif %}
+                    {% if notificaciones_nolidas > 0 %}({{ notificaciones_nolidas }}){% endif %}
                 </div>
             </a>
             <a href="/dash/recomendation/">
                 <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
-                    {% if user.recomendaciones_recibidas.count > 0 %}
-                        ({{ user.recomendaciones_recibidas.count }})
-                    {% endif %}
+                    {% if recomendaciones_noleidas > 0 %}({{ recomendaciones_noleidas }}){% endif %}
                 </div>
             </a>
         </div>

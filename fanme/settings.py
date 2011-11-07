@@ -1,8 +1,13 @@
 # Django settings for fanme project.
 # My stuff, this is for relative path
+import django.conf.global_settings as DEFAULT_SETTINGS
+TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+    "fanme.context_processors.indicadores",)
 import os
 template_dir = os.path.abspath('.')
 # end my stuff
+
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

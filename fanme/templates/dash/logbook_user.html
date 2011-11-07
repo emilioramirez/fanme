@@ -56,17 +56,17 @@
             <div class="sidebar-stadistic">
                 <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
                     <div class="stadistic-num">{{ user_logbook.persona.items.count }}</div>
-                    <div class="stadistic-nom">Fan{% if user_logbook.persona.items.count > 1 %}s{% endif %}</div>
+                    <div class="stadistic-nom">Sus Fan{% if user_logbook.persona.items.count > 1 %}s{% endif %}</div>
                 </div>
                 <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
                     <div class="stadistic-num">
                         {{ user_logbook.recomendaciones_enviadas.count }}
                     </div>
-                    <div class="stadistic-nom">Mis recomendaciones</div>
+                    <div class="stadistic-nom">Sus recomendaciones</div>
                 </div>
                 <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
                     <div class="stadistic-num">{{ user_logbook.comentarios_realizados.count }}</div>
-                    <div class="stadistic-nom">Comentario{% if user.comentarios_realizados.count > 1 %}s{% endif %}</div>
+                    <div class="stadistic-nom">Sus Comentario{% if user.comentarios_realizados.count > 1 %}s{% endif %}</div>
                 </div>
             </div>
         <div class="clear"></div>

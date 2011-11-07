@@ -151,6 +151,8 @@ def comment(request, item_id):
             comentario.item = item
             comentario.user = request.user
             comentario.fecha = datetime.now()
+            comentario.me_gusta = 0
+            comentario.denuncias = 0
             comentario.save()
             messages.append(u"Has comentado el producto {0}".format(
                 item.nombre))

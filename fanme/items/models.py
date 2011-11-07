@@ -10,7 +10,7 @@ class Item(models.Model):
     topico = models.ForeignKey(Topico, null=True, blank=True)
     users_are_comment = models.ManyToManyField(User, through='Comentario',
         related_name="items_comentados")
-    cantidad_fans = models.IntegerField(null=True, blank=True)
+    cantidad_fans = models.IntegerField(default=0, null=True, blank=True)
     #cantidad_recomendacion = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
@@ -47,8 +47,12 @@ class Comentario(models.Model):
     fecha = models.DateTimeField()
     item = models.ForeignKey(Item, related_name="comentarios_recibidos")
     user = models.ForeignKey(User, related_name="comentarios_realizados")
-    me_gusta = models.IntegerField(null=True, blank=True)
-    denuncias = models.IntegerField(null=True, blank=True)
+    me_gusta = models.IntegerField(default=0, null=True, blank=True)
+    denuncias = models.IntegerField(default=0, null=True, blank=True)
+
+    def __unicode__(self):
+        return u'{0} para {1}'.format(self.user,
+            self.item)
 
 
 class Recomendacion(models.Model):
@@ -58,6 +62,7 @@ class Recomendacion(models.Model):
     fecha = models.DateTimeField()
     user_origen = models.ForeignKey(User,
         related_name="recomendaciones_enviadas")
+    estado = models.CharField(default="noleido", max_length=30)
 
     def __unicode__(self):
         return u'{0} para {1} sobre {2}'.format(self.user_origen,
