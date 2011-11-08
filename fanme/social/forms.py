@@ -16,7 +16,7 @@ class MessageForm(forms.Form):
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
         widget=forms.Textarea(attrs={
-                'class': 'new-message-field'}))
+                'class': 'item-registration-description-field'}))
 
 
 class MessageResponseForm(forms.Form):

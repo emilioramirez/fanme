@@ -214,6 +214,8 @@ sidebar-follow-user{}
         border: 1px solid #BBBBBB;
         color: #BBBBBB;
         padding: 1px;
+        height: 60px;
+        width: 577px;
     }
     .item-registration-combo-field{
         border: 1px solid #BBBBBB;
