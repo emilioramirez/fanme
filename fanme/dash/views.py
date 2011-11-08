@@ -13,6 +13,7 @@ from fanme.items.models import Recomendacion
 from django.db.models import Q
 from django import forms
 from fanme import recommendations
+from fanme.accounts.forms import UserLogin
 
 
 @login_required(login_url='/accounts/user/')
@@ -355,13 +356,17 @@ def edit_pass(request):
 
 def preguntas_mas_frecuentes(request):
     searchbox = SearchBox()
+    form_login = UserLogin()
     return render_to_response('dash/preguntas_mas_frecuentes.html',
-        {'form_search': searchbox},
+        {'form_search': searchbox,
+        'form_login': form_login},
         context_instance=RequestContext(request))
 
 
 def temas_de_ayuda(request):
     searchbox = SearchBox()
+    form_login = UserLogin()
     return render_to_response('dash/temas_de_ayuda.html',
-        {'form_search': searchbox},
+        {'form_search': searchbox,
+        'form_login': form_login},
         context_instance=RequestContext(request))
