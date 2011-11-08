@@ -351,3 +351,17 @@ def edit_pass(request):
         'form_search': searchbox,
         'messages': messages},
         context_instance=RequestContext(request))
+
+
+def preguntas_mas_frecuentes(request):
+    searchbox = SearchBox()
+    return render_to_response('dash/preguntas_mas_frecuentes.html',
+        {'form_search': searchbox},
+        context_instance=RequestContext(request))
+
+
+def temas_de_ayuda(request):
+    searchbox = SearchBox()
+    return render_to_response('dash/temas_de_ayuda.html',
+        {'form_search': searchbox},
+        context_instance=RequestContext(request))

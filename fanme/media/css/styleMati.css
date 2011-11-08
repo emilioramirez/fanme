@@ -646,3 +646,53 @@ sidebar-follow-user{}
                 }
     /*End of the new notifications page*/
 /*End of the Company*/
+/*Begin of the help*/
+.help-content{
+    //margin-top: 100px;
+}
+    .help-content-label{
+        font-size: 16px;
+        margin: -32px 0px 0px 60px;
+        width: 190px;
+        color: black;
+    }
+    .help-clear{
+        margin-top: 20px;
+    }
+    .help-content-body{
+            border: 2px solid #979797;
+            float: right;
+            //height: 256px;
+            margin: -128px -298px 28px;
+            overflow: hidden;
+            //text-align: center;
+            width: 550px;
+    }
+    .help-question{
+        color: #646464;
+    }
+    .help-answers{
+        color: black;
+        margin-right: 15px;
+        text-align: justify;
+    }
+    .help-titles{
+        //color: gray;
+        text-align: center;
+        font-size: 15px;
+    }
+    .help-content-temas{
+        float: left;
+        margin-left: 40px;
+        margin-top: 10px;
+        text-align: center;
+    }
+    .help-temas-titles{
+        color: #646464;
+        font-size: 15px;
+        margin-top: 5px;
+    }
+    .help-respuestas-temas{
+        margin: 100px 0px 10px 40px;
+    }
+/*End of the help*/
