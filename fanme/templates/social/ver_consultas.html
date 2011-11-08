@@ -12,35 +12,27 @@
 {% endblock menuOptionsSelected %}
 
 {% block dashboard %}
-    <div class="title-messages">Notificaciones</div>
+    <div class="title-messages">Consultas</div>
     <div class="list-content-user-messages">
         <ul>
-            {% for notificaciones in notificaciones_enviadas %}
+            {% for consulta in consultas_recibidas %}
                 <li class="content-user-messages">
-                    <!--<div class="user-message-image">
+                    <div class="user-message-image">
                         {% if consulta.mis_imagenes.count %}
                             <img src="{{ consulta.first_image }}" alt="Score">
                         {% else %}
                             <img src="/mymedia/images/298.png" alt="Score">
                         {% endif %}
-                    </div>-->
-                    <div class="user-message-name">
-                        <a href="/social/messages_user/{{ message.id }}">
-                            {{ notificaciones.nombre }}
-                        </a>
                     </div>
                     <div class="user-message-name">
-                        {{ notificaciones.descripcion|truncatewords:30 }}
+                        <a href="/social/ver_consultas_item/{{ consulta.id }}">
+                            {{ consulta.nombre }}
+                        </a>
                     </div>
                     <div class="user-message-last"></div>
                     <div class="clear"></div>
                 </li>
             {% endfor %}
         </ul>
-    </div>
-    <div class="new-message">
-        <form action="/social/new_notification/">
-            <input type="submit" value="Nueva notificacion" class="submit"/>
-        </form>
     </div>
 {% endblock dashboard %}

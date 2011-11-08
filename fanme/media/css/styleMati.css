@@ -571,12 +571,32 @@ sidebar-follow-user{}
     .message-content-fields .errors{}
     .message-content-fields .errors .errorlist{margin: 0px; padding: 0px;}
     .new-message-label{}
-    .new-message-field{}
+    .user-to-field{
+        height: 20px;
+    }
+    .new-message-field{
+        height: 60px;
+        width: 505px;
+    }
+    .response-message-field{
+        width: 541px;
+        height: 50px;
+        margin-top: 10px;
+    }
 /* End Content Dashboard */
+/*Begining of the query to the company*/
+.combo-item{
+    margin: 0 0 0 36px;
+}
+/* End of the query to the company */
 /*Begining of the Company*/
 .menu-indicators-mati{
     color: #646464;
     margin: 6px 17px;
+}
+.boton-enviar-query{
+    float: right;
+    margin: 8px 36px 10px 0;
 }
     /*Begining of the new notifications page*/
     .notifications-content {
@@ -590,13 +610,13 @@ sidebar-follow-user{}
                 margin-bottom: 12px;
             }
             .notification-name-label{
-                margin-left: 89px;
+                margin-left: 85px;
             }
             .notification-name-field{
                 width: 367px;
             }
             .notification-date-label{
-                margin-left: 34px;
+                margin-left: 37px;
             }
             .notification-description-label{
                 float: left;
@@ -612,6 +632,10 @@ sidebar-follow-user{}
                 float: right;
                 margin-right: 44px;
                 margin-bottom: 10px;
+            }
+            .new-notification-textarea{
+                height: 50px;
+                width: 366px;
             }
             .content-form-notification ul.errorlist{
                     color: red;

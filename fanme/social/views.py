@@ -14,8 +14,9 @@ from operator import attrgetter
 import datetime
 
 from fanme.social.forms import EventoForm, NotificationForm
-from fanme.social.models import Evento
+from fanme.social.models import Evento, Consulta
 from fanme.support.models import Notificacion
+from fanme.items.models import Item
 
 
 @login_required(login_url='/accounts/user/')
@@ -149,6 +150,7 @@ def messages(request):
 @login_required(login_url='/accounts/user/')
 def new_message(request):
     searchbox = SearchBox()
+    messages=[]
     list_ids = request.user.followers.values_list('user', flat=True)
     users = User.objects.filter(id__in=list_ids)
     if request.method == 'POST':
@@ -163,7 +165,10 @@ def new_message(request):
             message.mensaje = mensaje
             message.fecha = datetime.datetime.now()
             message.save()
-            return HttpResponseRedirect('/social/messages/')
+            messages.append("Tu mensaje ha sido enviado exitosamente")
+            print messages
+            form_new_message = MessageForm()
+            return HttpResponseRedirect('/social/new_message/')
     else:
         form_new_message = MessageForm()
 #        list_ids = request.user.followers.values_list('user', flat=True)
@@ -171,7 +176,8 @@ def new_message(request):
         form_new_message.fields["user_to_id"].queryset = users
     return render_to_response('social/new_message.html',
         {'form_new_message': form_new_message,
-        'form_search': searchbox},
+        'form_search': searchbox,
+        'messages': messages},
         context_instance=RequestContext(request))
 
 
@@ -219,27 +225,75 @@ def getMensajes(request, user_id):
 @login_required(login_url='/accounts/user/')
 def company_query(request, company_id):
     searchbox = SearchBox()
-    try:
-        if request.method == 'POST':
-            form_query_message = MessageQueryForm(request.POST)
-            if form_query_message.is_valid():
-                mensaje = form_query_message.cleaned_data['mensaje']
-                message = Mensaje()
-                message.user_from_id = request.user.id
-                message.user_to_id = company_id
-                message.mensaje = mensaje
-                message.fecha = datetime.datetime.now()
-                message.save()
-                form_query_message = MessageQueryForm()
-                return HttpResponseRedirect('/social/messages/')
-        else:
+    messages = []
+    if request.method == 'POST':
+        form_query_message = MessageQueryForm(request.POST)
+        if form_query_message.is_valid():
+            mensaje_consulta = form_query_message.cleaned_data['consulta']
+            item = form_query_message.cleaned_data['item']
+            consulta = Consulta()
+            consulta.item = item
+            consulta.user_from = request.user
+            consulta.user_to = User.objects.get(id__exact=company_id)
+            consulta.mensaje = mensaje_consulta
+            consulta.fecha = datetime.datetime.now()
+            consulta.estado = "enviado"
+            consulta.save()
+            messages.append("Tu consulta ha sido enviada exitosamente")
             form_query_message = MessageQueryForm()
-    except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('social/company_query.html', {
+        else:
+            form_query_message.fields["item"].queryset = Item.objects.all()
+    else:
+        form_query_message = MessageQueryForm()
+        form_query_message.fields["item"].queryset = Item.objects.all()
+    return render_to_response('social/consulta_a_empresa.html', {
         'form_search': searchbox,
         'company_id': company_id,
-        'form_query_message': form_query_message},
+        'form_query_message': form_query_message,
+        'messages': messages},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def ver_consultas(request):
+    searchbox = SearchBox()
+    consultas_recibidas = request.user.consultas_recibidas.all().values(
+            'item').distinct()
+#    consultas_recibidas = Consulta.objects.all().values('item').distinct()
+    items = []
+    for dict in consultas_recibidas.all():
+        items.append(Item.objects.get(id=dict['item']))
+#        print dict
+#    for item in items:
+#        print item.mis_imagenes.count()
+    return render_to_response('social/ver_consultas.html', {
+        'form_search': searchbox,
+        'consultas_recibidas': items},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def ver_consultas_item(request, item_id):
+    searchbox = SearchBox()
+    item = Item.objects.get(id=item_id)
+    items_consultas = item.mis_consultas.values(
+        'user_from').distinct()
+    users = []
+    for dict in items_consultas.all():
+        users.append(User.objects.get(id=dict['user_from']))
+#    consultas = []
+#    for usuario in users:
+#        consultas = usuario.consultas_enviadas.all()
+#    for consulta in consultas:
+#        print consulta.item.id
+#        print item_id
+#        if consulta.item.id == item_id:
+#            print "algo"
+#        else:
+#            print "choto"
+    return render_to_response('social/ver_consultas_item.html', {
+        'form_search': searchbox,
+        'usuario_consulta_item': users},
         context_instance=RequestContext(request))
 
 

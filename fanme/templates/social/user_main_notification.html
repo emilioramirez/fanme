@@ -24,20 +24,26 @@
 
 {% block dashboard %}
     <div class="title-messages">Notificaciones</div>
-    {% for notificacion in notificaciones_recibidas %}
-        <div class="item-content-mess-event">
-            <div class="message-body">
-                <div class="message-usuario">
-                </div>
-            </div>
-            <a href="/social/notifications_by_company/{{ notificacion.id }}">
-                <div class="message-user-subject">
-                    {{ notificacion.first_name }}
-                </div>
-            </a>
-            <div class="message-descripcion">
-                {{ notificacion.descripcion|truncatewords:30 }}
-            </div>
-        </div>
-    {% endfor %}
+    <div class="list-content-user-messages">
+        <ul>
+            {% for notificacion in notificaciones_recibidas %}
+                <li class="content-user-messages">
+                    <div class="user-message-image">
+                        {% if notificacion.empresa.avatar %}
+                            <img src="{{ notificacion.empresa.avatar.url_50x50 }}" alt="Logo" />
+                        {% else %}
+                                <img src="/mymedia/images/020.png" alt="Logo" />
+                        {% endif%}
+                    </div>
+                    <div class="user-message-name">
+                        <a href="/social/notifications_by_company/{{ notificacion.id }}">
+                            {{ notificacion.first_name }}
+                        </a>
+                    </div>
+                    <div class="user-message-last"></div>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock dashboard %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from fanme.social.models import Evento, Notificacion, Mensaje, TipoEvento
+from fanme.social.models import Evento, Notificacion, Mensaje, TipoEvento, Consulta
 
 
 class EventoAdmin(admin.ModelAdmin):
@@ -30,5 +30,5 @@ class MensajeAdmin(admin.ModelAdmin):
 
 admin.site.register(Evento, EventoAdmin)
 admin.site.register(Notificacion)
-admin.site.register(Mensaje, MensajeAdmin)
-admin.site.register(TipoEvento)
+admin.site.register(Mensaje)
+admin.site.register(Consulta)
