@@ -12,7 +12,20 @@
     <div class="eventos-content">
         <div class='eventos-titulo'>Evento</div>
         {% if evento %}
+            <div class=''>
+                    <div class=''><img src="{{ evento.imagen.url }}" alt="Imagen de Evento" /></div>
+            </div>
             <div class='evento'>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Nombre</div>
+                    <div class='evento-field'>{{ evento.nombre }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>¿De que se trata?</div>
+                    <div class='evento-field'>{{ evento.descripcion }}</div>
+                    <div class="clear"></div>
+                </div>
                 <div class='evento-fields'>
                     <div class='evento-label'>¿Cuando es?</div>
                     <div class='evento-field'>{{ evento.fecha_inicio }}</div>
@@ -26,11 +39,6 @@
                 <div class='evento-fields'>
                     <div class='evento-label'>¿Donde?</div>
                     <div class='evento-field'>{{ evento.localizacion }}</div>
-                    <div class="clear"></div>
-                </div>
-                <div class='evento-fields'>
-                    <div class='evento-label'>¿De que se trata?</div>
-                    <div class='evento-field'>{{ evento.descripcion }}</div>
                     <div class="clear"></div>
                 </div>
                 <div class='evento-fields'>

@@ -46,11 +46,14 @@ class EventoForm(forms.ModelForm):
     class Meta():
         model = Evento
         fields = (
+            'nombre',
+            'tipo',
             'fecha_inicio',
             'fecha_fin',
             'localizacion',
             'descripcion',
-            'invitados'
+            'invitados',
+            'imagen',
             )
         widgets = {
             'fecha_inicio': forms.DateInput(attrs={

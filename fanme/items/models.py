@@ -37,6 +37,9 @@ class Item(models.Model):
         except:
             return 'no pibe'
 
+    def cantidad_recomendaciones(self):
+        return self.recomendacion_set.count()
+
 
 class Marca(models.Model):
     pass

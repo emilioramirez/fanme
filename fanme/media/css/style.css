@@ -50,9 +50,7 @@ body{}
                 color: #4F4F4F;
                 float: right;
                 font-weight: bold;
-/*
-                margin: 19px 0 0 0px;
-*/
+                margin-right: 20px;
             }
             .logged-user a {
                 text-decoration: none;
@@ -604,8 +602,8 @@ body{}
                             .comment-options .num{}
                             .comment-options .link{}
                         .comment-options a{color: grey;}
-                            .me-gusta-comentario{ overflow: hidden; }
-                            .me-gusta-comentario div{ float: left; font-size: 20px; margin-left: 5px;}
+                            .me-gusta-comentario{ overflow: hidden; margin-left: 6px;}
+                            .me-gusta-comentario div{ float: left; font-size: 20px; margin-left: 2px;}
                             .me-gusta-img{
                                 background: url("/mymedia/images/mini-imagenes3.png") no-repeat scroll -133px -299px transparent;
                                 height: 18px;
@@ -615,8 +613,8 @@ body{}
                             }
                             .me-gusta-img:hover{background: url("/mymedia/images/mini-imagenes3.png") no-repeat scroll -176px -242px transparent;}
                             .me-gusta-comentario a{text-decoration: none;}
-                            .denunciar-comentario{ overflow: hidden; margin-top: 20px; }
-                            .denunciar-comentario div{ float: left; font-size: 20px; margin-left: 5px;}
+                            .denunciar-comentario{ overflow: hidden; margin-top: 20px; margin-left: 6px;}
+                            .denunciar-comentario div{ float: left; font-size: 20px; margin-left: 2px;}
                             .denuncia-comentario-img{
                                 background: url("/mymedia/images/mini-imagenes3.png") no-repeat scroll -137px -38px transparent;
                                 height: 18px;
