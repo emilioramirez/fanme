@@ -695,4 +695,12 @@ sidebar-follow-user{}
     .help-respuestas-temas{
         margin: 100px 0px 10px 40px;
     }
+    .title-messages-help{
+            color: gray;
+            font-size: 25px;
+            margin-bottom: 25px;
+            margin-left: 547px;
+            margin-top: 35px;
+            text-align: right;
+    }
 /*End of the help*/
