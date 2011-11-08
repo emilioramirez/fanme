@@ -3,9 +3,17 @@ from django.contrib.auth.models import User
 from fanme.support.models import Localizacion
 
 
+class TipoEvento(models.Model):
+    nombre = models.CharField(max_length=30)
+
+    def __unicode__(self):
+        return self.nombre
+
+
 class Evento(models.Model):
     invitados = models.ManyToManyField(User, null=True, blank=True,
         related_name="eventos_invitado")
+    nombre = models.CharField(default="Nombre", max_length=30)
     descripcion = models.TextField(max_length=300)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
@@ -13,6 +21,9 @@ class Evento(models.Model):
     localizacion = models.ForeignKey(Localizacion)
     creador = models.ForeignKey(User, related_name="eventos_creados")
     estado = models.CharField(default="noleido", max_length=30)
+    tipo = models.ForeignKey(TipoEvento, default="", null=True, blank=True)
+    imagen = models.ImageField(default='images/calendario-default.png',
+        upload_to="eventos")
 
     def __unicode__(self):
         return self.descripcion
