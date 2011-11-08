@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block myjavascript %}
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+{% endblock myjavascript %}
+
+{% block searchBox %}
+    <div class="header-search-box">
+        <form action="/dash/results/" method="post">{% csrf_token %}
+            {{ form_search.as_p}}
+            <!--<input type="submit" value="Registrate" class="submit"/>-->
+        </form>
+    </div>
+{% endblock searchBox %}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
+{% block content %}
+    <div class="messages">
+        {% block messages %}{% endblock messages %}
+    </div>
+    <div class="content-dashboard">
+        {% block dashboard %}
+        {% endblock dashboard %}
+    </div>
+    <div class="content-sidebar">
+        {% block sidebar %}
+        {% endblock sidebar %}
+    </div>
+{% endblock%}
