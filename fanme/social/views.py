@@ -14,9 +14,10 @@ from operator import attrgetter
 import datetime
 
 from fanme.social.forms import EventoForm, NotificationForm
-from fanme.social.models import Evento, Consulta
-from fanme.support.models import Notificacion
+from fanme.social.models import Evento, Consulta, Notificacion
+#from fanme.support.models import Notificacion
 from fanme.items.models import Item
+from django.db.models import Q
 
 
 @login_required(login_url='/accounts/user/')
@@ -293,7 +294,31 @@ def ver_consultas_item(request, item_id):
 #            print "choto"
     return render_to_response('social/ver_consultas_item.html', {
         'form_search': searchbox,
-        'usuario_consulta_item': users},
+        'usuario_consulta_item': users,
+        'item_id': item_id},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def ver_consultas_item_usuario(request, item_id, user_id):
+    searchbox = SearchBox()
+    user = User.objects.get(id=user_id)
+    item = Item.objects.get(id=item_id)
+    item = item.id
+#    print item_mio_id
+#    user_consulta = user.consultas_enviadas.get(
+#        'item').distinct()
+    consulta = Consulta.objects.filter(
+        Q(item=item_id), Q(user_from=user_id))
+    print consulta
+#    users = []
+#    consultas = []
+#    for dict in user_consulta.all():
+#        users.append(User.objects.get(id=dict['item']))
+    return render_to_response('social/ver_consulta_item_usuario.html', {
+        'form_search': searchbox,
+        'usuario_consulta_item': user,
+        'consulta': consulta},
         context_instance=RequestContext(request))
 
 
@@ -330,15 +355,65 @@ def notificaciones(request):
 
 
 @login_required(login_url='/accounts/user/')
+def notificacion(request, notificacion_id):
+    searchbox = SearchBox()
+    empresa = False
+    try:
+        notificacion = Notificacion.objects.get(id=notificacion_id)
+        if (notificacion.empresa == request.user):
+            empresa = True
+    except Evento.DoesNotExist:
+        notificacion = []
+    temp = RequestContext(request, {'form_search': searchbox,
+        'notificacion': notificacion,
+        'empresa': empresa})
+    return render_to_response('social/notificaciones.html', temp)
+
+@login_required(login_url='/accounts/user/')
+def edit_notificacion(request, notificacion_id):
+    searchbox = SearchBox()
+    try:
+        notificacion_db = Notificacion.objects.get(id__exact=notificacion_id)
+        if not (notificacion_db.empresa == request.user):
+            return HttpResponseRedirect('/social/notificaciones/')
+    except Evento.DoesNotExist:
+        return HttpResponseRedirect('/social/notificaciones/')
+    if request.method == "POST":
+        form = NotificationForm(request.POST, instance=notificacion_db)
+        list_ids = request.user.followers.values_list('user', flat=True)
+        users = User.objects.filter(id__in=list_ids)
+        form.fields["usuarios_to"].queryset = users
+        if form.is_valid():
+            notificacion = form.save(commit=False)
+            notificacion.save()
+            form.save_m2m()
+            return HttpResponseRedirect('/social/notificaciones/')
+    else:
+        form = NotificationForm(instance=notificacion_db)
+        list_ids = request.user.followers.values_list('user', flat=True)
+        users = User.objects.filter(id__in=list_ids)
+        form.fields["usuarios_to"].queryset = users
+    template_vars = RequestContext(request, {"form": form, "user": request.user,
+        'form_search': searchbox, 'notificacion': notificacion_db})
+    return render_to_response('social/edit_notificacion.html', template_vars)
+
+
+@login_required(login_url='/accounts/user/')
 def delete_notificacion(request, notificacion_id):
-    #searchbox = SearchBox()
+    searchbox = SearchBox()
     try:
         notificacion_db = Notificacion.objects.get(id=notificacion_id)
-        notificacion_db.delete()
+        print notificacion_db
+        print notificacion_db.empresa
+        print request.user
+        if (notificacion_db.empresa == request.user):
+            notificacion_db.delete()
         return HttpResponseRedirect('/social/notificaciones/')
     except Notificacion.DoesNotExist:
         return HttpResponseRedirect('/social/notificaciones/')
-    return HttpResponseRedirect('/social/notificaciones/')
+    template_vars = RequestContext(request, {
+        'form_search': searchbox, 'notificacion': notificacion_db})
+    return HttpResponseRedirect('/social/edit_notificacion/', template_vars)
 
 
 @login_required(login_url='/accounts/user/')
@@ -392,7 +467,6 @@ def company_response_message(request, user_id):
 def new_notification(request):
     searchbox = SearchBox()
     if request.method == "POST":
-        print "algo"
         form = NotificationForm(request.POST)
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
