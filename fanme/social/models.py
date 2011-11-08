@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from fanme.support.models import Localizacion
-from fanme.items.models import Item
+from fanme.items.models import Item, Comentario, Recomendacion
 
 
 class TipoEvento(models.Model):
@@ -66,3 +66,19 @@ class Consulta(models.Model):
 
     def __unicode__(self):
         return self.mensaje
+
+
+class Actividad(models.Model):
+    item = models.ForeignKey(Item, related_name="act_item", default="",
+        blank=True, null=True)
+    recomendacion = models.ForeignKey(Recomendacion, related_name="act_recom",
+        default="", blank=True, null=True)
+    comentario = models.ForeignKey(Comentario, related_name="act_coment",
+        default="", blank=True, null=True)
+    usuario_origen = models.ForeignKey(User, related_name="act_origen",
+        default="", blank=True, null=True)
+    usuario_destino = models.ForeignKey(User, related_name="act_destino",
+        default="", blank=True, null=True)
+    fecha = models.DateTimeField()
+    descripcion = models.CharField(default="", max_length=60)
+    tipo = models.CharField(default="", max_length=30)
