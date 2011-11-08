@@ -14,6 +14,8 @@
         function doOnLoad() {
             myCalendar = new dhtmlXCalendarObject(["id_fecha_expiracion"]);
             myCalendar.setDateFormat("%d/%m/%Y");
+            myCalendar = new dhtmlXCalendarObject(["id_fecha_desde"]);
+            myCalendar.setDateFormat("%d/%m/%Y");
         }
     </script>
 {% endblock myjavascript %}
@@ -43,8 +45,14 @@
                 </div>
                 <div class="new-notification-clear"></div>
                 <div class="content-form-notification">
+                    {{ form.fecha_desde.errors }}
+                    <label for="fecha_desde" class="notification-date-desde-label">Fecha inicio:</label>
+                    {{ form.fecha_desde}}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-notification">
                     {{ form.fecha_expiracion.errors }}
-                    <label for="fecha_expiracion" class="notification-date-label">Fecha expiracion:</label>
+                    <label for="fecha_expiracion" class="notification-date-label">Fecha fin:</label>
                     {{ form.fecha_expiracion }}
                 </div>
                 <div class="new-notification-clear"></div>

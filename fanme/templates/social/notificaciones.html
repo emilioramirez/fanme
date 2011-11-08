@@ -13,30 +13,64 @@
 
 {% block dashboard %}
     <div class="title-messages">Notificaciones</div>
-    <div class="list-content-user-messages">
-        <ul>
-            {% for notificaciones in notificaciones_enviadas %}
-                <li class="content-user-messages">
-                    <!--<div class="user-message-image">
-                        {% if consulta.mis_imagenes.count %}
-                            <img src="{{ consulta.first_image }}" alt="Score">
-                        {% else %}
-                            <img src="/mymedia/images/298.png" alt="Score">
-                        {% endif %}
-                    </div>-->
-                    <div class="user-message-name">
-                        <a href="/social/messages_user/{{ message.id }}">
-                            {{ notificaciones.nombre }}
-                        </a>
-                    </div>
-                    <div class="user-message-name">
-                        {{ notificaciones.descripcion|truncatewords:30 }}
-                    </div>
-                    <div class="user-message-last"></div>
+    <div class="eventos-content">
+    {% if notificacion %}
+            <div class='evento'>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Nombre</div>
+                    <div class='evento-field'>{{ notificacion.nombre }}</div>
                     <div class="clear"></div>
-                </li>
-            {% endfor %}
-        </ul>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Descripcion</div>
+                    <div class='evento-field'>{{ notificacion.descripcion }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Fecha desde</div>
+                    <div class='evento-field'>{{ notificacion.fecha_desde }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Fecha expiracion</div>
+                    <div class='evento-field'>{{ notificacion.fecha_expiracion }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Invitados</div>
+                    <div class='evento-field'>
+                        <ul>
+                        {% for invitado in notificacion.usuarios_to.all %}
+                            <li>
+                                <div class='invitados'>
+                                    {{ invitado }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+    {% else %}
+        <div class='eventos-list'>
+            {% for notificaciones in notificaciones_enviadas %}
+                <div class='i-content'>
+                    <div class="i-title">
+                        {{ notificaciones.nombre }}
+                        <div class="i-title-options">
+                            <a href="/social/notificacion/edit/{{ notificaciones.id }}" title="Editar esta notificacion"><div class="i-title-options-edit"></div></a>
+                            <a href="/social/notificacion/delete/{{ notificaciones.id }}" title="ELIMINAR esta notificacion"><div class="i-title-options-delete"></div></a>
+                        </div>
+                    </div>
+                    <div class="i-body">
+                        <a href='/social/notificaciones/{{ notificaciones.id }}'>{{ notificaciones.descripcion }}</a> creado por tí.
+                    </div>
+                </div>
+            {% endfor%}
+        </div>
+    {% endif %}
     </div>
     <div class="new-message">
         <form action="/social/new_notification/">
