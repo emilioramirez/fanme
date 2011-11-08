@@ -14,6 +14,8 @@ from django.db.models import Q
 from django import forms
 from fanme import recommendations
 from fanme.accounts.forms import UserLogin
+from itertools import chain
+from operator import attrgetter
 
 
 @login_required(login_url='/accounts/user/')
@@ -84,8 +86,18 @@ def dashboard_topic(request, topic_id):
 @login_required(login_url='/accounts/user/')
 def logbook(request):
     searchbox = SearchBox()
-    return render_to_response('dash/logbook.html', {'form_search': searchbox},
-        context_instance=RequestContext(request))
+    try:
+        followings = request.user.persona.following.all()
+        actividades = []
+        for user in followings:
+            actividades = sorted(
+                chain(
+                    user.act_origen.all(), actividades),
+                key=attrgetter('fecha'), reverse=True)
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('dash/logbook.html', {'form_search': searchbox,
+        'actividades': actividades}, context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
