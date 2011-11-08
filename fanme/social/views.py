@@ -303,22 +303,16 @@ def ver_consultas_item(request, item_id):
 def ver_consultas_item_usuario(request, item_id, user_id):
     searchbox = SearchBox()
     user = User.objects.get(id=user_id)
-    item = Item.objects.get(id=item_id)
-    item = item.id
-#    print item_mio_id
-#    user_consulta = user.consultas_enviadas.get(
-#        'item').distinct()
-    consulta = Consulta.objects.filter(
-        Q(item=item_id), Q(user_from=user_id))
-    print consulta
-#    users = []
-#    consultas = []
-#    for dict in user_consulta.all():
-#        users.append(User.objects.get(id=dict['item']))
+    item_consultado = Item.objects.get(id=item_id)
+    consulta_item = Consulta.objects.filter(
+        Q(item=item_consultado), Q(user_from=user))
+    for consulta in consulta_item.all():
+        consulta.estado = "leido"
+        consulta.save()
     return render_to_response('social/ver_consulta_item_usuario.html', {
         'form_search': searchbox,
-        'usuario_consulta_item': user,
-        'consulta': consulta},
+        'usuario': user,
+        'consulta_item': consulta_item},
         context_instance=RequestContext(request))
 
 
@@ -368,6 +362,7 @@ def notificacion(request, notificacion_id):
         'notificacion': notificacion,
         'empresa': empresa})
     return render_to_response('social/notificaciones.html', temp)
+
 
 @login_required(login_url='/accounts/user/')
 def edit_notificacion(request, notificacion_id):
