@@ -24,23 +24,34 @@
 
 {% block dashboard %}
     <div class="title-messages">Notificaciones</div>
-    {% for notificacion in notificaciones_recibidas %}
-        <div class="item-content-mess-event">
-            <div class="message-body">
-                <div class="message-usuario">
-                </div>
-            </div>
-            <!--<a href="/social/notifications_by_company/{{ notificacion.id }}">-->
-            <div class="message-user-subject">
-                {{ notificacion.nombre }}
-            </div>
-            <!--</a>-->
-            <div class="message-user-fecha">
+    <div class="list-content-user-messages">
+        <ul>
+            {% for notificacion in notificaciones_recibidas %}
+                <li class="content-user-messages">
+                    <!--<div class="user-message-image">
+                        {% if consulta.mis_imagenes.count %}
+                            <img src="{{ consulta.first_image }}" alt="Score">
+                        {% else %}
+                            <img src="/mymedia/images/298.png" alt="Score">
+                        {% endif %}
+                    </div>-->
+                    <div class="user-message-name">
+                        <!--<a href="/social/notifications_by_company/{{ notificacion.id }}">-->
+                            {{ notificacion.nombre }}
+                        <!--</a>-->
+                    </div>
+                    <div class="message-user-fecha">
                 Hasta: {{ notificacion.fecha_expiracion|date:"d/M/Y" }}
             </div>
-            <div class="message-descripcion">
-                {{ notificacion.descripcion|truncatewords:30 }}
-            </div>
-        </div>
-    {% endfor %}
+                    <div class="user-message-name">
+                        <!--<a href="/social/company_response_message/{{ message.id }}">-->
+                            {{ notificacion.descripcion|truncatewords:30 }}
+                        <!--</a>-->
+                    </div>
+                    <div class="user-message-last"></div>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock dashboard %}

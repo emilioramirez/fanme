@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.contrib.auth.models import User
 from fanme.social.models import Evento, Notificacion
-import datetime
+from fanme.items.models import Item
 
 
 class MessageForm(forms.Form):
@@ -16,9 +15,8 @@ class MessageForm(forms.Form):
         label='Mensaje',
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
-        widget=forms.Textarea
-            (attrs={'style': 'resize: none;',
-            'cols': 60, 'rows': 4}))
+        widget=forms.Textarea(attrs={
+                'class': 'new-message-field'}))
 
 
 class MessageResponseForm(forms.Form):
@@ -27,18 +25,22 @@ class MessageResponseForm(forms.Form):
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
         widget=forms.Textarea
-            (attrs={'style': 'resize: none;',
-            'widht': 80, 'rows': 2}))
+            (attrs={'class': 'response-message-field'}))
 
 
 class MessageQueryForm(forms.Form):
-    mensaje = forms.CharField(
+    item = forms.ModelChoiceField(
         label='',
+        empty_label="---",
+        queryset=Item.objects.all(),
+        error_messages={'required': 'Es necesario un Item',
+            'invalid_choice': 'Opcion no valida'},
+        widget=forms.Select(attrs={'class': 'combo-item'}))
+    consulta = forms.CharField(
+        label='Consulta',
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
-        widget=forms.Textarea
-            (attrs={'style': 'resize: none;  margin: -16px 67px;',
-            'cols': 78, 'rows': 5}))
+        widget=forms.Textarea(attrs={'class': 'new-message-field'}))
 
 
 class EventoForm(forms.ModelForm):
@@ -61,22 +63,6 @@ class EventoForm(forms.ModelForm):
                 'class': 'evento-date-form-field field-evento-new'}),
         }
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        try:
-            fecha_inicio = cleaned_data['fecha_inicio']
-            fecha_fin = cleaned_data['fecha_fin']
-        except KeyError:
-            raise forms.ValidationError(
-                'La fecha de inicio y fin son requeridas')
-        if fecha_inicio < datetime.date.today():
-            raise forms.ValidationError(
-                'La fecha de inicio es menor que la fecha actual')
-        if fecha_fin < fecha_inicio:
-            raise forms.ValidationError(
-                'La fecha de fin no puede ser menor que la fecha inicio')
-        return cleaned_data
-
 
 class NotificationForm(forms.ModelForm):
 
@@ -94,6 +80,5 @@ class NotificationForm(forms.ModelForm):
             'fecha_expiracion': forms.DateInput(attrs={
                 'class': 'notification-name-field'}),
             'descripcion': forms.Textarea(attrs={
-                'style': 'resize: none;',
-                'cols': 50, 'rows': 4}),
+                'class': 'new-notification-textarea'}),
         }

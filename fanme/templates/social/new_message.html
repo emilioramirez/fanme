@@ -40,7 +40,15 @@
     </div>
 {% endblock menuOptions %}
 
+{% block messages %}
+{% endblock messages %}
+
 {% block dashboard %}
+    <div class="item-messages">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
     <div class="eventos-content">
         <div class='eventos-titulo'>Nuevo Mensaje</div>
         <div class="message-body">
@@ -49,7 +57,7 @@
                     <div class="message-content-fields">
                         <div class="errors">{{ form_new_message.user_to_id.errors }}</div>
                         <div class="new-message-label"><label for="nombre" class="notification-name-field">Para:</label></div>
-                        <div class="new-message-field">{{ form_new_message.user_to_id }}</div>
+                        <div class="user-to-field">{{ form_new_message.user_to_id }}</div>
                     </div>
                     <div class="message-content-fields">
                         <div class="errors">{{ form_new_message.mensaje.errors }}</div>
