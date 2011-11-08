@@ -1,0 +1,46 @@
+{% extends "dash/empresa.html" %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <!--<li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>-->
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="title-messages">Notificaciones</div>
+    <div class="list-content-user-messages">
+        <ul>
+            {% for notificaciones in notificaciones_enviadas %}
+                <li class="content-user-messages">
+                    <!--<div class="user-message-image">
+                        {% if consulta.mis_imagenes.count %}
+                            <img src="{{ consulta.first_image }}" alt="Score">
+                        {% else %}
+                            <img src="/mymedia/images/298.png" alt="Score">
+                        {% endif %}
+                    </div>-->
+                    <div class="user-message-name">
+                        <a href="/social/messages_user/{{ message.id }}">
+                            {{ notificaciones.nombre }}
+                        </a>
+                    </div>
+                    <div class="user-message-name">
+                        {{ notificaciones.descripcion|truncatewords:30 }}
+                    </div>
+                    <div class="user-message-last"></div>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="new-message">
+        <form action="/social/new_notification/">
+            <input type="submit" value="Nueva notificacion" class="submit"/>
+        </form>
+    </div>
+{% endblock dashboard %}
