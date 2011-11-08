@@ -467,7 +467,6 @@ def company_response_message(request, user_id):
 def new_notification(request):
     searchbox = SearchBox()
     if request.method == "POST":
-        print "algo"
         form = NotificationForm(request.POST)
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)

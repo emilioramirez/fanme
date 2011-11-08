@@ -73,12 +73,15 @@ class NotificationForm(forms.ModelForm):
         model = Notificacion
         fields = (
             'nombre',
+            'fecha_desde',
             'fecha_expiracion',
             'descripcion',
             'usuarios_to',
             )
         widgets = {
             'nombre': forms.TextInput(attrs={
+                'class': 'notification-name-field'}),
+            'fecha_desde': forms.DateInput(attrs={
                 'class': 'notification-name-field'}),
             'fecha_expiracion': forms.DateInput(attrs={
                 'class': 'notification-name-field'}),
