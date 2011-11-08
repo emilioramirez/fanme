@@ -14,6 +14,7 @@ from fanme.items.models import ItemImagen
 from fanme.items.forms import ItemRegisterForm, CommentForm
 from fanme.accounts.models import Empresa, Persona
 from fanme.segmentation.models import Topico
+from fanme.social.models import Actividad
 
 
 @login_required(login_url='/accounts/user/')
@@ -101,6 +102,14 @@ def fan(request, item_id):
             item.save()
             request.user.save()
             is_fan = True
+            #Registro la actividad del usuario
+            actividad = Actividad()
+            actividad.descripcion = "se hizo fan de "
+            actividad.tipo = "fan"
+            actividad.fecha = datetime.now()
+            actividad.item = item
+            actividad.usuario_origen = request.user
+            actividad.save()
             messages.append(u"Te has hecho fan de {0}".format(item.nombre))
     except Item.DoesNotExist:
         raise Http404
@@ -157,6 +166,14 @@ def comment(request, item_id):
             messages.append(u"Has comentado el producto {0}".format(
                 item.nombre))
             comment_form = CommentForm()
+            actividad = Actividad()
+            actividad.descripcion = "realizo un comentario en "
+            actividad.tipo = "comentario"
+            actividad.fecha = datetime.now()
+            actividad.item = item
+            actividad.usuario_origen = request.user
+            actividad.comentario = comentario
+            actividad.save()
     else:
         comment_form = CommentForm()
     comments = item.comentarios_recibidos.all().order_by('fecha')
@@ -195,6 +212,14 @@ def recomendation(request, item_id):
                 recomendacion.user_origen = request.user
                 recomendacion.save()
                 item.save()
+                actividad = Actividad()
+                actividad.descripcion = "recomendo el siguiente item"
+                actividad.tipo = "recomendacion"
+                actividad.fecha = datetime.now()
+                actividad.item = item
+                actividad.usuario_origen = request.user
+                actividad.recomendacion = recomendacion
+                actividad.save()
         return HttpResponseRedirect('/dash/dashboard/')
     return render_to_response('items/recomendacion.html',
         {'form_search': searchbox, 'usuarios': seguidores, 'item': item},
