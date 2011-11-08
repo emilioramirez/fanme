@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from fanme.support.models import Localizacion
+from fanme.items.models import Item
 
 
 class TipoEvento(models.Model):
@@ -61,6 +62,7 @@ class Consulta(models.Model):
     mensaje = models.TextField(max_length=300)
     fecha = models.DateTimeField()
     estado = models.CharField(default="noleido", max_length=30)
+    item = models.ForeignKey(Item, related_name='consultas', default='')
 
     def __unicode__(self):
         return self.mensaje
