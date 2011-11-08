@@ -15,7 +15,62 @@
 
 
 {% block dashboard %}
-    <h1>Seccion Logbook en construccion</h1>
+    <h1>Actividad de los usuarios que tu sigues</h1>
+    <div class="logbook-content-list">
+        {% if actividades %}
+            {% for actividad in actividades %}
+                {% if actividad.tipo == "fan" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{{ actividad.usuario_origen.persona.avatar.url_50x50 }}"/></div>
+
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" >{{ actividad.item}}</div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if actividad.tipo == "comentario" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{{ actividad.usuario_origen.persona.avatar.url_50x50 }}"/></div>
+
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" >{{ actividad.item}}</div>
+                            <div class="" >"{{ actividad.comentario.comentario }}"</div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if actividad.tipo == "recomendacion" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{{ actividad.usuario_origen.persona.avatar.url_50x50 }}"/></div>
+
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" >{{ actividad.item}}</div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            No hay nada
+        {% endif %}
+    </div>
 {% endblock dashboard %}
 
 {% block sidebar %}
