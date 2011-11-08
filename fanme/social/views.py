@@ -264,9 +264,6 @@ def ver_consultas(request):
     items = []
     for dict in consultas_recibidas.all():
         items.append(Item.objects.get(id=dict['item']))
-#        print dict
-#    for item in items:
-#        print item.mis_imagenes.count()
     return render_to_response('social/ver_consultas.html', {
         'form_search': searchbox,
         'consultas_recibidas': items},

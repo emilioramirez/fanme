@@ -62,7 +62,7 @@ class Consulta(models.Model):
     mensaje = models.TextField(max_length=300)
     fecha = models.DateTimeField()
     estado = models.CharField(default="noleido", max_length=30)
-    item = models.ForeignKey(Item, related_name='mis_consultas')
+#    item = models.ForeignKey(Item, related_name='mis_consultas')
 
     def __unicode__(self):
         return self.mensaje
