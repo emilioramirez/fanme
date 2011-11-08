@@ -15,14 +15,14 @@
     <div class="title-messages">Consultas</div>
     <div class="list-content-user-messages">
         <ul>
-            {% for usuario in usuario_consulta_item %}
+            {% for consulta in consulta_item %}
                 <li class="content-user-messages">
                     <div class="user-message-image">
                         {% if usuario.persona.avatar %}
                                 <img src="{{ usuario.persona.avatar.url_50x50 }}" alt="Logo" />
                         {% else %}
                             {% if usuario.persona %}
-                                {% if usuario.persona.sexo == "M" %}
+                                {% if user.sexo == "M" %}
                                     <img src="/mymedia/images/avatar-male.png" alt="Logo" />
                                 {% else %}
                                     <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
@@ -33,7 +33,7 @@
                         {% endif%}
                     </div>
                     <div class="user-message-name">
-                        {{ usuario.first_name }}
+                        {{ consulta.mensaje }}
                     </div>
                     <div class="user-message-last"></div>
                     <div class="clear"></div>
