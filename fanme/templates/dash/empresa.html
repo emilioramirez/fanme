@@ -42,12 +42,8 @@
         </a>
         <a href="/social/ver_consultas/">
             <div class="menu-indicators-mati">Consultas
-                {% if user.consultas_recibidas.all.count > 0 %}
-                    {% for consulta in user.consultas_recibidas.all %}
-                        {% if consulta.estado = "noleido" %}
-                            ({{ user.consultas_recibidas.all.count }})
-                        {% endif %}
-                    {% endfor %}
+                {% if consultas_noleidas > 0 %}
+                    ({{ consultas_noleidas }})
                 {% endif %}
             </div>
         </a>

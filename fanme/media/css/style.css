@@ -427,6 +427,7 @@ body{}
                         color: #646464;
                         font-size: 18px;
                         font-weight: bold;
+                        text-align: right;
                     }
                     .user-stars{
                         float: right;

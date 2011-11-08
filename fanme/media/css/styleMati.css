@@ -178,6 +178,7 @@ sidebar-follow-user{}
         font-weight: bold;
         padding: 8px 7px;
         width: 125px;
+        text-align: center;
     }
     .items-empresa{}
         .items-content{
