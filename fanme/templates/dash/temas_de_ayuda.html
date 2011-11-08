@@ -1,0 +1,197 @@
+{% extends "dash/base_ayuda.html" %}
+
+{% load dash_filters %}
+
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/style-icon-images.css" type="text/css" />
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block myjavascript %}
+    <script language="javascript">
+    function escribirDashboard()
+    {
+        borrarPreguntas()
+        var preguntas=new Array();
+        var respuestas=new Array();
+        preguntas[0] = "¿Qué es el Dashboard?";
+        preguntas[1] = "¿Qué son las recomendaciones?";
+        preguntas[2] = "¿Qué precisión puedo esperar de las recomendaciones que me de FanME?";
+        preguntas[3] = "¿Qué significan las estrellas debajo de tu foto?";
+        preguntas[4] = "¿Cómo los usuarios aportan conocimiento a FanME?";
+        preguntas[5] = "¿Por qué tengo que crear una cuenta para podes tener las recomendaciones de FanME?";
+        preguntas[6] = "¿Qué significa seguir a alguien?";
+        preguntas[7] = "¿Si yo sigo a alguien esa persona, también me tiene que seguir?";
+        preguntas[8] = "¿Puedo recomendar cosas a los usuarios que sigo?";
+        preguntas[8] = "¿Qué significa hacerse fan?";
+        var list = document.getElementById("preguntas");
+        for (i = 0; i < preguntas.length ; i++)
+        {
+            var li = document.createElement("li");
+            li.className = "help-question";
+            li.innerHTML = preguntas[i];
+            list.appendChild(li);
+            var newdiv = document.createElement('p');
+            newdiv.innerHTML = respuestas[i];
+            newdiv.className= "help-answers";
+            li.appendChild(newdiv);
+        }
+    }
+
+    function escribirLogbook()
+    {
+        borrarPreguntas()
+        var preguntas=new Array();
+        var respuestas=new Array();
+        preguntas[0] = "¿Qué es el Logbook?";
+        var list = document.getElementById("preguntas");
+        for (i = 0; i < preguntas.length ; i++)
+        {
+            var li = document.createElement("li");
+            li.className = "help-question";
+            li.innerHTML = preguntas[i];
+            list.appendChild(li);
+            var newdiv = document.createElement('p');
+            newdiv.innerHTML = respuestas[i];
+            newdiv.className= "help-answers";
+            li.appendChild(newdiv);
+        }
+    }
+
+    function escribirMensajes()
+    {
+        borrarPreguntas()
+        var preguntas=new Array();
+        var respuestas=new Array();
+        preguntas[0] = "¿Cómo se organizan los mensajes?";
+        preguntas[1] = "¿Cómo mandar un mensaje?";
+        preguntas[2] = "¿Qué pasa cuando envío un mensaje a alguien?";
+        preguntas[3] = "¿Puedo cancelar el envío de un mensaje que ya he enviado?";
+        //preguntas[4] = "¿A cuántas personas puedo enviar un mensaje al mismo tiempo?";
+        //preguntas[5] = "¿Dónde están mis mensajes de Facebook?"; WTF
+        //preguntas[6] = "¿Cómo puedo ver los mensajes que he enviado?";
+        //preguntas[7] = "¿Cómo elimino un mensaje concreto de una conversación?";
+        //preguntas[8] = "¿Puedo recuperar los mensajes eliminados?";
+        //preguntas[9] = "¿Cómo controlo quién puede enviarme mensajes?";
+        //preguntas[9] = "¿Cómo denuncio un mensaje como correo no deseado?";
+        respuestas[0] ="Los mensajes se agrupan en una conversación continua con cada amigo o grupo de amigos, no por fecha o por asunto. Gracias a un filtrado inteligente, siempre podrás ver los mensajes de tus amigos y de los amigos de tus amigos, en primer lugar.";
+        respuestas[1] ="Clic en el link 'Mensaje' en el lado derecho donde esta tu foto y nombre. Escribe el nombre de la persona que le quieras mandar el mensaje y un asunto (opcional). Presionar 'Enviar'. ";
+        respuestas[2] ="Cuando envías un mensaje a alguien, se entrega en los Mensajes de FanME de esa persona. Aparece una alerta en el Dashboard y en el Logbook de la persona. Si intercambias varios mensajes con una persona, estos van apareceran como una cadena de conversación única en los Mensajes de cada uno.";
+        respuestas[3] ="Los mensajes enviados no pueden cancelarse ni eliminarse de los 	mensajes del destinatario. Sí puedo cancelar el mensaje antes de enviarlo.";
+        var list = document.getElementById("preguntas");
+        for (i = 0; i < preguntas.length ; i++)
+        {
+            var li = document.createElement("li");
+            li.className = "help-question";
+            li.innerHTML = preguntas[i];
+            list.appendChild(li);
+            var newdiv = document.createElement('p');
+            newdiv.innerHTML = respuestas[i];
+            newdiv.className= "help-answers";
+            li.appendChild(newdiv);
+        }
+    }
+
+    function escribirEventos()
+    {
+        borrarPreguntas()
+        var preguntas=new Array();
+        var respuestas=new Array();
+        preguntas[0] = "¿Cómo puedo acceder a mis invitaciones y eventos próximos?";
+        preguntas[1] = "¿Cómo confirmo mi asistencia a un evento?";
+        preguntas[2] = "¿Cómo puedo eliminar un evento de mis próximos eventos?";
+        preguntas[3] = "¿Cómo puedo añadir fotos a un evento?";
+        preguntas[4] = "¿Cómo puedo añadir vídeos a un evento?";
+        preguntas[5] = "¿Cómo veo mis eventos antiguos?";
+        preguntas[6] = "¿Cuáles son las opciones de privacidad de los eventos?";
+        preguntas[7] = "¿Puedo evitar que mis seguidores vean a qué eventos voy a asistir?";
+        preguntas[8] = "¿Cómo se crea un evento?";
+        preguntas[9] = "¿Cómo invito a alguien a mi evento?";
+        preguntas[10] = "¿A quién puedo invitar a un evento?";
+        preguntas[11] = "¿Cómo envío un mensaje a toda mi lista de invitados a un evento?";
+        preguntas[12] = "¿Cómo puedo eliminar o cancelar un evento que he creado?";
+        preguntas[13] = "¿Cómo puedo cambiar la hora o la fecha de mi evento?";
+        preguntas[13] = "¿Puedo cambiar el nombre de mi evento?";
+        var list = document.getElementById("preguntas");
+        for (i = 0; i < preguntas.length ; i++)
+        {
+            var li = document.createElement("li");
+            li.className = "help-question";
+            li.innerHTML = preguntas[i];
+            list.appendChild(li);
+            var newdiv = document.createElement('p');
+            newdiv.innerHTML = respuestas[i];
+            newdiv.className= "help-answers";
+            li.appendChild(newdiv);
+        }
+    }
+
+    function escribirNotificaciones()
+    {
+        borrarPreguntas()
+        var preguntas=new Array();
+        var respuestas=new Array();
+        preguntas[0] = "¿Qué son las notificaciones?";
+        preguntas[1] = "¿Todos los usuarios pueden crearlas?";
+        preguntas[2] = "¿Cómo creo una notificación?";
+        preguntas[3] = "¿Puedo cargar fotos a una notificación? ¿Cómo?";
+        preguntas[4] = "¿A quiénes se puede enviar notificaciones?";
+        preguntas[5] = "¿Hay un límite en la cantidad de notificaciones que se pueden enviar?";
+        var list = document.getElementById("preguntas");
+        for (i = 0; i < preguntas.length ; i++)
+        {
+            var li = document.createElement("li");
+            li.className = "help-question";
+            li.innerHTML = preguntas[i];
+            list.appendChild(li);
+            var newdiv = document.createElement('p');
+            newdiv.innerHTML = respuestas[i];
+            newdiv.className= "help-answers";
+            li.appendChild(newdiv);
+        }
+    }
+
+    function borrarPreguntas()
+    {
+        var elemento = document.getElementById("preguntas");
+        while (elemento.firstChild)
+        {
+            elemento.removeChild(elemento.firstChild);
+        }
+    }
+    </script>
+{% endblock myjavascript %}
+
+{% block messages %}
+{% endblock messages %}
+
+{% block body-help %}
+    <div class="help-content-temas">
+        <img src="/mymedia/images/ayuda/dashboard.jpg" width="50" height="50">
+        <div id="dash" class="help-temas-titles" onclick=escribirDashboard() onmouseover="this.style.cursor='pointer';">Dashboard</div>
+    </div>
+    <div class="help-content-temas">
+        <img src="/mymedia/images/ayuda/logbook.jpg" width="50" height="50">
+        <div class="help-temas-titles" onclick=escribirLogbook() onmouseover="this.style.cursor='pointer';">Logbook</div>
+    </div>
+    <div class="help-content-temas">
+        <img src="/mymedia/images/ayuda/mensaje.jpg" width="50" height="50">
+        <div class="help-temas-titles" onclick=escribirMensajes() onmouseover="this.style.cursor='pointer';">Mensajes</div>
+    </div>
+    <div class="help-content-temas">
+        <img src="/mymedia/images/ayuda/evento.jpg" width="50" height="50">
+        <div class="help-temas-titles" onclick=escribirEventos() onmouseover="this.style.cursor='pointer';">Eventos</div>
+    </div>
+    <div class="help-content-temas">
+        <img src="/mymedia/images/ayuda/mensaje3.jpg" width="50" height="50">
+        <div class="help-temas-titles" onclick=escribirNotificaciones() onmouseover="this.style.cursor='pointer';">Notificaciones</div>
+    </div>
+    <div id="content" class="help-respuestas-temas">
+        <ol id="preguntas">
+        </ol>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock sidebar %}
