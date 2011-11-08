@@ -100,6 +100,7 @@ class Migration(SchemaMigration):
             'fecha_fin': ('django.db.models.fields.DateField', [], {}),
             'fecha_inicio': ('django.db.models.fields.DateField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'imagen': ('django.db.models.fields.files.ImageField', [], {'default': "'images/calendario-default.png'", 'max_length': '100'}),
             'invitados': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'eventos_invitado'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['auth.User']"}),
             'localizacion': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['support.Localizacion']"})
         },
@@ -123,6 +124,11 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombre': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'usuarios_to': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'notificaciones_recibidas'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['auth.User']"})
+        },
+        'social.tipoevento': {
+            'Meta': {'object_name': 'TipoEvento'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'nombre': ('django.db.models.fields.CharField', [], {'max_length': '30'})
         },
         'support.localidad': {
             'Meta': {'object_name': 'Localidad'},
