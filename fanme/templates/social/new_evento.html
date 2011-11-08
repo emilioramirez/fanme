@@ -40,7 +40,7 @@
 {% block dashboard %}
     <div class="eventos-content">
         <div class="form-nuevo-evento">
-            <form action="/social/nuevo/" method="post">{% csrf_token %}
+            <form action="/social/nuevo/" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table class="new-evento-table">
                     {{ form.as_table}}
                 </table>

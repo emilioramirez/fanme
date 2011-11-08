@@ -47,7 +47,7 @@ def eventos(request):
 def new_evento(request):
     searchbox = SearchBox()
     if request.method == "POST":
-        form = EventoForm(request.POST)
+        form = EventoForm(request.POST, request.FILES)
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
         form.fields["invitados"].queryset = users
@@ -56,6 +56,10 @@ def new_evento(request):
             creador = request.user
             evento.creador = creador
             evento.fecha_creacion = datetime.datetime.now()
+            try:
+                evento.imagen = request.FILES['imagen']
+            except KeyError:
+                pass
             evento.save()
             form.save_m2m()
             return HttpResponseRedirect('/social/eventos/')
@@ -94,12 +98,16 @@ def edit_evento(request, evento_id):
     except Evento.DoesNotExist:
         return HttpResponseRedirect('/social/eventos/')
     if request.method == "POST":
-        form = EventoForm(request.POST, instance=evento_db)
+        form = EventoForm(request.POST, request.FILES, instance=evento_db)
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
         form.fields["invitados"].queryset = users
         if form.is_valid():
             evento = form.save(commit=False)
+            try:
+                evento.imagen = request.FILES['imagen']
+            except KeyError:
+                pass
             evento.save()
             form.save_m2m()
             return HttpResponseRedirect('/social/eventos/')
