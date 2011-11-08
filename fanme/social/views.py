@@ -246,7 +246,7 @@ def company_query(request, company_id):
             consulta.user_to = User.objects.get(id__exact=company_id)
             consulta.mensaje = mensaje_consulta
             consulta.fecha = datetime.datetime.now()
-            consulta.estado = "enviado"
+            consulta.estado = "noleido"
             consulta.save()
             messages.append("Tu consulta ha sido enviada exitosamente")
             form_query_message = MessageQueryForm()
@@ -272,9 +272,6 @@ def ver_consultas(request):
     items = []
     for dict in consultas_recibidas.all():
         items.append(Item.objects.get(id=dict['item']))
-#        print dict
-#    for item in items:
-#        print item.mis_imagenes.count()
     return render_to_response('social/ver_consultas.html', {
         'form_search': searchbox,
         'consultas_recibidas': items},
@@ -518,4 +515,19 @@ def notification_by_company(request, company_id):
     return render_to_response('social/notifications_by_company.html', {
         'form_search': searchbox,
         'notificaciones_recibidas': notificaciones_recibidas},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def ver_notificacion(request, notificacion_id):
+    searchbox = SearchBox()
+    try:
+        notificaciones = Notificacion.objects.get(id=notificacion_id)
+        notificaciones.estado = "leido"
+        notificaciones.save()
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('social/ver_notificaciones.html', {
+        'form_search': searchbox,
+        'notificacion': notificaciones},
         context_instance=RequestContext(request))

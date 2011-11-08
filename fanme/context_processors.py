@@ -16,7 +16,7 @@ def indicadores(request):
         indicadores['recomendaciones_noleidas'] = rec
         indicadores['eventos_nolidas'] = eventos
         indicadores['mensajes_nolidas'] = mensajes
-        indicadores['notificaciones_noleidas'] = notificaciones
+        indicadores['notificaciones_nolidas'] = notificaciones
         indicadores['consultas_noleidas'] = consultas
     except:
         pass

@@ -18,8 +18,7 @@ class ItemRegisterForm(forms.Form):
         required=True,
         error_messages={'required': 'Es necesario una descripción'},
         widget=forms.Textarea
-            (attrs={'style': 'resize: none; border: 1px solid #BBBBBB; color: #BBBBBB; padding: 1px;',
-                'cols': 80, 'rows': 4}))
+            (attrs={'class': 'item-registration-description-field'}))
     topico = forms.ModelChoiceField(
         label='Tópico',
         empty_label="Tópico",
