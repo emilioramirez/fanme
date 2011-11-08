@@ -139,7 +139,9 @@ def results(request):
 @login_required(login_url='/accounts/user/')
 def empresa(request):
     searchbox = SearchBox()
-    return render_to_response('dash/empresa.html', {'form_search': searchbox},
+    messages = ['Estos usuarios se han hecho fan']
+    return render_to_response('dash/empresa.html', {'form_search': searchbox,
+        'messages': messages},
         context_instance=RequestContext(request))
 
 
