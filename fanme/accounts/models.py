@@ -18,7 +18,7 @@ class AbstractProfile(models.Model):
     is_first_time = models.BooleanField()
     avatar = ImageWithThumbsField(upload_to='avatares',
 #    avatar = models.ImageField(upload_to='avatares',
-        default='avatares/default.png',
+        default='',
         sizes=((50, 50), (100, 100)),
         null=True, blank=True)
 

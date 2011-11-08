@@ -32,10 +32,18 @@
                 {% for persona in usuarios %}
                     <div class="posible-user-recomend">
                         <div class="logged-user-photo">
-                            {% if persona.sexo == "M" %}
-                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                           {% if persona.avatar %}
+                                <img src="{{ persona.avatar.url_50x50 }}" alt="Logo" />
                             {% else %}
-                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                                {% if persona %}
+                                    {% if persona.sexo == "M" %}
+                                        <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                                    {% else %}
+                                        <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                                    {% endif%}
+                                {% else %}
+                                        <img src="/mymedia/images/020.png" alt="Logo" />
+                                {% endif%}
                             {% endif%}
                         </div>
                         <div class="user-recomend-name list-item-recomend"> {{ persona.user.first_name }} {{ persona.user.last_name }} - {{ persona.user.email }}</div>
