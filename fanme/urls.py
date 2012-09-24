@@ -7,6 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^$', views.redirect),
+    (r'^home/$', views.home),
     (r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('fanme.accounts.urls')),
     (r'^dash/', include('fanme.dash.urls')),

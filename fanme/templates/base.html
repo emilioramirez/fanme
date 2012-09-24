@@ -14,70 +14,70 @@
         <div class='conteiner'>
             <!-- Begin Header -->
             <div class='header'>
+            {% if user.is_authenticated %}
+                <div class="header-logo">
+                    <a href="/dash/dashboard/"><img src="/mymedia/images/logo.png" alt="Logo" /></a>
+                </div>
+            {% else %}
+                <div class="header-logo">
+                    <a href="/"><img src="/mymedia/images/logo.png" alt="Logo" /></a>
+                </div>
+            {% endif %}
+            {% block header %}
+            {% block menuArea %}
+                <div class="header-menu-area">
+                {% block searchBox %}{% endblock searchBox %}
                 {% if user.is_authenticated %}
-                    <div class="header-logo">
-                        <a href="/dash/dashboard/"><img src="/mymedia/images/logo.png" alt="Logo" /></a>
+                {% block menuOptions %}
+                    <ul class="menu-options">
+                        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+                        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+                        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+                    </ul>
+                {% endblock menuOptions %}
+                    <div class="logged-user">
+                        <div class="logged-user-name">
+                        {% if user.persona %}
+                            <a href="/dash/edit_account/">{{ user.first_name }}</a>
+                        {% else %}
+                            {{ user.empresa.razon_social }}
+                        {% endif%}
+                        </div>
+                        <div class="logged-user-menu">
+                            <a href='/accounts/logout/'>Salir</a>
+                        </div>
+                        <div class="logged-user-photo">
+                        {% if user.persona.avatar %}
+                            <img src="{{ user.persona.avatar.url_50x50 }}" alt="Logo" />
+                        {% else %}
+                        {% if user.persona %}
+                        {% if user.persona.sexo == "M" %}
+                            <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                        {% else %}
+                            <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                        {% endif%}
+                        {% else %}
+                            <img src="/mymedia/images/020.png" alt="Logo" />
+                        {% endif%}
+                        {% endif %}
+                        </div>
                     </div>
                 {% else %}
-                    <div class="header-logo">
-                        <a href="/"><img src="/mymedia/images/logo.png" alt="Logo" /></a>
+                {% block header_login %}
+                    <div class="header-login-form">
+                        <form action="/accounts/login/" method="post">{% csrf_token %}
+                            <ul>
+                                {{ form_login.as_ul }}
+                            </ul>
+                            <input type="submit" value="Ingresar" class="submit"/>
+                        </form>
                     </div>
+                {% endblock header_login %}
                 {% endif %}
-                {% block header %}
-                    {% block menuArea %}
-                        <div class="header-menu-area">
-                            {% block searchBox %}{% endblock searchBox %}
-                            {% if user.is_authenticated %}
-                                {% block menuOptions %}
-                                    <ul class="menu-options">
-                                        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
-                                        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
-                                        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
-                                    </ul>
-                                {% endblock menuOptions %}
-                                <div class="logged-user">
-                                    <div class="logged-user-name">
-                                        {% if user.persona %}
-                                            <a href="/dash/edit_account/">{{ user.first_name }}</a>
-                                        {% else %}
-                                            {{ user.empresa.razon_social }}
-                                        {% endif%}
-                                    </div>
-                                    <div class="logged-user-menu">
-                                        <a href='/accounts/logout/'>Salir</a>
-                                    </div>
-                                    <div class="logged-user-photo">
-                                        {% if user.persona.avatar %}
-                                            <img src="{{ user.persona.avatar.url_50x50 }}" alt="Logo" />
-                                        {% else %}
-                                            {% if user.persona %}
-                                                {% if user.persona.sexo == "M" %}
-                                                    <img src="/mymedia/images/avatar-male.png" alt="Logo" />
-                                                {% else %}
-                                                    <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
-                                                {% endif%}
-                                            {% else %}
-                                                    <img src="/mymedia/images/020.png" alt="Logo" />
-                                            {% endif%}
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            {% else %}
-                                {% block header_login %}
-                                    <div class="header-login-form">
-                                        <form action="/accounts/login/" method="post">{% csrf_token %}
-                                            <ul>
-                                                {{ form_login.as_ul }}
-                                            </ul>
-                                            <input type="submit" value="Ingresar" class="submit"/>
-                                        </form>
-                                    </div>
-                                {% endblock header_login %}
-                            {% endif %}
-                        </div>
-                    {% endblock menuArea %}
-                {% endblock header%}
-                <div class="clear"></div>
+                </div>
+            {% endblock menuArea %}
+            {% endblock header%}
+            <div class="clear"></div>
             <!-- End Header -->
             </div>
             <!-- Begin Content -->

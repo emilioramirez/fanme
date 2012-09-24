@@ -1,0 +1,24 @@
+{% extends "registration/base_registration.html" %}
+
+{% block title %}
+<title>Activate Fails</title>
+{% endblock %}
+
+{% block description %}{% endblock description %}
+
+{% block extracss %}{% endblock extracss %}
+
+{% block container %}
+<div class="row">
+    <div class="span12">
+        <div class="alert alert-info">
+            <h2>La activacion Fallo</h2>
+            <p>Su clave de activacion fallo: {{ activation_key }}</p>
+        </div>
+    </div>
+</div>
+{% endblock container %}
+
+{% block footer %}{% endblock footer %}
+
+{% block extrajs %}{% endblock extrajs %}
