@@ -1,0 +1,39 @@
+{% extends "registration/base_registration.html" %}
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+
+{% block description %}{% endblock description %}
+
+{% block extracss %}{% endblock extracss %}
+
+{% block container %}
+<div class="row">
+    <div class="span12">
+        <h1>Ingresa al sitio</h1>
+        <h2>Y formá parte</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="span12">
+        <form method="post" action="{% url django.contrib.auth.views.login %}">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-success">Entrar</button>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="span12">
+        <ul class="">
+            <li>¿<a href="{% url auth_password_reset %}">Olvidaste</a> tu contraseña?</li>
+            <li>¿Quieres crear una <a href="{% url registration_register %}">nueva cuenta</a>?</li>
+        </ul>
+    </div>
+</div>
+{% endblock container %}
+
+{% block footer %}{% endblock footer %}
+
+{% block extrajs %}{% endblock extrajs %}
