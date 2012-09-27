@@ -356,7 +356,7 @@ def edit_pass(request):
             if not request.user.check_password(actual_pass):
                 raise forms.ValidationError("La contrasenia no coincide")
             user = request.user
-            user.password = new_pass
+            user.set_password(new_pass)
             user.save()
             messages.append("Se actualizo correctamente la contrasenia")
     else:
