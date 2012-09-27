@@ -1,0 +1,28 @@
+{% extends "registration/base_registration.html" %}
+
+{% block title %}
+<title>Logout</title>
+{% endblock %}
+
+{% block description %}{% endblock description %}
+
+{% block extracss %}{% endblock extracss %}
+
+{% block container %}
+<div class="row">
+    <div class="span12">
+        <div class="alert alert-success">
+            <h1>Tu cuenta se ha cerrado con éxito</h1>
+            <h2>Puedes seguir navegando</h2>
+            <p>Puedes volver a <a href='{% url auth_login %}'>ingresar</a> si lo deseas.</p>
+        </div>
+    </div>
+</div>
+{% endblock container %}
+
+{% block footer %}{% endblock footer %}
+
+{% block extrajs %}{% endblock extrajs %}
+
+
+
