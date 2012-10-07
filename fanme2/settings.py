@@ -33,7 +33,7 @@ TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-AR'
 
 SITE_ID = 1
 
@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'south',
     'registration',
+    'accounts',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -155,6 +156,7 @@ ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, us
 # python -m smtpd -n -c DebuggingServer localhost:1025
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+
 
 try:
     from local_settings import *
