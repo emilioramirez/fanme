@@ -1,7 +1,8 @@
 {% extends "registration/base_registration.html" %}
+{% load i18n %}
 
 {% block title %}
-<title>Registration complete</title>
+<title>{% trans "Registracion completada" %}</title>
 {% endblock %}
 
 {% block description %}{% endblock description %}
@@ -10,11 +11,11 @@
 
 {% block container %}
 <div class="row">
-    <div class="span12">
+    <div class="span8 offset2">
         <div class="alert alert-info">
-            <h2>Su información ha sido enviada con éxito</h2>
-            <h3>Estás a un paso de formar parte de la comunidad</h3>
-            <p>Se ha enviado un email a tu cuenta, con una confirmación de la cuenta, una vez confirmada, ya formas parte de FanME</p>
+            <h2>{% trans "Su información ha sido enviada con éxito." %}</h2>
+            <h3>{% trans "Estás a un paso de formar parte de la comunidad de FanME." %}</h3>
+            <p>{% trans "Se ha enviado un email a tu cuenta, con una confirmación de la cuenta." %}</p>
         </div>
     </div>
 </div>
