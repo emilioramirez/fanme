@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-#Inicio Sección: Models que migran desde fanme.segmentacion
 class Topico(models.Model):
     nombre = models.CharField(max_length=20)
     descripcion = models.CharField(max_length=100)
@@ -30,10 +29,8 @@ class Denuncia(models.Model):
     fecha_denuncia = models.DateTimeField()
     fecha_resolucion = models.DateTimeField()
     descripcion = models.TextField(max_length=300)
-#Fin Sección.
 
 
-#Inicio Sección: Models que migran desde fanme.items
 class Item(models.Model):
     nombre = models.CharField(max_length=20)
     descripcion = models.TextField(max_length=300)
@@ -90,10 +87,8 @@ class Recomendacion(models.Model):
     class Meta:
 #        verbose_name = ''
         verbose_name_plural = "Recomendaciones"
-#Fin Sección.
 
 
-#Inicio Sección: Models que migran desde fanme.support
 class Rubro(models.Model):
     nombre = models.CharField(max_length=20)
     descripcion = models.CharField(max_length=100)
@@ -175,10 +170,8 @@ class Notificacion(models.Model):
     class Meta:
 #        verbose_name = ''
         verbose_name_plural = "Notificaciones"
-#Fin Sección.
 
 
-#Inicio Sección: Models que migran desde fanme.social
 class TipoEvento(models.Model):
     nombre = models.CharField(max_length=30)
 
@@ -237,7 +230,6 @@ class Actividad(models.Model):
         blank=True, null=True)
     recomendacion = models.ForeignKey(Recomendacion, related_name="act_recom",
         default="", blank=True, null=True)
-    #TODO: Agregar una relación a la app de Comentario de Django.
     #comentario = models.ForeignKey(Comentario, related_name="act_coment",
      #   default="", blank=True, null=True)
     usuario_origen = models.ForeignKey(User, related_name="act_origen",
@@ -247,4 +239,3 @@ class Actividad(models.Model):
     fecha = models.DateTimeField()
     descripcion = models.CharField(default="", max_length=60)
     tipo = models.CharField(default="", max_length=30)
-#Fin Sección.

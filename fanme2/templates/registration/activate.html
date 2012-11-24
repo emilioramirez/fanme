@@ -1,7 +1,8 @@
 {% extends "registration/base_registration.html" %}
+{% load i18n %}
 
 {% block title %}
-<title>Activate Fails</title>
+<title>{% trans  "Activacion Fallida" %}</title>
 {% endblock %}
 
 {% block description %}{% endblock description %}
@@ -12,8 +13,8 @@
 <div class="row">
     <div class="span12">
         <div class="alert alert-info">
-            <h2>La activacion Fallo</h2>
-            <p>Su clave de activacion fallo: {{ activation_key }}</p>
+            <h2>{% trans "La activacion Fallo" %}</h2>
+            <p>{% trans "Su clave de activacion fallo" %}: {{ activation_key }}</p>
         </div>
     </div>
 </div>
