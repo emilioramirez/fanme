@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
+from accounts import views as accounts_views
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -15,7 +16,8 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     # django-registration urls
-    (r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^accounts/profile/', accounts_views.profile, name='profile'),
+    url(r'^accounts/', include('registration.backends.default.urls')),
 )
 
 

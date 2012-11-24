@@ -19,8 +19,13 @@
         <div class="container">
             <a class="brand" href="/">FanME</a>
             <div class="pull-right">
-                <a class="btn btn-success" href="{% url auth_login %}">{% trans "Ingresar" %}</a>
-                <a class="btn btn-primary" href="{% url registration_register %}">{% trans "Registrarse" %}</a>
+                {% if user.is_authenticated %}
+                    <a class="btn btn-success" href="{% url auth_logout %}">{% trans "Salir" %}</a>
+                    <a class="btn btn-primary" href="{% url profile %}">{% trans "Perfil" %}</a>
+                {% else %}
+                    <a class="btn btn-success" href="{% url auth_login %}">{% trans "Ingresar" %}</a>
+                    <a class="btn btn-primary" href="{% url registration_register %}">{% trans "Registrarse" %}</a>
+                {% endif %}
             </div>
         </div>
     </div>
