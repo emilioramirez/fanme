@@ -1,0 +1,184 @@
+{% extends "profiles/base_profile.html" %}
+
+{% block title%}Perfil Publico DIN - {{user.first_name}} {{user.last_name}}{% endblock title%}
+
+{% block dropdown %}
+    <li><a href="{% url profile %}">Mi DIN</a></li>
+    <li class="divider"></li>
+    <li><a href="{% url profiles_edit_profile %}">Editar Perfil Publico DIN</a></li>
+    <li class="divider"></li>
+    <li><a href="/accounts/logout">Salir</a></li>
+{% endblock dropdown %}
+
+{% block content %}
+    <div class="row">
+        <div class="span12">
+            <div id="tittle" class="box">
+                <div id="access">
+                    <div id="avatar">
+                        <img id="" src="{{profile.avatar.url}}" width="100" height="100" alt="Avatar"/>
+                    </div>
+                    <div id="contact" class="margin-for-buttoms">
+                        <div class="button" id="misitio" title="Ir a mi web"><a href="{{profile.mi_sitio}}"><img src="/media/img/profile/buttons/weboficial.png" alt="" /></a></div>
+                        <div class="button" id="miemail" title="{{profile.user.email}}"><img src="/media/img/profile/buttons/mail.png" alt="" /></div>
+                        <div class="button" id="mitel" title="{{profile.telefono}}"><img src="/media/img/profile/buttons/telefono.png" alt="" /></div>
+                        {% if profile.facebook %}
+                        <div class="button" id="mifacebook" title="Ir a mi Face"><a href="{{profile.facebook}}"><img src="/media/img/profile/buttons/facebook.png" alt="" /></a></div>
+                        {% endif %}
+                        {% if profile.twitter %}
+                        <div class="button" id="mitwitter" title="Ir a mi Twitter"><a href="{{profile.twitter}}"><img src="/media/img/profile/buttons/twitter.png" alt="" /></a></div>
+                        {% endif %}
+                        {% if profile.linkedin %}
+                        <div class="button" id="milinkedin" title="Ir a mi Linkedin"><a href="{{profile.linkedin}}"><img src="/media/img/profile/buttons/linkedin.png" alt="" /></a></div>
+                        {% endif %}
+                        {% if profile.youtube %}
+                        <div class="button" id="miyoutube" title="Ir a mi Youtube"><a href="{{profile.youtube}}"><img src="/media/img/profile/buttons/youtube.png" alt="" /></a></div>
+                        {% endif %}
+                        {% if profile.vimeo %}
+                        <div class="button" id="mivimeo" title="Ir a mi Vimeo"><a href="{{profile.vimeo}}"><img src="/media/img/profile/buttons/vimeo.png" alt="" /></a></div>
+                        {% endif %}
+                    </div>
+                    <div id="contact-message" class="">
+                        <div id="tel-msg" {% if profile.telefono %}title="Podés marcar y copiar con Ctrl+V"{% endif %} style="display:none;">{% if profile.telefono %}   {{profile.telefono}}   {% else %}Teléfono sin especificar{% endif %}</div>
+                        <div id="email-msg" {% if profile.user.email %}title="Podés marcar y copiar con Ctrl+V"{% endif %} style="display:none;">{% if profile.user.email %}   {{profile.user.email}}   {% else %}Email sin especifiar{% endif %}</div>
+                    </div>
+                    <div id="social" class="margin-for-buttoms">
+                        <div class="button">
+                            <div class="icon"><img src="/media/img/profile/buttons/inspira.png" alt="" /></div>
+                            <div class="num"></div>
+                        </div>
+                        <div class="button">
+                            <div class="icon"><img src="/media/img/profile/buttons/vistas.png" alt="" /></div>
+                            <div class="num"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="name">{{profile.user.first_name}} {{profile.user.last_name}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="box">
+                <div id="cover-image">
+                    <div id="cover-img-content">
+                        <img src="{{profile.imagen_principal.url}}" alt=" " height="185" width="896"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="box">
+                <div class="data-content">
+                    <div class="data-img"><img src="/media/img/profile/data/02-soy.png" alt="" /></div>
+                    <img src="/media/img/profile/data/divisor.png" alt="" class="separador" />
+                    <div class="text"><span class="text-label">Soy </span><span class="data">{{profile.soy}}</span></div>
+                </div>
+            </div>  
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="box">
+                <div class="data-content">
+                    <div class="data-img"><img src="/media/img/profile/data/03-me-especializo.png" alt="" /></div>
+                    <img src="/media/img/profile/data/divisor.png" alt="" class="separador" />
+                    <div class="text"><span class="text-label">Me especializo en </span><span class="data">{{profile.me_especializo_en}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="box">
+                <div class="data-content">
+                    <div class="data-img"><img src="/media/img/profile/data/04-vivo.png" alt="" /></div>
+                    <img src="/media/img/profile/data/divisor.png" alt="" class="separador" />
+                    <div class="text"><span class="text-label">Vivo en </span><span class="data">{{profile.vivo_en}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="box">
+                <div class="data-content">
+                    <div class="data-img"><img src="/media/img/profile/data/05-trabajo.png" alt="" /></div>
+                    <img src="/media/img/profile/data/divisor.png" alt="" class="separador" />
+                    <div class="text"><span class="text-label">Trabajo como </span><span class="data">{{profile.trabajo_como}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="box">
+                <div class="data-content">
+                    <div class="data-img"><img src="/media/img/profile/data/06-me-inspira.png" alt="" /></div>
+                    <img src="/media/img/profile/data/divisor.png" alt="" class="separador" />
+                    <div class="text"><span class="text-label">Me inspira </span><span class="data">{{profile.me_inspira}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="box">
+                <div class="data-content">
+                    <div class="data-img"><img src="/media/img/profile/data/07-mis-4.png" alt="" /></div>
+                    <img src="/media/img/profile/data/divisor.png" alt="" class="separador" />
+                    <div class="text"><span class="text-label">Mis 4</span><span class="data"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="box">
+                <div id="gallery">
+                    <div class="image-content">
+                        <div class="image">
+                            <div class="img-margin">
+                                <a id="image_1" href="{{profile.imagen_1.url}}"><img src="{{profile.imagen_1.url}}" alt="" height="195" width="440" /></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-content">
+                        <div class="image">
+                            <div class="img-margin">
+                                <a id="image_2" href="{{profile.imagen_2.url}}"><img src="{{profile.imagen_2.url}}" alt="" height="195" width="440" /></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-content">
+                        <div class="image">
+                            <div class="img-margin">
+                                <a id="image_3" href="{{profile.imagen_3.url}}"><img src="{{profile.imagen_3.url}}" alt="" height="195" width="440" /></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-content">
+                        <div class="image">
+                            <div class="img-margin">
+                                <a id="image_4" href="{{profile.imagen_4.url}}"><img src="{{profile.imagen_4.url}}" alt="" height="195" width="440" /></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="box">
+                <div class="data-content">
+                    <div class="data-img"><img src="/media/img/profile/data/08-tilde-no.png" alt="" /></div>
+                    <img src="/media/img/profile/data/divisor.png" alt="" class="separador" />
+                    <div class="text"><span class="text-label">Disponible para</span><span class="data"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% endblock title %}
+
+{% block description %}{% endblock description %}
+
+{% block extracss %}{% endblock extracss %}
+
+{% block header %}
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">FanME</a>
+            <div class="pull-right">
+                <a class="btn btn-success" href="{% url auth_login %}">{% trans "Ingresar" %}</a>
+                <a class="btn btn-primary" href="{% url registration_register %}   ">{% trans "Registrarse" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    {% block container %}{% endblock container %}
+</div> <!-- /container -->
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}
+
+{% block extrajs %}{% endblock extrajs %}
