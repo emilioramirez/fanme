@@ -1,0 +1,51 @@
+{% extends "profiles/base_profile.html" %}
+
+{% block title%}Crear Perfil Publico de DIN{% endblock title%}
+
+{% block content %}
+    <div class="row">
+        <div class="span10 offset1">
+            <div id="content">
+                <div class="row">
+                    <div class="span8 offset1">
+                        <div id="edit-title" class="well">
+                            <h1 class="">Crear tu Perfil en DIN</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span8 offset1">
+                        <div id="edit-subtitle" class="alert alert-success">
+                            <h3 class="">Estos son los datos que definen tu perfil público en DIN. Podés pasar el enlace a tu perfil para que te conozcan.</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span8 offset1">
+                        <div class="well">
+                            <div class="row">
+                                <div class="span6 offset1">
+                                        <form method='post' action='' enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {{ form.non_field_errors }}
+                                            <table>
+                                                {% for field in form %}
+                                                    <tr>
+                                                        <td>{{ field.label }}</td>
+                                                        <td><span>{{ field.errors }}</span>{{ field }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                            <div class="centrado">
+                                                <button type="submit" class="btn btn-success" >Crear</button>
+                                            </div>
+                                        </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

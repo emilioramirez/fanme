@@ -1,0 +1,59 @@
+{% extends "registration/base_registration.html" %}
+{% load i18n %}
+
+{% block title %}
+<title>{% trans "Ingresar al sistema" %}</title>
+{% endblock %}
+
+{% block description %}{% endblock description %}
+
+{% block extracss %}{% endblock extracss %}
+
+{%block header%}
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">FanME</a>
+            <div class="pull-right">
+                <a class="btn btn-primary" href="{% url registration_register %}">{% trans "Registrarme" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock header%}
+
+{% block container %}
+<div class="row">
+    <div class="span4 offset4">
+        <h1>{% trans "Ingresá al sitema" %}</h1>
+        <h2>{% trans "Y comenzá a recibir recomendaciones de FanME" %}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="span4 offset4">
+        <form method="post" action="{% url django.contrib.auth.views.login %}">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-success">{% trans "Ingresar" %}</button>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="span4 offset4">
+        <ul class="unstyled">
+            {% url auth_password_reset as resetPasswordUrl %}
+            {% blocktrans %}
+                <li>¿ <a href="{{ resetPasswordUrl }}">Olvidaste</a> tu contraseña?</li>
+            {% endblocktrans %}
+            {% url registration_register as registrationUrl %}
+            {% blocktrans %}
+                <li>¿Quieres crear una <a href='{{registrationUrl}}'>nueva cuenta</a>?</li>
+            {% endblocktrans %}
+        </ul>
+    </div>
+</div>
+{% endblock container %}
+
+{% block footer %}{% endblock footer %}
+
+{% block extrajs %}{% endblock extrajs %}
