@@ -12,11 +12,6 @@
 {% block container %}
 <div class="row">
     <div class="span12">
-        <h1>{% trans "Crear una cuenta de Usuario" %}</h1>
-    </div>
-</div>
-<div class="row">
-    <div class="span12">
         <form method='post' action=''>
             {% csrf_token %}
             {{ form }}
