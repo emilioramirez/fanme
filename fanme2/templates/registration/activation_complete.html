@@ -1,29 +1,18 @@
 {% extends "registration/base_registration.html" %}
-{% load i18n %}
 
 {% block title %}
-<title>{% trans "Activacion completada" %}</title>
+<title>Activacion completada</title>
 {% endblock %}
-
-{% block description %}{% endblock description %}
-
-{% block extracss %}{% endblock extracss %}
 
 {% block container %}
 <div class="row row-separation">
     <div class="span8 offset2">
         <div class="alert alert-success">
-            <h1>{% trans "Se ha activado tu cuenta con exito." %}</h1>
-            <h2>{% trans "Ya formas parte de FanME." %}</h2>
+            <h1>Se ha activado tu cuenta con exito.</h1>
+            <h2>Ya formas parte de FanME.</h2>
             {% url auth_login as urlLogin %}
-            {% blocktrans %}
-                <p>Puedes <a href='{{urlLogin}}'> ingresar</a> con el usuario y contraseña que te registraste.</p>
-            {% endblocktrans %}
+            <p>Puedes <a href='{{urlLogin}}'> ingresar</a> con el usuario y contraseña que te registraste.</p>
         </div>
     </div>
 </div>
 {% endblock container %}
-
-{% block footer %}{% endblock footer %}
-
-{% block extrajs %}{% endblock extrajs %}

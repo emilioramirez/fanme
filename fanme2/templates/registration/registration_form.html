@@ -1,18 +1,13 @@
 {% extends "registration/base_registration.html" %}
-{% load i18n %}
 
 {% block title %}
-<title>{% trans "Registrate en FanME!" %}</title>
+<title>Registrate en FanME!</title>
 {% endblock %}
-
-{% block description %}{% endblock description %}
-
-{% block extracss %}{% endblock extracss %}
 
 {% block container %}
 <div class="row">
     <div class="span12">
-        <h1>{% trans "Crear una cuenta de Usuario" %}</h1>
+        <h1>Crear una cuenta de Usuario</h1>
     </div>
 </div>
 <div class="row">
@@ -20,13 +15,8 @@
         <form method='post' action=''>
             {% csrf_token %}
             {{ form }}
-            <button type="submit" class="btn btn-success">{% trans "Enviar" %}</button>
+            <button type="submit" class="btn btn-success">Enviar</button>
         </form>
     </div>
 </div>
 {% endblock container %}
-
-{% block footer %}{% endblock footer %}
-
-{% block extrajs %}{% endblock extrajs %}
-
