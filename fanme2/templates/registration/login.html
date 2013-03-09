@@ -6,22 +6,22 @@
 
 {% block container %}
 <div class="row">
-    <div class="span4 offset4">
+    <div class="span20">
         <h1>Ingresá al sitema</h1>
         <h2>Y comenzá a recibir recomendaciones de FanME</h2>
     </div>
 </div>
 <div class="row">
-    <div class="span4 offset4">
+    <div class="span20">
         <form method="post" action="{% url django.contrib.auth.views.login %}">
             {% csrf_token %}
             {{ form }}
-            <button type="submit" class="btn btn-success">Ingresar</button>
+            <div><button type="submit" class="btn btn-success">Ingresar</button></div>
         </form>
     </div>
 </div>
 <div class="row">
-    <div class="span4 offset4">
+    <div class="span20">
         <ul class="unstyled">
             <li>¿ <a href="{% url auth_password_reset %}">Olvidaste</a> tu contraseña?</li>
             <li>¿Quieres crear una <a href='{% url registration_register %}'>nueva cuenta</a>?</li>

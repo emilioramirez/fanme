@@ -152,12 +152,8 @@ LOGGING = {
     }
 }
 
-ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
-
-# python -m smtpd -n -c DebuggingServer localhost:1025
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
-
+# One-week activation window; you may, of course, use a different value.
+ACCOUNT_ACTIVATION_DAYS = 7
 
 try:
     from local_settings import *
