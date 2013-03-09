@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title%}Comunidad DIN{% endblock title%}</title>
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Le styles -->
+        <link href="/media/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/media/css/custom.css" rel="stylesheet">
+        <link href="/media/css/profile.css" rel="stylesheet">
+        <!-- FancyBox -->
+        <link rel="stylesheet" href="/media/js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+        {% block scripts %}{% endblock scripts %}
+        {% block css %}{% endblock css %}
+
+        <!-- Le fav and touch icons -->
+        <link rel="shortcut icon" href="/media/img/favicon.ico">
+        
+        
+        <!-- Le Google Analytics -->
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-29392668-1']);
+            _gaq.push(['_setDomainName', 'comunidaddin.org']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    </head>
+
+    <body>
+        <!-- BEGIN Container -->
+        <div class="container {% block container-class %}{% endblock container-class %}" id="main-profile-conteiner">
+        {% block container %}
+            <div id="toTop" title="Subir"></div>
+            {% block header %}
+            <!-- BEGIN Navbar -->
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <!-- Brand -->
+                        <ul class="nav">
+                            <li>
+                                <a id="brand-din" href="{% url home %}"><img src="/media/img/logocomunidadparabarra.png" alt="COMUNIDAD DIN"/></a>
+                            </li>
+                            <li class="divider-vertical"></li>
+                            <li>
+                                <a href="http://tiendadin.com">TIENDA</a>
+                            </li>
+                            <li class="divider-vertical"></li>
+                            <li>
+                                <a href="http://comunidaddin.org/blog">BLOG</a>
+                            </li>
+                            <li class="divider-vertical"></li>
+                        </ul>
+                        <!-- BEGIN Options -->
+                        <ul class="nav pills pull-right">
+                            {% if user.is_authenticated %}
+                                <!-- BEGIN Logged -->
+                                <li class="dropdown" id="menu1">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+                                        Bienvenido <strong>{{ user.username }}</strong>
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                    {% block dropdown %}
+                                        <li><a href="{% url profile %}">Mi DIN</a></li>
+                                        <li class="divider"></li>
+                                        {% if user.get_profile %}
+                                            <li><a href="{% url nice_profiles_profile_detail user.username %}">Editar Perfil Publico</a></li>
+                                            <li class="divider"></li>
+                                        {%endif%}
+                                        <li><a href="/accounts/logout">Salir</a></li>
+                                    {% endblock dropdown %}
+                                    </ul>
+                                </li>
+                                <!-- END Logged -->
+                            {% else %}
+                                <!-- BEGIN Sign -->
+                                <li class="dropdown" id="menu1">
+                                    <a id="dropdown-registrate" title="Registrate en DIN" class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+                                        <i class="icon-sign-custom"></i>
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/accounts/register">Registrate</a></li>
+                                    </ul>
+                                </li>
+                                <!-- END Sign -->
+                                <!-- BEGIN Login -->
+                                <li class="dropdown">
+                                    <a id="dropdown-ingresa" title="Ingresá a tu cuenta" href="#" class="dropdown-toggle"  data-toggle="dropdown">
+                                        <i class="icon-login-custom"></i>
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/accounts/login">Ingresá</a></li>
+                                    </ul>
+                                </li>
+                                <!-- END Login -->
+                            {% endif %}
+                        </ul>
+                        <!-- END Options -->
+                    </div>
+                </div>
+            </div>
+            <!-- END Navbar -->
+            {% endblock header %}
+            
+            <!-- BEGIN messages -->
+            <div class="row">
+                <div class="span12">{% block messages %}{% endblock messages %}</div>
+            </div>
+            <!-- END messages -->
+            
+            <!-- BEGIN conteiner -->
+            <div class="row">
+                <div class="span12">{% block content %}{% endblock content %}</div>
+            </div>
+            <!-- END conteiner -->
+            
+            <!-- BEGIN footer -->
+            <div class="row">
+                <div class="span12">{% block footer %}{% endblock footer %}</div>
+            </div>
+            <!-- END footer -->
+
+            <!-- BEGIN Dev -->
+            <footer>
+                <div class="row">
+                    <div class="span12">
+                        <div class="centrado margin-top30">Power by: <a href="https://www.djangoproject.com">Django</a> - Develop by: <a href="http://www.linkedin.com/in/emilioramirez">Emilio Ramirez</a> &lt;contacto@emilioramirez.com.ar&gt;</div>
+                    </div>
+                </div>
+            </footer>
+            <!-- END Dev -->
+        {% endblock container %}
+        </div>
+        <!-- END Container -->
+
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="/media/js/jquery.js"></script>
+        <script src="/media/js/bootstrap.min.js"></script>
+        <!-- FancyBox -->
+        <script src="/media/js/fancybox/jquery.fancybox.js"></script>
+        <script src="/media/js/fancybox/jquery.fancybox.pack.js"></script>
+        <!-- My applicatrions -->
+        <script src="/media/js/application.js"></script>
+    </body>
+
+</html>
