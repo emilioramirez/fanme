@@ -1,17 +1,5 @@
-{% extends "registration/base_registration.html" %}
-
-{% block title %}
-<title>Registrate en FanME!</title>
-{% endblock %}
-
-{% block container %}
 <div class="row">
-    <div class="span12">
-        <h1>Crear una cuenta de Usuario</h1>
-    </div>
-</div>
-<div class="row">
-    <div class="span12">
+    <div class="span6">
         <form method='post' action=''>
             {% csrf_token %}
             {{ form }}
@@ -19,4 +7,3 @@
         </form>
     </div>
 </div>
-{% endblock container %}
