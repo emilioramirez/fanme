@@ -1,14 +1,28 @@
 {% extends "registration/base_registration.html" %}
 
+{%block header%}
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="/">FanME</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block title %}
 <title>Ingresar al sistema</title>
 {% endblock %}
 
 {% block container %}
-<div class="row">
-    <div class="span4 offset4">
-        <h1>Ingresá al sitema</h1>
-        <h2>Y comenzá a recibir recomendaciones de FanME</h2>
+<div class="row" style="margin-top:60px">
+    <div class="span12">
+        <div class="alert alert-error">
+            <h2>Error al intentar ingresar a FanMe</h2>
+            <h4>Ocurrio un error al intentar ingresar a FanMe.
+                Compruebe que el nombre de usuario y contraseña ingresados
+                sean los correctos.</h4>
+        </div>
     </div>
 </div>
 <div class="row">
