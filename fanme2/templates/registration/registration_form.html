@@ -1,9 +1,32 @@
+{% extends "registration/base_registration.html" %}
+
+{%block header%}
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="/">FanME</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block title %}
+<title>Registrate en FanME!</title>
+{% endblock %}
+
+{% block container %}
 <div class="row">
-    <div class="span6">
+    <div class="span20">
+        <h1>Crear una cuenta de Usuario</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="span20">
         <form method='post' action=''>
             {% csrf_token %}
             {{ form }}
-            <button type="submit" class="btn btn-success">Enviar</button>
+            <div><button type="submit" class="btn btn-success">Enviar</button></div>
         </form>
     </div>
 </div>
+{% endblock container %}
