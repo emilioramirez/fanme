@@ -4,5 +4,5 @@ from django.shortcuts import render_to_response
 
 def home(request):
     context = {}
-    return render_to_response('home.html', context,
+    return render_to_response('base_menu_home.html', context,
         context_instance=RequestContext(request))
