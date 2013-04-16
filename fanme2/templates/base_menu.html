@@ -21,7 +21,7 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Opciones<b class="caret"></b></a>
                         <ul class="dropdown-menu" role="menu" >
-                            <li><a href="#"><i class="icon-edit"></i> Editar Perfil</a></li>
+                            <li><a href="/accounts/edit_profile"><i class="icon-edit"></i> Editar Perfil</a></li>
                             <li><a href="#">...</a></li>
                             <li><a href="#">...</a></li>
                             <li class="divider"></li>
@@ -35,8 +35,8 @@
                 {% endif %}
                 <div class="pull-right">
                     <form class="navbar-form pull-left" method="post" action="/" id="login_form">{% csrf_token %}
-                        <input class="span2" type="text" name="username" value="" id="username">
-                        <input class="span2" type="password" name="password" value="" id="password">
+                        <input class="span2" type="text" name="username" placeholder="Nombre de usuario" id="username">
+                        <input class="span2" type="password" name="password" placeholder="Contraseña" id="password">
                         <input class="btn btn-success" type="submit" value="Login" id="button"/>
                     </form>
                 </div>

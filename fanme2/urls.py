@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     # django-registration urls
     url(r'^accounts/profile/', accounts_views.profile, name='profile'),
+    url(r'^accounts/edit_profile/', accounts_views.edit_profile),
     url(r'^accounts/', include('registration.backends.default.urls')),
 )
 
