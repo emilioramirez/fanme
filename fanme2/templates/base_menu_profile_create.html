@@ -7,5 +7,12 @@
 {% block description %}{% endblock description %}
 
 {% block content %}
-{{ form }}
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <h1>{{ page_title }}</h1>
+            {{ profile_form }}
+        </div>
+    </div>
+</div>
 {% endblock content %}
