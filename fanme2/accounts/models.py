@@ -17,7 +17,7 @@ class Profile(models.Model):
     """
     user = models.OneToOneField(User, related_name='%(class)s',
         verbose_name=_('Usuario'), unique=True,)
-    first_login = models.BooleanField(_('Primer ingreso'))
+    first_login = models.BooleanField(_('Primer ingreso'), blank=True)
     avatar = models.ImageField(_('Foto de perfil'), upload_to='avatars',
         default='avatars/default.jpg')
 
