@@ -15,8 +15,8 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/', include('accounts.urls')),
     # django-registration urls
-    url(r'^accounts/profile/', accounts_views.profile, name='profile'),
     url(r'^accounts/', include('registration.backends.default.urls')),
 )
 
