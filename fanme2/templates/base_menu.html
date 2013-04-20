@@ -30,6 +30,9 @@
                     </li>
                 </ul>
                 {% else %}
+                {% if form.errors %}
+                    <p>Your username and password didn't match, please try again.</p>
+                {% endif %}
                 <div class="pull-right">
                     <a class="btn btn-success" href="{% url "auth_login" %}">{% trans "Ingresar" %}</a>
                     <a class="btn btn-alert" href="{% url "registration_register" %}">{% trans "Registrarse" %}</a>
