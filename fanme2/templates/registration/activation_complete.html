@@ -10,7 +10,7 @@
         <div class="alert alert-success">
             <h1>Se ha activado tu cuenta con exito.</h1>
             <h2>Ya formas parte de FanME.</h2>
-            {% url auth_login as urlLogin %}
+            {% url "auth_login" as urlLogin %}
             <p>Puedes <a href='{{urlLogin}}'> ingresar</a> con el usuario y contraseña que te registraste.</p>
         </div>
     </div>
