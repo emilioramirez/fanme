@@ -24,7 +24,7 @@ def create_profile(request):
     """
     Create a form for user profile
     """
-    profile_form = ProfileForm(user=request.user)
+    profile_form = ProfileForm()
     page_title = u"Crear su perfil"
     return render_to_response('base_menu_profile_create.html', locals(),
                               context_instance=RequestContext(request))
