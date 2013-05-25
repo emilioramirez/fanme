@@ -4,3 +4,27 @@
     margin-bottom: 30px;
     padding: 10px;
 }
+
+.dashboard-item-description {
+    height: 60px;
+    padding: 0px 10px 10px;
+    width: 300px;
+    text-align: justify;
+}
+
+.side-bar-content{
+    height: 320px;
+    margin-left: 40px;
+    margin-top: 115px;
+    width: 200px;
+}
+
+.upper-bar{
+    margin-left: 27px;
+    margin-top: 30px;
+    width: 644px;
+}
+
+.container-fluid .row-fluid [class*="span"] {
+    margin-left: 1%;
+}

@@ -1,0 +1,118 @@
+{% extends "base_menu.html" %}
+
+{% block title %}
+<title>Dash</title>
+{% endblock title %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/custom.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/fanme_heritage.css">
+{% endblock extracss %}
+
+{% block description %}{% endblock description %}
+
+{% block central-content %}
+<div class="container" style="margin-left:150px;">
+    <div class="row">
+        <div class="span9">
+            <div class="well well-large upper-bar"></div>
+        </div>
+    </div>
+    <div class="span9">
+        <ul class="thumbnails">
+            {% for items in recomended_items %}
+            <li class="span6">
+              <div class="thumbnail">
+                <img src="{{ STATIC_URL }}img/avatar-famale-big.png" alt="product 1">
+                <div class="caption">
+                  <h5>{{ items }}</h5>
+                  <div id="description" class="dashboard-item-description">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Algo mas aca para que se muestre las elipsis
+                  </div>
+                  <p>Categoria: Libro | Cuento</p>
+                  <div id="score-section">
+                      <img src="{{ STATIC_URL }}img/dashboard-content-item-header-score.png" style="float:left;" alt="Score">
+                      <p style="margin-left: 22px;">25</p>
+                  </div>
+                  <p>
+                      <input class="btn btn-primary" type="submit" value="Fan" id="button"/>
+                      <input class="btn btn-primary" type="submit" value="Recomendar" id="button"/>
+                  </p>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+      </div>
+</div>
+{% endblock central-content %}
+
+{% block right-content %}
+<div class="well well-large side-bar-content">
+    <div class="user-name-sidebar">Matias Muñoz</div>
+    <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+    <div class="sidebar-stadistic">
+        <a href="/dash/fans/">
+            <div class="stadistic-fan sidebar-stadistic-item" title="Consultá de que items sos Fan">
+                <div class="stadistic-num">5<!--{{ user.persona.items.count }}--></div>
+                <div class="stadistic-nom">Fan<!--{% if user.persona.items.count > 1 %}s{% endif %}--></div>
+            </div>
+        </a>
+        <a href="/dash/recomendated/">
+            <div class="stadistic-recomendations sidebar-stadistic-item" title="Consultá cuantas recomendaciones hiciste y a quien">
+                <div class="stadistic-num">5<!--{{ user.recomendaciones_enviadas.count }}-->
+                </div>
+                <div class="stadistic-nom">Mis recomendaciones</div>
+            </div>
+        </a>
+        <a href="/dash/comments/">
+            <div class="stadistic-comments sidebar-stadistic-item" title="Consultá los items que has comentado">
+                <div class="stadistic-num">5<!--{{ user.comentarios_realizados.count }}--></div>
+                <div class="stadistic-nom">Comentario<!--{% if user.comentarios_realizados.count > 1 %}s{% endif %}--></div>
+            </div>
+        </a>
+    </div>
+    <div class="sidebar-menu-indicators">
+        <a href="/social/messages/">
+            <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                <!--{% if mensajes_nolidas > 0 %}({{ mensajes_nolidas }}){% endif %}-->
+            </div>
+        </a>
+        <a href="/social/eventos/">
+
+            <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                <!--{% if eventos_nolidas > 0 %}({{ eventos_nolidas }}){% endif %}-->
+            </div>
+        </a>
+        <a href="/social/user_main_notification/">
+            <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                <!--{% if notificaciones_nolidas > 0 %}({{ notificaciones_nolidas }}){% endif %}-->
+            </div>
+        </a>
+        <a href="/dash/recomendation/">
+            <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                <!--{% if recomendaciones_noleidas > 0 %}({{ recomendaciones_noleidas }}){% endif %}-->
+            </div>
+        </a>
+    </div>
+    <input class="btn btn-danger" type="submit" value="Crear Producto" id="button"/>
+</div>
+{% endblock right-content %}
+
+{% block extrajs %}
+<script src="{{ STATIC_URL }}dotdotdot-1.5.7/jquery.dotdotdot-1.5.7.js"></script>
+<script language="javascript" type="text/javascript">
+    $(function() {
+        $('.dashboard-item-description').dotdotdot();
+    });
+</script>
+{% endblock extrajs %}
