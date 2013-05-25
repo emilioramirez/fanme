@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('accounts.urls')),
     # django-registration urls
     url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^dashboard/', 'fanme2.views.dashboard', name='dashboard'),
 )
 
 from django.conf import settings
