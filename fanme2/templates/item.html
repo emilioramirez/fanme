@@ -1,0 +1,66 @@
+{% extends "base_menu.html" %}
+
+{% block title %}
+<title>Item</title>
+{% endblock title %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/custom.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/fanme_heritage.css">
+{% endblock extracss %}
+
+{% block description %}{% endblock description %}
+
+{% block central-content %}
+<div class="span11" style="margin-left: 20%; margin-top:40px;">
+    <div class="thumbnail-horiz thumbnail" style="height: 350px;">
+        <div class="item-header" style="margin-bottom: 30px;">
+            <h3 class="item-title">El Principito</h3>
+            <div class="item-score">
+                <img src="{{ STATIC_URL }}img/dashboard-content-item-header-score.png" alt="Score" class="item-score-image"title="Cantidad de fans">25
+            </div>
+        </div>
+        <div id="body" style="width: 880px; height: 200px;">
+            <img data-src="holder.js/360x270" src="{{ STATIC_URL }}img/principito.200x200.jpeg" alt="" style="margin-left:10px;" class="pull-left">
+            <div class="caption item-description">
+                Partiendo de la atenta mirada del propio autor, encarnado en sí mismo (en un piloto de aviones), comienza narrando la frustración de su infancia y los impedimentos de sus mayores para llevar a cavo sus dibujos de niñez. Todos esos sentimientos de soledad y incomprensión almacenados en la infancia desaparecen con la llegada del principito, estrambótico y .
+            </div>
+            <div class="well well-large upper-bar item-all-images"></div>
+        </div>
+        <div id="item-content-footer">
+            <div class="span3" style="width:200px;">
+                <div class="stadistic-fan sidebar-stadistic-item" title="Cantidad de Fans">
+                    <div class="stadistic-num">5<!--{{ user.persona.items.count }}--></div>
+                    <div class="stadistic-nom">Fan<!--{% if user.persona.items.count > 1 %}s{% endif %}--></div>
+                </div>
+                <div class="stadistic-fan sidebar-stadistic-item" title="Cantidad de Recomendaciones">
+                    <div class="stadistic-num">5<!--{{ user.persona.items.count }}--></div>
+                    <div class="stadistic-nom">Recomendaciones<!--{% if user.persona.items.count > 1 %}s{% endif %}--></div>
+                </div>
+            </div>
+            <p>
+            <div class="item-buttons">
+                <a href="#" class="btn btn-primary">Fan</a>
+                <a href="#" class="btn btn-primary">Me gusta</a>
+                <a href="#" class="btn btn-primary">Recomendar</a>
+                <a href="#" class="btn btn-primary">Denunciar</a>
+            </div>
+            </p>
+        </div>
+    </div>
+    <div class="extra-tags">
+        <h3 class="h3-title-margin-left">Etiquetas</h3>
+        <div>Tag1 Tag2 Tag3 Tag4 Tag5 Tag5 Tag6</div>
+    </div>
+    <div class="extra-links">
+        <h3 class="h3-title-margin-left">Podes conseguir este producto en:</h3>
+        <div class="well well-large upper-bar item-all-locals"></div>
+    </div>
+</div>
+{% endblock central-content %}
+
+{% block right-content %}
+{% endblock right-content %}
+
+{% block extrajs %}
+{% endblock extrajs %}

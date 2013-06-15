@@ -36,3 +36,9 @@ def dashboard(request):
 #    context = {}
     return render_to_response('dashboard.html', {'recomended_items': items},
             context_instance=RequestContext(request))
+
+
+@login_required
+def item(request):
+    return render_to_response('item.html',
+            context_instance=RequestContext(request))
