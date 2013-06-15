@@ -28,3 +28,70 @@
 .container-fluid .row-fluid [class*="span"] {
     margin-left: 1%;
 }
+
+/*Item section*/
+    .thumbnail.right-caption > img {
+        float: left;
+        margin-right: 9px;
+        width: 200px;
+        height: 200px;
+    }
+
+    .thumbnail.right-caption {
+        float: left;
+    }
+
+    .thumbnail.right-caption > .caption {
+        padding: 4px;
+    }
+
+    .item-title{
+        margin-top: 5px;
+        margin-left: 60px;
+        float: left;
+    }
+
+    .item-score-image{
+        margin-right:5px;
+        margin-top: -2px;
+        display: inline-block;
+    }
+
+    .item-descripcion-big{
+        height: 80px;
+        margin: 0 20px 0 220px;
+        text-align: justify;
+        width: 912px;
+    }
+
+    .item-all-images{
+        float: right;
+        height: 30px;
+        margin: 22px 4px 0;
+        width: 577px;
+    }
+
+    .item-description{
+        width: 630px;
+        margin-left:240px;
+        text-align: justify;
+    }
+
+    .item-buttons{
+        float: right;
+        margin-right: 15px;
+        margin-top: 35px;
+    }
+
+    .h3-title-margin-left{
+        margin-left: 10px;
+    }
+
+    .item-all-locals{
+        float: right;
+        height: 30px;
+        margin: 0 15px;
+        width: 577px;
+    }
+
+/*End Item section*/

@@ -25,13 +25,15 @@
               <div class="thumbnail">
                 <img src="{{ STATIC_URL }}img/avatar-famale-big.png" alt="product 1">
                 <div class="caption">
+                <a href="#">
                   <h5>{{ items }}</h5>
+                </a>
                   <div id="description" class="dashboard-item-description">
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Algo mas aca para que se muestre las elipsis
                   </div>
                   <p>Categoria: Libro | Cuento</p>
                   <div id="score-section">
-                      <img src="{{ STATIC_URL }}img/dashboard-content-item-header-score.png" style="float:left;" alt="Score">
+                      <img src="{{ STATIC_URL }}img/dashboard-content-item-header-score.png" style="float:left;" alt="Score" title="Cantidad de fans">
                       <p style="margin-left: 22px;">25</p>
                   </div>
                   <p>
@@ -61,20 +63,20 @@
                 </ul>
             </div>
     <div class="sidebar-stadistic">
-        <a href="/dash/fans/">
+        <a href="#">
             <div class="stadistic-fan sidebar-stadistic-item" title="Consultá de que items sos Fan">
                 <div class="stadistic-num">5<!--{{ user.persona.items.count }}--></div>
                 <div class="stadistic-nom">Fan<!--{% if user.persona.items.count > 1 %}s{% endif %}--></div>
             </div>
         </a>
-        <a href="/dash/recomendated/">
+        <a href="#">
             <div class="stadistic-recomendations sidebar-stadistic-item" title="Consultá cuantas recomendaciones hiciste y a quien">
                 <div class="stadistic-num">5<!--{{ user.recomendaciones_enviadas.count }}-->
                 </div>
                 <div class="stadistic-nom">Mis recomendaciones</div>
             </div>
         </a>
-        <a href="/dash/comments/">
+        <a href="#">
             <div class="stadistic-comments sidebar-stadistic-item" title="Consultá los items que has comentado">
                 <div class="stadistic-num">5<!--{{ user.comentarios_realizados.count }}--></div>
                 <div class="stadistic-nom">Comentario<!--{% if user.comentarios_realizados.count > 1 %}s{% endif %}--></div>
@@ -82,23 +84,23 @@
         </a>
     </div>
     <div class="sidebar-menu-indicators">
-        <a href="/social/messages/">
+        <a href="#">
             <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
                 <!--{% if mensajes_nolidas > 0 %}({{ mensajes_nolidas }}){% endif %}-->
             </div>
         </a>
-        <a href="/social/eventos/">
+        <a href="#">
 
             <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
                 <!--{% if eventos_nolidas > 0 %}({{ eventos_nolidas }}){% endif %}-->
             </div>
         </a>
-        <a href="/social/user_main_notification/">
+        <a href="#">
             <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
                 <!--{% if notificaciones_nolidas > 0 %}({{ notificaciones_nolidas }}){% endif %}-->
             </div>
         </a>
-        <a href="/dash/recomendation/">
+        <a href="#">
             <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
                 <!--{% if recomendaciones_noleidas > 0 %}({{ recomendaciones_noleidas }}){% endif %}-->
             </div>
