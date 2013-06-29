@@ -67,12 +67,12 @@
     .item-all-images{
         float: right;
         height: 30px;
-        margin: 22px 4px 0;
-        width: 577px;
+        margin: 22px -7px 0;
+        width: 718px;
     }
 
     .item-description{
-        width: 630px;
+        width: 760px;
         margin-left:240px;
         text-align: justify;
     }
@@ -91,7 +91,7 @@
         float: right;
         height: 30px;
         margin: 0 15px;
-        width: 577px;
+        width: 723px;
     }
 
 /*End Item section*/
