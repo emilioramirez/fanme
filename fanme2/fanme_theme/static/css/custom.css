@@ -13,16 +13,17 @@
 }
 
 .side-bar-content{
+    box-shadow: 0 0 10px #000000;
     height: 320px;
-    margin-left: 40px;
-    margin-top: 115px;
+    margin-left: -20px;
+    margin-top: 146px;
     width: 200px;
+    position: fixed;
 }
 
 .upper-bar{
-    margin-left: 27px;
+    margin-left: 20px;
     margin-top: 30px;
-    width: 644px;
 }
 
 .container-fluid .row-fluid [class*="span"] {
@@ -46,11 +47,15 @@
     }
 
     .item-title{
-        margin-top: 5px;
         margin-left: 60px;
         float: left;
+        font-size: 24px;
+        line-height: 40px;
+        color: #317EAC;
+        font-family: 'Telex',sans-serif;
+        font-weight: bold;
     }
-
+    .item-title:hover { text-shadow: 1px 4px 4px #646464; text-decoration: none;}
     .item-score-image{
         margin-right:5px;
         margin-top: -2px;
@@ -77,11 +82,25 @@
         text-align: justify;
     }
 
+        .item-description-dashboard
+        {
+            float: right;
+            margin-right: 8px;
+            text-align: justify;
+            width: 400px;
+        }
+
     .item-buttons{
         float: right;
         margin-right: 15px;
         margin-top: 35px;
     }
+
+        .item-buttons-dashboard
+        {
+            float: right;
+            margin-right: 15px;
+        }
 
     .h3-title-margin-left{
         margin-left: 10px;

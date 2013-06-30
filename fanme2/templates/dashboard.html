@@ -12,37 +12,33 @@
 {% block description %}{% endblock description %}
 
 {% block central-content %}
-<div class="container" style="margin-left:150px;">
+<div class="container" style="margin-left:30%;">
     <div class="row">
-        <div class="span9">
+        <div class="span8">
             <div class="well well-large upper-bar"></div>
         </div>
     </div>
-    <div class="span9">
+    <div class="span8">
         <ul class="thumbnails">
             {% for items in recomended_items %}
-            <li class="span6">
-              <div class="thumbnail">
-                <img src="{{ STATIC_URL }}img/avatar-famale-big.png" alt="product 1">
-                <div class="caption">
-                <a href="#">
-                  <h5>{{ items }}</h5>
-                </a>
-                  <div id="description" class="dashboard-item-description">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Algo mas aca para que se muestre las elipsis
-                  </div>
-                  <p>Categoria: Libro | Cuento</p>
-                  <div id="score-section">
-                      <img src="{{ STATIC_URL }}img/dashboard-content-item-header-score.png" style="float:left;" alt="Score" title="Cantidad de fans">
-                      <p style="margin-left: 22px;">25</p>
-                  </div>
-                  <p>
-                      <input class="btn btn-primary" type="submit" value="Fan" id="button"/>
-                      <input class="btn btn-primary" type="submit" value="Recomendar" id="button"/>
-                  </p>
+            <div class="thumbnail-horiz thumbnail" style="height: 270px; margin-top:25px;">
+                <div class="item-header" style="margin-bottom: 25px;">
+                    <a href="#" class="item-title">{{ items }}</a>
+                    <div class="item-score">
+                        <img src="{{ STATIC_URL }}img/dashboard-content-item-header-score.png" alt="Score" class="item-score-image"title="Cantidad de fans">25
+                    </div>
                 </div>
-              </div>
-            </li>
+                <div id="body" style="width: 615px; height: 170px;">
+                    <img src="{{ STATIC_URL }}img/princ2.150x150.jpeg" class="img-polaroid" alt="" style="margin-left:10px;" class="pull-left">
+                    <div class="caption item-description-dashboard">
+                        Partiendo de la atenta mirada del propio autor, encarnado en sí mismo (en un piloto de aviones), comienza narrando la frustración de su infancia y los impedimentos de sus mayores para llevar a cavo sus dibujos de niñez. Todos esos sentimientos de soledad y incomprensión almacenados en la infancia desaparecen con la llegada del principito, estrambótico y .
+                    </div>
+                </div>
+                    <div class="item-buttons-dashboard">
+                        <a href="#" class="btn btn-primary">Fan</a>
+                        <a href="#" class="btn btn-primary">Recomendar</a>
+                    </div>
+            </div>
             {% endfor %}
           </ul>
       </div>
