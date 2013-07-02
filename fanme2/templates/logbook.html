@@ -1,0 +1,37 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}
+<title>Logbook</title>
+{% endblock title %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/custom.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/fanme_heritage.css">
+{% endblock extracss %}
+
+{% block description %}{% endblock description %}
+
+{% block central-content-dashboard %}
+<h1 style="margin-left: -60px;">Actividad de los usuarios que tu sigues</h1>
+<div class="span8">
+    <ul class="thumbnails">
+        {% for items in recomended_items %}
+        <div class="thumbnail-horiz thumbnail" style="height: 195px; margin-top:25px;">
+            <div id="body" style="width: 615px; height: 170px; margin-top: 5px;">
+                <img src="{{ STATIC_URL }}img/princ2.150x150.jpeg" class="img-polaroid" alt="" style="margin-left:10px;" class="pull-left">
+                <div class="caption item-description-dashboard">
+                    <div class="actividad-desc-content">
+                        <div class="logbook-item-description">Se hizo fan de</div>
+                        <div class="logbook-item-description" >Il Gato</div>
+                        <div class="logbook-item-description">8 Nov. 2011 12:32:44</div>
+                    </div>
+                </div>
+                <div class="user-name">
+                    <a href="#" class="user-name-link">Matias Munoz</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock central-content-dashboard %}

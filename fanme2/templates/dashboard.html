@@ -1,4 +1,4 @@
-{% extends "base_menu.html" %}
+{% extends "base_dashboard.html" %}
 
 {% block title %}
 <title>Dash</title>
@@ -11,8 +11,7 @@
 
 {% block description %}{% endblock description %}
 
-{% block central-content %}
-<div class="container" style="margin-left:30%;">
+{% block central-content-dashboard %}
     <div class="row">
         <div class="span8">
             <div class="well well-large upper-bar"></div>
@@ -42,8 +41,7 @@
             {% endfor %}
           </ul>
       </div>
-</div>
-{% endblock central-content %}
+{% endblock central-content-dashboard %}
 
 {% block right-content %}
 <div class="well well-large side-bar-content">

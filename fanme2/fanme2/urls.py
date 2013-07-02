@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     # django-registration urls
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^dashboard/', 'fanme2.views.dashboard', name='dashboard'),
+    url(r'^logbook/', 'fanme2.views.logbook', name='logbook'),
     url(r'^item/', 'fanme2.views.item', name='item'),
 )
 

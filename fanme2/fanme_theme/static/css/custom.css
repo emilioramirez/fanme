@@ -15,7 +15,7 @@
 .side-bar-content{
     box-shadow: 0 0 10px #000000;
     height: 320px;
-    margin-left: -20px;
+    margin-left: -170px;
     margin-top: 146px;
     width: 200px;
     position: fixed;
@@ -114,3 +114,25 @@
     }
 
 /*End Item section*/
+
+/*Logbook section*/
+
+.user-name
+{
+    color: #317EAC;
+    font-family: 'Telex',sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    margin: 5px 30px;
+}
+
+    .user-name-link:hover {text-decoration: none;}
+
+.logbook-item-description
+{
+    font-family: 'Telex',sans-serif;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*End Logbook section*/

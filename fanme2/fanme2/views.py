@@ -42,3 +42,11 @@ def dashboard(request):
 def item(request):
     return render_to_response('item.html',
             context_instance=RequestContext(request))
+
+
+@login_required
+def logbook(request):
+    items = ['El Principito', 'Game Of Thrones', 'How I Met Your Mother', 'Restaurante FanME']
+#    context = {}
+    return render_to_response('logbook.html', {'recomended_items': items},
+            context_instance=RequestContext(request))
