@@ -35,3 +35,77 @@
     </ul>
 </div>
 {% endblock central-content-dashboard %}
+
+{% block right-content %}
+<div class="well well-large side-bar-content">
+    <div class="user-name-sidebar">Matias Muñoz</div>
+    <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+    <div class="sidebar-stadistic">
+        <a href="#">
+            <div class="stadistic-fan sidebar-stadistic-item" title="Consultá de que items sos Fan">
+                <div class="stadistic-num">5<!--{{ user.persona.items.count }}--></div>
+                <div class="stadistic-nom">Fans<!--{% if user.persona.items.count > 1 %}s{% endif %}--></div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="stadistic-recomendations sidebar-stadistic-item" title="Consultá cuantas recomendaciones hiciste y a quien">
+                <div class="stadistic-num">5<!--{{ user.persona.following.count }}-->
+                </div>
+                <div class="stadistic-nom">
+                                            Usuarios sigo
+                <!--{% if user.persona.following.count > 1 %}
+                        Usuarios sigo
+                    {% else %}
+                        Usuario sigo
+                    {% endif %}-->
+                </div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="stadistic-comments sidebar-stadistic-item" title="Consultá los items que has comentado">
+                <div class="stadistic-num">5<!--{{ user.followers.count }}--></div>
+                <div class="stadistic-nom">Usuarios me siguen
+                    <!--{% if user.followers.count > 1 %}
+                        Usuarios me siguen
+                    {% else %}
+                        Usuario me sigue
+                    {% endif %}-->
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="sidebar-menu-indicators">
+        <a href="#">
+            <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                <!--{% if mensajes_nolidas > 0 %}({{ mensajes_nolidas }}){% endif %}-->
+            </div>
+        </a>
+        <a href="#">
+
+            <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                <!--{% if eventos_nolidas > 0 %}({{ eventos_nolidas }}){% endif %}-->
+            </div>
+        </a>
+        <a href="#">
+            <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                <!--{% if notificaciones_nolidas > 0 %}({{ notificaciones_nolidas }}){% endif %}-->
+            </div>
+        </a>
+        <a href="#">
+            <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                <!--{% if recomendaciones_noleidas > 0 %}({{ recomendaciones_noleidas }}){% endif %}-->
+            </div>
+        </a>
+    </div>
+    <input class="btn btn-danger" type="submit" value="Crear Producto" id="button" style="margin-left: 40px;"/>
+</div>
+{% endblock right-content %}
