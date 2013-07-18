@@ -239,3 +239,16 @@ class Actividad(models.Model):
     fecha = models.DateTimeField()
     descripcion = models.CharField(default="", max_length=60)
     tipo = models.CharField(default="", max_length=30)
+
+
+class Plan(models.Model):
+    nombre = models.CharField(max_length=30)
+    descripcion = models.CharField(max_length=300)
+    cant_items = models.IntegerField()
+    fecha_creacion = models.DateField()
+    fecha_inicio_vigencia = models.DateField()
+    fecha_fin_vigencia = models.DateField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __unicode__(self):
+        return self.nombre
