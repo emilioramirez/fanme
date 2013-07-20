@@ -100,15 +100,6 @@
             </div>
         </a>
     </div>
-    <input class="btn btn-danger" type="submit" value="Crear Producto" id="button"/>
+    <a href="/item/crear/" class="btn btn-danger" id="crear_item" style="margin-left: 40px;">Crear Producto</a>
 </div>
 {% endblock right-content %}
-
-{% block extrajs %}
-<script src="{{ STATIC_URL }}dotdotdot-1.5.7/jquery.dotdotdot-1.5.7.js"></script>
-<script language="javascript" type="text/javascript">
-    $(function() {
-        $('.dashboard-item-description').dotdotdot();
-    });
-</script>
-{% endblock extrajs %}
