@@ -8,12 +8,17 @@
 
 {% block description %}{% endblock description %}
 
-{% block central-content %}
-<div class="container" style="margin-left:20%;">
-    {% block central-content-dashboard%}{% endblock central-content-dashboard %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span9">
+        <div class="container" style="margin-left:20%;">
+            {% block central-content-dashboard%}{% endblock central-content-dashboard %}
+        </div>
+    </div>
+    <div class="span3">
+      {% block right-content %}{% endblock right-content %}
+    </div>
+  </div>
 </div>
-{% endblock central-content %}
-
-
-{% block right-content %}{% endblock right-content %}
-
+{% endblock content %}
