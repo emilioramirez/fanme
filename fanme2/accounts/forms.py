@@ -1,15 +1,9 @@
 # -*- coding: utf-8 *-*
 from django import forms
-from accounts.models import Profile
+from accounts.models import ProfileUser
 
 
-class ProfileForm(forms.ModelForm):
+class ProfileUserForm(forms.ModelForm):
     class Meta:
-        model = Profile
-        # exclude = ('user', 'first_login')
-
-
-# class ProfileUserForm(forms.ModelForm):
-#     class Meta:
-#         model = ProfileUser
-    
+        model = ProfileUser
+        exclude = ('user', 'first_login')
