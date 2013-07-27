@@ -1,6 +1,6 @@
 # -*- coding: utf-8 *-*
 from django import forms
-from fanme2.core.models import Item, Topico, Evento, Notificacion
+from core.models import Item, Topico, Evento, Notificacion
 from django.contrib.auth.models import User
 
 

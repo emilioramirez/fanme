@@ -12,8 +12,8 @@
                     <input type="text" class="search-query" placeholder="Search">
                 </form>
                 <ul class="nav pull-left">
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Logbook</a></li>
+                    <li><a href="{% url "fanme2.views.dashboard" %}">Dashboard</a></li>
+                    <li><a href="{% url "fanme2.views.logbook" %}">Logbook</a></li>
                     <li><a href="#">Topicos</a></li>
                 </ul>
                 <ul class="nav pull-right">
@@ -46,6 +46,9 @@
     </div>
 </div>
 {%endblock header%}
+
+{% block content %}
+{% endblock content %}
 
 {% block footer %}
 <footer class="container">
