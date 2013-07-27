@@ -198,7 +198,7 @@ class Evento(models.Model):
         return self.descripcion
 
 
-class Notificacion(models.Model):
+class NotificacionEmpresa(models.Model):
     empresa = models.ForeignKey(User, related_name='notificaciones_enviadas')
     usuarios_to = models.ManyToManyField(User, null=True, blank=True,
         related_name='notificaciones_recibidas')
