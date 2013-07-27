@@ -133,7 +133,7 @@ INSTALLED_APPS = (
     'south',
     'registration',
     'accounts',
-    #'core',
+    'core',
 )
 
 # A sample logging configuration. The only tangible logging

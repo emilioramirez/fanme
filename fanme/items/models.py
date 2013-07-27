@@ -1,7 +1,7 @@
 from django.db import models
 from fanme.segmentation.models import Topico
 from django.contrib.auth.models import User
-from fanme.thumbs import ImageWithThumbsField
+from thumbs import ImageWithThumbsField
 
 
 class Item(models.Model):
