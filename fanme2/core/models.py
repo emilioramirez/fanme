@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .thumbs import ImageWithThumbsField
 
 
 class Topico(models.Model):
@@ -69,6 +70,19 @@ class Item(models.Model):
 
     def cantidad_recomendaciones(self):
         return self.recomendacion_set.count()
+
+
+class ItemImagen(models.Model):
+    item = models.ForeignKey(Item, related_name='mis_imagenes')
+#    imagen = models.ImageField(
+    imagen = ImageWithThumbsField(
+        upload_to='items',
+        default='items/default.png',
+        sizes=((50, 50), (100, 100), (200, 200)),
+        null=True, blank=True)
+
+    def __unicode__(self):
+        return u'{0} ({1})'.format(self.item, self.imagen.name)
 
 
 class Recomendacion(models.Model):

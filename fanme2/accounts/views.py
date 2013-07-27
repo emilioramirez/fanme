@@ -27,8 +27,8 @@ def create_profile_common(request):
         # The user has a profile, redirect to profile
         profile = request.user.profile
         return HttpResponseRedirect(reverse('profile'))
-    except AttributeError:
-        pass
+    except Profile.DoesNotExist:
+        print "No existe el usuario, accounts/view/create_profile_common"
     if request.method == 'POST':
         profile_user_form = ProfileUserForm(request.POST)
         if profile_user_form.is_valid():

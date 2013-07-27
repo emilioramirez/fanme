@@ -1,6 +1,6 @@
 # -*- coding: utf-8 *-*
 from django import forms
-from core.models import Item, Topico, Evento, Notificacion
+from core.models import Item, Topico, Evento, NotificacionEmpresa
 from django.contrib.auth.models import User
 
 
@@ -131,7 +131,7 @@ class EventoForm(forms.ModelForm):
 class NotificationForm(forms.ModelForm):
 
     class Meta():
-        model = Notificacion
+        model = NotificacionEmpresa
         fields = (
             'nombre',
             'fecha_desde',
