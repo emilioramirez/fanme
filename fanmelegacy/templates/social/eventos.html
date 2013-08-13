@@ -11,6 +11,10 @@
 
 {% block dashboard %}
     <div class="eventos-content">
+    {% if no_hay_eventos %}
+        <div class='eventos-titulo'>Eventos</div>
+        No has creado ningun evento. <a href="/social/nuevo/" style="text-decoration: none;">¿Que esperas hacerlo?</a>
+    {% else %}
         {% if eventos_creados %}
             <div class='eventos-titulo'>Eventos creados</div>
             <div class='eventos-list'>
@@ -44,6 +48,7 @@
                 {% endfor%}
             </div>
         {% endif %}
+    {% endif %}
     </div>
 {% endblock dashboard %}
 
