@@ -23,6 +23,7 @@ from django.db.models import Q
 @login_required(login_url='/accounts/user/')
 def eventos(request):
     searchbox = SearchBox()
+    no_hay_eventos = True
     try:
         eventos_creados = request.user.eventos_creados.all().order_by(
             'fecha_inicio')
@@ -38,8 +39,13 @@ def eventos(request):
             evento.save()
     except Evento.DoesNotExist:
         eventos_invitado = []
+    print eventos_creados
+    if eventos_creados and eventos_invitado:
+        no_hay_eventos = False
+    print no_hay_eventos
     temp = RequestContext(request, {'eventos_creados': eventos_creados,
-        'eventos_invitado': eventos_invitado, 'form_search': searchbox})
+        'eventos_invitado': eventos_invitado, 'no_hay_eventos': no_hay_eventos,
+        'form_search': searchbox})
     return render_to_response('social/eventos.html', temp)
 
 
