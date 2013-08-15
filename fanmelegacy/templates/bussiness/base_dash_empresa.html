@@ -1,54 +1,17 @@
 {% extends "dash/base_dash.html" %}
 
-
 {% block mystylesheet %}
-    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
 {% endblock mystylesheet%}
 
 {% block menuOptionsSelected %}
     <ul class="menu-options">
         <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
-        <li class="menu-item-selected"><a href="/bussiness/planes/">Planes</a></li>
+        <li class="menu-item-selected"><a href="/bussiness/dash_planes/">Planes</a></li>
     </ul>
 {% endblock menuOptionsSelected %}
 
 
 {% block dashboard %}
-    <div class="item-messages">
-        {% for message in messages %}
-            <p class="message">{{ message }}</p>
-        {% endfor %}
-    </div>
-    <div class="result-result">
-        <div class="result-content">
-            <div class="result-body">
-                {% for user_profile in user.followers.all %}
-                        <div class="result-hit">
-                            <a href="/dash/logbook/{{ user_profile.user.id }}">
-                                <div class="result-image">
-                                    {% if user_profile.avatar %}
-                                        <img src="{{ user_profile.avatar.url_50x50 }}" alt="Logo" />
-                                    {% else %}
-                                        {% if user_profile %}
-                                            {% if user_profile.sexo == "M" %}
-                                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
-                                            {% else %}
-                                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
-                                            {% endif%}
-                                        {% else %}
-                                                <img src="/mymedia/images/020.png" alt="Logo" />
-                                        {% endif%}
-                                    {% endif%}
-                                </div>
-                            </a>
-                            <a href="/dash/logbook/{{ user_profile.user.id }}">
-                                <div class="result-descripcion">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</div>
-                            </a>
-                        </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
 {% endblock dashboard %}
 
 {% block sidebar %}
