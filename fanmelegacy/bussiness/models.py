@@ -21,7 +21,7 @@ class Plan(models.Model):
 
 
 class PlanXEmpresa(models.Model):
-    empresa = models.ForeignKey(User)
+    empresa = models.ForeignKey(User, related_name="plan_empresa")
     plan = models.ForeignKey(Plan, related_name='plan_elegido')
     fecha_inicio_vigencia = models.DateField()
     fecha_fin_vigencia = models.DateField()

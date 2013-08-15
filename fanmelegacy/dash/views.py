@@ -140,7 +140,7 @@ def results(request):
 def empresa(request):
     searchbox = SearchBox()
     messages = ['Estos usuarios se han hecho fan']
-    return render_to_response('dash/empresa.html', {'form_search': searchbox,
+    return render_to_response('bussiness/dash_planes.html', {'form_search': searchbox,
         'messages': messages},
         context_instance=RequestContext(request))
 
