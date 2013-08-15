@@ -42,7 +42,6 @@ def eventos(request):
     print eventos_creados
     if eventos_creados and eventos_invitado:
         no_hay_eventos = False
-    print no_hay_eventos
     temp = RequestContext(request, {'eventos_creados': eventos_creados,
         'eventos_invitado': eventos_invitado, 'no_hay_eventos': no_hay_eventos,
         'form_search': searchbox})

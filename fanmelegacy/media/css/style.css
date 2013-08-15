@@ -159,6 +159,7 @@ body{}
                 border: none;
                 padding: 8px 6px 8px;
                 color: white;
+                margin-right: -7px;
                 background: url("/mymedia/images/register-form-submit-bg-grande.png") no-repeat scroll 0 0 transparent;
             }
             .accounts-thanks-welcome-image{ text-align: center; }

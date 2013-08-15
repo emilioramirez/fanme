@@ -1,5 +1,8 @@
 {% extends "dash/dashboard.html" %}
 
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
 
 {% block menuOptionsSelected %}
     <ul class="menu-options">
@@ -14,6 +17,7 @@
     {% if no_hay_eventos %}
         <div class='eventos-titulo'>Eventos</div>
         No has creado ningun evento. <a href="/social/nuevo/" style="text-decoration: none;">¿Que esperas hacerlo?</a>
+        <div class="new-message"></div>
     {% else %}
         {% if eventos_creados %}
             <div class='eventos-titulo'>Eventos creados</div>
