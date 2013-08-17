@@ -1,0 +1,90 @@
+{% extends "dash/base_dash.html" %}
+
+{% block mystylesheet %}
+        <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item-selected"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/bussiness/dash_planes/">Planes</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="item-messages">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
+    <div class="result-result">
+        <div class="result-content">
+            <div class="result-body">
+                {% for user_profile in user.followers.all %}
+                        <div class="result-hit">
+                            <a href="/dash/logbook/{{ user_profile.user.id }}">
+                                <div class="result-image">
+                                    {% if user_profile.avatar %}
+                                        <img src="{{ user_profile.avatar.url_50x50 }}" alt="Logo" />
+                                    {% else %}
+                                        {% if user_profile %}
+                                            {% if user_profile.sexo == "M" %}
+                                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                                            {% else %}
+                                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                                            {% endif%}
+                                        {% else %}
+                                                <img src="/mymedia/images/020.png" alt="Logo" />
+                                        {% endif%}
+                                    {% endif%}
+                                </div>
+                            </a>
+                            <a href="/dash/logbook/{{ user_profile.user.id }}">
+                                <div class="result-descripcion">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</div>
+                            </a>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+<div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">{{ user.empresa.razon_social }}</div>
+            <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <a href="/social/company_messages/">
+            <div class="menu-indicators-mati">Mensajes
+                {% if user.mensajes_recibidos.count > 0 %}
+                    ({{ user.mensajes_recibidos.count }})
+                {% endif %}
+            </div>
+        </a>
+        <a href="/social/ver_consultas/">
+            <div class="menu-indicators-mati">Consultas
+                {% if consultas_noleidas > 0 %}
+                    ({{ consultas_noleidas }})
+                {% endif %}
+            </div>
+        </a>
+        <a href="/social/notificaciones/">
+            <div class="menu-indicators-mati">Notificaciones</div>
+        </a>
+        <div class="sidebar-new-item-mati">
+            <a href="/items/item/register/"><div class="new-item-buttom-mati">Crear Item</div></a>
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}

@@ -1,0 +1,60 @@
+{% extends "dash/base_dash.html" %}
+
+{% block mystylesheet %}
+        <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item-selected"><a href="/bussiness/dash_planes/">Planes</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="item-messages">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+<div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">{{ user.empresa.razon_social }}</div>
+            <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="/mymedia/images/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <a href="/social/company_messages/">
+            <div class="menu-indicators-mati">Mensajes
+                {% if user.mensajes_recibidos.count > 0 %}
+                    ({{ user.mensajes_recibidos.count }})
+                {% endif %}
+            </div>
+        </a>
+        <a href="/social/ver_consultas/">
+            <div class="menu-indicators-mati">Consultas
+                {% if consultas_noleidas > 0 %}
+                    ({{ consultas_noleidas }})
+                {% endif %}
+            </div>
+        </a>
+        <a href="/social/notificaciones/">
+            <div class="menu-indicators-mati">Notificaciones</div>
+        </a>
+        <div class="sidebar-new-item-mati">
+            <a href="/items/item/register/"><div class="new-item-buttom-mati">Elegir Plan</div></a>
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}
