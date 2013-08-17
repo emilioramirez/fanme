@@ -14,7 +14,7 @@ def dash_planes(request):
     if not planes:
         messages = ['No posee planes. Por favor creee un plan.']
     else:
-
+        pass
     return render_to_response('bussiness/dash_empresa.html', {'form_search': searchbox,
         'messages': messages},
         context_instance=RequestContext(request))

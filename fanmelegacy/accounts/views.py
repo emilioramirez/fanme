@@ -3,6 +3,11 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
+from django.contrib.sites.models import RequestSite
+
+from registration.models import RegistrationProfile
+
 from accounts.forms import UserRegisterForm, CompanyRegisterForm
 from accounts.forms import UserLogin
 from accounts.models import Persona, Empresa
@@ -20,7 +25,13 @@ def register_user(request):
             sex = form_register.cleaned_data['sex']
             email = form_register.cleaned_data['email']
             password = form_register.cleaned_data['password']
-            user = User.objects.create_user(email, email, password)
+            # Create a inactive user with django-registration
+            if Site._meta.installed:
+                site = Site.objects.get_current()
+            else:
+                site = RequestSite(request)
+            user = RegistrationProfile.objects.create_inactive_user(email, email,
+                                                                        password, site)
             user.first_name = first_name
             user.last_name = last_name
             profile = Persona()
@@ -51,7 +62,13 @@ def register_company(request):
             url = form_register.cleaned_data['url']
             email = form_register.cleaned_data['email']
             password = form_register.cleaned_data['password']
-            user = User.objects.create_user(username, email, password)
+            # Create a inactive user with django-registration
+            if Site._meta.installed:
+                site = Site.objects.get_current()
+            else:
+                site = RequestSite(request)
+            user = RegistrationProfile.objects.create_inactive_user(username, email,
+                                                                        password, site)
             profile = Empresa()
             profile.user = user
             profile.razon_social = razon_social
