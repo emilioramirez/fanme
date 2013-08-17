@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'social',
     'south',
     'django_extensions',
+    'registration'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -168,4 +169,11 @@ LOGGING = {
     }
 }
 
-#from .local_settings import *
+# Django-registration
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
+
+# python -m smtpd -n -c DebuggingServer localhost:1025
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
+from local_settings import *
