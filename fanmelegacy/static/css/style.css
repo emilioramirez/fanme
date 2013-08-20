@@ -74,7 +74,7 @@ body{}
                     .logged-user-menu a:hover { text-decoration: underline; }
             .header-search-box{ float: left; margin: 0px 0px 0px 35px;}
                 .header-seach-form-field{
-                    background: url("/mymedia/images/header-searchbox-lupa.png") no-repeat 240px 6px white;
+                    background: url("../images/header-searchbox-lupa.png") no-repeat 240px 6px white;
                     border: 1px solid grey;
                     height: 26px;
                     width: 250px;
@@ -92,7 +92,7 @@ body{}
                 .menu-options li{ float: left; height: 22px; width: 86px; padding: 7px 0 0 0; text-align: center;}
                 .menu-options li a{ text-decoration: none; }
                     .menu-item-selected{
-                        background: url("/mymedia/images/header-menu-item-selected.png") no-repeat scroll 0px 0px transparent;
+                        background: url("../images/header-menu-item-selected.png") no-repeat scroll 0px 0px transparent;
                     }
                     .menu-item-selected a{ color: white; font-weight: bold;}
                     li.menu-item-selected a{ color: white;}
@@ -126,7 +126,7 @@ body{}
                 color: #E44D24;
                 font-size: 15px;
                 font-weight: bold;
-                background: url("/mymedia/images/register-form-title-shadow.png") no-repeat center bottom;
+                background: url("../images/register-form-title-shadow.png") no-repeat center bottom;
                 height: 35px;
             }
                 .form-title{ background: white; height: 31px; }
@@ -160,7 +160,7 @@ body{}
                 padding: 8px 6px 8px;
                 color: white;
                 margin-right: -7px;
-                background: url("/mymedia/images/register-form-submit-bg-grande.png") no-repeat scroll 0 0 transparent;
+                background: url("../images/register-form-submit-bg-grande.png") no-repeat scroll 0 0 transparent;
             }
             .accounts-thanks-welcome-image{ text-align: center; }
             .accounts-thanks{ color: gray; font-size: 15px; margin: 16px 10px; text-align: center;}
@@ -235,7 +235,7 @@ body{}
                             width: 150px;
                         }
                             .mini-img-comment{
-                                background: url("/mymedia/images/mini-img.png") no-repeat scroll -16px -1px transparent;
+                                background: url("../images/mini-img.png") no-repeat scroll -16px -1px transparent;
                                 float: left;
                                 height: 16px;
                                 width: 16px;
@@ -252,7 +252,7 @@ body{}
             /* Begin Recomend Item */
             .form-recomend-user{margin: 88px 60px;}
             .form-recomend-user input{
-                background: url("/mymedia/images/crear-item.png") no-repeat scroll 0 0 transparent;
+                background: url("../images/crear-item.png") no-repeat scroll 0 0 transparent;
                 border: medium none;
                 color: white;
                 float: right;
@@ -288,23 +288,23 @@ body{}
                             }
                             .i-title-options a{  }
                                 .i-title-options-edit{
-                                    background: url("/mymedia/images/mini-imagenes2.png") no-repeat scroll -19px -1px transparent;
+                                    background: url("../images/mini-imagenes2.png") no-repeat scroll -19px -1px transparent;
                                     height: 16px;
                                     width: 16px;
                                     float: left;
                                     margin-right: 20px;
                                 }
                                 .i-title-options-edit:hover{
-                                    background: url("/mymedia/images/mini-imagenes2.png") no-repeat scroll -1px -1px transparent;
+                                    background: url("../images/mini-imagenes2.png") no-repeat scroll -1px -1px transparent;
                                 }
                                 .i-title-options-delete{
-                                    background: url("/mymedia/images/xxx.png") no-repeat scroll 0px 1px transparent;
+                                    background: url("../images/xxx.png") no-repeat scroll 0px 1px transparent;
                                     float: left;
                                     height: 16px;
                                     width: 16px;
                                 }
                                 .i-title-options-delete:hover{
-                                    background: url("/mymedia/images/xxx.png") no-repeat scroll 0px -48px transparent;
+                                    background: url("../images/xxx.png") no-repeat scroll 0px -48px transparent;
                                 }
                         .i-body{
                             padding: 10px;
@@ -321,7 +321,7 @@ body{}
                     .evento-item a div:hover{ background: #1D9ACD; color: white; }
                     .evento-cuerpo{ float: left; width: 370px;}
                     .evento-editar{
-                        background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+                        background: url("../images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
                         border: medium none;
                         color: White;
                         float: right;
@@ -345,7 +345,7 @@ body{}
             .new-evento-table tr{}
             .form-nuevo-evento input{}
             .form-nuevo-evento .submit{
-                background: url("/mymedia/images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+                background: url("../images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
                 border: medium none;
                 color: White;
                 float: right;
@@ -481,7 +481,7 @@ body{}
                 .sidebar-new-item{}
                     .sidebar-new-item a{ text-decoration: none;}
                     .new-item-buttom{
-                        background: url("/mymedia/images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+                        background: url("../images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
                         color: white;
                         float: left;
                         font-size: 14px;
@@ -607,24 +607,24 @@ body{}
                             .me-gusta-comentario{ overflow: hidden; margin-left: 6px;}
                             .me-gusta-comentario div{ float: left; font-size: 20px; margin-left: 2px;}
                             .me-gusta-img{
-                                background: url("/mymedia/images/mini-imagenes3.png") no-repeat scroll -133px -299px transparent;
+                                background: url("../images/mini-imagenes3.png") no-repeat scroll -133px -299px transparent;
                                 height: 18px;
                                 margin: 0;
                                 padding: 0;
                                 width: 16px;
                             }
-                            .me-gusta-img:hover{background: url("/mymedia/images/mini-imagenes3.png") no-repeat scroll -176px -242px transparent;}
+                            .me-gusta-img:hover{background: url("../images/mini-imagenes3.png") no-repeat scroll -176px -242px transparent;}
                             .me-gusta-comentario a{text-decoration: none;}
                             .denunciar-comentario{ overflow: hidden; margin-top: 20px; margin-left: 6px;}
                             .denunciar-comentario div{ float: left; font-size: 20px; margin-left: 2px;}
                             .denuncia-comentario-img{
-                                background: url("/mymedia/images/mini-imagenes3.png") no-repeat scroll -137px -38px transparent;
+                                background: url("../images/mini-imagenes3.png") no-repeat scroll -137px -38px transparent;
                                 height: 18px;
                                 margin: 0;
                                 padding: 0;
                                 width: 16px;
                             }
-                            .denuncia-comentario-img:hover{background: url("/mymedia/images/mini-imagenes3.png") no-repeat scroll -115px -271px transparent;}
+                            .denuncia-comentario-img:hover{background: url("../images/mini-imagenes3.png") no-repeat scroll -115px -271px transparent;}
                             .denunciar-comentario a{text-decoration: none;}
                 .list-comment-add{}
                     .comment-add{

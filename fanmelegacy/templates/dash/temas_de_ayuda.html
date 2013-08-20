@@ -4,8 +4,8 @@
 
 
 {% block mystylesheet %}
-    <link rel="stylesheet" href="/mymedia/css/style-icon-images.css" type="text/css" />
-    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
 {% endblock mystylesheet%}
 
 {% block register_form %}
@@ -206,23 +206,23 @@
 
 {% block body-help %}
     <div class="help-content-temas">
-        <img src="/mymedia/images/ayuda/dashboard.jpg" width="50" height="50">
+        <img src="{{ STATIC_URL }}images/ayuda/dashboard.jpg" width="50" height="50">
         <div id="dash" class="help-temas-titles" onclick=escribirDashboard() onmouseover="this.style.cursor='pointer';">Dashboard</div>
     </div>
     <div class="help-content-temas">
-        <img src="/mymedia/images/ayuda/logbook.jpg" width="50" height="50">
+        <img src="{{ STATIC_URL }}images/ayuda/logbook.jpg" width="50" height="50">
         <div class="help-temas-titles" onclick=escribirLogbook() onmouseover="this.style.cursor='pointer';">Logbook</div>
     </div>
     <div class="help-content-temas">
-        <img src="/mymedia/images/ayuda/mensaje.jpg" width="50" height="50">
+        <img src="{{ STATIC_URL }}images/ayuda/mensaje.jpg" width="50" height="50">
         <div class="help-temas-titles" onclick=escribirMensajes() onmouseover="this.style.cursor='pointer';">Mensajes</div>
     </div>
     <div class="help-content-temas">
-        <img src="/mymedia/images/ayuda/evento.jpg" width="50" height="50">
+        <img src="{{ STATIC_URL }}images/ayuda/evento.jpg" width="50" height="50">
         <div class="help-temas-titles" onclick=escribirEventos() onmouseover="this.style.cursor='pointer';">Eventos</div>
     </div>
     <div class="help-content-temas">
-        <img src="/mymedia/images/ayuda/mensaje3.jpg" width="50" height="50">
+        <img src="{{ STATIC_URL }}images/ayuda/mensaje3.jpg" width="50" height="50">
         <div class="help-temas-titles" onclick=escribirNotificaciones() onmouseover="this.style.cursor='pointer';">Notificaciones</div>
     </div>
     <div id="content" class="help-respuestas-temas">

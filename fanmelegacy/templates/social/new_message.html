@@ -3,10 +3,10 @@
 {% load dash_filters %}
 
 {% block myjavascript %}
-    <script language="javascript" src="/mymedia/js/myutils.js"></script>
-    <script type="text/javascript" src="/mymedia/js/Autosuggest/jquery.autoSuggest.js"></script>
-    <script type="text/javascript" src="/mymedia/js/Autosuggest/jquery.autoSuggest.minified.js"></script>
-    <script type="text/javascript" src="/mymedia/js/Autosuggest/jquery.autoSuggest.packed.js"></script>
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.minified.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.packed.js"></script>
     <script language="javascript">
         $(function(){
             $("#id_string input").autoSuggest(data);
@@ -24,8 +24,8 @@
 {% endblock myjavascript %}
 
 {% block mystylesheet-dashboard %}
-    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
-    <link rel="stylesheet" href="/mymedia/css/Autosuggest/autoSuggest.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/Autosuggest/autoSuggest.css" type="text/css" />
 {% endblock mystylesheet-dashboard%}
 
 {% block menuOptions %}

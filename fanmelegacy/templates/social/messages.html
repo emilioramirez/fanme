@@ -3,11 +3,11 @@
 {% load dash_filters %}
 
 {% block myjavascript %}
-    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
 {% endblock myjavascript %}
 
 {% block mystylesheet-dashboard %}
-    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
 {% endblock mystylesheet-dashboard%}
 
 {% block menuOptionsSelected %}
@@ -32,12 +32,12 @@
                                 {% else %}
                                     {% if usuario.persona %}
                                         {% if usuario.persona.sexo == "M" %}
-                                            <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                                            <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
                                         {% else %}
-                                            <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                                            <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
                                         {% endif%}
                                     {% else %}
-                                            <img src="/mymedia/images/020.png" alt="Logo" />
+                                            <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
                                     {% endif%}
                                 {% endif%}
                             </div>
