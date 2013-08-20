@@ -1,17 +1,17 @@
 {% extends "accounts/base_accounts.html" %}
 
 {% block mystylesheet %}
-<link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
-<link rel="stylesheet" href="/mymedia/css/style.css" type="text/css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
 {% endblock %}
 
 {% block myjavascript %}
-    <script type="text/javascript" src="/mymedia/js/DragAndDrop/jquery.min.js"></script>
-    <script type="text/javascript" src="/mymedia/js/DragAndDrop/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/mymedia/js/DragAndDrop/jquery.bgiframe-2.1.2.js"></script>
-    <script type="text/javascript" src="/mymedia/js/DragAndDrop/jquery-ui-i18n.min.js"></script>
-    <script type="text/javascript" async="" src="/mymedia/js/DragAndDrop/ga.js"></script>
-    <link class="ui-theme" rel="Stylesheet" type="text/css" href="/mymedia/css/parseTheme.css.php"><style class="demo-style">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/DragAndDrop/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/DragAndDrop/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/DragAndDrop/jquery.bgiframe-2.1.2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/DragAndDrop/jquery-ui-i18n.min.js"></script>
+    <script type="text/javascript" async="" src="{{ STATIC_URL }}js/DragAndDrop/ga.js"></script>
+    <link class="ui-theme" rel="Stylesheet" type="text/css" href="{{ STATIC_URL }}css/parseTheme.css.php"><style class="demo-style">
     #sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
     #sortable1 li, #sortable2 li { list-style-type: none; margin: 15px; padding: 5px; font-size: 1.2em; width: 34px; }
     <style>

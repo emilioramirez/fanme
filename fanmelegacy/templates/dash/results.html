@@ -1,7 +1,7 @@
 {% extends "dash/base_dash.html" %}
 
 {% block mystylesheet %}
-    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
 {% endblock %}
 
 {% block menuOptionsSelected %}
@@ -41,7 +41,7 @@
 -->
                                     <img src="{{ item.first_image_little }}" alt="Score">
                                 {% else %}
-                                    <img src="/mymedia/images/298.png" alt="Score">
+                                    <img src="{{ STATIC_URL }}images/298.png" alt="Score">
                                 {% endif %}
                             </div>
                         </a>
@@ -66,12 +66,12 @@
                                     {% else %}
                                         {% if user.persona %}
                                             {% if user.persona.sexo == "M" %}
-                                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                                                <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
                                             {% else %}
-                                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                                                <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
                                             {% endif%}
                                         {% else %}
-                                                <img src="/mymedia/images/020.png" alt="Logo" />
+                                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
                                         {% endif%}
                                     {% endif%}
                                 </div>
@@ -95,7 +95,7 @@
                                 {% if organization.avatar %}
                                     <img src="{{ organization.avatar.url_50x50 }}" alt="Logo" />
                                 {% else %}
-                                        <img src="/mymedia/images/020.png" alt="Logo" />
+                                        <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
                                 {% endif%}
                             </div>
                         </a>
