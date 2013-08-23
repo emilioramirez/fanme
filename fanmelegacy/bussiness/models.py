@@ -21,12 +21,12 @@ class Plan(models.Model):
 
 
 class PlanXEmpresa(models.Model):
-    empresa = models.ForeignKey(User, related_name="plan_empresa")
+    empresa = models.ForeignKey(User, related_name='plan_empresa')
     plan = models.ForeignKey(Plan, related_name='plan_elegido')
     fecha_inicio_vigencia = models.DateField()
     fecha_fin_vigencia = models.DateField()
     item = models.ManyToManyField(Item, null=True, blank=True,
         related_name="enlaces_externos")
 
-    def __init__(self):
-        models.Model.__init__(self)
+    def __unicode__(self):
+        return ''

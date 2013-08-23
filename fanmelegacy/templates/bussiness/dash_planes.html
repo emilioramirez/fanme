@@ -17,6 +17,10 @@
             <p class="message">{{ message }}</p>
         {% endfor %}
     </div>
+    <div class="item-messages">
+        <p class="message">Su plan vigente es: {{ plan.plan.nombre }}</p>
+        <p class="message">Le quedan  {{ plan.plan.cant_items|add:plan.item.count }} items por registrar su enlace.</p>
+    </div>
 {% endblock dashboard %}
 
 {% block sidebar %}
@@ -53,7 +57,7 @@
             <div class="menu-indicators-mati">Notificaciones</div>
         </a>
         <div class="sidebar-new-item-mati">
-            <a href="/items/item/register/"><div class="new-item-buttom-mati">Elegir Plan</div></a>
+            <a href="/bussiness/elegir_plan/"><div class="new-item-buttom-mati">Elegir Plan</div></a>
         </div>
         <div class="clear"></div>
     </div>

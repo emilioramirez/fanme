@@ -1,0 +1,53 @@
+{% extends "dash/base_dash.html" %}
+
+{% block mystylesheet %}
+{% endblock mystylesheet%}
+
+{% block myjavascript %}
+<script>
+     function combo(clicked_id) {
+        var is_checked = document.getElementById(clicked_id).checked;
+        if(is_checked){
+            document.getElementById('planIdSeleccionado').value = clicked_id;
+        }
+        else{
+            document.getElementById('planIdSeleccionado').value = 0;
+        }
+    }
+</script>
+{% endblock myjavascript %}
+
+{% block menuOptionsSelected %}
+{% endblock menuOptionsSelected %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <table id="Tabla" border="1" style="margin-top:50px;">
+        <col width="200px;">
+        <col width="300px;">
+        <col width="100px;">
+        <col width="100px;">
+        <col width="100px;">
+        <tr>
+            <th>Plan</th>
+            <th>Descripcion</th>
+            <th>Precio</th>
+            <th>Cantidad de Items</th>
+            <th>Comprar</th>
+        </tr>
+        {% for plan in planes %}
+            <tr>
+                <td>{{ plan.nombre }}</td>
+                <td>{{ plan.descripcion }}</td>
+                <td>{{ plan.precio }}</td>
+                <td>{{ plan.cant_items }}</td>
+                <td>
+                    <input type="radio" name="radio_checked" id={{ plan.id }} onclick="combo(this.id)" />
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <input type="hidden" name="planIdSeleccionado" id="planIdSeleccionado" value="" />
+    <input type="submit" value="Elegir Plan" onclick=elegirPlan() class="button-input" style="margin-top:20px; margin-right:60px;" />
+</form>
+{% endblock content %}
