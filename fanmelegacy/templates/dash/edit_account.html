@@ -3,14 +3,14 @@
 {% load dash_filters %}
 
 {% block mystylesheet %}
-    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/dhtmlxcalendar.css"></link>
-    <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
 {% endblock mystylesheet%}
 
 {% block myjavascript %}
-    <script src="/mymedia/js/codebase/dhtmlxcalendar.js"></script>
-    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
     <script>
         var myCalendar;
         function doOnLoad() {

@@ -3,7 +3,7 @@
 {% load dash_filters %}
 
 {% block mystylesheet %}
-    <link rel="stylesheet" href="/mymedia/css/style-icon-images.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
 {% endblock mystylesheet%}
 
 {% block menuOptionsSelected %}
@@ -25,7 +25,7 @@
             <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
             <div class="item-nombre">{{ item }}</div>
             <div class="item-score">
-                <img src="/mymedia/images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
+                <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
                 {{ item.persona_set.count }}
             </div>
             <div class="clear"></div>
@@ -35,7 +35,7 @@
                 {% if item.mis_imagenes.count %}
                     <img src="{{ item.first_image_big }}" alt="Score">
                 {% else %}
-                    <img src="/mymedia/images/298.png" alt="Score">
+                    <img src="{{ STATIC_URL }}images/298.png" alt="Score">
                 {% endif %}
             </div>
             <div class="item-descripcion-big">{{ item.descripcion }}</div>
@@ -44,8 +44,8 @@
                     {% for itemimage in item.mis_imagenes.all %}
                         <li class="image-little"><img src="{{ itemimage.imagen.url_50x50 }}" alt="Score"></li>
 <!--
-                    <li class="image-little"><img src="/mymedia/images/206.png" alt="Score"></li>
-                    <li class="image-little"><img src="/mymedia/images/207.png" alt="Score"></li>
+                    <li class="image-little"><img src="{{ STATIC_URL }}images/206.png" alt="Score"></li>
+                    <li class="image-little"><img src="{{ STATIC_URL }}images/207.png" alt="Score"></li>
 -->
                     {% endfor %}
                 </ul>
@@ -65,12 +65,12 @@
             </div>
             <div class="item-buttons">
                 {% if not is_fan %}
-                    <a href="/items/fan/{{ item.id }}" ><img src="/mymedia/images/item-button-fan.png" alt="Fan" /></a>
+                    <a href="/items/fan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
                 {% endif %}
-                <a href="/items/recomendation/{{ item.id }}" ><img src="/mymedia/images/item-button-recomendar.png" alt="Recomendar" /></a>
-                <a href="#" ><img src="/mymedia/images/item-button-denunciar.png" alt="Denunciar" /></a>
+                <a href="/items/recomendation/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
+                <a href="#" ><img src="{{ STATIC_URL }}images/item-button-denunciar.png" alt="Denunciar" /></a>
                 {% if is_fan %}
-                    <a href="/items/unfan/{{ item.id }}" ><img src="/mymedia/images/item-buttom-unFan.png" alt="Unfan" /></a>
+                    <a href="/items/unfan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-buttom-unFan.png" alt="Unfan" /></a>
                 {% endif %}
             </div>
             <div class="clear"></div>
@@ -87,9 +87,9 @@
         <p>Lo podés conseguir en:</p>
         <div class="item-image-all">
             <ul class="image-list">
-                <li class="image-little-ref"><img src="/mymedia/images/197.png" alt="Score"></li>
-                <li class="image-little-ref"><img src="/mymedia/images/466.png" alt="Score"></li>
-                <li class="image-little-ref"><img src="/mymedia/images/563.png" alt="Score"></li>
+                <li class="image-little-ref"><img src="{{ STATIC_URL }}images/197.png" alt="Score"></li>
+                <li class="image-little-ref"><img src="{{ STATIC_URL }}images/466.png" alt="Score"></li>
+                <li class="image-little-ref"><img src="{{ STATIC_URL }}images/563.png" alt="Score"></li>
             </ul>
         </div>
     </div>
@@ -106,12 +106,12 @@
                     {% else %}
                         {% if comment.user.persona %}
                             {% if comment.user.persona.sexo == "M" %}
-                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                                <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
                             {% else %}
-                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                                <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
                             {% endif%}
                         {% else %}
-                                <img src="/mymedia/images/020.png" alt="Logo" />
+                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
                         {% endif%}
                     {% endif%}
                 </div>
@@ -142,12 +142,12 @@
                     {% else %}
                         {% if user.persona %}
                             {% if user.persona.sexo == "M" %}
-                                <img src="/mymedia/images/avatar-male.png" alt="Logo" />
+                                <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
                             {% else %}
-                                <img src="/mymedia/images/avatar-famale.png" alt="Logo" />
+                                <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
                             {% endif%}
                         {% else %}
-                                <img src="/mymedia/images/020.png" alt="Logo" />
+                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
                         {% endif%}
                     {% endif%}
                 </div>
