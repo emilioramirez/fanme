@@ -12,15 +12,16 @@
 {% endblock menuOptionsSelected %}
 
 {% block dashboard %}
+    {% if not posee_plan %}
     <div class="item-messages">
-        {% for message in messages %}
-            <p class="message">{{ message }}</p>
-        {% endfor %}
+        <p class="message">{{ message }}</p>
     </div>
+    {% else %}
     <div class="item-messages">
         <p class="message">Su plan vigente es: {{ plan.plan.nombre }}</p>
         <p class="message">Le quedan  {{ plan.plan.cant_items|add:plan.item.count }} items por registrar su enlace.</p>
     </div>
+    {% endif %}
 {% endblock dashboard %}
 
 {% block sidebar %}
