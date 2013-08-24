@@ -1,0 +1,53 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+            <ul class="menu-options">
+                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+            </ul>
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
+{% block messages %}
+    <div class="item-messages">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endblock messages %}
+
+{% block dashboard %}
+    <div class="title-messages">Consultas</div>
+    <div class="message-body">
+        <div class="message-content-mati">
+            <form action="/social/consulta_a_empresa/{{ company_id }}" method="post">{% csrf_token %}
+                <div class="message-content-fields">
+                    <div class="errors">{{ form_query_message.item.errors }}</div>
+                        <label for="nombre" class="notification-name-field">Item:</label>
+                        {{ form_query_message.item }}
+                    </div>
+                    <div class="message-content-fields">
+                        <div class="errors">{{ form_query_message.consulta.errors }}</div>
+                        <div class="new-message-label"><label for="nombre" class="notification-name-field">Consulta:</label></div>
+                        <div class="new-message-field">{{ form_query_message.consulta }}</div>
+                    </div>
+                <input type="submit" value="Enviar" class="boton-enviar-query"/>
+                <!--<input type="submit" value="Enviar" class="enviar-query"/>-->
+            </form>
+        </div>
+    </div>
+{% endblock dashboard %}
