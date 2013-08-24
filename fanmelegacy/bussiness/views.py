@@ -11,13 +11,17 @@ import calendar
 @login_required(login_url='/accounts/user/')
 def dash_planes(request):
     searchbox = SearchBox()
-    messages = ['']
+    message = ''
     planes = request.user.plan_empresa.all().order_by('-fecha_fin_vigencia')
-    plan = planes[0]
+    posee_plan = False
     if not planes:
-        messages = ['No posee planes. Por favor seleccione un plan.']
+        message = 'No posee planes. Por favor seleccione un plan.'
+        plan = None
+    else:
+        plan = planes[0]
+        posee_plan = True
     return render_to_response('bussiness/dash_planes.html', {'form_search': searchbox,
-        'messages': messages, 'plan': plan},
+        'message': message, 'plan': plan, 'posee_plan': posee_plan},
         context_instance=RequestContext(request))
 
 
