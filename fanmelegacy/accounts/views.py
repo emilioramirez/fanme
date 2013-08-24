@@ -104,7 +104,7 @@ def login_user(request):
                 else:
                     return HttpResponseRedirect('/dash/dashboard/')
             except Persona.DoesNotExist:
-                return HttpResponseRedirect('/dash/empresa/')
+                return HttpResponseRedirect('/bussiness/dash_empresa/')
     else:
         form_login = UserLogin()
     form_register = UserRegisterForm()

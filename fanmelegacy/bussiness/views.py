@@ -47,6 +47,14 @@ def new_notificacion(request):
     pass
 
 
+@login_required(login_url='/accounts/user/')
+def dash_empresa(request):
+    messages = ['']
+    searchbox = SearchBox()
+    return render_to_response('bussiness/dash_empresa.html', {'form_search': searchbox,
+        'messages': messages},
+        context_instance=RequestContext(request))
+
 def add_months(sourcedate, months):
     month = sourcedate.month - 1 + months
     year = sourcedate.year + month / 12
