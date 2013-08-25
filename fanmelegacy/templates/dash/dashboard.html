@@ -33,7 +33,9 @@
                             <div class="list-item-topico list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
                         </a>
                     {% else %}
-                        <div class="list-item-topico un-list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                        <a href="/dash/dashboard/topic/add/{{ topic.id }}">
+                            <div class="list-item-topico un-list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                        </a>
                     {% endif %}
                 </li>
             {% endfor %}
