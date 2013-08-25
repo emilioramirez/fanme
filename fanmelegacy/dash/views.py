@@ -84,6 +84,20 @@ def dashboard_topic(request, topic_id):
 
 
 @login_required(login_url='/accounts/user/')
+def dashboard_topic_add(request, topic_id):
+    try:
+        top = Topico.objects.get(id=topic_id)
+        profile = request.user.persona
+        profile.topicos.add(top)
+        profile.save()
+    except Topico.DoesNotExist:
+        pass
+    except Persona.DoesNotExist:
+        pass
+    return HttpResponseRedirect('/dash/dashboard/')
+
+
+@login_required(login_url='/accounts/user/')
 def logbook(request):
     searchbox = SearchBox()
     try:

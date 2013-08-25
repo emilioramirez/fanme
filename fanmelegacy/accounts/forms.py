@@ -10,16 +10,16 @@ TYPES_OF_SEX = (('', 'Sexo'), ('M', 'Masculino'), ('F', 'Femenino'))
 class UserLogin(forms.Form):
     login_username = forms.CharField(
         label='',
-        initial='Email',
+        # initial='Email',
         required=True,
         error_messages={'required': 'Es necesario su Email'},
-        widget=forms.TextInput(attrs={'class': 'accounts-register-form-field'}))
+        widget=forms.TextInput(attrs={'class': 'accounts-register-form-field', 'placeholder': 'Email'}))
     login_password = forms.CharField(
         label='',
-        initial='Password',
+        # initial='Password',
         required=True,
         widget=forms.PasswordInput(
-            attrs={'class': 'accounts-register-form-field'}),
+            attrs={'class': 'accounts-register-form-field', 'placeholder': 'Password'}),
             error_messages={'required': 'Es necesario una Password'})
 
     def clean(self):
