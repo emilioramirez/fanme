@@ -1,0 +1,54 @@
+{% extends "dash/dashboard.html" %}
+
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+{% endblock mystylesheet-dashboard %}
+
+{% block myjavascript %}
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script>
+        var myCalendar;
+        function doOnLoad() {
+            myCalendar = new dhtmlXCalendarObject(["id_fecha_inicio"]);
+            myCalendar.setDateFormat("%d/%m/%Y");
+            myCalendar2 = new dhtmlXCalendarObject(["id_fecha_fin"]);
+            myCalendar2.setDateFormat("%d/%m/%Y");
+        }
+    </script>
+{% endblock myjavascript %}
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+
+
+
+{% block dashboard %}
+    <div class="eventos-content">
+        <div class="form-nuevo-evento">
+            <form action="/social/nuevo/" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table class="new-evento-table">
+                    {{ form.as_table}}
+                </table>
+                <input type="submit" value="Crear" class="submit"/>
+            </form>
+        </div>
+    </div>
+{% endblock dashboard %}
+
+{% block crear %}
+{% endblock %}

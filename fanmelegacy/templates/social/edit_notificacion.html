@@ -1,0 +1,48 @@
+{% extends "dash/empresa.html" %}
+
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <!--<li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>-->
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+{% endblock mystylesheet-dashboard %}
+
+{% block myjavascript %}
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script>
+        var myCalendar;
+        function doOnLoad() {
+            myCalendar = new dhtmlXCalendarObject(["fecha_expiracion"]);
+            myCalendar.setDateFormat("%d/%m/%Y");
+        }
+    </script>
+{% endblock myjavascript %}
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+{% block dashboard %}
+    <div class="eventos-content">
+        <div class="form-nuevo-evento">
+            <form action="/social/notificacion/edit/{{ notificacion.id }}" method="post">{% csrf_token %}
+                <table>
+                    {{ form.as_table}}
+                </table>
+            <input type="submit" value="Guardar" class="submit"/>
+            </form>
+        </div>
+        <div class="evento-editar"><a href="/social/notificacion/delete/{{ notificacion.id }}">Borrar</a></div>
+    </div>
+{% endblock dashboard %}
+
+{% block crear %}
+{% endblock %}
