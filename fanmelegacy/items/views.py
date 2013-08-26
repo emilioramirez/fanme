@@ -15,6 +15,7 @@ from items.forms import ItemRegisterForm, CommentForm
 from accounts.models import Empresa, Persona
 from segmentation.models import Topico
 from social.models import Actividad
+from bussiness.models import PlanXEmpresa
 
 
 @login_required(login_url='/accounts/user/')
@@ -23,13 +24,22 @@ def item(request, item_id):
     comment_form = CommentForm()
     try:
         item = Item.objects.get(pk=item_id)
-        is_fan = request.user.persona.items.filter(nombre=item.nombre)
+        #is_fan = request.user.persona.items.filter(nombre=item.nombre)
+        is_fan = False
+        item_plan = PlanXEmpresa.objects.filter(item=item)
+        empresas = []
+        for enlace_externo in item_plan:
+            #if enlace_externo.fecha_fin_vigencia > datetime.datetime.now():
+                empresa = Empresa.objects.get(pk=request.user.empresa.id)
+                empresas.append(empresa)
+        if item.enlaces_externos.count:
+            print item.enlaces_externos
         comments = item.comentarios_recibidos.all().order_by('fecha')
     except Item.DoesNotExist:
         raise Http404
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item, 'is_fan': is_fan, 'comment_form': comment_form,
-        'comments': comments},
+        'comments': comments, 'empresas': empresas},
         context_instance=RequestContext(request))
 
 
