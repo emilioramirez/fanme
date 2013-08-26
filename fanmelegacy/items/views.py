@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from datetime import datetime
+from datetime import datetime, date
 
 from dash.forms import SearchBox
 from items.models import Item, Comentario, Marca, Recomendacion
@@ -29,7 +29,8 @@ def item(request, item_id):
         item_plan = PlanXEmpresa.objects.filter(item=item)
         empresas = []
         for enlace_externo in item_plan:
-            #if enlace_externo.fecha_fin_vigencia > datetime.datetime.now():
+            if enlace_externo.fecha_fin_vigencia > date.today():
+                mostrar_boton_enlace = False
                 empresa = Empresa.objects.get(pk=request.user.empresa.id)
                 empresas.append(empresa)
         if item.enlaces_externos.count:
@@ -39,7 +40,8 @@ def item(request, item_id):
         raise Http404
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item, 'is_fan': is_fan, 'comment_form': comment_form,
-        'comments': comments, 'empresas': empresas},
+        'comments': comments, 'empresas': empresas,
+        'mostrar_boton_enlace': mostrar_boton_enlace},
         context_instance=RequestContext(request))
 
 
