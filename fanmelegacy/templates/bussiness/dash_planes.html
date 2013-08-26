@@ -1,5 +1,7 @@
 {% extends "dash/base_dash.html" %}
 
+{% load bussiness_filter %}
+
 {% block mystylesheet %}
         <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
 {% endblock mystylesheet%}
@@ -19,7 +21,7 @@
     {% else %}
     <div class="item-messages">
         <p class="message">Su plan vigente es: {{ plan.plan.nombre }}</p>
-        <p class="message">Le quedan  {{ plan.plan.cant_items|add:plan.item.count }} items por registrar su enlace.</p>
+        <p class="message">Le quedan  {{ plan.plan.cant_items|restar:plan.item.count }} items por registrar su enlace.</p>
     </div>
     {% endif %}
 {% endblock dashboard %}

@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from models import PlanXEmpresa, Plan
+from items.models import Item
 import datetime
 import calendar
 
@@ -58,6 +59,15 @@ def dash_empresa(request):
     return render_to_response('bussiness/dash_empresa.html', {'form_search': searchbox,
         'messages': messages},
         context_instance=RequestContext(request))
+
+@login_required(login_url='/accounts/user/')
+def registrar_enlace(request, item_id):
+    item = Item.objects.get(pk=item_id)
+    planes = request.user.plan_empresa.all().order_by('-fecha_fin_vigencia')
+    plan_vigente = planes[0]
+    plan_vigente.item.add(item)
+    plan_vigente.save()
+    return HttpResponseRedirect('/bussiness/dash_planes/')
 
 def add_months(sourcedate, months):
     month = sourcedate.month - 1 + months

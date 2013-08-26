@@ -66,7 +66,7 @@
                         <a href="/items/unfan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-buttom-unFan.png" alt="Unfan" /></a>
                     {% endif %}
                 {% else %}
-                    <a href="/items/fan/{{ item.id }}" class="btn btn-info">Registrar enlace</a>
+                    <a href="/bussiness/registrar_enlace/{{ item.id }}"><img src="{{ STATIC_URL }}images/item-button-registrar-enlace.png" alt="Registrar Enlace" /></a>
                 {% endif%}
             </div>
             <div class="clear"></div>
@@ -83,9 +83,10 @@
         <p>Lo podés conseguir en:</p>
         <div class="item-image-all">
             <ul class="image-list">
-                <li class="image-little-ref"><img src="{{ STATIC_URL }}images/197.png" alt="Score"></li>
-                <li class="image-little-ref"><img src="{{ STATIC_URL }}images/466.png" alt="Score"></li>
-                <li class="image-little-ref"><img src="{{ STATIC_URL }}images/563.png" alt="Score"></li>
+            {% for empresa in empresas %}
+                <!--<li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ user.empresa.avatar.url_50x50 }}" alt="Score" /></a></li>-->
+                <li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ STATIC_URL }}images/020.png" alt="Score" /></a></li>
+            {% endfor %}
             </ul>
         </div>
     </div>
