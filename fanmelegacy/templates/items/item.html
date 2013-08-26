@@ -6,6 +6,21 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
 {% endblock mystylesheet%}
 
+{% block menuOptionsSelected %}
+    {% if user.persona %}
+        <ul class="menu-options">
+            <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+            <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+            <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+        </ul>
+    {% else %}
+        <ul class="menu-options">
+            <li class="menu-item"><a href="/bussiness/dash_empresa/">Dashboard</a></li>
+            <li class="menu-item"><a href="/bussiness/dash_planes/">Planes</a></li>
+        </ul>
+    {% endif %}
+{% endblock menuOptionsSelected %}
+
 {% block item %}
     <div class="item-messages">
         {% for message in messages %}
@@ -66,7 +81,9 @@
                         <a href="/items/unfan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-buttom-unFan.png" alt="Unfan" /></a>
                     {% endif %}
                 {% else %}
-                    <a href="/bussiness/registrar_enlace/{{ item.id }}"><img src="{{ STATIC_URL }}images/item-button-registrar-enlace.png" alt="Registrar Enlace" /></a>
+                    {% if mostrar_boton_enlace %}
+                        <a href="/bussiness/registrar_enlace/{{ item.id }}"><img src="{{ STATIC_URL }}images/item-button-registrar-enlace.png" alt="Registrar Enlace" /></a>
+                    {% endif %}
                 {% endif%}
             </div>
             <div class="clear"></div>
@@ -84,8 +101,11 @@
         <div class="item-image-all">
             <ul class="image-list">
             {% for empresa in empresas %}
-                <!--<li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ user.empresa.avatar.url_50x50 }}" alt="Score" /></a></li>-->
-                <li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ STATIC_URL }}images/020.png" alt="Score" /></a></li>
+                {% if empresa.avatar %}
+                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ user.empresa.avatar.url_50x50 }}" alt="Score" /></a></li>
+                {% else %}
+                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ STATIC_URL }}images/020.png" alt="Logo" /></a></li>
+                {% endif%}
             {% endfor %}
             </ul>
         </div>

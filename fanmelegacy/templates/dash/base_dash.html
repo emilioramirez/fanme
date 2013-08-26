@@ -4,9 +4,6 @@
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
 {% endblock myjavascript %}
 
-{% block menuOptionsSelected %}
-{% endblock menuOptionsSelected %}
-
 {% block searchBox %}
     <div class="header-search-box">
         <form action="/dash/results/" method="post">{% csrf_token %}
@@ -15,6 +12,13 @@
         </form>
     </div>
 {% endblock searchBox %}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
 
 {% block content %}
     <div class="messages">

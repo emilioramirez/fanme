@@ -13,6 +13,13 @@
     </div>
 {% endblock searchBox %}
 
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
 {% block content %}
     <div class="content-item">
         {% block item %}
