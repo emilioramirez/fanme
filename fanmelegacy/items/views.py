@@ -27,11 +27,15 @@ def item(request, item_id):
         #is_fan = request.user.persona.items.filter(nombre=item.nombre)
         is_fan = False
         item_plan = PlanXEmpresa.objects.filter(item=item)
+        mostrar_boton_enlace = True
+        try:
+            request.user.persona
+        except:
+            mostrar_boton_enlace = puede_registrar_enlace(request, item)
         empresas = []
         for enlace_externo in item_plan:
             if enlace_externo.fecha_fin_vigencia > date.today():
-                mostrar_boton_enlace = False
-                empresa = Empresa.objects.get(pk=request.user.empresa.id)
+                empresa = Empresa.objects.get(user_id=enlace_externo.empresa.id)
                 empresas.append(empresa)
         if item.enlaces_externos.count:
             print item.enlaces_externos
@@ -43,6 +47,18 @@ def item(request, item_id):
         'comments': comments, 'empresas': empresas,
         'mostrar_boton_enlace': mostrar_boton_enlace},
         context_instance=RequestContext(request))
+
+
+def puede_registrar_enlace(request, item):
+    ret = False
+    planes = request.user.plan_empresa.all().order_by('-fecha_fin_vigencia')
+    if not planes:
+        ret = True
+    else:
+        plan = planes[0]
+        if plan.fecha_fin_vigencia < date.today():
+            ret = True
+    return ret
 
 
 @login_required(login_url='/accounts/user/')

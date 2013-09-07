@@ -519,6 +519,14 @@ body{}
                     text-align: justify;
                     width: 544px;
                 }
+                .item-images{
+                    border: 1px solid #9B9B9B;
+                    float: left;
+                    height: 90px;
+                    margin: -5px 0 0 40px;
+                    width: 467px;
+                    background: none repeat scroll 0 0 #ECECEC;
+                }
                 .item-image-all{
                     border: 1px solid #9B9B9B;
                     float: left;

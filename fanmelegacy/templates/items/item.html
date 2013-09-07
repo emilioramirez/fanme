@@ -46,7 +46,7 @@
                 {% endif %}
             </div>
             <div class="item-descripcion-big">{{ item.descripcion }}</div>
-            <div class="item-image-all">
+            <div class="item-images">
                 <ul class="image-list">
                     {% for itemimage in item.mis_imagenes.all %}
                         <li class="image-little"><img src="{{ itemimage.imagen.url_50x50 }}" alt="Score"></li>
