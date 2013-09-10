@@ -22,6 +22,7 @@ from bussiness.models import PlanXEmpresa
 def item(request, item_id):
     searchbox = SearchBox()
     comment_form = CommentForm()
+    mostrar_boton_enlace = True
     try:
         item = Item.objects.get(pk=item_id)
         #is_fan = request.user.persona.items.filter(nombre=item.nombre)
