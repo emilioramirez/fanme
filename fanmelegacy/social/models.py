@@ -51,6 +51,8 @@ class Notificacion(models.Model):
     descripcion = models.TextField(max_length=300)
     nombre = models.CharField(max_length=30)
     estado = models.CharField(default="noleido", max_length=30)
+    imagen = models.ImageField(default='images/calendario-default.png',
+        upload_to="notificaciones")
 
     def __unicode__(self):
         return self.descripcion

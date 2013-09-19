@@ -39,10 +39,14 @@ def dashboard(request):
             for rank, itemname in ranking:
                 lista = Item.objects.filter(nombre=itemname)
                 items_by_topics.append(lista)
+        notificaciones_noleidas = request.user.notificaciones_recibidas.filter(
+            estado='noleido').count()
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/dashboard.html', {'form_search': searchbox,
-        'topicos': items_by_topics, 'r_topics': root_topics},
+        'topicos': items_by_topics,
+        'notificaciones_noleidas': notificaciones_noleidas,
+        'r_topics': root_topics},
         context_instance=RequestContext(request))
 
 

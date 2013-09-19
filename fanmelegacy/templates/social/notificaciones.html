@@ -16,6 +16,9 @@
     <div class="eventos-content">
     {% if notificacion %}
             <div class='evento'>
+                <div class=''>
+                    <div class=''><img src="{{ notificacion.imagen.url }}" alt="Imagen de Notificacion" /></div>
+                </div>
                 <div class='evento-fields'>
                     <div class='evento-label'>Nombre</div>
                     <div class='evento-field'>{{ notificacion.nombre }}</div>

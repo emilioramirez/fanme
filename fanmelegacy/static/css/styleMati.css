@@ -643,6 +643,17 @@ sidebar-follow-user{}
                 height: 50px;
                 width: 421px;
             }
+            .notification-imagen-label{
+                margin-left: 48px;
+            }
+            .content-form-notification-imagen{
+                margin-bottom: 35px;
+                margin-left: 39px;
+            }
+            .content-form-notification-imagen{}
+                .content-form-notification-imagen label{
+                    margin-left: 58px !important;
+                }
             .content-form-notification ul.errorlist{
                     color: red;
                     font-size: 10px;

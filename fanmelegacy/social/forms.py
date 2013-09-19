@@ -77,13 +77,14 @@ class NotificationForm(forms.ModelForm):
             'fecha_expiracion',
             'descripcion',
             'usuarios_to',
+            'imagen',
             )
         widgets = {
             'nombre': forms.TextInput(attrs={
                 'class': 'notification-name-field'}),
-            'fecha_desde': forms.DateInput(attrs={
+            'fecha_desde': forms.DateTimeInput(attrs={
                 'class': 'notification-name-field'}),
-            'fecha_expiracion': forms.DateInput(attrs={
+            'fecha_expiracion': forms.DateTimeInput(attrs={
                 'class': 'notification-name-field'}),
             'descripcion': forms.Textarea(attrs={
                 'class': 'new-notification-textarea'}),

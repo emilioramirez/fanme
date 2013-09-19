@@ -39,8 +39,7 @@ def eventos(request):
             evento.save()
     except Evento.DoesNotExist:
         eventos_invitado = []
-    print eventos_creados
-    if eventos_creados and eventos_invitado:
+    if eventos_creados or eventos_invitado:
         no_hay_eventos = False
     temp = RequestContext(request, {'eventos_creados': eventos_creados,
         'eventos_invitado': eventos_invitado, 'no_hay_eventos': no_hay_eventos,
@@ -180,7 +179,6 @@ def new_message(request):
             message.fecha = datetime.datetime.now()
             message.save()
             messages.append("Tu mensaje ha sido enviado exitosamente")
-            print messages
             form_new_message = MessageForm()
             return HttpResponseRedirect('/social/new_message/')
     else:
@@ -390,6 +388,10 @@ def edit_notificacion(request, notificacion_id):
         form.fields["usuarios_to"].queryset = users
         if form.is_valid():
             notificacion = form.save(commit=False)
+            try:
+                notificacion.imagen = request.FILES['imagen']
+            except KeyError:
+                pass
             notificacion.save()
             form.save_m2m()
             return HttpResponseRedirect('/social/notificaciones/')
@@ -408,9 +410,6 @@ def delete_notificacion(request, notificacion_id):
     searchbox = SearchBox()
     try:
         notificacion_db = Notificacion.objects.get(id=notificacion_id)
-        print notificacion_db
-        print notificacion_db.empresa
-        print request.user
         if (notificacion_db.empresa == request.user):
             notificacion_db.delete()
         return HttpResponseRedirect('/social/notificaciones/')
@@ -478,7 +477,12 @@ def new_notification(request):
         form.fields["usuarios_to"].queryset = users
         if form.is_valid():
             notification = form.save(commit=False)
+            notification.fecha_creacion = datetime.datetime.now()
             notification.empresa = request.user
+            try:
+                notification.imagen = request.FILES['imagen']
+            except KeyError:
+                pass
             notification.save()
             form.save_m2m()
             return HttpResponseRedirect('/social/notificaciones/')
@@ -499,6 +503,7 @@ def user_main_view_notifications(request):
         notificaciones_recibidas = request.user.notificaciones_recibidas.all(
             ).values('empresa').distinct()
         usuarios = []
+        print notificaciones_recibidas
         for dict in notificaciones_recibidas.all():
             usuarios.append(User.objects.get(id=dict['empresa']))
     except Persona.DoesNotExist:

@@ -30,5 +30,6 @@ class MensajeAdmin(admin.ModelAdmin):
 
 admin.site.register(Evento, EventoAdmin)
 admin.site.register(Notificacion)
+admin.site.register(TipoEvento)
 admin.site.register(Mensaje)
 admin.site.register(Consulta)
