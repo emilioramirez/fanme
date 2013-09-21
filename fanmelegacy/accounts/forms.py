@@ -77,7 +77,7 @@ class UserRegisterForm(forms.Form):
         error_messages={'required': 'Es necesario una Password',
             'min_length': 'Debe ingresar minimo 6 caracteres'})
 
-    def clean_username(self):
+    def clean_email(self):
         data = self.cleaned_data['email']
         try:
             User.objects.get(email=data)
