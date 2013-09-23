@@ -45,7 +45,11 @@
                         <div class="new-message-label"><label for="nombre" class="notification-name-field">Consulta:</label></div>
                         <div class="new-message-field">{{ form_query_message.consulta }}</div>
                     </div>
-                <input type="submit" value="Enviar" class="boton-enviar-query"/>
+                {% if no_posee_items %}
+                    <button type="button" disabled class="boton-enviar-query">Enviar</button>
+                {% else %}
+                    <input type="submit" value="Enviar" class="boton-enviar-query"/>
+                {% endif %}
                 <!--<input type="submit" value="Enviar" class="enviar-query"/>-->
             </form>
         </div>

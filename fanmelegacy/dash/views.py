@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
@@ -136,6 +137,8 @@ def results(request):
         first_users = User.objects.filter(
             Q(first_name__icontains=search) | Q(last_name__icontains=search),
             ~Q(id=request.user.id))
+        #user_match = User.objects.filter(first_name__icontains=search).
+        #first_users = user_contain | user_match
         #Get the 8 first organizations that match with the search
         first_organizations = Empresa.objects.filter(
         razon_social__icontains=search)[:8]
@@ -372,11 +375,11 @@ def edit_pass(request):
             actual_pass = form_update.cleaned_data['actual_pass']
             new_pass = form_update.cleaned_data['new_pass']
             if not request.user.check_password(actual_pass):
-                raise forms.ValidationError("La contrasenia no coincide")
+                raise forms.ValidationError("La contraseña no coincide")
             user = request.user
             user.set_password(new_pass)
             user.save()
-            messages.append("Se actualizo correctamente la contrasenia")
+            messages.append("Se actualizó correctamente la contraseña")
     else:
         form_update = PassUpdateForm()
     return render_to_response('dash/edit_pass.html',

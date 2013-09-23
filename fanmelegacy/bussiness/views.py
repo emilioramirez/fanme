@@ -14,6 +14,8 @@ def dash_planes(request):
     searchbox = SearchBox()
     message = ''
     planes = request.user.plan_empresa.all().order_by('-fecha_fin_vigencia')
+    consultas_noleidas = request.user.consultas_recibidas.filter(
+            estado="noleido").count()
     posee_plan = False
     if not planes:
         message = 'No posee planes. Por favor seleccione un plan.'
@@ -22,7 +24,8 @@ def dash_planes(request):
         plan = planes[0]
         posee_plan = True
     return render_to_response('bussiness/dash_planes.html', {'form_search': searchbox,
-        'message': message, 'plan': plan, 'posee_plan': posee_plan},
+        'message': message, 'plan': plan, 'posee_plan': posee_plan,
+        'consultas_noleidas': consultas_noleidas},
         context_instance=RequestContext(request))
 
 
@@ -56,8 +59,10 @@ def new_notificacion(request):
 def dash_empresa(request):
     messages = ['']
     searchbox = SearchBox()
+    consultas_noleidas = request.user.consultas_recibidas.filter(
+            estado="noleido").count()
     return render_to_response('bussiness/dash_empresa.html', {'form_search': searchbox,
-        'messages': messages},
+        'messages': messages, 'consultas_noleidas': consultas_noleidas},
         context_instance=RequestContext(request))
 
 

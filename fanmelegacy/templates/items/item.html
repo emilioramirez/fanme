@@ -172,7 +172,7 @@
                     <p class="comment-username-add">{{ user.first_name }} {{ user.last_name }}</p>
                         <form action="/items/comment/{{ item.id }}" method="post">{% csrf_token %}
                             {{ comment_form.as_p }}
-                            <input type="submit" value="Comentar" class="submit"/>
+                            <input type="submit" value="Comentar" class="submit" style="float: right; margin-right: 63px; margin-top: -4px;"/>
                         </form>
                 </div>
                 <div class="comment-options-add"></div>

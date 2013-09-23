@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
@@ -7,11 +8,11 @@ from django.contrib.auth.decorators import login_required
 from social.forms import MessageForm, MessageResponseForm
 from social.forms import MessageQueryForm
 from dash.forms import SearchBox
-from accounts.models import Persona
+from accounts.models import Persona, Empresa
 from social.models import Mensaje
 from itertools import chain
 from operator import attrgetter
-import datetime
+from datetime import datetime, date
 
 from social.forms import EventoForm, NotificationForm
 from social.models import Evento, Consulta, Notificacion
@@ -238,6 +239,7 @@ def getMensajes(request, user_id):
 def company_query(request, company_id):
     searchbox = SearchBox()
     messages = []
+    no_posee_items = False
     if request.method == 'POST':
         form_query_message = MessageQueryForm(request.POST)
         if form_query_message.is_valid():
@@ -248,22 +250,42 @@ def company_query(request, company_id):
             consulta.user_from = request.user
             consulta.user_to = User.objects.get(id__exact=company_id)
             consulta.mensaje = mensaje_consulta
-            consulta.fecha = datetime.datetime.now()
+            consulta.fecha = datetime.now()
             consulta.estado = "noleido"
             consulta.save()
             messages.append("Tu consulta ha sido enviada exitosamente")
             form_query_message = MessageQueryForm()
         else:
-            form_query_message.fields["item"].queryset = Item.objects.all()
+            items_plan = items_en_plan_vigente(company_id)
+            if items_plan == None or items_plan.count() == 0:
+                messages.append("La empresa no posee items registrados. No se le podrá enviar ninguna consulta.")
+                no_posee_items = True
+            form_query_message.fields["item"].queryset = items_plan
     else:
         form_query_message = MessageQueryForm()
-        form_query_message.fields["item"].queryset = Item.objects.all()
+        items_plan = items_en_plan_vigente(company_id)
+        if items_plan == None or items_plan.count() == 0:
+            messages.append("La empresa no posee items registrados. No se le podrá enviar ninguna consulta.")
+            no_posee_items = True
+        form_query_message.fields["item"].queryset = items_plan
     return render_to_response('social/consulta_a_empresa.html', {
         'form_search': searchbox,
         'company_id': company_id,
         'form_query_message': form_query_message,
+        'no_posee_items': no_posee_items,
         'messages': messages},
         context_instance=RequestContext(request))
+
+
+def items_en_plan_vigente(company_id):
+    empresa = User.objects.get(pk=company_id)
+    planes = empresa.plan_empresa.all().order_by('-fecha_fin_vigencia')
+    items_plan = None
+    if planes:
+        plan = planes[0]
+        if plan.fecha_fin_vigencia > date.today():
+            items_plan = plan.item
+    return items_plan
 
 
 @login_required(login_url='/accounts/user/')
@@ -271,13 +293,14 @@ def ver_consultas(request):
     searchbox = SearchBox()
     consultas_recibidas = request.user.consultas_recibidas.all().values(
             'item').distinct()
-#    consultas_recibidas = Consulta.objects.all().values('item').distinct()
     items = []
+    consultas_noleidas = request.user.consultas_recibidas.filter(
+        estado="noleido").count()
     for dict in consultas_recibidas.all():
         items.append(Item.objects.get(id=dict['item']))
     return render_to_response('social/ver_consultas.html', {
         'form_search': searchbox,
-        'consultas_recibidas': items},
+        'consultas_recibidas': items, 'consultas_noleidas': consultas_noleidas},
         context_instance=RequestContext(request))
 
 
@@ -290,6 +313,8 @@ def ver_consultas_item(request, item_id):
     users = []
     for dict in items_consultas.all():
         users.append(User.objects.get(id=dict['user_from']))
+    consultas_noleidas = request.user.consultas_recibidas.filter(
+        estado="noleido").count()
 #    consultas = []
 #    for usuario in users:
 #        consultas = usuario.consultas_enviadas.all()
@@ -303,7 +328,7 @@ def ver_consultas_item(request, item_id):
     return render_to_response('social/ver_consultas_item.html', {
         'form_search': searchbox,
         'usuario_consulta_item': users,
-        'item_id': item_id},
+        'item_id': item_id, 'consultas_noleidas': consultas_noleidas},
         context_instance=RequestContext(request))
 
 
@@ -317,9 +342,11 @@ def ver_consultas_item_usuario(request, item_id, user_id):
     for consulta in consulta_item.all():
         consulta.estado = "leido"
         consulta.save()
+    consultas_noleidas = request.user.consultas_recibidas.filter(
+        estado="noleido").count()
     return render_to_response('social/ver_consulta_item_usuario.html', {
         'form_search': searchbox,
-        'usuario': user,
+        'usuario': user, 'consultas_noleidas': consultas_noleidas,
         'consulta_item': consulta_item},
         context_instance=RequestContext(request))
 
@@ -348,10 +375,12 @@ def notificaciones(request):
     searchbox = SearchBox()
     try:
         notificaciones_enviadas = request.user.notificaciones_enviadas.all()
+        consultas_noleidas = request.user.consultas_recibidas.filter(
+            estado="noleido").count()
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/notificaciones.html', {
-        'form_search': searchbox,
+        'form_search': searchbox, 'consultas_noleidas': consultas_noleidas,
         'notificaciones_enviadas': notificaciones_enviadas},
         context_instance=RequestContext(request))
 
@@ -426,13 +455,15 @@ def company_messages(request):
     try:
         mensajes_recibidos = request.user.mensajes_recibidos.all().values(
             'user_from').distinct()
+        consultas_noleidas = request.user.consultas_recibidas.filter(
+            estado="noleido").count()
         usuarios = []
         for dict in mensajes_recibidos.all():
             usuarios.append(User.objects.get(id=dict['user_from']))
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/company_messages.html', {
-        'form_search': searchbox,
+        'form_search': searchbox, 'consultas_noleidas': consultas_noleidas,
         'mensajes_recibidos': usuarios},
         context_instance=RequestContext(request))
 

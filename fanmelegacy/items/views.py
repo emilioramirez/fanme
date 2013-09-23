@@ -57,7 +57,7 @@ def puede_registrar_enlace(request, item):
         ret = True
     else:
         plan = planes[0]
-        if plan.fecha_fin_vigencia < date.today():
+        if plan.fecha_fin_vigencia > date.today():
             ret = True
     return ret
 
