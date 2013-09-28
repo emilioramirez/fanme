@@ -5,4 +5,5 @@ syntax: glob
 *.nja
 *~
 *.db
+fanmelegacy/media/
 local_settings.py

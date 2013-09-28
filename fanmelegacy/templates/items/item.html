@@ -1,6 +1,6 @@
 {% extends "items/base_items.html" %}
 
-{% load dash_filters %}
+{% load dash_filters comments avatar_tags %}
 
 {% block mystylesheet %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
@@ -115,28 +115,17 @@
 
 {% block comments %}
     <div class="list-comment">
-        {% for comment in comments %}
+        {% get_comment_list for item as comment_list %}
+        {% for comment in comment_list %}
             <div class="comment">
                 <div class="comment-user-image">
-                    {% if comment.user.persona.avatar %}
-                        <img src="{{ comment.user.persona.avatar.url_50x50 }}" alt="Logo" />
-                    {% else %}
-                        {% if comment.user.persona %}
-                            {% if comment.user.persona.sexo == "M" %}
-                                <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
-                            {% else %}
-                                <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
-                            {% endif%}
-                        {% else %}
-                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
-                        {% endif%}
-                    {% endif%}
+                    <img src="{% avatar_url comment.user 50 %}" alt="">
                 </div>
                 <div class="comment-user">
                     <p class="comment-username">
-                        {{ comment.user.first_name }} {{ comment.user.last_name }} - <span class="coment-date">{{ comment.fecha }}</span>
+                        {{ comment.user.first_name }} {{ comment.user.last_name }} - <span class="coment-date">{{ comment.submit_date }}</span>
                     </p>
-                    <p class="comment-text">{{ comment.comentario }}</p>
+                    <p class="comment-text">{{ comment.comment }}</p>
                 </div>
                 <div class="comment-options">
                     <div class="me-gusta-comentario">
@@ -149,31 +138,41 @@
                         <div class="link"><a href="/items/comment/denunciar/{{ comment.id }}" title="Denunciar"><div class="denuncia-comentario-img"></div></a></div>
                         <div class="clear"></div>
                     </div>
+                    {% if comment.user == user %}
+                    <div><a href="/items/comment/eliminar/{{ comment.id }}">Borrar</a></div>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
+
         <div class="comment-add">
                 <div class="comment-user-image-add">
-                    {% if user.persona.avatar %}
-                        <img src="{{ user.persona.avatar.url_50x50 }}" alt="Logo" />
-                    {% else %}
-                        {% if user.persona %}
-                            {% if user.persona.sexo == "M" %}
-                                <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
-                            {% else %}
-                                <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
-                            {% endif%}
-                        {% else %}
-                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
-                        {% endif%}
-                    {% endif%}
+                    <img src="{% avatar_url user 50 %}" alt="">
                 </div>
                 <div class="comment-user-add">
                     <p class="comment-username-add">{{ user.first_name }} {{ user.last_name }}</p>
+                    <!-- {# 
                         <form action="/items/comment/{{ item.id }}" method="post">{% csrf_token %}
                             {{ comment_form.as_p }}
                             <input type="submit" value="Comentar" class="submit" style="float: right; margin-right: 63px; margin-top: -4px;"/>
                         </form>
+                     #} -->   
+                     {% if user.is_authenticated %}
+                        {% get_comment_form for item as form %}
+                        <form action="{% comment_form_target %}" method="POST">
+                            {% csrf_token %}
+                            {{ form.honeypot }}
+                            {{ form.content_type }}
+                            {{ form.object_pk }}
+                            {{ form.timestamp }}
+                            {{ form.security_hash }}
+                            <input type="hidden" name="next" value="/items/item/{{ item.id }}" />
+                            <p>{{ form.comment }}</p>
+                            <p><input type="submit" value="Comentar" id="id_submit" /></p>
+                        </form>
+                    {% else %}
+                        <p>Por favor <a href="{% url 'auth_login' %}">ingrese al sistema</a> para poder comentar.</p>
+                    {% endif %}
                 </div>
                 <div class="comment-options-add"></div>
             </div>
