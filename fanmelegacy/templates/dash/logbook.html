@@ -1,5 +1,7 @@
 {% extends "dash/base_dash.html" %}
 
+{% load avatar_tags %}
+
 {% block mystylesheet %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
@@ -22,7 +24,7 @@
                 {% if actividad.tipo == "fan" %}
                     <div class="actividad-fan-content">
                         <div class="actividad-user-orig">
-                            <div class="actividad-imagen"><img src="{{ actividad.usuario_origen.persona.avatar.url_50x50 }}"/></div>
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
 
                         </div>
                         <div class="actividad-desc-content">
@@ -38,7 +40,7 @@
                 {% if actividad.tipo == "comentario" %}
                     <div class="actividad-fan-content">
                         <div class="actividad-user-orig">
-                            <div class="actividad-imagen"><img src="{{ actividad.usuario_origen.persona.avatar.url_50x50 }}"/></div>
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
 
                         </div>
                         <div class="actividad-desc-content">
@@ -55,7 +57,7 @@
                 {% if actividad.tipo == "recomendacion" %}
                     <div class="actividad-fan-content">
                         <div class="actividad-user-orig">
-                            <div class="actividad-imagen"><img src="{{ actividad.usuario_origen.persona.avatar.url_50x50 }}"/></div>
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
 
                         </div>
                         <div class="actividad-desc-content">
