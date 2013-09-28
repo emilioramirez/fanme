@@ -15,7 +15,11 @@
         function comparePass() {
             var new_pass = document.getElementById('id_new_pass').value;
             var confirm_pass = document.getElementById('id_confirm_pass').value;
-            if(new_pass != confirm_pass)
+            if(confirm_pass == '')
+            {
+                alert("Debe confirmar la nueva contraseña");
+            }
+            else if(new_pass != confirm_pass)
             {
                 alert("La nueva contraseña no coincide");
             }

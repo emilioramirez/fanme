@@ -370,18 +370,15 @@ def edit_pass(request):
     searchbox = SearchBox()
     messages = []
     if request.method == 'POST':
-        form_update = PassUpdateForm(request.POST)
+        form_update = PassUpdateForm(user=request.user, data=request.POST or None)
         if form_update.is_valid():
-            actual_pass = form_update.cleaned_data['actual_pass']
             new_pass = form_update.cleaned_data['new_pass']
-            if not request.user.check_password(actual_pass):
-                raise forms.ValidationError("La contraseña no coincide")
             user = request.user
             user.set_password(new_pass)
             user.save()
             messages.append("Se actualizó correctamente la contraseña")
     else:
-        form_update = PassUpdateForm()
+        form_update = PassUpdateForm(user=request.user)
     return render_to_response('dash/edit_pass.html',
         {'form_update': form_update,
         'form_search': searchbox,

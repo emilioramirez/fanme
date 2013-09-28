@@ -95,6 +95,10 @@ class PassUpdateForm(forms.Form):
             'required': 'Es necesario una Password',
             'min_length': 'Debe ingresar minimo 6 caracteres'})
 
+    def __init__(self, user, data=None):
+        self.user = user
+        super(PassUpdateForm, self).__init__(data=data)
+
     def clean_new_pass(self):
         data = self.cleaned_data['new_pass']
         try:
@@ -102,4 +106,11 @@ class PassUpdateForm(forms.Form):
             raise forms.ValidationError("Este usuario ya existe")
         except User.DoesNotExist:
             pass
+        return data
+
+    def clean_actual_pass(self):
+        data = self.cleaned_data['actual_pass']
+        if not self.user.check_password(data):
+            raise forms.ValidationError("La contraseña actual ingresada no coincide.")
+            print 'hola'
         return data
