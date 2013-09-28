@@ -1,7 +1,11 @@
 Django==1.5.1
-PIL==1.1.7
 SQLite3Database==0.2.0
-South==0.7.3
 argparse==1.2.1
 django-extensions==0.6
 wsgiref==0.1.2
+Pillow==2.1.0
+South==0.8.1
+django-appconf==0.6
+django-avatar==2.0
+six==1.4.1
+
