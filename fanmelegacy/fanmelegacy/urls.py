@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     (r'^items/', include('items.urls')),
     (r'^social/', include('social.urls')),
     (r'^bussiness/', include('bussiness.urls')),
+    (r'^comments/', include('django.contrib.comments.urls')),
+    (r'^avatar/', include('avatar.urls')),
 )
 
 from django.conf import settings

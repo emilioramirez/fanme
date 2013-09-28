@@ -729,3 +729,11 @@ body{}
     vertical-align:middle;
 }
 
+.avatar-manage{}
+.avatar-manage p{margin: 10px;}
+.avatar-manage form > p{margin: 10px;}
+.avatar-manage ul{list-style: none;overflow: hidden;}
+.avatar-manage li{float: left;}
+.avatar-manage li img{float: left;}
+#id_honeypot {display: none;}
+#id_comment{height: 55px;width: 503px;}
