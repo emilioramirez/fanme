@@ -2,9 +2,12 @@
 from django.http import Http404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib import comments
+from django.contrib.comments.views.moderation import perform_delete
+from django.contrib.comments.views.utils import next_redirect
 
 from datetime import datetime, date
 
@@ -280,3 +283,20 @@ def denunciar_comentario(request, comentario_id):
     comentario.denuncias += 1
     comentario.save()
     return HttpResponseRedirect('/items/item/{0}'.format(comentario.item.id))
+
+
+@login_required(login_url='/accounts/user')
+def delete_own_comment(request, comment_id, next=None):
+    comment = get_object_or_404(comments.get_model(), id=comment_id)
+    # Delete on POST
+    if request.method == 'POST':
+        if comment.user.id != request.user.id:
+            raise Http404
+        perform_delete(request, comment)
+        return next_redirect(request, fallback=next or 'comments-approve-done',
+                c=comment.pk)
+    else:
+        return render_to_response('comments/approve.html',
+            {'comment': comment, "next": next},
+            RequestContext(request)
+        )

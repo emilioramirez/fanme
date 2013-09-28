@@ -1,3 +1,4 @@
+{% load avatar_tags %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
@@ -57,19 +58,7 @@
                             <a href='/accounts/logout/'>Salir</a>
                         </div>
                         <div class="logged-user-photo">
-                        {% if user.persona.avatar %}
-                            <img src="{{ user.persona.avatar.url_50x50 }}" alt="Logo" />
-                        {% else %}
-                        {% if user.persona %}
-                        {% if user.persona.sexo == "M" %}
-                            <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
-                        {% else %}
-                            <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
-                        {% endif%}
-                        {% else %}
-                            <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
-                        {% endif%}
-                        {% endif %}
+                            <img src="{% avatar_url user 50 %}" alt="" />
                         </div>
                     </div>
                 {% else %}
