@@ -662,6 +662,64 @@ sidebar-follow-user{}
                     margin-bottom: 0px;
                 }
     /*End of the new notifications page*/
+    /*Begining of the new evento page*/
+        .content-form-evento{}
+            .evento-name-label{
+                margin-left: 43px;
+            }
+            .evento-name-field{
+                width: 422px;
+            }
+            .evento-date-label{
+                margin-left: 37px;
+            }
+            .evento-date-desde-label{
+                margin-left: 22px;
+            }
+            .evento-date-fin-label{
+                margin-left: 34px;
+            }
+            .evento-tipo-label{
+                margin-left: 64px;
+            }
+            .evento-description-label{
+                float: left;
+                margin-left: 22px;
+                margin-right: 4px;
+            }
+            .evento-users-label{
+                float: left;
+                margin-left: 37px;
+                margin-right: 5px;
+            }
+            .new-evento{
+                float: right;
+                margin-right: 44px;
+                margin-bottom: 10px;
+            }
+            .new-evento-textarea{
+                height: 50px;
+                width: 421px;
+            }
+            .evento-imagen-label{
+                margin-left: 48px;
+            }
+            .content-form-evento-imagen{
+                margin-bottom: 35px;
+                margin-left: 39px;
+            }
+            .content-form-evento-imagen{}
+                .content-form-evento-imagen label{
+                    margin-left: 58px !important;
+                }
+            .content-form-evento ul.errorlist{
+                    color: red;
+                    font-size: 10px;
+                    list-style: none outside none;
+                    margin-left: 56px;
+                    margin-bottom: 0px;
+                }
+    /*End of the new evento page*/
 /*End of the Company*/
 /*Begin of the help*/
 .help-content{

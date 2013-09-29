@@ -38,13 +38,14 @@ def eventos(request):
         for evento in eventos_noleidos:
             evento.estado = "leido"
             evento.save()
+        notificaciones_noleidas = get_cant_notificaciones(request)
     except Evento.DoesNotExist:
         eventos_invitado = []
     if eventos_creados or eventos_invitado:
         no_hay_eventos = False
     temp = RequestContext(request, {'eventos_creados': eventos_creados,
         'eventos_invitado': eventos_invitado, 'no_hay_eventos': no_hay_eventos,
-        'form_search': searchbox})
+        'form_search': searchbox, 'notificaciones_noleidas': notificaciones_noleidas})
     return render_to_response('social/eventos.html', temp)
 
 
@@ -60,7 +61,7 @@ def new_evento(request):
             evento = form.save(commit=False)
             creador = request.user
             evento.creador = creador
-            evento.fecha_creacion = datetime.datetime.now()
+            evento.fecha_creacion = datetime.now()
             try:
                 evento.imagen = request.FILES['imagen']
             except KeyError:
@@ -154,11 +155,17 @@ def messages(request):
         for msj in msj_noleidos:
             msj.estado = "leido"
             msj.save()
+        notificaciones_noleidas = get_cant_notificaciones(request)
     except Persona.DoesNotExist:  # Esto para que esta?
         return HttpResponseRedirect('/dash/empresa/')  # Esto para que esta?
     return render_to_response('social/messages.html', {'form_search': searchbox,
-        'usuarios': usuarios},
+        'usuarios': usuarios, 'notificaciones_noleidas': notificaciones_noleidas},
         context_instance=RequestContext(request))
+
+
+def get_cant_notificaciones(request):
+    return request.user.notificaciones_recibidas.filter(
+            estado='noleido').count()
 
 
 @login_required(login_url='/accounts/user/')
@@ -421,6 +428,7 @@ def edit_notificacion(request, notificacion_id):
                 notificacion.imagen = request.FILES['imagen']
             except KeyError:
                 pass
+            notificacion.estado = 'actualizado'
             notificacion.save()
             form.save_m2m()
             return HttpResponseRedirect('/social/notificaciones/')
@@ -508,7 +516,7 @@ def new_notification(request):
         form.fields["usuarios_to"].queryset = users
         if form.is_valid():
             notification = form.save(commit=False)
-            notification.fecha_creacion = datetime.datetime.now()
+            notification.fecha_creacion = datetime.now()
             notification.empresa = request.user
             try:
                 notification.imagen = request.FILES['imagen']
@@ -534,14 +542,15 @@ def user_main_view_notifications(request):
         notificaciones_recibidas = request.user.notificaciones_recibidas.all(
             ).values('empresa').distinct()
         usuarios = []
-        print notificaciones_recibidas
         for dict in notificaciones_recibidas.all():
             usuarios.append(User.objects.get(id=dict['empresa']))
+        notificaciones_noleidas = get_cant_notificaciones(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/user_main_notification.html', {
         'form_search': searchbox,
-        'notificaciones_recibidas': usuarios},
+        'notificaciones_recibidas': usuarios,
+        'notificaciones_noleidas': notificaciones_noleidas,},
         context_instance=RequestContext(request))
 
 
@@ -566,9 +575,11 @@ def ver_notificacion(request, notificacion_id):
         notificaciones = Notificacion.objects.get(id=notificacion_id)
         notificaciones.estado = "leido"
         notificaciones.save()
+        notificaciones_noleidas = get_cant_notificaciones(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/ver_notificaciones.html', {
         'form_search': searchbox,
-        'notificacion': notificaciones},
+        'notificacion': notificaciones,
+        'notificaciones_noleidas': notificaciones_noleidas,},
         context_instance=RequestContext(request))

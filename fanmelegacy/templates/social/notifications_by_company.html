@@ -39,6 +39,9 @@
                         <a href="/social/ver_notificaciones/{{ notificacion.id }}">
                             {{ notificacion.nombre }}
                         </a>
+                        {% if notificacion.estado != 'leido' %}
+                            ({{ notificacion.estado }})
+                        {% endif %}
                     </div>
                     <div class="message-user-fecha">
                 Hasta: {{ notificacion.fecha_expiracion|date:"d/M/Y" }}
