@@ -40,8 +40,7 @@ def dashboard(request):
             for rank, itemname in ranking:
                 lista = Item.objects.filter(nombre=itemname)
                 items_by_topics.append(lista)
-        notificaciones_noleidas = request.user.notificaciones_recibidas.filter(
-            estado='noleido').count()
+        notificaciones_noleidas = get_cant_notificaciones(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/dashboard.html', {'form_search': searchbox,
@@ -113,10 +112,17 @@ def logbook(request):
                 chain(
                     user.act_origen.all(), actividades),
                 key=attrgetter('fecha'), reverse=True)
+        notificaciones_noleidas = get_cant_notificaciones(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/logbook.html', {'form_search': searchbox,
+        'notificaciones_noleidas': notificaciones_noleidas,
         'actividades': actividades}, context_instance=RequestContext(request))
+
+
+def get_cant_notificaciones(request):
+    return request.user.notificaciones_recibidas.filter(
+            estado='noleido').count()
 
 
 @login_required(login_url='/accounts/user/')
@@ -294,12 +300,13 @@ def recomendaciones_recibidas(request):
             r.estado = "leido"
             r.save()
         messages.append("Te han recomendado los siguientes items")
+        notificaciones_noleidas = get_cant_notificaciones(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/mis_recomendaciones_recibidas.html',
         {'form_search': searchbox, 'messages': messages,
         'recomendaciones': items,
-            'is_fan': False},
+        'notificaciones_noleidas': notificaciones_noleidas, 'is_fan': False},
         context_instance=RequestContext(request))
 
 

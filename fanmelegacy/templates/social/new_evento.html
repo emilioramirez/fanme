@@ -14,6 +14,7 @@
 {% block mystylesheet-dashboard %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
 {% endblock mystylesheet-dashboard %}
 
 {% block myjavascript %}
@@ -28,23 +29,94 @@
             myCalendar2.setDateFormat("%d/%m/%Y");
         }
     </script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5oH8nVPAHgFub2orh1UBYNd7PCUa8vKw&sensor=false"></script>
+    <script>
+        var map;
+        var myCenter=new google.maps.LatLng(-31.416651238629328, -64.1835880279541);
+
+        function initialize()
+        {
+            var mapProp = {
+              center:myCenter,
+              zoom:14,
+              mapTypeId:google.maps.MapTypeId.HYBRID
+              };
+
+            map=new google.maps.Map(document.getElementById("googleMap")
+              ,mapProp);
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            //Agrego el listener para agregar un marcador en el mapa.
+            google.maps.event.addListener(map, 'click', function(event) {
+                placeMarker(event.latLng);
+              });
+        }
+
+        function placeMarker(location) {
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map,
+              });
+              var infowindow = new google.maps.InfoWindow({
+                content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+              });
+              infowindow.open(map,marker);
+            }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 {% endblock myjavascript %}
 
 {% block bodystuff %}
     onload="doOnLoad();"
 {% endblock %}
 
-
-
-
 {% block dashboard %}
-    <div class="eventos-content">
+    <div class="title-messages">Nuevo evento</div>
+    <div class="notifications-content">
         <div class="form-nuevo-evento">
             <form action="/social/nuevo/" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table class="new-evento-table">
-                    {{ form.as_table}}
-                </table>
-                <input type="submit" value="Crear" class="submit"/>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.nombre.errors }}
+                    <label for="id_user_to_id" class="evento-name-label">Nombre:</label>
+                    {{ form.nombre }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.tipo.errors }}
+                    <label for="id_user_to_id" class="evento-tipo-label">Tipo:</label>
+                    {{ form.tipo }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.fecha_inicio.errors }}
+                    <label for="id_user_to_id" class="evento-date-desde-label">Fecha Inicio:</label>
+                    {{ form.fecha_inicio }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.fecha_fin.errors }}
+                    <label for="id_user_to_id" class="evento-date-fin-label">Fecha Fin:</label>
+                    {{ form.fecha_fin }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.descripcion.errors }}
+                    <label for="id_user_to_id" class="evento-description-label">Descripcion:</label>
+                    {{ form.descripcion }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.invitados.errors }}
+                    <label for="id_user_to_id" class="evento-users-label">Invitados:</label>
+                    {{ form.invitados }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div id="googleMap" style="width:500px;height:400px; margin-left:30px;"></div>
+                <div class="new-notification-clear"></div>
+                <input type="submit" value="Crear" class="submit" style="margin-right:31px;"/>
             </form>
         </div>
     </div>

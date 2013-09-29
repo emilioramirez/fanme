@@ -344,6 +344,18 @@ body{}
             .new-evento-table{}
             .new-evento-table tr{}
             .form-nuevo-evento input{}
+            .form-nuevo-evento input[value="Nombre"]{
+                width: 170px;
+            }
+            .form-nuevo-evento select[id="id_tipo"]{
+                width: 173px;
+            }
+            .form-nuevo-evento select[id="id_invitados"]{
+                width: 398px;
+            }
+            .form-nuevo-evento textarea{
+                width: 391px;
+            }
             .form-nuevo-evento .submit{
                 background: url("../images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
                 border: medium none;
@@ -354,7 +366,7 @@ body{}
                 height: 33px;
                 width: 72px;
             }
-            .field-evento-new{border: 1px solid grey; width: 85%;}}
+            .field-evento-new{border: 1px solid grey; width: 70%;}}
 
             .evento{}
             .evento a{ float: right;}
