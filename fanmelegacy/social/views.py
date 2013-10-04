@@ -57,10 +57,14 @@ def new_evento(request):
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
         form.fields["invitados"].queryset = users
+        latitud = request.POST.get("latitud", "")
+        longitud = request.POST.get("longitud", "")
         if form.is_valid():
             evento = form.save(commit=False)
             creador = request.user
             evento.creador = creador
+            evento.latitud = latitud
+            evento.longitud = longitud
             evento.fecha_creacion = datetime.now()
             try:
                 evento.imagen = request.FILES['imagen']
@@ -69,6 +73,8 @@ def new_evento(request):
             evento.save()
             form.save_m2m()
             return HttpResponseRedirect('/social/eventos/')
+        else:
+            print form.errors
     else:
         form = EventoForm()
         list_ids = request.user.followers.values_list('user', flat=True)
@@ -134,6 +140,22 @@ def delete_evento(request, evento_id):
         evento_db = Evento.objects.get(id=evento_id)
         if (evento_db.creador == request.user):
             evento_db.delete()
+        return HttpResponseRedirect('/social/eventos/')
+    except Evento.DoesNotExist:
+        return HttpResponseRedirect('/social/eventos/')
+    template_vars = RequestContext(request, {
+        'form_search': searchbox, 'evento': evento_db})
+    return render_to_response('social/edit_evento.html', template_vars)
+
+
+@login_required(login_url='/accounts/user/')
+def cancelar_evento(request, evento_id):
+    searchbox = SearchBox()
+    try:
+        evento_db = Evento.objects.get(id=evento_id)
+        if (evento_db.creador == request.user):
+            evento_db.estado = 'cancelado'
+            evento_db.save()
         return HttpResponseRedirect('/social/eventos/')
     except Evento.DoesNotExist:
         return HttpResponseRedirect('/social/eventos/')

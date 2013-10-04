@@ -141,7 +141,8 @@ INSTALLED_APPS = (
     'social',
     'south',
     'django_extensions',
-    'registration'
+    'registration',
+    'fanmelegacy'
 )
 
 # A sample logging configuration. The only tangible logging

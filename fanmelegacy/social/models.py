@@ -19,12 +19,13 @@ class Evento(models.Model):
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
     fecha_creacion = models.DateField()
-    localizacion = models.ForeignKey(Localizacion)
     creador = models.ForeignKey(User, related_name="eventos_creados")
     estado = models.CharField(default="noleido", max_length=30)
     tipo = models.ForeignKey(TipoEvento, default="", null=True, blank=True)
     imagen = models.ImageField(default='images/calendario-default.png',
         upload_to="eventos")
+    latitud = models.CharField(default="0.0", max_length=30)
+    longitud = models.CharField(default="0.0", max_length=30)
 
     def __unicode__(self):
         return self.descripcion

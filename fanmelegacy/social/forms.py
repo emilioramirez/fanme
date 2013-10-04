@@ -52,7 +52,6 @@ class EventoForm(forms.ModelForm):
             'tipo',
             'fecha_inicio',
             'fecha_fin',
-            'localizacion',
             'descripcion',
             'invitados',
             'imagen',
