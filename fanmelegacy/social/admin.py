@@ -7,7 +7,7 @@ class EventoAdmin(admin.ModelAdmin):
 #    fields =
     filter_horizontal = ('invitados',)
     list_display = ('nombre', 'fecha_creacion', 'fecha_inicio', 'fecha_fin',
-        'localizacion', 'creador', 'estado')
+        'creador', 'estado')
     list_filter = ('estado', 'tipo')
     list_per_page = 50
     ordering = ('-fecha_creacion', '-fecha_inicio', 'nombre')

@@ -12,9 +12,11 @@
 {% block mystylesheet-dashboard %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
 {% endblock mystylesheet-dashboard %}
 
 {% block myjavascript %}
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5oH8nVPAHgFub2orh1UBYNd7PCUa8vKw&sensor=false"></script>
     <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
     <script>
@@ -26,6 +28,33 @@
             myCalendar2.setDateFormat("%d/%m/%Y");
         }
     </script>
+    <script>
+      $( document ).ready(function() {
+        var longitud = {{ evento.longitud }};
+        var latitud = {{ evento.latitud }};
+        var myCenter = new google.maps.LatLng(latitud,longitud);
+        var marker;
+
+        function initialize()
+        {
+            var mapProp = {
+              center:myCenter,
+              zoom:19,
+              mapTypeId:google.maps.MapTypeId.HYBRID
+              };
+
+            map=new google.maps.Map(document.getElementById("googleMap")
+              ,mapProp);
+
+          var marker = new google.maps.Marker({
+              position: myCenter,
+              map: map
+          });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+      });
+</script>
 {% endblock myjavascript %}
 
 {% block bodystuff %}
@@ -33,19 +62,61 @@
 {% endblock %}
 
 
-
-
 {% block dashboard %}
-    <div class="eventos-content">
+    <div class="title-messages">Editar evento</div>
+    <div class="notifications-content">
         <div class="form-nuevo-evento">
             <form action="/social/evento/edit/{{ evento.id }}" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>
-                    {{ form.as_table}}
-                </table>
-            <input type="submit" value="Guardar" class="submit"/>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.nombre.errors }}
+                    <label for="id_user_to_id" class="evento-name-label">Nombre:</label>
+                    {{ form.nombre }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.tipo.errors }}
+                    <label for="id_user_to_id" class="evento-tipo-label">Tipo:</label>
+                    {{ form.tipo }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.fecha_inicio.errors }}
+                    <label for="id_user_to_id" class="evento-date-desde-label">Fecha Inicio:</label>
+                    {{ form.fecha_inicio }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.fecha_fin.errors }}
+                    <label for="id_user_to_id" class="evento-date-fin-label">Fecha Fin:</label>
+                    {{ form.fecha_fin }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.descripcion.errors }}
+                    <label for="id_user_to_id" class="evento-description-label">Descripcion:</label>
+                    {{ form.descripcion }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.invitados.errors }}
+                    <label for="id_user_to_id" class="evento-users-label">Invitados:</label>
+                    {{ form.invitados }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div id="googleMap" style="width:500px;height:400px; margin-left:30px;"></div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-notification">
+                    {{ form.imagen.errors }}
+                    <label for="fecha_expiracion" class="notification-imagen-label">Imagen:</label>
+                    {{ form.imagen }}
+                </div>
+                <input type="hidden" name="latitud" id="latitud" value="" />
+                <input type="hidden" name="longitud" id="longitud" value="" />
+                <input type="submit" value="Crear" class="submit" style="margin-right:31px;"/>
             </form>
         </div>
-        <div class="evento-editar"><a href="/social/evento/delete/{{ evento.id }}">Borrar</a></div>
+        <div class="evento-editar" style="padding: 8px 6px;"><a href="/social/evento/cancelar/{{ evento.id }}">Cancelar</a></div>
     </div>
 {% endblock dashboard %}
 

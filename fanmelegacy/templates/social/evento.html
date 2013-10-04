@@ -8,6 +8,63 @@
     </ul>
 {% endblock menuOptionsSelected %}
 
+{% block myjavascript %}
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5oH8nVPAHgFub2orh1UBYNd7PCUa8vKw&sensor=false"></script>
+    <script>
+        var map;
+        var longitud = document.getElementById('longitud').value;
+        var latitud = document.getElementById('latitud').value;
+        var myCenter = new google.maps.LatLng(longitud,latitud);
+        var marker;
+
+        function initialize()
+        {
+            var mapProp = {
+              center:myCenter,
+              zoom:14,
+              mapTypeId:google.maps.MapTypeId.HYBRID
+              };
+
+            map=new google.maps.Map(document.getElementById("googleMap")
+              ,mapProp);
+
+          var marker = new google.maps.Marker({
+              position: myLatlng,
+              map: map
+          });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <script>
+      $( document ).ready(function() {
+        var longitud = {{ evento.longitud }};
+        var latitud = {{ evento.latitud }};
+        var myCenter = new google.maps.LatLng(latitud,longitud);
+        var marker;
+
+        function initialize()
+        {
+            var mapProp = {
+              center:myCenter,
+              zoom:19,
+              mapTypeId:google.maps.MapTypeId.HYBRID
+              };
+
+            map=new google.maps.Map(document.getElementById("googleMap")
+              ,mapProp);
+
+          var marker = new google.maps.Marker({
+              position: myCenter,
+              map: map
+          });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+      });
+  </script>
+{% endblock myjavascript %}
+
 {% block dashboard %}
     <div class="eventos-content">
         <div class='eventos-titulo'>Evento</div>
@@ -38,7 +95,8 @@
                 </div>
                 <div class='evento-fields'>
                     <div class='evento-label'>¿Donde?</div>
-                    <div class='evento-field'>{{ evento.localizacion }}</div>
+                    <div class="new-notification-clear"></div>
+                    <div id="googleMap" style="width:450px;height:400px; margin-left:73px; margin-top: -1px;"></div>
                     <div class="clear"></div>
                 </div>
                 <div class='evento-fields'>
@@ -66,6 +124,8 @@
         {% else %}
             <div>No existe este evento</div>
         {% endif %}
+        <input type="hidden" name="latitud" id="latitud" value="" />
+        <input type="hidden" name="longitud" id="longitud" value="" />
     </div>
 {% endblock dashboard %}
 
