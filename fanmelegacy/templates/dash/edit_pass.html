@@ -18,10 +18,21 @@
             if(confirm_pass == '')
             {
                 alert("Debe confirmar la nueva contraseña");
+                document.getElementById('my-form').onsubmit = function() {
+                    return false;
+                }
             }
             else if(new_pass != confirm_pass)
             {
                 alert("La nueva contraseña no coincide");
+                document.getElementById('my-form').onsubmit = function() {
+                    return false;
+                }
+            }
+            else{
+                document.getElementById('my-form').onsubmit = function() {
+                    return true;
+                }
             }
         }
     </script>
@@ -47,7 +58,7 @@
     <div class="edit-account">
         <div class="edit-pass-content">
             <div class="edit-pass-form">
-                <form action="/dash/edit_pass/" method="post">{% csrf_token %}
+                <form action="/dash/edit_pass/" method="post" id="my-form">{% csrf_token %}
                     <div class="edit-pass-content-label">
                         {{ form_update.actual_pass.errors }}
                         <label for="id_actual_pass" class="edit-pass-content-label1">Contraseña Actual:</label>
