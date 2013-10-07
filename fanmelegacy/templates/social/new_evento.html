@@ -71,9 +71,6 @@
             google.maps.event.addListener(map, 'click', function(event) {
                 placeMarker(event.latLng);
               });
-            google.maps.event.addListener(map, 'click', function() {
-                geocodePosition(marker.getPosition());
-                });
         }
 
         function placeMarker(location) {
@@ -86,6 +83,9 @@
                     content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
                   });
                 infowindow.open(map,marker);*/
+                google.maps.event.addListener(marker, 'click', function() {
+                    geocodePosition(marker.getPosition());
+                    });
                 geocodePosition(marker.getPosition());
                 latitud = location.lat();
                 longitud = location.lng();
@@ -98,6 +98,9 @@
                 longitud = location.lng();
                 document.getElementById('longitud').value = longitud;
                 document.getElementById('latitud').value = latitud;
+                google.maps.event.addListener(marker, 'click', function() {
+                    geocodePosition(marker.getPosition());
+                    });
             }
         }
 

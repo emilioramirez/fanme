@@ -181,4 +181,4 @@ ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, us
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
 
-from local_settings import *
+#from local_settings import *
