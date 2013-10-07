@@ -31,7 +31,6 @@ def item(request, item_id):
         #is_fan = request.user.persona.items.filter(nombre=item.nombre)
         is_fan = False
         item_plan = PlanXEmpresa.objects.filter(item=item)
-        mostrar_boton_enlace = True
         try:
             request.user.persona
         except:
@@ -41,8 +40,6 @@ def item(request, item_id):
             if enlace_externo.fecha_fin_vigencia > date.today():
                 empresa = Empresa.objects.get(user_id=enlace_externo.empresa.id)
                 empresas.append(empresa)
-        if item.enlaces_externos.count:
-            print item.enlaces_externos
         comments = item.comentarios_recibidos.all().order_by('fecha')
     except Item.DoesNotExist:
         raise Http404
@@ -60,7 +57,8 @@ def puede_registrar_enlace(request, item):
         ret = True
     else:
         plan = planes[0]
-        if plan.fecha_fin_vigencia > date.today():
+        esta_item_en_el_plan = plan.item.get(pk=item.id)
+        if plan.fecha_fin_vigencia > date.today() and esta_item_en_el_plan == None:
             ret = True
     return ret
 
