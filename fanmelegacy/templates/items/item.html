@@ -32,8 +32,8 @@
             <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
             <div class="item-nombre">{{ item }}</div>
             <div class="item-score">
-                <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
-                {{ item.persona_set.count }}
+                <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" style="margin-top:-1px;" alt="Score">
+                <span style="vertical-align:top;">{{ item.persona_set.count }}</span>
             </div>
             <div class="clear"></div>
         </div>
@@ -102,9 +102,11 @@
             <ul class="image-list">
             {% for empresa in empresas %}
                 {% if empresa.avatar %}
-                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ user.empresa.avatar.url_50x50 }}" alt="Score" /></a></li>
+                    <!--<li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ user.empresa.avatar.url_50x50 }}" alt="Score" /></a></li>-->
+                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url user 50 %}" alt="" /></a></li>
                 {% else %}
-                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ STATIC_URL }}images/020.png" alt="Logo" /></a></li>
+                    <!--<li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ STATIC_URL }}images/020.png" alt="Logo" /></a></li>-->
+                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url user 50 %}" alt="" /></a></li>
                 {% endif%}
             {% endfor %}
             </ul>
@@ -151,12 +153,12 @@
                 </div>
                 <div class="comment-user-add">
                     <p class="comment-username-add">{{ user.first_name }} {{ user.last_name }}</p>
-                    <!-- {# 
+                    <!-- {#
                         <form action="/items/comment/{{ item.id }}" method="post">{% csrf_token %}
                             {{ comment_form.as_p }}
                             <input type="submit" value="Comentar" class="submit" style="float: right; margin-right: 63px; margin-top: -4px;"/>
                         </form>
-                     #} -->   
+                     #} -->
                      {% if user.is_authenticated %}
                         {% get_comment_form for item as form %}
                         <form action="{% comment_form_target %}" method="POST">
