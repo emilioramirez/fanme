@@ -27,7 +27,7 @@
 
 {% block dashboard %}
     <div class="form-recomend-user">
-        <form action="/items/recomendation/{{ item.id }}" method="post">{% csrf_token %}
+        <form action="/items/recomendation/{{ item.id }}/" method="post">{% csrf_token %}
             <div class="list-posible-user-recomend">
                 {% for persona in usuarios %}
                     <div class="posible-user-recomend">
@@ -53,7 +53,7 @@
                 {% endfor %}
 
             </div>
-            <input type="submit" value="Recomendar" class="submit"/>
+            <input type="submit" value="Recomendar" class="submit" />
         </form>
     </div>
 {% endblock dashboard %}
