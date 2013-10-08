@@ -42,12 +42,14 @@ def dashboard(request):
                 items_by_topics.append(lista)
         notificaciones_noleidas = get_cant_notificaciones(request)
         recomendaciones_noleidas = get_cant_recomendaciones(request)
+        mensajes_nolidas = get_cant_mensajes(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/dashboard.html', {'form_search': searchbox,
         'topicos': items_by_topics,
         'notificaciones_noleidas': notificaciones_noleidas,
         'recomendaciones_noleidas': recomendaciones_noleidas,
+        'mensajes_nolidas':mensajes_nolidas,
         'r_topics': root_topics},
         context_instance=RequestContext(request))
 
@@ -116,17 +118,19 @@ def logbook(request):
                 key=attrgetter('fecha'), reverse=True)
         notificaciones_noleidas = get_cant_notificaciones(request)
         recomendaciones_noleidas = get_cant_recomendaciones(request)
+        mensajes_nolidas = get_cant_mensajes(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/logbook.html', {'form_search': searchbox,
         'notificaciones_noleidas': notificaciones_noleidas,
         'recomendaciones_noleidas': recomendaciones_noleidas,
+        'mensajes_nolidas':mensajes_nolidas,
         'actividades': actividades}, context_instance=RequestContext(request))
 
 
 def get_cant_notificaciones(request):
-    return request.user.notificaciones_recibidas.filter(
-            estado='noleido').count()
+    return request.user.notificaciones_recibidas.filter(~Q(estado='leido')).count()
+            #estado='noleido').count()
 
 
 def get_cant_recomendaciones(request):
@@ -418,3 +422,8 @@ def temas_de_ayuda(request):
         {'form_search': searchbox,
         'form_login': form_login},
         context_instance=RequestContext(request))
+
+
+def get_cant_mensajes(request):
+    return request.user.mensajes_recibidos.filter(
+            estado='noleido').count()

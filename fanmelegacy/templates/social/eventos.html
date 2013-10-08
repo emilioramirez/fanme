@@ -26,6 +26,9 @@
                     <div class='i-content'>
                         <div class="i-title">
                                 {{ evento.nombre }}   {{ evento.fecha_inicio }}
+                                {% if evento.estado != 'leido' %}
+                                    ({{ evento.estado }})
+                                {% endif %}
                                 <div class="i-title-options">
                                     <a href="/social/evento/edit/{{ evento.id }}" title="Editar este evento"><div class="i-title-options-edit"></div></a>
                                     <a href="/social/evento/delete/{{ evento.id }}" title="Cancelar este evento"><div class="i-title-options-delete"></div></a>
