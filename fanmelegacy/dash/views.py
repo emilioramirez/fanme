@@ -41,11 +41,13 @@ def dashboard(request):
                 lista = Item.objects.filter(nombre=itemname)
                 items_by_topics.append(lista)
         notificaciones_noleidas = get_cant_notificaciones(request)
+        recomendaciones_noleidas = get_cant_recomendaciones(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/dashboard.html', {'form_search': searchbox,
         'topicos': items_by_topics,
         'notificaciones_noleidas': notificaciones_noleidas,
+        'recomendaciones_noleidas': recomendaciones_noleidas,
         'r_topics': root_topics},
         context_instance=RequestContext(request))
 
@@ -113,15 +115,22 @@ def logbook(request):
                     user.act_origen.all(), actividades),
                 key=attrgetter('fecha'), reverse=True)
         notificaciones_noleidas = get_cant_notificaciones(request)
+        recomendaciones_noleidas = get_cant_recomendaciones(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/logbook.html', {'form_search': searchbox,
         'notificaciones_noleidas': notificaciones_noleidas,
+        'recomendaciones_noleidas': recomendaciones_noleidas,
         'actividades': actividades}, context_instance=RequestContext(request))
 
 
 def get_cant_notificaciones(request):
     return request.user.notificaciones_recibidas.filter(
+            estado='noleido').count()
+
+
+def get_cant_recomendaciones(request):
+    return request.user.recomendaciones_recibidas.filter(
             estado='noleido').count()
 
 
