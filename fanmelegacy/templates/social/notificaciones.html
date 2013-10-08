@@ -62,9 +62,12 @@
                 <div class='i-content'>
                     <div class="i-title">
                         {{ notificaciones.nombre }}
+                        {% if notificaciones.estado != 'leido' %}
+                            ({{ notificaciones.estado }})
+                        {% endif %}
                         <div class="i-title-options">
                             <a href="/social/notificacion/edit/{{ notificaciones.id }}" title="Editar esta notificacion"><div class="i-title-options-edit"></div></a>
-                            <a href="/social/notificacion/delete/{{ notificaciones.id }}" title="ELIMINAR esta notificacion"><div class="i-title-options-delete"></div></a>
+                            <a href="/social/notificacion/delete/{{ notificaciones.id }}" title="Cancelar esta notificacion"><div class="i-title-options-delete"></div></a>
                         </div>
                     </div>
                     <div class="i-body">

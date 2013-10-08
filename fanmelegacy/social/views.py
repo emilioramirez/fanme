@@ -142,7 +142,8 @@ def delete_evento(request, evento_id):
     try:
         evento_db = Evento.objects.get(id=evento_id)
         if (evento_db.creador == request.user):
-            evento_db.delete()
+            evento_db.estado = 'cancelado'
+            evento_db.save()
         return HttpResponseRedirect('/social/eventos/')
     except Evento.DoesNotExist:
         return HttpResponseRedirect('/social/eventos/')
@@ -212,7 +213,7 @@ def new_message(request):
             message.user_from_id = request.user.id
             message.user_to_id = user_to_id
             message.mensaje = mensaje
-            message.fecha = datetime.datetime.now()
+            message.fecha = datetime.now()
             message.save()
             messages.append("Tu mensaje ha sido enviado exitosamente")
             form_new_message = MessageForm()
@@ -241,7 +242,7 @@ def messages_user(request, user_id):
                 message.user_from_id = request.user.id
                 message.user_to_id = user_id
                 message.mensaje = mensaje
-                message.fecha = datetime.datetime.now()
+                message.fecha = datetime.now()
                 message.save()
                 form_response_message = MessageResponseForm()
                 mensajes = getMensajes(request, user_id)
@@ -477,7 +478,8 @@ def delete_notificacion(request, notificacion_id):
     try:
         notificacion_db = Notificacion.objects.get(id=notificacion_id)
         if (notificacion_db.empresa == request.user):
-            notificacion_db.delete()
+            notificacion_db.estado = 'cancelada'
+            notificacion_db.save()
         return HttpResponseRedirect('/social/notificaciones/')
     except Notificacion.DoesNotExist:
         return HttpResponseRedirect('/social/notificaciones/')
@@ -618,4 +620,9 @@ def ver_notificacion(request, notificacion_id):
 
 def get_cant_recomendaciones(request):
     return request.user.recomendaciones_recibidas.filter(
+            estado='noleido').count()
+
+
+def get_cant_mensajes(request):
+    return request.user.mensajes_recibidos.filter(
             estado='noleido').count()
