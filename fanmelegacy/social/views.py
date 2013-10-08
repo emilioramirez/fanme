@@ -39,13 +39,15 @@ def eventos(request):
             evento.estado = "leido"
             evento.save()
         notificaciones_noleidas = get_cant_notificaciones(request)
+        recomendaciones_noleidas = get_cant_recomendaciones(request)
     except Evento.DoesNotExist:
         eventos_invitado = []
     if eventos_creados or eventos_invitado:
         no_hay_eventos = False
     temp = RequestContext(request, {'eventos_creados': eventos_creados,
         'eventos_invitado': eventos_invitado, 'no_hay_eventos': no_hay_eventos,
-        'form_search': searchbox, 'notificaciones_noleidas': notificaciones_noleidas})
+        'form_search': searchbox, 'notificaciones_noleidas': notificaciones_noleidas,
+        'recomendaciones_noleidas': recomendaciones_noleidas})
     return render_to_response('social/eventos.html', temp)
 
 
@@ -80,8 +82,9 @@ def new_evento(request):
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
         form.fields["invitados"].queryset = users
+        recomendaciones_noleidas = get_cant_recomendaciones(request)
     template_vars = RequestContext(request, {"form": form,
-        'form_search': searchbox})
+        'form_search': searchbox, 'recomendaciones_noleidas':recomendaciones_noleidas})
     return render_to_response('social/new_evento.html', template_vars)
 
 
@@ -178,10 +181,12 @@ def messages(request):
             msj.estado = "leido"
             msj.save()
         notificaciones_noleidas = get_cant_notificaciones(request)
+        recomendaciones_noleidas = get_cant_recomendaciones(request)
     except Persona.DoesNotExist:  # Esto para que esta?
         return HttpResponseRedirect('/dash/empresa/')  # Esto para que esta?
     return render_to_response('social/messages.html', {'form_search': searchbox,
-        'usuarios': usuarios, 'notificaciones_noleidas': notificaciones_noleidas},
+        'usuarios': usuarios, 'notificaciones_noleidas': notificaciones_noleidas,
+        'recomendaciones_noleidas':recomendaciones_noleidas},
         context_instance=RequestContext(request))
 
 
@@ -196,6 +201,7 @@ def new_message(request):
     messages=[]
     list_ids = request.user.followers.values_list('user', flat=True)
     users = User.objects.filter(id__in=list_ids)
+    recomendaciones_noleidas = get_cant_recomendaciones(request)
     if request.method == 'POST':
         form_new_message = MessageForm(request.POST)
         form_new_message.fields["user_to_id"].queryset = users
@@ -218,7 +224,7 @@ def new_message(request):
         form_new_message.fields["user_to_id"].queryset = users
     return render_to_response('social/new_message.html',
         {'form_new_message': form_new_message,
-        'form_search': searchbox,
+        'form_search': searchbox, 'recomendaciones_noleidas': recomendaciones_noleidas,
         'messages': messages},
         context_instance=RequestContext(request))
 
@@ -406,6 +412,7 @@ def notificaciones(request):
         notificaciones_enviadas = request.user.notificaciones_enviadas.all()
         consultas_noleidas = request.user.consultas_recibidas.filter(
             estado="noleido").count()
+        recomendaciones_noleidas = get_cant_recomendaciones(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/notificaciones.html', {
@@ -567,12 +574,14 @@ def user_main_view_notifications(request):
         for dict in notificaciones_recibidas.all():
             usuarios.append(User.objects.get(id=dict['empresa']))
         notificaciones_noleidas = get_cant_notificaciones(request)
+        recomendaciones_noleidas = get_cant_recomendaciones(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/user_main_notification.html', {
         'form_search': searchbox,
         'notificaciones_recibidas': usuarios,
-        'notificaciones_noleidas': notificaciones_noleidas,},
+        'notificaciones_noleidas': notificaciones_noleidas,
+        'recomendaciones_noleidas': recomendaciones_noleidas},
         context_instance=RequestContext(request))
 
 
@@ -605,3 +614,8 @@ def ver_notificacion(request, notificacion_id):
         'notificacion': notificaciones,
         'notificaciones_noleidas': notificaciones_noleidas,},
         context_instance=RequestContext(request))
+
+
+def get_cant_recomendaciones(request):
+    return request.user.recomendaciones_recibidas.filter(
+            estado='noleido').count()
