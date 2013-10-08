@@ -39,7 +39,7 @@ class UserUpdateForm(forms.Form):
         label='Email',
         error_messages={'required': 'Es necesario su Email',
             'invalid': 'Correo electronico no valido'},
-        widget=forms.TextInput(attrs={'class': 'edit-account-email-field'}))
+        widget=forms.TextInput(attrs={'class': 'edit-account-email-field', 'readonly':'readonly'}))
     birth_date = forms.DateField(
         label='Fecha de Nacimiento',
         initial='',
