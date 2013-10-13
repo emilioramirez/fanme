@@ -17,6 +17,7 @@ from fanmelegacy import recommendations
 from accounts.forms import UserLogin
 from itertools import chain
 from operator import attrgetter
+from django.contrib.auth import logout
 
 
 @login_required(login_url='/accounts/user/')
@@ -427,3 +428,12 @@ def temas_de_ayuda(request):
 def get_cant_mensajes(request):
     return request.user.mensajes_recibidos.filter(
             estado='noleido').count()
+
+
+@login_required(login_url='/accounts/user/')
+def dar_baja_cuenta(request):
+    account = request.user
+    account.is_active = False
+    account.save()
+    logout(request)
+    return HttpResponseRedirect('/accounts/user/')
