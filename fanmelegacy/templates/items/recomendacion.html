@@ -1,0 +1,59 @@
+{% extends "dash/dashboard.html" %}
+
+{% block myjavascript %}
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+{% endblock myjavascript %}
+
+{% block searchBox %}
+    <div class="header-search-box">
+        <form action="/dash/results/" method="post">{% csrf_token %}
+            {{ form_search.as_p}}
+            <!--<input type="submit" value="Registrate" class="submit"/>-->
+        </form>
+    </div>
+{% endblock searchBox %}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+            <ul class="menu-options">
+                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+            </ul>
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div class="form-recomend-user">
+        <form action="/items/recomendation/{{ item.id }}/" method="post">{% csrf_token %}
+            <div class="list-posible-user-recomend">
+                {% for persona in usuarios %}
+                    <div class="posible-user-recomend">
+                        <div class="logged-user-photo">
+                           {% if persona.avatar %}
+                                <img src="{{ persona.avatar.url_50x50 }}" alt="Logo" />
+                            {% else %}
+                                {% if persona %}
+                                    {% if persona.sexo == "M" %}
+                                        <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
+                                    {% else %}
+                                        <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
+                                    {% endif%}
+                                {% else %}
+                                        <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
+                                {% endif%}
+                            {% endif%}
+                        </div>
+                        <div class="user-recomend-name list-item-recomend"> {{ persona.user.first_name }} {{ persona.user.last_name }} - {{ persona.user.email }}</div>
+                        <div class="user-recomend-checkbox list-item-recomend"><input type="checkbox" name="recomendados" value="{{ persona.user.id }}" /></div>
+                    </div>
+                    <div class="clear"></div>
+                {% endfor %}
+
+            </div>
+            <input type="submit" value="Recomendar" class="submit" />
+        </form>
+    </div>
+{% endblock dashboard %}
