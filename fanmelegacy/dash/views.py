@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+import operator
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
@@ -150,19 +151,34 @@ def results(request):
     searchbox = SearchBox(request.POST)
     if searchbox.is_valid():
         search = searchbox.cleaned_data['string']
-        #Get the 8 first items that match with the search
-        first_items = Item.objects.filter(nombre__icontains=search)[:8]
-        #Get the 8 first users that match with the search
+        list_of_words = search.strip().split(" ")
+        # Get the 8 first items that match with the search
+        # reduce(operator.or_, (Q(first_name__contains=x) for x in ['x', 'y', 'z']))
+        # Model.objects.filter(reduce(...))
+        # Is equivalent to:
+        # Model.objects.filter(Q(first_name__contains='x') | Q(first_name__contains='y') | Q(first_name__contains='z'))
+        first_items = Item.objects.filter(
+                        reduce(operator.or_,
+                              (Q(nombre__icontains=x) for x in list_of_words)
+                        )
+                    )[:8]
         first_users = User.objects.filter(
-            Q(first_name__icontains=search) | Q(last_name__icontains=search),
-            ~Q(id=request.user.id))
-        #user_match = User.objects.filter(first_name__icontains=search).
-        #first_users = user_contain | user_match
+                    reduce(operator.or_,
+                          (Q(first_name__icontains=x) | Q(last_name__icontains=x) for x in list_of_words)
+                    ),
+                    ~Q(id=request.user.id))
         #Get the 8 first organizations that match with the search
         first_organizations = Empresa.objects.filter(
-        razon_social__icontains=search)[:8]
+                reduce(operator.or_,
+                      (Q(razon_social__icontains=x) for x in list_of_words)
+                )
+            )[:8]
         #Get the 8 first topics that match with the search
-        first_topics = Topico.objects.filter(nombre__icontains=search)[:8]
+        first_topics = Topico.objects.filter(
+                reduce(operator.or_,
+                      (Q(nombre__icontains=x) for x in list_of_words)
+                )
+            )[:8]
     else:
         return render_to_response('dash/results.html',
             {'form_search': searchbox},
