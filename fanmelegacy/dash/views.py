@@ -227,6 +227,7 @@ def logbook_user(request, user_id):
     try:
         user_logbook = User.objects.get(id=user_id)
         my_profile = request.user.persona
+        print user_logbook
         if not my_profile.following.filter(id=user_logbook.id):
             return HttpResponseRedirect('/dash/follow/{0}'.format(user_id))
     except Persona.DoesNotExist:
@@ -437,3 +438,27 @@ def dar_baja_cuenta(request):
     account.save()
     logout(request)
     return HttpResponseRedirect('/accounts/user/')
+
+
+@login_required(login_url='/accounts/user/')
+def dejar_de_seguir_usuario(request, user_id):
+    user_to_follow = User.objects.get(id=user_id)
+    my_profile = request.user.persona
+    my_profile.following.remove(user_to_follow)
+    return HttpResponseRedirect('/dash/follow/{0}'.format(user_id))
+
+
+@login_required(login_url='/accounts/user/')
+def dejar_de_seguir_usuarios(request):
+    searchbox = SearchBox()
+    if request.method == 'POST':
+        my_profile = request.user.persona
+        lista_dejar_de_seguir = request.POST.getlist('eliminados')
+        for user in lista_dejar_de_seguir:
+            user_to_unfollow = User.objects.get(id=user)
+            my_profile.following.remove(user_to_unfollow)
+        return HttpResponseRedirect('dash/logbook.html')
+    else:
+        return render_to_response('dash/dejar_de_seguir.html',
+            {'form_search': searchbox},
+            context_instance=RequestContext(request))
