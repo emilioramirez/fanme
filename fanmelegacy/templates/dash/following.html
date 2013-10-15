@@ -50,6 +50,8 @@
                 {% endfor %}
             </div>
         </div>
-        <a href="/dash/dejar_de_seguir_usuarios" class="button-input" style="text-decoration: none; padding: 4px 13px; margin-right:-32px;">Dejar de seguir</a>
+        {% if user.persona.following.all.count > 0 %}
+            <a href="/dash/dejar_de_seguir_usuarios" class="button-input" style="text-decoration: none; padding: 4px 13px; margin-right:-32px;">Dejar de seguir</a>
+        {% endif %}
     </div>
 {% endblock dashboard %}
