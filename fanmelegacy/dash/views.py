@@ -451,14 +451,20 @@ def dejar_de_seguir_usuario(request, user_id):
 @login_required(login_url='/accounts/user/')
 def dejar_de_seguir_usuarios(request):
     searchbox = SearchBox()
+    notificaciones_noleidas = get_cant_notificaciones(request)
+    recomendaciones_noleidas = get_cant_recomendaciones(request)
+    mensajes_nolidas = get_cant_mensajes(request)
     if request.method == 'POST':
         my_profile = request.user.persona
         lista_dejar_de_seguir = request.POST.getlist('eliminados')
         for user in lista_dejar_de_seguir:
             user_to_unfollow = User.objects.get(id=user)
             my_profile.following.remove(user_to_unfollow)
-        return HttpResponseRedirect('dash/logbook.html')
+        return HttpResponseRedirect('logbook')
     else:
         return render_to_response('dash/dejar_de_seguir.html',
-            {'form_search': searchbox},
+            {'form_search': searchbox,
+            'notificaciones_noleidas': notificaciones_noleidas,
+            'recomendaciones_noleidas': recomendaciones_noleidas,
+            'mensajes_nolidas': mensajes_nolidas},
             context_instance=RequestContext(request))
