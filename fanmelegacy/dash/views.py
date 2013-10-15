@@ -460,7 +460,7 @@ def dejar_de_seguir_usuarios(request):
         for user in lista_dejar_de_seguir:
             user_to_unfollow = User.objects.get(id=user)
             my_profile.following.remove(user_to_unfollow)
-        return HttpResponseRedirect('logbook')
+        return HttpResponseRedirect('/dash/logbook')
     else:
         return render_to_response('dash/dejar_de_seguir.html',
             {'form_search': searchbox,
