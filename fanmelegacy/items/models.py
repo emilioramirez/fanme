@@ -2,6 +2,8 @@ from django.db import models
 from segmentation.models import Topico
 from django.contrib.auth.models import User
 from fanmelegacy.thumbs import ImageWithThumbsField
+from south.modelsinspector import add_introspection_rules
+add_introspection_rules([], ["^fanmelegacy\.thumbs\.ImageWithThumbsField"])
 
 
 class Item(models.Model):
@@ -87,3 +89,8 @@ class ItemImagen(models.Model):
 
     def __unicode__(self):
         return u'{0} ({1})'.format(self.item, self.imagen.name)
+
+
+class ItemDenuncias(models.Model):
+    item = models.ForeignKey(Item, related_name="item_denunciado")
+    user = models.ForeignKey(User, related_name="usuario_que_denuncia")

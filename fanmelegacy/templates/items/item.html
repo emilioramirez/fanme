@@ -76,7 +76,9 @@
                         <a href="/items/fan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
                     {% endif %}
                     <a href="/items/recomendation/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
-                    <a href="#" ><img src="{{ STATIC_URL }}images/item-button-denunciar.png" alt="Denunciar" /></a>
+                    {% if mostrar_denuncia %}
+                        <a href="/items/denunciar_item/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-denunciar.png" alt="Denunciar" /></a>
+                    {% endif %}
                     {% if is_fan %}
                         <a href="/items/unfan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-buttom-unFan.png" alt="Unfan" /></a>
                     {% endif %}
