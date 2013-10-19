@@ -171,6 +171,7 @@
                             {{ form.timestamp }}
                             {{ form.security_hash }}
                             <input type="hidden" name="next" value="/items/item/{{ item.id }}" />
+                            <input type="hidden" name="mostrar_denuncia" value="{{ mostrar_denuncia }}" />
                             <p>{{ form.comment }}</p>
                             <p><input type="submit" value="Comentar" id="id_submit" /></p>
                         </form>
