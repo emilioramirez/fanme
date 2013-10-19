@@ -12,7 +12,7 @@ from django.contrib.comments.views.utils import next_redirect
 from datetime import datetime, date
 
 from dash.forms import SearchBox
-from items.models import Item, Comentario, Marca, Recomendacion
+from items.models import Item, Comentario, Recomendacion, ItemDenuncias
 from items.models import ItemImagen
 from items.forms import ItemRegisterForm, CommentForm
 from accounts.models import Empresa, Persona
@@ -308,3 +308,29 @@ def delete_own_comment(request, comment_id, next=None):
             {'comment': comment, "next": next},
             RequestContext(request)
         )
+
+
+@login_required(login_url='/accounts/user')
+def denunciar_item(request, item_id):
+    searchbox = SearchBox()
+    messages = []
+    comment_form = CommentForm()
+    item = Item.objects.get(pk=item_id)
+    denuncia = ItemDenuncias()
+    denuncia.item = Item.objects.get(pk=item_id)
+    denuncia.user = request.user
+    denuncia.save()
+    mostrar_denuncia = verificar_si_existe_denuncia(request, item)
+    return render_to_response('items/item.html', {'form_search': searchbox,
+        'item': item, 'comment_form': comment_form, 'messages': messages,
+        'comments': comments, 'mostrar_denuncia': mostrar_denuncia},
+        context_instance=RequestContext(request))
+
+
+def verificar_si_existe_denuncia(request, item):
+    denuncia = ItemDenuncias.objects.filter(item=item).filter(
+        user=request.user)
+    existe_denuncia = True
+    if denuncia != None:
+        existe_denuncia = False
+    return existe_denuncia
