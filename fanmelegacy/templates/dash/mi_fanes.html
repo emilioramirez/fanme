@@ -1,0 +1,62 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+
+{% block dashboard %}
+    <div class="item-messages">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
+    <div class="dashboard-list-items">
+        {% for item, cantidad_comentarios in items %}
+            <div class="item-content">
+                    <div class="item-header">
+                        <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
+                        <div class="item-nombre"><a href="/items/item/{{ item.id }}">{{ item }}</a></div>
+                        <div class="item-score" title="Cantidad de fans">
+                            <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
+                            {{ item.cantidad_fans }}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="item-body">
+                        <div class="item-image" title="Imagen ilustrativa del item">
+                            {% if item.mis_imagenes.count %}
+<!--
+                                {% for itemimagen in item.mis_imagenes.all %}
+                                    <img src="{{ itemimagen.imagen.url_100x100 }}" alt="Score">
+                                {% endfor %}
+-->
+                                <img src="{{ item.first_image }}" alt="Score">
+                            {% else %}
+                                <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                            {% endif %}
+                        </div>
+                        <div class="item-descripcion" title="Descripcion del item">{{ item.descripcion|truncatewords:70 }}</div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="item-footer">
+                        <div class="item-topico">{{ item.topico }}</div>
+                        <div class="item-buttons">
+<!--
+                            <a href="/items/fan/{{ item.id }}" title="Hazte Fan de este item"><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
+-->
+                            <a href="/items/unfan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-buttom-unFan.png" alt="Unfan" /></a>
+                            <a href="/items/recomendation/{{ item.id }}" title="Recomendá este item a tus seguidores"><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+{% endblock dashboard %}
