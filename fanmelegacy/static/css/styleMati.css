@@ -285,7 +285,6 @@ sidebar-follow-user{}
             width: 579px;
         }
         .edit-account-content-label{
-            width: 307px;
             padding: 0px 0px 10px 0px;
         }
         .edit-account-content-label img{
@@ -363,6 +362,7 @@ sidebar-follow-user{}
         float: right;
         height: 32px;
         width: 72px;
+        margin-right: 40px;
     }
     .edit-account-form{
         float: left;
@@ -380,7 +380,6 @@ sidebar-follow-user{}
              width: 100%;
          }
              .edit-pass-content-label{
-                width: 410px;
                 padding: 15px 10px 10px;
             }
                 .edit-pass-content-label1{
@@ -400,7 +399,7 @@ sidebar-follow-user{}
                 float: right;
                 height: 32px;
                 width: 72px;
-                margin: 10px 30px 10px 0;
+                margin: 10px 12px 10px 0;
             }
             .edit-pass-form-field{
                 border: 1px solid #BBBBBB;
