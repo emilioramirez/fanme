@@ -94,3 +94,7 @@ class ItemImagen(models.Model):
 class ItemDenuncias(models.Model):
     item = models.ForeignKey(Item, related_name="item_denunciado")
     user = models.ForeignKey(User, related_name="usuario_que_denuncia")
+
+    def __unicode__(self):
+        return u'{0} para {1}'.format(self.user,
+            self.item)

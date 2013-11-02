@@ -22,7 +22,7 @@ body{}
         position: fixed;
         width: 100%;
         z-index: 50;
-        margin: -8px -7px;
+        margin: 0px -1px;
     }
         .header-logo { float: left; margin: 5px 0 1px 30px; }
 
@@ -34,7 +34,7 @@ body{}
                 float: right;
                 margin-right: 30px;
             }
-            .header-login-form ul { float: left;}
+            .header-login-form ul { float: left; margin-top: 14px;}
             .header-login-form ul li { float: left; list-style: none; margin-right: 10px;}
             .header-login-form ul li input {border: 1px solid #BBBBBB;color: #BBBBBB;height: 26px;}
             .header-login-form ul li ul.errorlist {
@@ -56,6 +56,9 @@ body{}
                 text-decoration: none;
                 color: #4f4f4f;
             }
+            .header-tab{
+                padding: 6px 0.9px 0px 24px!important;
+            }
             .logged-user a:hover {
                 text-decoration: underline;
             }
@@ -72,12 +75,12 @@ body{}
                 .logged-user-menu{float: left; margin: 19px 10px 0 0; }
                     .logged-user-menu a{ text-decoration: none; color: #4f4f4f; font-weight: normal;}
                     .logged-user-menu a:hover { text-decoration: underline; }
-            .header-search-box{ float: left; margin: 0px 0px 0px 35px;}
+            .header-search-box{ float: left; margin: 14px 0px 0px 35px;}
                 .header-seach-form-field{
                     background: url("../images/header-searchbox-lupa.png") no-repeat 240px 6px white;
                     border: 1px solid grey;
                     height: 26px;
-                    width: 250px;
+                    width: 265px;
                     color: #BBBBBB;
                     padding-left: 10px;
                 }
@@ -87,9 +90,9 @@ body{}
                     list-style: none outside none;
                     margin: 0 0 -12px;
                 }
-            .header-menu-options{ float: left; }
+            .header-menu-options{ float: left;}
                 .menu-options{ list-style: none;}
-                .menu-options li{ float: left; height: 22px; width: 86px; padding: 7px 0 0 0; text-align: center;}
+                .menu-options li{ float: left; height: 22px; width: 86px; padding: 2px 0 0 0; text-align: center;}
                 .menu-options li a{ text-decoration: none; }
                     .menu-item-selected{
                         background: url("../images/header-menu-item-selected.png") no-repeat scroll 0px 0px transparent;
@@ -500,7 +503,7 @@ body{}
                         font-size: 14px;
                         font-weight: bold;
                         height: 36px;
-                        margin: 20px 0 0 20px;
+                        margin: 10px 0 15px 25px;
                         padding: 9px 0 0 50px;
                         width: 184px;
                     }

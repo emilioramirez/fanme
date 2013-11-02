@@ -142,7 +142,8 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'registration',
-    'fanmelegacy'
+    'fanmelegacy',
+    'chronograph'
 )
 
 # A sample logging configuration. The only tangible logging

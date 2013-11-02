@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
         <title>{% block title %}FanME{% endblock %}</title>
         <script language="javascript" src="{{ STATIC_URL }}js/jquery-1.6.2.min.js"></script>
+        <link href="{{ STATIC_URL }}css/tour/bootstrap-fanme.css" rel="stylesheet">
+        <link href="{{ STATIC_URL }}css/tour/bootstrap.css" rel="stylesheet">
         {% block mystylesheet %}{% endblock %}
         {% block myjavascript %}{% endblock %}
     </head>
@@ -27,7 +29,8 @@
             {% endif %}
             {% block header %}
             {% block menuArea %}
-                <div class="header-menu-area">
+                <nav class="navbar" role="navigation">
+                <!--<div class="header-menu-area">-->
                 {% block searchBox %}{% endblock searchBox %}
                 {% if user.is_authenticated %}
                 {% block menuOptions %}
@@ -61,6 +64,7 @@
                             <img src="{% avatar_url user 50 %}" alt="" />
                         </div>
                     </div>
+                </nav>
                 {% else %}
                 {% block header_login %}
                     <div class="header-login-form">
