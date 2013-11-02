@@ -1,4 +1,11 @@
 {% extends "base.html" %}
 
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
 {% block content %}
 {% endblock content %}
