@@ -50,7 +50,6 @@ body{}
                 color: #4F4F4F;
                 float: right;
                 font-weight: bold;
-                margin-right: 20px;
             }
             .logged-user a {
                 text-decoration: none;
@@ -131,6 +130,7 @@ body{}
                 font-weight: bold;
                 background: url("../images/register-form-title-shadow.png") no-repeat center bottom;
                 height: 35px;
+                margin-bottom: 10px;
             }
                 .form-title{ background: white; height: 31px; }
             .accounts-register-form-field {

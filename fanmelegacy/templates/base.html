@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
         <title>{% block title %}FanME{% endblock %}</title>
         <script language="javascript" src="{{ STATIC_URL }}js/jquery-1.6.2.min.js"></script>
+        <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
         <link href="{{ STATIC_URL }}css/tour/bootstrap-fanme.css" rel="stylesheet">
         <link href="{{ STATIC_URL }}css/tour/bootstrap.css" rel="stylesheet">
         {% block mystylesheet %}{% endblock %}
@@ -29,42 +30,52 @@
             {% endif %}
             {% block header %}
             {% block menuArea %}
-                <nav class="navbar" role="navigation">
-                <!--<div class="header-menu-area">-->
-                {% block searchBox %}{% endblock searchBox %}
-                {% if user.is_authenticated %}
-                {% block menuOptions %}
-                <div class="header-menu-options">
-                    {% if user.persona %}
-                        <ul class="menu-options">
-                            <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
-                            <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
-                            <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
-                        </ul>
-                    {% else %}
-                        <ul class="menu-options">
-                            <li class="menu-item"><a href="/bussiness/dash_empresa/">Dashboard</a></li>
-                            <li class="menu-item"><a href="/bussiness/dash_planes/">Planes</a></li>
-                        </ul>
-                    {% endif %}
-                </div>
-                {% endblock menuOptions %}
-                    <div class="logged-user">
-                        <div class="logged-user-name">
-                        {% if user.persona %}
-                            <a href="/dash/edit_account/">{{ user.first_name }}</a>
-                        {% else %}
-                            {{ user.empresa.razon_social }}
-                        {% endif%}
-                        </div>
-                        <div class="logged-user-menu">
-                            <a href='/accounts/logout/'>Salir</a>
-                        </div>
-                        <div class="logged-user-photo">
-                            <img src="{% avatar_url user 50 %}" alt="" />
+                <div class="navbar navbar-fixed-top">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <div class="nav-collapse">
+                                {% block searchBox %}{% endblock searchBox %}
+                                {% if user.is_authenticated %}
+                                {% block menuOptions %}
+                                <div class="header-menu-options">
+                                    {% if user.persona %}
+                                        <ul class="menu-options">
+                                            <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+                                            <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+                                            <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+                                        </ul>
+                                    {% else %}
+                                        <ul class="menu-options">
+                                            <li class="menu-item"><a href="/bussiness/dash_empresa/">Dashboard</a></li>
+                                            <li class="menu-item"><a href="/bussiness/dash_planes/">Planes</a></li>
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                                {% endblock menuOptions %}
+                                <ul class="nav pull-right">
+                                    <div class="logged-user">
+                                        <div class="logged-user-name">
+                                        {% if user.persona %}
+                                            <li class="dropdown">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user.first_name }}<b class="caret"></b></a>
+                                                <ul class="dropdown-menu" role="menu" >
+                                                    <li><a href="/dash/edit_account/"><i class="icon-edit"></i> Editar Perfil</a></li>
+                                                    <li><a href="/accounts/logout/"><i class="icon-edit"></i>Salir</a></li>
+                                                </ul>
+                                            </li>
+                                {% else %}
+                                    {{ user.empresa.razon_social }}
+                                {% endif%}
+                                        </div>
+                                        <div class="logged-user-photo">
+                                            <img src="{% avatar_url user 50 %}" alt="" />
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </nav>
+                </div>
                 {% else %}
                 {% block header_login %}
                     <div class="header-login-form">
@@ -110,5 +121,6 @@
         <!-- End Conteiner -->
         </div>
         <div class="clear"></div>
+        <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>

@@ -29,7 +29,7 @@
             <div class="clear"></div>
         </div>
         <div class="item-body">
-            <div class="item-registration">
+            <div class="item-registration" style="margin-top: 10px;">
                 <form action="/items/item/register/" method="post" enctype="multipart/form-data">{% csrf_token %}
                     {{ form_register.as_p }}
                     <input type="submit" value="Crear Item" class="item-registration-submit"/>
