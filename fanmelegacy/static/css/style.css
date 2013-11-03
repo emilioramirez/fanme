@@ -116,8 +116,12 @@ body{}
         /* End for Header Register */
     /* End Header */
 
+    /* Begin Messages */
+    #messages-conteiner{padding-top: 60px;margin: 0px auto;width: 880px;}
+    /* End Messages */
+
     /* Begin Content */
-    .content{ /*overflow: hidden;*/ margin: 0px auto; width: 880px; padding: 60px 0px; min-height: 450px;}
+    .content{ /*overflow: hidden;*/ margin: 0px auto; width: 880px; padding: 0px 0px; min-height: 450px;}
 
         /* Begin for Content Register */
         .accounts-register-welcome-image{ float: left; padding: 80px 0 0 20px; }
@@ -621,7 +625,7 @@ body{}
                                 padding: 5px;
                                 width: 500px;
                             }
-                        .comment-options{float: left; margin: 50px 0; color: grey;}
+                        .comment-options{margin: 50px 0; color: grey;}
                             .comment-options .num{}
                             .comment-options .link{}
                         .comment-options a{color: grey;}

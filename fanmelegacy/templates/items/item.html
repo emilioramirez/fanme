@@ -22,15 +22,6 @@
 {% endblock menuOptionsSelected %}
 
 {% block item %}
-    <div class="item-messages">
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
     <div class="item-content">
         <div class="item-header">
             <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
