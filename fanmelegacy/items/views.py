@@ -8,11 +8,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import comments
 from django.contrib.comments.views.moderation import perform_delete
 from django.contrib.comments.views.utils import next_redirect
+from django.contrib.comments import Comment
 
 from datetime import datetime, date
 
 from dash.forms import SearchBox
-from items.models import Item, Comentario, Marca, Recomendacion
+from items.models import Item, Comentario, Recomendacion, ItemDenuncias
 from items.models import ItemImagen
 from items.forms import ItemRegisterForm, CommentForm
 from accounts.models import Empresa, Persona
@@ -41,12 +42,14 @@ def item(request, item_id):
                 empresa = Empresa.objects.get(user_id=enlace_externo.empresa.id)
                 empresas.append(empresa)
         comments = item.comentarios_recibidos.all().order_by('fecha')
+        mostrar_denuncia = verificar_si_existe_denuncia(request, item)
     except Item.DoesNotExist:
         raise Http404
     return render_to_response('items/item.html', {'form_search': searchbox,
         'item': item, 'is_fan': is_fan, 'comment_form': comment_form,
         'comments': comments, 'empresas': empresas,
-        'mostrar_boton_enlace': mostrar_boton_enlace},
+        'mostrar_boton_enlace': mostrar_boton_enlace,
+        'mostrar_denuncia': mostrar_denuncia},
         context_instance=RequestContext(request))
 
 
@@ -268,13 +271,17 @@ def recomendation(request, item_id):
 
 @login_required(login_url='/accounts/user/')
 def me_gusta_comentario(request, comentario_id):
+    comments = Comment.objects.for_model(Item).filter(object_pk=5).filter(
+        user_id=5)
+    print comments
+    print comentario_id
     try:
         comentario = Comentario.objects.get(pk=comentario_id)
     except Comentario.DoesNotExist:
         raise Http404
     comentario.me_gusta += 1
     comentario.save()
-#    comments = item.comentario_set.all().order_by('fecha')
+    comments = item.comentario_set.all().order_by('fecha')
     return HttpResponseRedirect('/items/item/{0}'.format(comentario.item.id))
 #    return render_to_response('items/item.html', {'form_search': searchbox,
 #        'item': item, 'comment_form': comment_form, 'messages': messages,
@@ -308,3 +315,29 @@ def delete_own_comment(request, comment_id, next=None):
             {'comment': comment, "next": next},
             RequestContext(request)
         )
+
+
+@login_required(login_url='/accounts/user')
+def denunciar_item(request, item_id):
+    searchbox = SearchBox()
+    messages = []
+    comment_form = CommentForm()
+    item = Item.objects.get(pk=item_id)
+    denuncia = ItemDenuncias()
+    denuncia.item = Item.objects.get(pk=item_id)
+    denuncia.user = request.user
+    denuncia.save()
+    mostrar_denuncia = verificar_si_existe_denuncia(request, item)
+    return render_to_response('items/item.html', {'form_search': searchbox,
+        'item': item, 'comment_form': comment_form, 'messages': messages,
+        'comments': comments, 'mostrar_denuncia': mostrar_denuncia},
+        context_instance=RequestContext(request))
+
+
+def verificar_si_existe_denuncia(request, item):
+    denuncia = ItemDenuncias.objects.filter(item=item).filter(
+        user=request.user)
+    existe_denuncia = True
+    if denuncia.count() > 0:
+        existe_denuncia = False
+    return existe_denuncia

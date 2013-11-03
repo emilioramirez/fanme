@@ -11,11 +11,11 @@ class Command(NoArgsCommand):
         eventos = Evento.objects.all()
         for evento in eventos:
             if date.today() > evento.fecha_fin:
-                evento.estado = 'ocurrido'
+                evento.estado = 'finalizado'
                 evento.save()
         #Actualiza todas las notificaciones al estado ocurrido
         notificaciones = Notificacion.objects.all()
         for notificacion in notificaciones:
             if date.today() > evento.fecha_fin:
-                notificacion.estado = 'ocurrido'
+                notificacion.estado = 'finalizado'
                 notificacion.save()

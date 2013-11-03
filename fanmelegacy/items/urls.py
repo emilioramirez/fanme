@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     (r'^comment/denunciar/(?P<comentario_id>\d+)/$', views.denunciar_comentario),
     (r'^comment/eliminar/(?P<comment_id>\d+)/$', views.delete_own_comment),
     (r'^recomendation/(?P<item_id>\d+)/$', views.recomendation),
+    (r'^denunciar_item/(?P<item_id>\d+)/$', views.denunciar_item),
 )
