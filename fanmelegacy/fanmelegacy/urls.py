@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     (r'^bussiness/', include('bussiness.urls')),
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^avatar/', include('avatar.urls')),
+    (r'^rathings/', include('rathings.urls')),
 )
 
 from django.conf import settings

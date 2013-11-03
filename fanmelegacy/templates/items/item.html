@@ -1,6 +1,6 @@
 {% extends "items/base_items.html" %}
 
-{% load dash_filters comments avatar_tags %}
+{% load dash_filters comments avatar_tags rathings_tags %}
 
 {% block mystylesheet %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
@@ -22,11 +22,6 @@
 {% endblock menuOptionsSelected %}
 
 {% block item %}
-    <div class="item-messages">
-        {% for message in messages %}
-            <p class="message">{{ message }}</p>
-        {% endfor %}
-    </div>
     <div class="item-content">
         <div class="item-header">
             <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
@@ -133,13 +128,15 @@
                 </div>
                 <div class="comment-options">
                     <div class="me-gusta-comentario">
-                        <div class="num">{{ comment.me_gusta }}</div>
-                        <div class="link"><a href="/items/comment/megusta/{{ comment.id }}" title="Me gusta"><div class="me-gusta-img"></div></a></div>
+                        {% count_likes for comment as cant_likes %}
+                        <div class="num">{{ cant_likes }}</div>
+                        <div class="link">{% get_like_link for comment %}</div>
                         <div class="clear"></div>
                     </div>
                     <div class="denunciar-comentario">
-                        <div class="num">{{ comment.denuncias }}</div>
-                        <div class="link"><a href="/items/comment/denunciar/{{ comment.id }}" title="Denunciar"><div class="denuncia-comentario-img"></div></a></div>
+                        {% count_dislikes for comment as cant_dislikes %}
+                        <div class="num">{{ cant_dislikes }}</div>
+                        <div class="link">{% get_dislike_link for comment %}</div>
                         <div class="clear"></div>
                     </div>
                     {% if comment.user == user %}

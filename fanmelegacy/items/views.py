@@ -20,7 +20,7 @@ from accounts.models import Empresa, Persona
 from segmentation.models import Topico
 from social.models import Actividad
 from bussiness.models import PlanXEmpresa
-
+from django.contrib import messages
 
 @login_required(login_url='/accounts/user/')
 def item(request, item_id):
