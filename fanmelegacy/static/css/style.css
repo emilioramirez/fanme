@@ -703,7 +703,7 @@ body{}
     /* Begin Footer */
     .footer{ margin: 15px 0 0 0px; }
         .footer-line-divisor{ text-align: center; }
-        .footer-links{ margin: 10px 0 0 0; text-align: center; }
+        .footer-links{ margin: 10px 0 0 0; text-align: center; height: 50px;}
             .footer-links a { text-decoration: none; color: black; }
     /* End Footer */
 
