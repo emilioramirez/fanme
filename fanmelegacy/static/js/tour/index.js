@@ -15,21 +15,17 @@
 	{
 		title: "Dashboard",
 		content: "Dentro de esta sección podras ver todas las recomendaciones que FanMe ha encontrado para ti!",
-		reflex: true,
 		orphan: true
 	}, {
         element: "#filter-content",
         placement: "right",
         title: "Filtros",
         content: "Podras filtrar los items recomendados según el Tópico que quieras ver!",
-        reflex: true,
-        backdrop: true,
-        animation: true
+        backdrop: true
       }, {
         element: "#recomendaciones-content",
         title: "Recomendaciones",
         content: "Podras visualizar los items recomendados por FanMe.",
-        reflex: true,
         backdrop: true
       }, {
         element: "#item-botones",
