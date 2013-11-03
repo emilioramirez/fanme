@@ -46,7 +46,7 @@ class UserUpdateForm(forms.Form):
         input_formats=['%d/%m/%Y'],
         error_messages={'required': 'Fecha invalida: Día/Mes/Año',
             'invalid': 'Fecha invalida: Día/Mes/Año'},
-        widget=forms.DateInput(attrs={'class': 'edit-account-date-field'}))
+        widget=forms.DateInput(attrs={'class': 'edit-account-date-field', 'style': 'width: 178px;'}))
     avatar = forms.ImageField(
         required=False,
         label='Imagen de Perfil',
