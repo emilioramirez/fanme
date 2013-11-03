@@ -57,7 +57,7 @@ def new_notificacion(request):
 
 @login_required(login_url='/accounts/user/')
 def dash_empresa(request):
-    messages = ['']
+    messages = ''
     searchbox = SearchBox()
     consultas_noleidas = request.user.consultas_recibidas.filter(
             estado="noleido").count()
