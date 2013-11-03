@@ -30,19 +30,16 @@ body{}
         /* Begin for Header Register */
         .header-menu-area { overflow: hidden; }
             /* Begin Login form */
-            .header-login-form {
-                float: right;
-                margin-right: 30px;
-            }
+            .header-login-form {}
             .header-login-form ul { float: left; margin-top: 14px;}
-            .header-login-form ul li { float: left; list-style: none; margin-right: 10px;}
+            .header-login-form ul li { float: left; list-style: none; margin-right: 10px; width: 175px;}
             .header-login-form ul li input {border: 1px solid #BBBBBB;color: #BBBBBB;height: 26px;}
             .header-login-form ul li ul.errorlist {
                 font-size: 10px;
                 color: red;
-                margin-top: -11px;
+                margin: -12px -184px 0px -40px;
             }
-            .header-login-form ul li:first-child ul.errorlist { margin: -12px -184px 0 0; }
+            .header-login-form ul li:first-child ul.errorlist { margin: -12px -184px 0px -40px; }
             .header-login-form .submit { height: 29px; float: left; margin-top: 13px;}
             /* End Login form */
             /* User Logged */
@@ -146,7 +143,7 @@ body{}
                 padding: 0px;
                 font-size: 10px;
                 color: red;
-                margin-bottom: -10px;
+                margin-bottom: 2px;
             }
                 .form-register-eres-empresa {
                     color: grey;
@@ -162,7 +159,6 @@ body{}
                 border: none;
                 padding: 8px 6px 8px;
                 color: white;
-                margin-right: -7px;
                 background: url("../images/register-form-submit-bg-grande.png") no-repeat scroll 0 0 transparent;
             }
             .accounts-thanks-welcome-image{ text-align: center; }
