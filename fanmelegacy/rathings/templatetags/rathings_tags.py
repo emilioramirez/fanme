@@ -113,6 +113,15 @@ def get_like_link(parser, token):
 
 
 class DislikeNode(BaseRatingNode):
+
+    def __init__(self, var_name="", object_expr=None):
+        if object_expr is None:
+            raise template.TemplateSyntaxError("Rating nodes must be given either a literal object or a ctype and object pk.")
+        
+        self.rating_model = Dislike
+        self.var_name = var_name
+        self.object_expr = object_expr
+
     def get_context_value_from_queryset(self, context, qs):
         """Subclasses should override this."""
         return qs.count()
@@ -124,7 +133,7 @@ def count_dislikes(parser, token):
     return DislikeNode.token_handler(parser, token)
 
 
-class DislikeLinkNode(BaseRatingNode):
+class DislikeLinkNode(DislikeNode):
     
     def render(self, context):
         content_type, object_id = self.get_target_ctype_pk(context)

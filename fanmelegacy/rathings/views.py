@@ -45,9 +45,9 @@ def dislike(request, object_id):
     object_ctype = ContentType.objects.get_for_id(ctype_id)    
     obj, created = Dislike.objects.get_or_create(content_type=object_ctype, object_id=object_id, user=request.user)
     if not created:
-        messages.add_message(request, messages.INFO, _("Already you like this"))
+        messages.add_message(request, messages.INFO, _("Already you dislike this"))
     else:
-        messages.add_message(request, messages.INFO, _("You like this now"))
+        messages.add_message(request, messages.INFO, _("You dislike this now"))
 
     if next is not None:
         return HttpResponseRedirect(next)
