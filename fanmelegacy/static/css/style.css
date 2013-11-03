@@ -633,6 +633,11 @@ body{}
                                 padding: 0;
                                 width: 16px;
                             }
+                            .me-gusta-img-green{background: url("../images/mini-imagenes3.png") no-repeat scroll -176px -242px transparent;
+                                height: 18px;
+                                margin: 0;
+                                padding: 0;
+                                width: 16px;}
                             .me-gusta-img:hover{background: url("../images/mini-imagenes3.png") no-repeat scroll -176px -242px transparent;}
                             .me-gusta-comentario a{text-decoration: none;}
                             .denunciar-comentario{ overflow: hidden; margin-top: 20px; margin-left: 6px;}
