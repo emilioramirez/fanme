@@ -39,16 +39,16 @@
                                 {% block menuOptions %}
                                 <div class="header-menu-options">
                                     {% if user.persona %}
-                                        <ul class="menu-options">
-                                            <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
-                                            <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
-                                            <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
-                                        </ul>
+                                            <ul class="nav nav-pills header-tab">
+                                              <li><a href="/dash/dashboard/">Dashboard</a></li>
+                                              <li><a href="/dash/logbook/">Logbook</a></li>
+                                              <li><a href="/dash/topicos/">Topicos</a></li>
+                                            </ul>
                                     {% else %}
-                                        <ul class="menu-options">
-                                            <li class="menu-item"><a href="/bussiness/dash_empresa/">Dashboard</a></li>
-                                            <li class="menu-item"><a href="/bussiness/dash_planes/">Planes</a></li>
-                                        </ul>
+                                            <ul class="nav nav-pills header-tab">
+                                              <li><a href="/bussiness/dash_empresa/">Dashboard</a></li>
+                                              <li class="active" ><a href="/bussiness/dash_planes/">Planes</a></li>
+                                            </ul>
                                     {% endif %}
                                 </div>
                                 {% endblock menuOptions %}
@@ -64,7 +64,12 @@
                                                 </ul>
                                             </li>
                                 {% else %}
-                                    {{ user.empresa.razon_social }}
+                                    <li class="dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user.empresa.razon_social }}<b class="caret"></b></a>
+                                        <ul class="dropdown-menu" role="menu" >
+                                            <li><a href="/accounts/logout/"><i class="icon-edit"></i>Salir</a></li>
+                                        </ul>
+                                    </li>
                                 {% endif%}
                                         </div>
                                         <div class="logged-user-photo">
@@ -78,7 +83,7 @@
                 </div>
                 {% else %}
                 {% block header_login %}
-                    <div class="header-login-form">
+                    <div class="header-login-form nav navbar-nav navbar-right">
                         <form action="/accounts/login/" method="post">{% csrf_token %}
                             <ul>
                                 {{ form_login.as_ul }}

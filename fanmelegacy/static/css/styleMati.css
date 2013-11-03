@@ -14,77 +14,77 @@
         /*Begin images*/
         .imagen-electrodomesticos{
                 background: url("../images/iconos-topicos.png") repeat scroll 37px 0 transparent;
-                height: 25px;
+                height: 35px;
                 width: 34px;
                 margin: 15px;
                 float: left;
         }
         .imagen-juegos{
                 background: url("../images/iconos-topicos.png") repeat scroll 37px -35px transparent;
-                height: 25px;
+                height: 35px;
                 width: 34px;
                 margin: 15px;
                 float: left;
         }
         .imagen-cine{
                 background: url("../images/iconos-topicos.png") repeat scroll 37px -70px transparent;
-                height: 25px;
+                height: 35px;
                 width: 34px;
                 margin: 15px;
                 float: left;
         }
         .imagen-ropaMujer{
                 background: url("../images/iconos-topicos.png") repeat scroll 37px -105px transparent;
-                height: 25px;
+                height: 35px;
                 width: 34px;
                 margin: 15px;
                 float: left;
         }
         .imagen-hogar{
                 background: url("../images/iconos-topicos.png") repeat scroll 37px -140px transparent;
-                height: 25px;
+                height: 35px;
                 width: 34px;
                 margin: 15px;
                 float: left;
         }
         .imagen-libros{
                 background: url("../images/iconos-topicos.png") repeat scroll 37px -175px transparent;
-                height: 25px;
+                height: 35px;
                 width: 34px;
                 margin: 15px;
                 float: left;
         }
         .imagen-musica{
                 background: url("../images/iconos-topicos.png") repeat scroll 37px -210px transparent;
-                height: 25px;
+                height: 35px;
                 width: 34px;
                 margin: 15px;
                 float: left;
         }
         .imagen-arte{
                 background: url("../images/iconos-topicos.png") repeat scroll 37px -245px transparent;
-                height: 25px;
+                height: 35px;
                 width: 34px;
                 margin: 15px;
                 float: left;
         }
         .imagen-comida{
                 background: url("../images/iconos-topicos.png") repeat scroll 37px -280px transparent;
-                height: 25px;
+                height: 35px;
                 width: 34px;
                 margin: 15px;
                 float: left;
         }
         .imagen-ropaHombre{
                 background: url("../images/iconos-topicos.png") repeat scroll 37px -315px transparent;
-                height: 25px;
+                height: 35px;
                 width: 34px;
                 margin: 15px;
                 float: left;
         }
         .imagen-viajes{
                 background: url("../images/iconos-topicos.png") repeat scroll 37px -350px transparent;
-                height: 25px;
+                height: 35px;
                 width: 34px;
                 margin: 15px;
                 float: left;
@@ -235,7 +235,7 @@ sidebar-follow-user{}
         color: red;
         font-size: 10px;
         list-style: none outside none;
-        margin: 5px 0px -10px 39px;
+        margin: 5px 0px 0px 43px;
     }
 /*End item registration*/
 /*Begin empresa dashboard*/
@@ -246,10 +246,10 @@ sidebar-follow-user{}
         float: left;
         font-size: 14px;
         font-weight: bold;
-        height: 17px;
-        margin: 18px;
-        padding: 10px 59px;
-        width: 85px;
+        margin: 10px 0 15px 25px;
+        padding: 9px 0 0 60px;
+        width: 184px;
+        height: 40px;
     }
     .new-link-buttom-mati{
         background: url("../images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
