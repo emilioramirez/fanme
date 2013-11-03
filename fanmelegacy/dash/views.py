@@ -6,14 +6,14 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django import forms
 
 from dash.forms import SearchBox, UserUpdateForm, PassUpdateForm
 from items.models import Item
 from accounts.models import Persona, Empresa
 from segmentation.models import Topico
 from items.models import Recomendacion
-from django.db.models import Q
-from django import forms
 from fanmelegacy import recommendations
 from accounts.forms import UserLogin
 from itertools import chain

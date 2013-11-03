@@ -115,8 +115,12 @@ body{}
         /* End for Header Register */
     /* End Header */
 
+    /* Begin Messages */
+    #messages-conteiner{padding-top: 60px;margin: 0px auto;width: 880px;}
+    /* End Messages */
+
     /* Begin Content */
-    .content{ /*overflow: hidden;*/ margin: 0px auto; width: 880px; padding: 60px 0px; min-height: 450px;}
+    .content{ /*overflow: hidden;*/ margin: 0px auto; width: 880px; padding: 0px 0px; min-height: 450px;}
 
         /* Begin for Content Register */
         .accounts-register-welcome-image{ float: left; padding: 80px 0 0 20px; }
@@ -620,7 +624,7 @@ body{}
                                 padding: 5px;
                                 width: 500px;
                             }
-                        .comment-options{float: left; margin: 50px 0; color: grey;}
+                        .comment-options{margin: 50px 0; color: grey;}
                             .comment-options .num{}
                             .comment-options .link{}
                         .comment-options a{color: grey;}
@@ -633,6 +637,11 @@ body{}
                                 padding: 0;
                                 width: 16px;
                             }
+                            .me-gusta-img-green{background: url("../images/mini-imagenes3.png") no-repeat scroll -176px -242px transparent;
+                                height: 18px;
+                                margin: 0;
+                                padding: 0;
+                                width: 16px;}
                             .me-gusta-img:hover{background: url("../images/mini-imagenes3.png") no-repeat scroll -176px -242px transparent;}
                             .me-gusta-comentario a{text-decoration: none;}
                             .denunciar-comentario{ overflow: hidden; margin-top: 20px; margin-left: 6px;}
