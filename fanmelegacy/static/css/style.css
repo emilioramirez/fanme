@@ -758,3 +758,7 @@ body{}
 .avatar-manage li img{float: left;}
 #id_honeypot {display: none;}
 #id_comment{height: 55px;width: 503px;}
+
+.clear-navbar{
+    margin: 80px 0px 5px;
+}
