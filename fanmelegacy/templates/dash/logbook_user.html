@@ -7,10 +7,10 @@
 {% endblock mystylesheet%}
 
 {% block menuOptionsSelected %}
-    <ul class="menu-options">
-        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
-        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
-        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
     </ul>
 {% endblock menuOptionsSelected %}
 
@@ -67,7 +67,7 @@
                     <div class="stadistic-nom">Sus Comentario{% if user.comentarios_realizados.count > 1 %}s{% endif %}</div>
                 </div>
                 <div class="sidebar-follow-user">
-                    <a href="/dash/unfollow/{{ user_logbook.id }}"><div class="follow-buttom-mati" style="margin: 10px!important;">Dejar de seguir</div></a>
+                    <a href="/dash/unfollow/{{ user_logbook.id }}"><div class="new-item-buttom-mati" style="margin: 10px!important;">Dejar de seguir</div></a>
                 </div>
             </div>
         <div class="clear"></div>

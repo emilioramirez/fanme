@@ -2,10 +2,10 @@
 
 
 {% block menuOptionsSelected %}
-    <ul class="menu-options">
-        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
-        <li class="menu-item-selected"><a href="/dash/logbook/">Logbook</a></li>
-        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
     </ul>
 {% endblock menuOptionsSelected %}
 
@@ -51,7 +51,7 @@
             </div>
         </div>
         {% if user.persona.following.all.count > 0 %}
-            <a href="/dash/dejar_de_seguir_usuarios" class="button-input" style="text-decoration: none; padding: 4px 13px; margin-right:-32px;">Dejar de seguir</a>
+            <a href="/dash/dejar_de_seguir_usuarios" class="button-input" style="text-decoration: none; padding: 1px 13px; margin-right:-32px;">Dejar de seguir</a>
         {% endif %}
     </div>
 {% endblock dashboard %}
