@@ -11,8 +11,11 @@
 
 
 {% block myjavascript %}
-    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/prism.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
     <script>
         var myCalendar;
         function doOnLoad() {

@@ -2,24 +2,25 @@
 
 {% load dash_filters %}
 
-
 {% block mystylesheet %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
+    <link href="{{ STATIC_URL }}css/tour/prism.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/bootstrap-tour.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/index.css" rel="stylesheet">
     {% block mystylesheet-dashboard %}{% endblock mystylesheet-dashboard%}
 {% endblock mystylesheet%}
 
-
 {% block menuOptionsSelected %}
-    <ul class="menu-options">
-        <li class="menu-item-selected"><a href="/dash/dashboard/">Dashboard</a></li>
-        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
-        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    <ul class="nav nav-pills header-tab">
+      <li class="active"><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
     </ul>
 {% endblock menuOptionsSelected %}
 
-
 {% block dashboard %}
-    <div class="dashboard-list-topics">
+    <div id="dash-content"></div>
+    <div id="filter-content" class="dashboard-list-topics">
         <ul class="list-topics">
             {% for topic in r_topics %}
                 <li>
@@ -44,7 +45,7 @@
     <div class="dashboard-list-items">
         {% for items in topicos %}
             {% for item in items %}
-                <div class="item-content">
+                <div id="recomendaciones-content" class="item-content">
                     <div class="item-header">
                         <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
                         <div class="item-nombre"><a href="/items/item/{{ item.id }}">{{ item }}</a></div>
@@ -67,7 +68,7 @@
                     </div>
                     <div class="item-footer">
                         <div class="item-topico">{{ item.topico }}</div>
-                        <div class="item-buttons">
+                        <div id="item-botones" class="item-buttons">
                             <a href="/items/fan/{{ item.id }}" title="Hazte Fan de este item"><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
                             <a href="/items/recomendation/{{ item.id }}" title="Recomendá este item a tus seguidores"><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
                         </div>
@@ -147,3 +148,17 @@
         <div class="clear"></div>
     </div>
 {% endblock sidebar %}
+
+{% block footer %}
+    <div class="footer-line-divisor">
+        <img src="{{ STATIC_URL }}images/footer-line-divisor.png" alt="Footer Line Divisor" />
+    </div>
+    <!-- Eso deberia ser dinamico -->
+    <div class="footer-links">
+        <a href="/dash/preguntas_mas_frecuentes/">Ayuda</a> |
+        <a href="#">Sobre Nosotros</a> |
+        <a href="#">Condiciones</a> |
+        <a href="#">Copyright</a> |
+        <a href="#" class="start">Tour</a>
+    </div>
+{% endblock%}

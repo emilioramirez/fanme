@@ -7,6 +7,7 @@
 
 {% block myjavascript %}
 <script language="javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
+<script src="{{ STATIC_URL }}js/tour/bootstrap.js"></script>
 <script>
      function combo(clicked_id) {
         var is_checked = document.getElementById(clicked_id).checked;
@@ -36,6 +37,10 @@
 {% endblock myjavascript %}
 
 {% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/bussiness/dash_empresa/">Dashboard</a></li>
+      <li><a href="/bussiness/dash_planes/">Planes</a></li>
+    </ul>
 {% endblock menuOptionsSelected %}
 
 {% block content %}

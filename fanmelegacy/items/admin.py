@@ -1,6 +1,6 @@
 from django.contrib import admin
 from items.models import Item, Marca, Comentario, Recomendacion
-from items.models import ItemImagen
+from items.models import ItemImagen, ItemDenuncias
 
 
 class ItemAdmin(admin.ModelAdmin):
@@ -46,3 +46,4 @@ admin.site.register(Marca)
 admin.site.register(Comentario, ComentarioAdmin)
 admin.site.register(Recomendacion, RecomendacionAdmin)
 admin.site.register(ItemImagen)
+admin.site.register(ItemDenuncias)
