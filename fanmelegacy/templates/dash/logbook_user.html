@@ -1,0 +1,75 @@
+{% extends "dash/base_dash.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+
+{% block dashboard %}
+    <div class="logbook_follow">
+        <p>Enhorabuena, ya estas siguiendo a este usuario.</p>
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    <div class="sidebar-content">
+            <div class="sidebar-user">
+                <div class="user-name">{{ user_logbook.first_name }} {{ user_logbook.last_name }}</div>
+                <div class="logbook-user-image">
+                    {% if user_logbook.persona.avatar %}
+                        <img src="{{ user_logbook.persona.avatar.url_100x100 }}" alt="Logo" />
+                    {% else %}
+                        {% if user_logbook.persona %}
+                            {% if user_logbook.persona.sexo == "M" %}
+                                <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
+                            {% else %}
+                                <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
+                            {% endif%}
+                        {% else %}
+                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
+                        {% endif%}
+                    {% endif%}
+                </div>
+
+                <div class="user-stars">
+                    <ul>
+                        <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sidebar-stadistic">
+                <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+                    <div class="stadistic-num">{{ user_logbook.persona.items.count }}</div>
+                    <div class="stadistic-nom">Sus Fan{% if user_logbook.persona.items.count > 1 %}s{% endif %}</div>
+                </div>
+                <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
+                    <div class="stadistic-num">
+                        {{ user_logbook.recomendaciones_enviadas.count }}
+                    </div>
+                    <div class="stadistic-nom">Sus recomendaciones</div>
+                </div>
+                <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
+                    <div class="stadistic-num">{{ user_logbook.comentarios_realizados.count }}</div>
+                    <div class="stadistic-nom">Sus Comentario{% if user.comentarios_realizados.count > 1 %}s{% endif %}</div>
+                </div>
+                <div class="sidebar-follow-user">
+                    <a href="/dash/unfollow/{{ user_logbook.id }}"><div class="follow-buttom-mati" style="margin: 10px!important;">Dejar de seguir</div></a>
+                </div>
+            </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}

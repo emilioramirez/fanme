@@ -1,0 +1,125 @@
+{% extends "dash/base_dash.html" %}
+
+{% load avatar_tags %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock %}
+
+{% block menuOptionsSelected %}
+    {% if user.persona %}
+        <ul class="menu-options">
+            <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+            <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+            <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+        </ul>
+    {% else %}
+        <ul class="menu-options">
+            <li class="menu-item"><a href="/bussiness/dash_empresa/">Dashboard</a></li>
+            <li class="menu-item"><a href="/bussiness/dash_planes/">Planes</a></li>
+        </ul>
+    {% endif %}
+{% endblock menuOptionsSelected %}
+
+{% block content %}
+    {% block dashboard %}
+    <div class="result-result">
+        <div class="result-text">
+            {% with userlen=users_result|length %}
+            {% with orglen=organizations_result|length  %}
+            {% with toplen=topics_result|length %}
+                <p>Resultados ({{ items_result|length|add:userlen|add:orglen|add:toplen }})</p>
+            {% endwith %}
+            {% endwith %}
+            {% endwith %}
+        </div>
+        <div class="result-content">
+            <div class="result-header">
+                <div class="result-name">Productos ({{ items_result|length }})</div>
+            </div>
+            <div class="result-body">
+                {% for item in items_result %}
+                    <div class="result-hit">
+                        <a href="/items/item/{{ item.id }}">
+                            <div class="result-image">
+                                {% if item.mis_imagenes.count %}
+<!--
+                                {% for itemimagen in item.mis_imagenes.all %}
+                                    <img src="{{ itemimagen.imagen.url_100x100 }}" alt="Score">
+                                {% endfor %}
+-->
+                                    <img src="{{ item.first_image_little }}" alt="Score">
+                                {% else %}
+                                    <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                                {% endif %}
+                            </div>
+                        </a>
+                        <a href="/items/item/{{ item.id }}">
+                            <div class="result-descripcion">{{ item.nombre }}</div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="result-content">
+            <div class="result-header">
+                <div class="result-name">Usuarios ({{ users_result|length }})</div>
+            </div>
+            <div class="result-body">
+                {% for user in users_result %}
+                        <div class="result-hit">
+                            <a href="/dash/logbook/{{ user.id }}">
+                                <div class="result-image">
+                                    <img src="{% avatar_url user 50 %}" alt="">
+                                </div>
+                            </a>
+                            <a href="/dash/logbook/{{ user.id }}">
+                                <div class="result-descripcion">{{ user.first_name }} {{ user.last_name }}</div>
+                            </a>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="result-content">
+            <div class="result-header">
+                <div class="result-name">Empresas ({{ organizations_result|length }})</div>
+            </div>
+            <div class="result-body">
+                {% for organization in organizations_result %}
+                    <div class="result-hit">
+                        <a href="/items/empresa/{{ organization.id }}">
+                            <div class="result-image">
+                                {% if organization.avatar %}
+                                    <img src="{{ organization.avatar.url_50x50 }}" alt="Logo" />
+                                {% else %}
+                                        <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
+                                {% endif%}
+                            </div>
+                        </a>
+                        <a href="/items/empresa/{{ organization.id }}">
+                            <div class="result-descripcion" >{{ organization.razon_social }}</a></div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="result-content">
+            <div class="result-header">
+                <div class="result-name">Tópicos ({{ topics_result|length }})</div>
+            </div>
+            <div class="result-body">
+                {% for topic in topics_result %}
+                    <div class="result-hit">
+                        <a href="#">
+                            <div class="result-image"></div>
+                        </a>
+                        <a href="#">
+                            <div class="result-descripcion"><a href="#">{{ topic.nombre }}</a></div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endblock dashboard %}
+{% endblock %}

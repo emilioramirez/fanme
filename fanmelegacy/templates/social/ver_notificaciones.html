@@ -1,0 +1,70 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+            <ul class="menu-options">
+                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+            </ul>
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div class="title-messages">Notificaciones</div>
+    <div class="eventos-content">
+        <div class='evento'>
+            <div class=''>
+                <div class=''><img src="{{ notificacion.imagen.url }}" alt="Imagen de la notificacion" /></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Nombre</div>
+                <div class='evento-field'>{{ notificacion.nombre }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Descripcion</div>
+                <div class='evento-field'>{{ notificacion.descripcion }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Fecha desde</div>
+                <div class='evento-field'>{{ notificacion.fecha_desde }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Fecha expiracion</div>
+                <div class='evento-field'>{{ notificacion.fecha_expiracion }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Invitados</div>
+                <div class='evento-field'>
+                    <ul>
+                    {% for invitado in notificacion.usuarios_to.all %}
+                        <li>
+                            <div class='invitados'>
+                                {{ invitado }}
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+{% endblock dashboard %}
