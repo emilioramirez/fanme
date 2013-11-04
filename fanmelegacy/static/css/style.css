@@ -653,6 +653,13 @@ body{}
                                 padding: 0;
                                 width: 16px;
                             }
+                            .denuncia-comentario-img-red{
+                                background: url("../images/mini-imagenes3.png") no-repeat scroll -115px -271px transparent;
+                                height: 18px;
+                                margin: 0;
+                                padding: 0;
+                                width: 16px;
+                            }
                             .denuncia-comentario-img:hover{background: url("../images/mini-imagenes3.png") no-repeat scroll -115px -271px transparent;}
                             .denunciar-comentario a{text-decoration: none;}
                 .list-comment-add{}
