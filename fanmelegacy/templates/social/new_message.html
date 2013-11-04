@@ -4,6 +4,7 @@
 
 {% block myjavascript %}
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/bootstrap.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.minified.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.packed.js"></script>
@@ -28,17 +29,13 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/Autosuggest/autoSuggest.css" type="text/css" />
 {% endblock mystylesheet-dashboard%}
 
-{% block menuOptions %}
-    <div class="header-menu-options">
-        {% block menuOptionsSelected %}
-            <ul class="menu-options">
-                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
-                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
-                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
-            </ul>
-        {% endblock menuOptionsSelected %}
-    </div>
-{% endblock menuOptions %}
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
 
 {% block dashboard %}
     <div class="item-messages">
