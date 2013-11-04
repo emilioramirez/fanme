@@ -1,0 +1,84 @@
+{% extends "dash/empresa.html" %}
+
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <!--<li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>-->
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+{% endblock mystylesheet-dashboard %}
+
+{% block myjavascript %}
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script>
+        var myCalendar;
+        function doOnLoad() {
+            myCalendar = new dhtmlXCalendarObject(["fecha_expiracion"]);
+            myCalendar.setDateFormat("%d/%m/%Y");
+        }
+    </script>
+{% endblock myjavascript %}
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+{% block dashboard %}
+    <div class="eventos-content">
+        <div class="form-nuevo-evento">
+            <form action="/social/notificacion/edit/{{ notificacion.id }}" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <div class="new-notification-clear"></div>
+                <div class="content-form-notification">
+                    {{ form.nombre.errors }}
+                    <label for="id_user_to_id" class="notification-name-label">Nombre:</label>
+                    {{ form.nombre }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-notification">
+                    {{ form.fecha_desde.errors }}
+                    <label for="fecha_desde" class="notification-date-desde-label">Fecha inicio:</label>
+                    {{ form.fecha_desde}}
+                    <label style="margin-left: 95px;">Formato: dd/mm/aaaa hh:mm<label>
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-notification">
+                    {{ form.fecha_expiracion.errors }}
+                    <label for="fecha_expiracion" class="notification-date-label">Fecha fin:</label>
+                    {{ form.fecha_expiracion }}
+                    <label style="margin-left: 95px;">Formato: dd/mm/aaaa hh:mm<label>
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-notification">
+                    {{ form.descripcion.errors }}
+                    <label for="fecha_expiracion" class="notification-description-label">Descripcion:</label>
+                    {{ form.descripcion }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-notification">
+                    {{ form.usuarios_to.errors }}
+                    <label for="fecha_expiracion" class="notification-users-label">Invitados:</label>
+                    {{ form.usuarios_to }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-notification-imagen">
+                    {{ form.imagen.errors }}
+                    <label for="fecha_expiracion" class="notification-imagen-label"></label>
+                    {{ form.imagen }}
+                </div>
+                <div class="new-notification-clear"></div>
+            <input type="submit" value="Guardar" class="submit" style="margin-right: 25px;"/>
+            </form>
+        </div>
+        <div class="evento-editar"><a href="/social/notificacion/delete/{{ notificacion.id }}">Borrar</a></div>
+    </div>
+{% endblock dashboard %}
+
+{% block crear %}
+{% endblock %}

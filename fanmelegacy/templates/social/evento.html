@@ -1,0 +1,158 @@
+{% extends "dash/dashboard.html" %}
+
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block myjavascript %}
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5oH8nVPAHgFub2orh1UBYNd7PCUa8vKw&sensor=false"></script>
+    <script>
+        var map;
+        var longitud = document.getElementById('longitud').value;
+        var latitud = document.getElementById('latitud').value;
+        var myCenter = new google.maps.LatLng(longitud,latitud);
+        var geocoder = new google.maps.Geocoder();
+        var marker;
+
+        function initialize()
+        {
+            var mapProp = {
+              center:myCenter,
+              zoom:14,
+              mapTypeId:google.maps.MapTypeId.HYBRID
+              };
+
+            map=new google.maps.Map(document.getElementById("googleMap")
+              ,mapProp);
+
+          var marker = new google.maps.Marker({
+              position: myLatlng,
+              map: map
+          });
+
+          google.maps.event.addListener(marker, 'click', function() {
+                    geocodePosition(marker.getPosition());
+                    });
+        }
+
+        function geocodePosition(pos) {
+          geocoder.geocode({
+            latLng: pos
+          }, function(responses) {
+            if (responses && responses.length > 0) {
+              updateMarkerAddress(responses[0].formatted_address);
+            } else {
+              updateMarkerAddress('Cannot determine address at this location.');
+            }
+          });
+        }
+
+        function updateMarkerAddress(str) {
+          var infowindow = new google.maps.InfoWindow({
+                content: str
+              });
+            infowindow.open(map,marker);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <script>
+      $( document ).ready(function() {
+        var longitud = {{ evento.longitud }};
+        var latitud = {{ evento.latitud }};
+        var myCenter = new google.maps.LatLng(latitud,longitud);
+        var marker;
+
+        function initialize()
+        {
+            var mapProp = {
+              center:myCenter,
+              zoom:19,
+              mapTypeId:google.maps.MapTypeId.HYBRID
+              };
+
+            map=new google.maps.Map(document.getElementById("googleMap")
+              ,mapProp);
+
+          var marker = new google.maps.Marker({
+              position: myCenter,
+              map: map
+          });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+      });
+  </script>
+{% endblock myjavascript %}
+
+{% block dashboard %}
+    <div class="eventos-content">
+        <div class='eventos-titulo'>Evento</div>
+        {% if evento %}
+            <div class=''>
+                    <div class=''><img src="{{ evento.imagen.url }}" alt="Imagen de Evento" /></div>
+            </div>
+            <div class='evento'>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Nombre</div>
+                    <div class='evento-field'>{{ evento.nombre }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>¿De que se trata?</div>
+                    <div class='evento-field'>{{ evento.descripcion }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>¿Cuando es?</div>
+                    <div class='evento-field'>{{ evento.fecha_inicio }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>¿Cuando termina?</div>
+                    <div class='evento-field'>{{ evento.fecha_fin }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>¿Donde?</div>
+                    <div class="new-notification-clear"></div>
+                    <div id="googleMap" style="width:450px;height:400px; margin-left:73px; margin-top: -1px;"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Invitados</div>
+                    <div class='evento-field'>
+                        <ul>
+                        {% for invitado in evento.invitados.all %}
+                            <li>
+                                <div class='invitados'>
+                                    {{ invitado }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                {% if creador %}
+                    <div class='evento-editar-btn'>
+                        <a href="/social/evento/edit/{{ evento.id }}"><div class="evento-editar">editar</div></a>
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div>No existe este evento</div>
+        {% endif %}
+        <input type="hidden" name="latitud" id="latitud" value="" />
+        <input type="hidden" name="longitud" id="longitud" value="" />
+    </div>
+{% endblock dashboard %}
+
+{% block crear %}
+    <a href="/social/nuevo/"><div class="new-item-buttom">Crear Evento</div></a>
+{% endblock %}

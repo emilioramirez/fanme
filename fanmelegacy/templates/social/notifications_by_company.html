@@ -1,0 +1,57 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/bootstrap.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="title-messages">Notificaciones</div>
+    <div class="list-content-user-messages">
+        <ul>
+            {% for notificacion in notificaciones_recibidas %}
+                <li class="content-user-messages">
+                    <!--<div class="user-message-image">
+                        {% if consulta.mis_imagenes.count %}
+                            <img src="{{ consulta.first_image }}" alt="Score">
+                        {% else %}
+                            <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                        {% endif %}
+                    </div>-->
+                    <div class="user-message-name">
+                        <a href="/social/ver_notificaciones/{{ notificacion.id }}">
+                            {{ notificacion.nombre }}
+                        </a>
+                        {% if notificacion.estado != 'leido' %}
+                            ({{ notificacion.estado }})
+                        {% endif %}
+                    </div>
+                    <div class="message-user-fecha">
+                Hasta: {{ notificacion.fecha_expiracion|date:"d/M/Y" }}
+            </div>
+                    <div class="user-message-name">
+                        <!--<a href="/social/company_response_message/{{ message.id }}">-->
+                            {{ notificacion.descripcion|truncatewords:30 }}
+                        <!--</a>-->
+                    </div>
+                    <div class="user-message-last"></div>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock dashboard %}
