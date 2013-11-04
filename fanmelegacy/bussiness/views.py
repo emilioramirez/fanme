@@ -32,7 +32,7 @@ def dash_planes(request):
 @login_required(login_url='/accounts/user/')
 def elegir_plan(request):
     searchbox = SearchBox()
-    messages = ['']
+    messages = ''
     if request.method == 'POST':
         plan_id = request.POST.get("planIdSeleccionado", "")
         plan_elegido = Plan.objects.get(pk=plan_id)

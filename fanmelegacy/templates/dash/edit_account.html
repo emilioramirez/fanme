@@ -1,12 +1,12 @@
 {% extends "dash/dashboard.html" %}
 
-{% load dash_filters avatar_tags %}
+{% load avatar_tags %}
 
-{% block mystylesheet %}
+{% block mystylesheet-dashboard %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
-{% endblock mystylesheet%}
+{% endblock mystylesheet-dashboard%}
 
 {% block myjavascript %}
     <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
@@ -38,11 +38,6 @@
 {% endblock menuOptionsSelected %}
 
 {% block content %}
-    <div class="item-messages">
-        {% for message in messages %}
-            <p class="message">{{ message }}</p>
-        {% endfor %}
-    </div>
     <div class="edit-text">
         <p>Datos de la cuenta</p>
     </div>
