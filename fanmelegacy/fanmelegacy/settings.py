@@ -140,10 +140,11 @@ INSTALLED_APPS = (
     'items',
     'social',
     'south',
-    'django_extensions',
+    # 'django_extensions',
     'registration',
     'fanmelegacy',
-    'chronograph'
+    'chronograph',
+    'rathings'
 )
 
 # A sample logging configuration. The only tangible logging

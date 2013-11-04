@@ -63,7 +63,6 @@ class BaseRatingNode(template.Node):
         qs = self.rating_model.objects.filter(
             content_type = ctype,
             object_id = smart_text(object_pk),
-            user = context['user']
         )
         return qs
 
