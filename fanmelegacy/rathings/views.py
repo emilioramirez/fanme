@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 
-from rathings.models import Like, Dislike
+from rathings.models import Like, Dislike, dislike_created
 
 
 @login_required
@@ -48,6 +48,7 @@ def dislike(request, object_id):
         messages.add_message(request, messages.INFO, _("Already you dislike this"))
     else:
         messages.add_message(request, messages.INFO, _("You dislike this now"))
+        dislike_created.send(sender=Dislike, instance=obj)
 
     if next is not None:
         return HttpResponseRedirect(next)

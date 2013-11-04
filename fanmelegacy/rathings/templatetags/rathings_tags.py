@@ -23,13 +23,11 @@ class BaseRatingNode(template.Node):
         
         if len(words) == 2:
             if words[0] != "for":
-                print "no es for"
                 raise template.TemplateSyntaxError("{} tag had invalid arguments: {}".format(tag_name, words[0]))
             object_expr = words[1]
             return cls(
                 object_expr=parser.compile_filter(object_expr))
         elif len(words) == 4:
-            print "es 4"
             if words[0] != "for":
                 raise template.TemplateSyntaxError("{} tag had invalid arguments: {}".format(tag_name, words[0]))
             if words[2] != "as":

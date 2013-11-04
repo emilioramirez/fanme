@@ -1,8 +1,10 @@
+from django.dispatch import Signal
 from django.db import models
 from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
+
 
 
 class BaseRating(models.Model):
@@ -40,3 +42,6 @@ class Dislike(BaseRating):
         ordering = ('date_created',)
         verbose_name = _('Dislike')
         verbose_name_plural = _('Dislikes')
+
+
+dislike_created = Signal(providing_args=["instance",])

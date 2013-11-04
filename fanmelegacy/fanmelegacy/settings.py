@@ -182,4 +182,9 @@ ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, us
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
 
+# Cantidad de denuncias permitidas: el algoritmo es
+# if denuncias.count >= CANTIDAD_DENUNCIAS
+# crear un analisis de denuncia
+CANTIDAD_DENUNCIAS = 2
+
 #from local_settings import *
