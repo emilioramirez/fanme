@@ -32,7 +32,6 @@ def dash_planes(request):
 @login_required(login_url='/accounts/user/')
 def elegir_plan(request):
     searchbox = SearchBox()
-    messages = ''
     if request.method == 'POST':
         plan_id = request.POST.get("planIdSeleccionado", "")
         plan_elegido = Plan.objects.get(pk=plan_id)
@@ -47,7 +46,7 @@ def elegir_plan(request):
         planes = Plan.objects.all()
     return render_to_response('bussiness/elegir_plan.html',
         {'form_search': searchbox,
-        'planes': planes, 'messages': messages},
+        'planes': planes},
         context_instance=RequestContext(request))
 
 
@@ -57,12 +56,11 @@ def new_notificacion(request):
 
 @login_required(login_url='/accounts/user/')
 def dash_empresa(request):
-    messages = ''
     searchbox = SearchBox()
     consultas_noleidas = request.user.consultas_recibidas.filter(
             estado="noleido").count()
     return render_to_response('bussiness/dash_empresa.html', {'form_search': searchbox,
-        'messages': messages, 'consultas_noleidas': consultas_noleidas},
+     'consultas_noleidas': consultas_noleidas},
         context_instance=RequestContext(request))
 
 

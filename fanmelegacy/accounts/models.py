@@ -5,7 +5,7 @@ from support.models import Rubro
 from segmentation.models import Topico, AnalisisDenuncia, EstadoAnalisisDenuncia, AccionAnalisisDenuncia
 from items.models import Item
 from fanmelegacy.thumbs import ImageWithThumbsField
-from rathings.models import dislike_created
+from rathings.models import dislike_created, Dislike
 
 
 # Create your models here.
@@ -74,7 +74,6 @@ def analisis_denuncias(sender, **kwargs):
     object_id = kwargs['instance'].object_id
     qs = Dislike.objects.filter(content_type=ctype, object_id=object_id)
     cant_denuncias = qs.count()
-    import pdb;pdb.set_trace()
     if cant_denuncias >= settings.CANTIDAD_DENUNCIAS:
         estado, created_e = EstadoAnalisisDenuncia.objects.get_or_create(
             estado="creado", descripcion="Denuncia creada")
