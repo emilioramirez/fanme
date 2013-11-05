@@ -7,6 +7,12 @@ Context variables:
 <a href="{{ url }}" title="Denunciado">
     <div class="denuncia-comentario-img-red"></div>
 </a>
+{# DELETE THIS SECTION #}
+{% elif url == '#1' %}
+<a href="#" title="Ya te gusta, no puedes denunciarlo">
+    <div class="denuncia-comentario-img-grey"></div>
+</a>
+{# DELETE THIS SECTION #}
 {% else %}
 <a href="{{ url }}?ctype={{ content_type.pk }}" title="Denunciar">
     <div class="denuncia-comentario-img"></div>
