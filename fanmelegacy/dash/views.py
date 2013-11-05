@@ -112,8 +112,9 @@ def logbook(request):
     searchbox = SearchBox()
     try:
         followings = request.user.persona.following.all()
+        active_followings = followings.filter(is_active=True)
         actividades = []
-        for user in followings:
+        for user in active_followings:
             actividades = sorted(
                 chain(
                     user.act_origen.all(), actividades),
@@ -121,12 +122,13 @@ def logbook(request):
         notificaciones_noleidas = get_cant_notificaciones(request)
         recomendaciones_noleidas = get_cant_recomendaciones(request)
         mensajes_nolidas = get_cant_mensajes(request)
+        cant_following = active_followings.count()
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/logbook.html', {'form_search': searchbox,
         'notificaciones_noleidas': notificaciones_noleidas,
         'recomendaciones_noleidas': recomendaciones_noleidas,
-        'mensajes_nolidas':mensajes_nolidas,
+        'mensajes_nolidas':mensajes_nolidas, 'cant_following': cant_following,
         'actividades': actividades}, context_instance=RequestContext(request))
 
 
@@ -325,7 +327,7 @@ def recomendaciones_recibidas(request):
     try:
         request.user.persona
         items_ids = request.user.recomendaciones_recibidas.all().values_list(
-            'item', flat=True).distinct()
+            'item', flat=True).distinct().filter(user_origen__is_active=True)
         items = Item.objects.filter(id__in=items_ids)
         rec = request.user.recomendaciones_recibidas.filter(estado="noleido")
         for r in rec:
@@ -346,8 +348,13 @@ def recomendaciones_recibidas(request):
 def following(request):
     searchbox = SearchBox()
     messages = ['Estas siguiendo a estos usuarios']
+    followings = request.user.persona.following.all()
+    active_followings = followings.filter(is_active=True)
+    cant_following = active_followings.count()
     return render_to_response('dash/following.html',
-        {'form_search': searchbox, 'messages': messages},
+        {'form_search': searchbox, 'messages': messages,
+        'active_followings': active_followings,
+        'cant_following': cant_following},
         context_instance=RequestContext(request))
 
 
@@ -355,8 +362,13 @@ def following(request):
 def followers(request):
     searchbox = SearchBox()
     messages = ['Estos usuarios te estan siguiendo']
+    followers = request.user.persona.following.all()
+    active_followers = followers.filter(is_active=True)
+    cant_following = get_active_followings(request)
     return render_to_response('dash/followers.html',
-        {'form_search': searchbox, 'messages': messages},
+        {'form_search': searchbox, 'messages': messages,
+        'followers': active_followers,
+        'cant_following': cant_following},
         context_instance=RequestContext(request))
 
 
@@ -529,3 +541,9 @@ def dejar_de_seguir_usuarios(request):
             'recomendaciones_noleidas': recomendaciones_noleidas,
             'mensajes_nolidas': mensajes_nolidas},
             context_instance=RequestContext(request))
+
+
+def get_active_followings(request):
+    followings = request.user.persona.following.all()
+    active_followings = followings.filter(is_active=True)
+    return active_followings.count()
