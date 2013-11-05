@@ -342,8 +342,13 @@ def recomendaciones_recibidas(request):
 def following(request):
     searchbox = SearchBox()
     messages.add_message(request, messages.INFO, 'Estas siguiendo a estos usuarios')
+    followings = request.user.persona.following.all()
+    active_followings = followings.filter(is_active=True)
+    cant_following = active_followings.count()
     return render_to_response('dash/following.html',
-        {'form_search': searchbox},
+        {'form_search': searchbox,
+         'active_followings': active_followings,
+         'cant_following': cant_following},
         context_instance=RequestContext(request))
 
 
@@ -351,15 +356,23 @@ def following(request):
 def followers(request):
     searchbox = SearchBox()
     messages.add_message(request, messages.INFO, 'Estos usuarios te estan siguiendo')
+    followers = request.user.persona.following.all()
+    active_followers = followers.filter(is_active=True)
+    cant_following = get_active_followings(request)
     return render_to_response('dash/followers.html',
-        {'form_search': searchbox},
+        {'form_search': searchbox,
+        'followers': active_followers,
+        'cant_following': cant_following},
         context_instance=RequestContext(request))
 
+def get_active_followings(request):
+    followings = request.user.persona.following.all()
+    active_followings = followings.filter(is_active=True)
+    return active_followings.count()
 
 @login_required(login_url='/accounts/user/')
 def edit_account(request):
     searchbox = SearchBox()
-    messages = []
     is_active = True
     try:
         data = {'first_name': request.user.first_name,
@@ -397,7 +410,7 @@ def edit_account(request):
             messages.add_message(request, messages.SUCCESS, "Se actualizo correctamente el perfil")
     return render_to_response('dash/edit_account.html',
         {'form_update': form_update,
-        'form_search': searchbox},
+        'form_search': searchbox, 'is_active': is_active},
         context_instance=RequestContext(request))
 
 
@@ -449,7 +462,7 @@ def dar_baja_cuenta(request):
     account = request.user
     account.is_active = False
     account.save()
-    messages = ['Tu cuenta ha sido desactivada']
+    messages.add_message(request, messages.WARNING, 'Tu cuenta ha sido desactivada')
     try:
         data = {'first_name': request.user.first_name,
                     'last_name': request.user.last_name,
@@ -463,7 +476,6 @@ def dar_baja_cuenta(request):
     return render_to_response('dash/edit_account.html',
         {'form_update': form_update,
         'form_search': searchbox,
-        'messages': messages,
         'is_active': False},
         context_instance=RequestContext(request))
 
@@ -474,7 +486,7 @@ def activar_cuenta(request):
     account = request.user
     account.is_active = True
     account.save()
-    messages = ['Tu cuenta ha sido activada']
+    messages.add_message(request, messages.SUCCESS, 'Tu cuenta ha sido activada')
     try:
         data = {'first_name': request.user.first_name,
                     'last_name': request.user.last_name,
@@ -488,7 +500,6 @@ def activar_cuenta(request):
     return render_to_response('dash/edit_account.html',
         {'form_update': form_update,
         'form_search': searchbox,
-        'messages': messages,
         'is_active': True},
         context_instance=RequestContext(request))
 
