@@ -20,7 +20,11 @@
         }
 
         function ConfirmarBaja(){
-            return confirm("¿Esta seguro que desea dar de baja a la cuenta? \n Si confirma la desactivacion de la cuenta usted sera deslogueado del sistema.")
+            return confirm("¿Esta seguro que desea desactivar su la cuenta?")
+        }
+
+        function ConfirmarActivacion(){
+            return confirm("¿Esta seguro que desea volver activar su cuenta?")
         }
     </script>
 {% endblock myjavascript %}
@@ -80,7 +84,11 @@
                             <a href="/dash/edit_pass/">Cambiar contraseña</a>
                         </div>
                         <div style="text-align:left!important; margin-top:20px;">
-                            <a id="desactivar_cuenta" href="/dash/dar_baja_cuenta/" onclick="return ConfirmarBaja()" >Dar de baja a la cuenta</a>
+                            {% if is_active %}
+                                <a id="desactivar_cuenta" href="/dash/dar_baja_cuenta/" onclick="return ConfirmarBaja()" >Desactivar cuenta</a>
+                            {% else %}
+                                <a id="activar_cuenta" href="/dash/activar_cuenta/" onclick="return ConfirmarActivacion()" >Activar cuenta</a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="field-area">

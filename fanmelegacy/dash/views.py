@@ -168,6 +168,7 @@ def results(request):
                           (Q(first_name__icontains=x) | Q(last_name__icontains=x) for x in list_of_words)
                     ),
                     ~Q(id=request.user.id))
+        active_users = first_users.filter(is_active=True)
         #Get the 8 first organizations that match with the search
         first_organizations = Empresa.objects.filter(
                 reduce(operator.or_,
@@ -187,7 +188,7 @@ def results(request):
     return render_to_response('dash/results.html',
         {'form_search': searchbox,
             'items_result': first_items,
-            'users_result': first_users,
+            'users_result': active_users,
             'organizations_result': first_organizations,
             'topics_result': first_topics},
             context_instance=RequestContext(request))
@@ -363,6 +364,7 @@ def followers(request):
 def edit_account(request):
     searchbox = SearchBox()
     messages = []
+    is_active = True
     try:
         data = {'first_name': request.user.first_name,
                     'last_name': request.user.last_name,
@@ -371,6 +373,7 @@ def edit_account(request):
                     'birth_date': request.user.persona.fecha_nacimiento,
                     'avatar': request.user.persona.avatar}
         form_update = UserUpdateForm(data)
+        is_active = request.user.is_active
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     if request.method == 'POST':
@@ -399,7 +402,8 @@ def edit_account(request):
     return render_to_response('dash/edit_account.html',
         {'form_update': form_update,
         'form_search': searchbox,
-        'messages': messages},
+        'messages': messages,
+        'is_active': is_active},
         context_instance=RequestContext(request))
 
 
@@ -449,11 +453,52 @@ def get_cant_mensajes(request):
 
 @login_required(login_url='/accounts/user/')
 def dar_baja_cuenta(request):
+    searchbox = SearchBox()
     account = request.user
     account.is_active = False
     account.save()
-    logout(request)
-    return HttpResponseRedirect('/accounts/user/')
+    messages = ['Tu cuenta ha sido desactivada']
+    try:
+        data = {'first_name': request.user.first_name,
+                    'last_name': request.user.last_name,
+                    'sex': request.user.persona.sexo,
+                    'email': request.user.email,
+                    'birth_date': request.user.persona.fecha_nacimiento,
+                    'avatar': request.user.persona.avatar}
+        form_update = UserUpdateForm(data)
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('dash/edit_account.html',
+        {'form_update': form_update,
+        'form_search': searchbox,
+        'messages': messages,
+        'is_active': False},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def activar_cuenta(request):
+    searchbox = SearchBox()
+    account = request.user
+    account.is_active = True
+    account.save()
+    messages = ['Tu cuenta ha sido activada']
+    try:
+        data = {'first_name': request.user.first_name,
+                    'last_name': request.user.last_name,
+                    'sex': request.user.persona.sexo,
+                    'email': request.user.email,
+                    'birth_date': request.user.persona.fecha_nacimiento,
+                    'avatar': request.user.persona.avatar}
+        form_update = UserUpdateForm(data)
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('dash/edit_account.html',
+        {'form_update': form_update,
+        'form_search': searchbox,
+        'messages': messages,
+        'is_active': True},
+        context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
