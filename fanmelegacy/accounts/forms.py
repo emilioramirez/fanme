@@ -30,8 +30,6 @@ class UserLogin(forms.Form):
                 password=login_password)
             if user is None:
                 raise forms.ValidationError("Usuario o Password no valido")
-            elif not user.is_active:
-                raise forms.ValidationError("Esta cuenta esta desactivada")
         return self.cleaned_data
 
 

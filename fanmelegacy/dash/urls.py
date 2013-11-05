@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     (r'^preguntas_mas_frecuentes/$', views.preguntas_mas_frecuentes),
     (r'^temas_de_ayuda/$', views.temas_de_ayuda),
     (r'^dar_baja_cuenta', views.dar_baja_cuenta),
+    (r'^activar_cuenta', views.activar_cuenta),
     (r'^unfollow/(?P<user_id>\d+)$', views.dejar_de_seguir_usuario),
     (r'^dejar_de_seguir', views.dejar_de_seguir_usuarios),
 )
