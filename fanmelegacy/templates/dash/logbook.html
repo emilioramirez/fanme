@@ -70,7 +70,7 @@
                 {% endif %}
             {% endfor %}
         {% else %}
-            No hay nada
+            Los usuarios que siguen no han realizado ninguna actividad en el sistema
         {% endif %}
     </div>
 {% endblock dashboard %}
@@ -98,7 +98,7 @@
                 </a>
                 <a href="/dash/following/">
                     <div class="stadistic-recomendations sidebar-stadistic-item">
-                        <div class="stadistic-num">{{ user.persona.following.count }}</div>
+                        <div class="stadistic-num">{{ cant_following }}</div>
                         <div class="stadistic-nom">
                             {% if user.persona.following.count > 1 %}
                                 Usuarios sigo
