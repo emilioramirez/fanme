@@ -66,6 +66,7 @@
                 </div>
             </div>
             <div class="item-buttons">
+            {% if user.is_active %}
                 {% if user.persona %}
                     {% if not is_fan %}
                         <a href="/items/fan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
@@ -82,6 +83,7 @@
                         <a href="/bussiness/registrar_enlace/{{ item.id }}"><img src="{{ STATIC_URL }}images/item-button-registrar-enlace.png" alt="Registrar Enlace" /></a>
                     {% endif %}
                 {% endif%}
+            {% endif %}
             </div>
             <div class="clear"></div>
         </div>
@@ -145,7 +147,6 @@
                 </div>
             </div>
         {% endfor %}
-
         <div class="comment-add">
                 <div class="comment-user-image-add">
                     <img src="{% avatar_url user 50 %}" alt="">

@@ -69,8 +69,10 @@
                     <div class="item-footer">
                         <div class="item-topico">{{ item.topico }}</div>
                         <div id="item-botones" class="item-buttons">
-                            <a href="/items/fan/{{ item.id }}" title="Hazte Fan de este item"><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
-                            <a href="/items/recomendation/{{ item.id }}" title="Recomendá este item a tus seguidores"><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
+                            {% if user.is_active %}
+                                <a href="/items/fan/{{ item.id }}" title="Hazte Fan de este item"><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
+                                <a href="/items/recomendation/{{ item.id }}" title="Recomendá este item a tus seguidores"><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
+                            {% endif %}
                         </div>
                         <div class="clear"></div>
                     </div>
