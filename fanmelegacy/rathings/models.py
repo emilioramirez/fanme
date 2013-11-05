@@ -29,8 +29,8 @@ class Like(BaseRating):
 
     class Meta:
         ordering = ('date_created',)
-        verbose_name = _('Like')
-        verbose_name_plural = _('Likes')
+        verbose_name = _('Me gusta')
+        verbose_name_plural = _('Me gusta')
 
 
 class Dislike(BaseRating):
@@ -40,8 +40,8 @@ class Dislike(BaseRating):
 
     class Meta:
         ordering = ('date_created',)
-        verbose_name = _('Dislike')
-        verbose_name_plural = _('Dislikes')
+        verbose_name = _('Denuncia')
+        verbose_name_plural = _('Denuncias')
 
 
 dislike_created = Signal(providing_args=["instance",])

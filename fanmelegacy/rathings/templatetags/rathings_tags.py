@@ -100,6 +100,15 @@ class LikeLinkNode(BaseRatingNode):
             Like.objects.get(content_type=content_type, object_id=object_id, user=context['user'])
         except Like.DoesNotExist:
             url = reverse("rathings.views.like", args=[object_id])
+
+        # DELETE THIS SECTION
+        try:
+            Dislike.objects.get(content_type=content_type, object_id=object_id, user=context['user'])
+            url = "#1"
+            return render_to_string("rathings/like.html", {"url": url, "content_type": content_type})
+        except Dislike.DoesNotExist:
+            pass
+        # DELETE THIS SECTION
         
         return render_to_string("rathings/like.html", {"url": url, "content_type": content_type})
 
@@ -139,6 +148,15 @@ class DislikeLinkNode(DislikeNode):
             Dislike.objects.get(content_type=content_type, object_id=object_id, user=context['user'])
         except Dislike.DoesNotExist:
             url = reverse("rathings.views.dislike", args=[object_id])
+
+        # DELETE THIS SECTION
+        try:
+            Like.objects.get(content_type=content_type, object_id=object_id, user=context['user'])
+            url = "#1"
+            return render_to_string("rathings/dislike.html", {"url": url, "content_type": content_type})
+        except Like.DoesNotExist:
+            pass
+        # DELETE THIS SECTION
 
         return render_to_string("rathings/dislike.html",{"url": url, "content_type": content_type})
 

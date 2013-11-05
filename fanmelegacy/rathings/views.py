@@ -24,7 +24,7 @@ def like(request, object_id):
     if not created:
         messages.add_message(request, messages.INFO, _("Already you like this"))
     else:
-        messages.add_message(request, messages.INFO, _("You like this now"))
+        messages.add_message(request, messages.SUCCESS, _("You like this now"))
 
     if next is not None:
         return HttpResponseRedirect(next)
@@ -41,13 +41,12 @@ def dislike(request, object_id):
     if ctype_id is None:
         messages.add_message(request, messages.ERROR, _("Missing ctype_id"))
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
     object_ctype = ContentType.objects.get_for_id(ctype_id)    
     obj, created = Dislike.objects.get_or_create(content_type=object_ctype, object_id=object_id, user=request.user)
     if not created:
         messages.add_message(request, messages.INFO, _("Already you dislike this"))
     else:
-        messages.add_message(request, messages.INFO, _("You dislike this now"))
+        messages.add_message(request, messages.SUCCESS, _("You dislike this now"))
         dislike_created.send(sender=Dislike, instance=obj)
 
     if next is not None:
