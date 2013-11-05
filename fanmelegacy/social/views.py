@@ -32,9 +32,9 @@ def eventos(request):
         eventos_creados = []
     try:
         eventos_invitado = request.user.eventos_invitado.all().order_by(
-            'fecha_inicio')
+            'fecha_inicio').filter(creador__is_active=True)
         eventos_noleidos = request.user.eventos_invitado.filter(
-            estado="noleido")
+            estado="noleido").filter(creador__is_active=True)
         for evento in eventos_noleidos:
             evento.estado = "leido"
             evento.save()
@@ -80,7 +80,7 @@ def new_evento(request):
     else:
         form = EventoForm()
         list_ids = request.user.followers.values_list('user', flat=True)
-        users = User.objects.filter(id__in=list_ids)
+        users = User.objects.filter(id__in=list_ids).filter(is_active=True)
         form.fields["invitados"].queryset = users
         recomendaciones_noleidas = get_cant_recomendaciones(request)
     template_vars = RequestContext(request, {"form": form,
@@ -94,12 +94,13 @@ def evento(request, evento_id):
     creador = False
     try:
         evento = Evento.objects.get(id=evento_id)
+        lista_invitados = evento.invitados.all().filter(is_active=True)
         if (evento.creador == request.user):
             creador = True
     except Evento.DoesNotExist:
         evento = []
     temp = RequestContext(request, {'form_search': searchbox, 'evento': evento,
-        'creador': creador})
+        'creador': creador, 'lista_invitados': lista_invitados})
     return render_to_response('social/evento.html', temp)
 
 
@@ -129,7 +130,7 @@ def edit_evento(request, evento_id):
     else:
         form = EventoForm(instance=evento_db)
         list_ids = request.user.followers.values_list('user', flat=True)
-        users = User.objects.filter(id__in=list_ids)
+        users = User.objects.filter(id__in=list_ids).filter(is_active=True)
         form.fields["invitados"].queryset = users
     template_vars = RequestContext(request, {"form": form, "user": request.user,
         'form_search': searchbox, 'evento': evento_db})
@@ -173,7 +174,7 @@ def messages(request):
     searchbox = SearchBox()
     try:
         mensajes_recibidos = request.user.mensajes_recibidos.all().values(
-            'user_from').distinct()
+            'user_from').distinct().filter(user_from__is_active=True)
         usuarios = []
         for dict in mensajes_recibidos.all():
             usuarios.append(User.objects.get(id=dict['user_from']))
@@ -201,7 +202,7 @@ def new_message(request):
     searchbox = SearchBox()
     messages=[]
     list_ids = request.user.followers.values_list('user', flat=True)
-    users = User.objects.filter(id__in=list_ids)
+    users = User.objects.filter(id__in=list_ids).filter(is_active=True)
     recomendaciones_noleidas = get_cant_recomendaciones(request)
     if request.method == 'POST':
         form_new_message = MessageForm(request.POST)
