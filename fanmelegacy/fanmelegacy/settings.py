@@ -188,4 +188,7 @@ EMAIL_PORT = 1025
 # crear un analisis de denuncia
 CANTIDAD_DENUNCIAS = 2
 
+from django.contrib.messages import constants as message_constants
+MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
+
 #from local_settings import *

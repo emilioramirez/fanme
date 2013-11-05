@@ -116,7 +116,8 @@ body{}
     /* End Header */
 
     /* Begin Messages */
-    #messages-conteiner{padding-top: 60px;margin: 0px auto;width: 880px;}
+    #messages-conteiner{padding-top: 70px;margin: 0px auto;width: 880px;}
+    #messages-conteiner ul {list-style: none; margin:0px; padding:0px;}
     /* End Messages */
 
     /* Begin Content */
@@ -637,6 +638,13 @@ body{}
                                 padding: 0;
                                 width: 16px;
                             }
+                            .me-gusta-img-grey{
+                                background: url("../images/mini-imagenes3.png") no-repeat scroll -133px -299px transparent;
+                                height: 18px;
+                                margin: 0;
+                                padding: 0;
+                                width: 16px;
+                            }
                             .me-gusta-img-green{background: url("../images/mini-imagenes3.png") no-repeat scroll -176px -242px transparent;
                                 height: 18px;
                                 margin: 0;
@@ -647,6 +655,13 @@ body{}
                             .denunciar-comentario{ overflow: hidden; margin-top: 20px; margin-left: 6px;}
                             .denunciar-comentario div{ float: left; font-size: 20px; margin-left: 2px;}
                             .denuncia-comentario-img{
+                                background: url("../images/mini-imagenes3.png") no-repeat scroll -137px -38px transparent;
+                                height: 18px;
+                                margin: 0;
+                                padding: 0;
+                                width: 16px;
+                            }
+                            .denuncia-comentario-img-grey{
                                 background: url("../images/mini-imagenes3.png") no-repeat scroll -137px -38px transparent;
                                 height: 18px;
                                 margin: 0;
