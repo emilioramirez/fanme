@@ -140,7 +140,7 @@ INSTALLED_APPS = (
     'items',
     'social',
     'south',
-    # 'django_extensions',
+    'django_extensions',
     'registration',
     'fanmelegacy',
     'chronograph',
@@ -179,6 +179,9 @@ LOGGING = {
 # Django-registration
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
 
+from django.contrib.messages import constants as message_constants
+MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
+
 # python -m smtpd -n -c DebuggingServer localhost:1025
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
@@ -188,7 +191,18 @@ EMAIL_PORT = 1025
 # crear un analisis de denuncia
 CANTIDAD_DENUNCIAS = 2
 
-from django.contrib.messages import constants as message_constants
-MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
+# Relaciones de puntajes y estrellas
+PUNTAJES = {
+    'item_fan': 2,
+    'comment_like': 2,
+
+}
+ESTRELLAS = {
+    "1": 20,
+    "2": 60,
+    "3": 200,
+    "4": 400,
+    "5": 600
+}
 
 #from local_settings import *

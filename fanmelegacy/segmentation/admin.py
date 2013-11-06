@@ -11,7 +11,7 @@ class TopicoAdmin(admin.ModelAdmin):
 
 class AnalisisDenunciaAdmin(admin.ModelAdmin):
     list_display = ('fecha_creacion', 'fecha_resolucion', 'moderador',
-        'descripcion', 'accion_tomada', 'estado', 'content_type', 'object_id')
+        'descripcion', 'estado', 'content_type', 'object_id')
 
 
 admin.site.register(Topico, TopicoAdmin)
