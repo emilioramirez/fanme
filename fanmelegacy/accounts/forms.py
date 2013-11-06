@@ -10,7 +10,6 @@ TYPES_OF_SEX = (('', 'Sexo'), ('M', 'Masculino'), ('F', 'Femenino'))
 class UserLogin(forms.Form):
     login_username = forms.CharField(
         label='',
-        # initial='Email',
         required=True,
         error_messages={'required': 'Es necesario su Email'},
         widget=forms.TextInput(attrs={'class': 'accounts-register-form-field', 'placeholder': 'Email'}))
@@ -36,42 +35,48 @@ class UserLogin(forms.Form):
 class UserRegisterForm(forms.Form):
     first_name = forms.CharField(
         label='',
-        initial='Nombre',
         required=True,
         error_messages={'required': 'Es necesario un Nombre'},
-        widget=forms.TextInput(attrs={'class': 'accounts-register-form-field'}))
+        widget=forms.TextInput(attrs={'class': 'accounts-register-form-field',
+            'placeholder': 'Nombre'})
+        )
     last_name = forms.CharField(
         label='',
-        initial='Apellido',
         required=True,
         error_messages={'required': 'Es necesario un Apellido'},
-        widget=forms.TextInput(attrs={'class': 'accounts-register-form-field'}))
+        widget=forms.TextInput(attrs={'class': 'accounts-register-form-field',
+            'placeholder': 'Apellido'})
+        )
     birth_date = forms.DateField(
         label='',
-        initial='Fecha de Nacimiento',
         input_formats=['%d/%m/%Y'],
         error_messages={'required': 'Es necesaria su Fecha de Nacimiento',
             'invalid': u'Fecha invalida, ingrese de la forma Día/Mes/Año'},
-        widget=forms.DateInput(attrs={'class': 'accounts-register-form-field'}))
+        widget=forms.DateInput(attrs={'class': 'accounts-register-form-field',
+            'placeholder': 'Fecha de Nacimiento'})
+        )
     sex = forms.ChoiceField(
         label='',
         choices=TYPES_OF_SEX,
         error_messages={'required': 'Es necesario su Sexo',
             'invalid_choice': 'Opcion no valida, seleccioe M o F'},
-        widget=forms.Select(attrs={'class': 'accounts-register-form-field'}))
+        widget=forms.Select(attrs={'class': 'accounts-register-form-field',
+            'placeholder': 'Sexo'})
+        )
     email = forms.EmailField(
         label='',
-        initial='Email',
         error_messages={'required': 'Es necesario su Email',
             'invalid': 'Correo electronico no valido'},
-        widget=forms.TextInput(attrs={'class': 'accounts-register-form-field'}))
+        widget=forms.TextInput(attrs={'class': 'accounts-register-form-field',
+            'placeholder': 'Email'})
+        )
     password = forms.CharField(
         label='',
-        initial='Password',
         required=True,
         min_length=6,
         widget=forms.PasswordInput(
-            attrs={'class': 'accounts-register-form-field'}),
+            attrs={'class': 'accounts-register-form-field',
+            'placeholder': 'Password'}),
         error_messages={'required': 'Es necesario una Password',
             'min_length': 'Debe ingresar minimo 6 caracteres'})
 

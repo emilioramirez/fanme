@@ -71,7 +71,7 @@ body{}
                 .logged-user-menu{float: left; margin: 19px 10px 0 0; }
                     .logged-user-menu a{ text-decoration: none; color: #4f4f4f; font-weight: normal;}
                     .logged-user-menu a:hover { text-decoration: underline; }
-            .header-search-box{ float: left; margin: 14px 0px 0px 35px;}
+            .header-search-box{ float: left; margin: 14px 0px 0px 100px;}
                 .header-seach-form-field{
                     background: url("../images/header-searchbox-lupa.png") no-repeat 240px 6px white;
                     border: 1px solid grey;

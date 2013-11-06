@@ -68,12 +68,9 @@
 
             <div class="user-stars">
                 <ul>
+                    {% for estrella in user_logbook.persona.cantidad_estrellas %}
                     <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
-                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
-                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
-                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
-                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
-                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
