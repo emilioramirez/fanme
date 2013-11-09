@@ -12,11 +12,6 @@
 
 
 {% block dashboard %}
-    <div class="item-messages">
-        {% for message in messages %}
-            <p class="message">{{ message }}</p>
-        {% endfor %}
-    </div>
     <div class="dashboard-list-items">
         {% for item, cantidad_comentarios in items %}
             <div class="item-content">

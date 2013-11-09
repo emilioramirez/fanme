@@ -16,15 +16,15 @@ def like(request, object_id):
     next = request.GET.get("next", None)
 
     if ctype_id is None:
-        messages.add_message(request, messages.ERROR, _("Missing ctype_id"))
+        messages.add_message(request, messages.ERROR, _("Error interno"))
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     object_ctype = ContentType.objects.get_for_id(ctype_id)    
     obj, created = Like.objects.get_or_create(content_type=object_ctype, object_id=object_id, user=request.user)
     if not created:
-        messages.add_message(request, messages.INFO, _("Already you like this"))
+        messages.add_message(request, messages.INFO, _("Ya te gusta ese comentario"))
     else:
-        messages.add_message(request, messages.INFO, _("You like this now"))
+        messages.add_message(request, messages.SUCCESS, _("Ahora te gusta este comentario"))
 
     if next is not None:
         return HttpResponseRedirect(next)
@@ -41,13 +41,12 @@ def dislike(request, object_id):
     if ctype_id is None:
         messages.add_message(request, messages.ERROR, _("Missing ctype_id"))
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
     object_ctype = ContentType.objects.get_for_id(ctype_id)    
     obj, created = Dislike.objects.get_or_create(content_type=object_ctype, object_id=object_id, user=request.user)
     if not created:
-        messages.add_message(request, messages.INFO, _("Already you dislike this"))
+        messages.add_message(request, messages.INFO, _("Ya denunciaste este comentario"))
     else:
-        messages.add_message(request, messages.INFO, _("You dislike this now"))
+        messages.add_message(request, messages.SUCCESS, _("Acabas de denunciar el comentario"))
         dislike_created.send(sender=Dislike, instance=obj)
 
     if next is not None:
