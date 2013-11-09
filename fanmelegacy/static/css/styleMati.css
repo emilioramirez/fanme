@@ -737,7 +737,7 @@ sidebar-follow-user{}
             border: 2px solid #979797;
             float: right;
             //height: 256px;
-            margin: -128px -298px 28px;
+            margin: -85px -298px 28px;
             overflow: hidden;
             //text-align: center;
             width: 550px;
@@ -754,6 +754,7 @@ sidebar-follow-user{}
         //color: gray;
         text-align: center;
         font-size: 15px;
+        margin-top: 15px;
     }
     .help-content-temas{
         float: left;

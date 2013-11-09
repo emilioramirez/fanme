@@ -21,7 +21,7 @@
             <div class="result-body">
                 {% for user_profile in active_followers %}
                         <div class="result-hit">
-                            <a href="/dash/logbook/{{ user_profile.user.id }}">
+                            <a href="/dash/logbook/{{ user_profile.id }}">
                                 <div class="result-image">
                                     {% if user_profile.avatar %}
                                         <img src="{{ user_profile.avatar.url_50x50 }}" alt="Logo" />
@@ -38,8 +38,12 @@
                                     {% endif%}
                                 </div>
                             </a>
-                            <a href="/dash/logbook/{{ user_profile.user.id }}">
-                                <div class="result-descripcion">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</div>
+                            <a href="/dash/logbook/{{ user_profile.id }}">
+                                {% if user_profile.first_name == "" %}
+                                    <div class="result-descripcion">{{ user_profile.empresa.razon_social }}</div>
+                                {% else %}
+                                    <div class="result-descripcion">{{ user_profile.first_name }} {{ user_profile.last_name }}</div>
+                                {% endif %}
                             </a>
                         </div>
                 {% endfor %}
