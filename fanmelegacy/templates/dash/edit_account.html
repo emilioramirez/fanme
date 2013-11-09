@@ -1,0 +1,110 @@
+{% extends "dash/dashboard.html" %}
+
+{% load avatar_tags %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+{% endblock mystylesheet-dashboard%}
+
+{% block myjavascript %}
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/bootstrap.js"></script>
+    <script>
+        var myCalendar;
+        function doOnLoad() {
+            myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
+            myCalendar.setDateFormat("%d/%m/%Y");
+        }
+
+        function ConfirmarBaja(){
+            return confirm("¿Esta seguro que desea desactivar su la cuenta?")
+        }
+
+        function ConfirmarActivacion(){
+            return confirm("¿Esta seguro que desea volver activar su cuenta?")
+        }
+    </script>
+{% endblock myjavascript %}
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block content %}
+    <div class="edit-text">
+        <p>Datos de la cuenta</p>
+    </div>
+    <div class="edit-account">
+        <div class="edit-account-content">
+            <div class="edit-account-form">
+                <form action="/dash/edit_account/" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="field-area">
+                        <div class="edit-account-content-label">
+                            {{ form_update.first_name.errors }}
+                            <label for="id_first_name" class="edit-account-content-label">Nombre:</label>
+                            {{ form_update.first_name }}
+                        </div>
+                        <div class="edit-account-content-label">
+                            {{ form_update.last_name.errors }}
+                            <label for="id_last_name">Apellido:</label>
+                            {{ form_update.last_name }}
+                        </div>
+                        <div class="edit-account-content-label">
+                            {{ form_update.sex.errors }}
+                            <label for="id_sex">Sexo:</label>
+                            {{ form_update.sex }}
+                        </div>
+                        <div class="edit-account-content-label">
+                            {{ form_update.email.errors }}
+                            <label for="id_email">Email:</label>
+                            {{ form_update.email }}
+                        </div>
+                        <div class="edit-account-content-label" style="margin-left: -20px;">
+                            <div class="edit-account-label-birth_date-error">
+                                {{ form_update.birth_date.errors }}
+                            </div>
+                            <label for="id_birth_date">Fecha de Nacimiento:</label>
+                            {{ form_update.birth_date }}
+                        </div>
+                        <div class="edit-account-content-label">
+                            <input type="submit" value="Guardar" class="edit-save"/>
+                        </div>
+                        <div style="text-align:left!important; margin-top:40px;">
+                            <a href="/dash/edit_pass/">Cambiar contraseña</a>
+                        </div>
+                        <div style="text-align:left!important; margin-top:20px;">
+                            {% if is_active %}
+                                <a id="desactivar_cuenta" href="/dash/dar_baja_cuenta/" onclick="return ConfirmarBaja()" >Desactivar cuenta</a>
+                            {% else %}
+                                <a id="activar_cuenta" href="/dash/activar_cuenta/" onclick="return ConfirmarActivacion()" >Activar cuenta</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="field-area">
+                        <div class="edit-account-content-label">
+                            <img src="{% avatar_url user 100 %}" alt="">
+                            <div>
+                                <a href="{% url 'avatar_change' %}">Cambiar tu imagen de perfil</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock sidebar %}

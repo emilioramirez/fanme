@@ -1,0 +1,26 @@
+{% extends "avatar/base.html" %}
+{% load i18n avatar_tags %}
+{% load url from future %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block content %}
+<div class="edit-account">
+    <div class="edit-account-content">
+        <div class="avatar-manage">
+            <p><img src="{% avatar_url user 100 %}" alt=""></p>
+            <p><strong>Avatar actual</strong></p>
+            {% if not avatars %}
+                <p>{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
+            {% endif %}
+            <form enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}">
+                {% csrf_token %}
+                {{ upload_avatar_form.as_p }}
+                <p><input type="submit" value="{% trans "Upload New Image" %}" /></p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
