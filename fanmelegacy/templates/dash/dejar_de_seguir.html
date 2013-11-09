@@ -14,7 +14,7 @@
     <div class="form-recomend-user">
         <form action="/dash/dejar_de_seguir_usuarios/" method="post">{% csrf_token %}
             <div class="list-posible-user-recomend">
-                {% for persona in user.persona.following.all %}
+                {% for persona in active_followings %}
                     <div class="posible-user-recomend">
                         <div class="logged-user-photo">
                            {% if persona.avatar %}

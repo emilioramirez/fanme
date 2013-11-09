@@ -124,13 +124,15 @@ def logbook(request):
         recomendaciones_noleidas = get_cant_recomendaciones(request)
         mensajes_nolidas = get_cant_mensajes(request)
         cant_following = active_followings.count()
+        cant_followers = get_active_followers(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/logbook.html', {'form_search': searchbox,
         'notificaciones_noleidas': notificaciones_noleidas,
         'recomendaciones_noleidas': recomendaciones_noleidas,
         'mensajes_nolidas':mensajes_nolidas, 'cant_following': cant_following,
-        'actividades': actividades}, context_instance=RequestContext(request))
+        'actividades': actividades, 'cant_followers': cant_followers},
+        context_instance=RequestContext(request))
 
 
 def get_cant_notificaciones(request):
@@ -332,7 +334,7 @@ def recomendaciones_recibidas(request):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/mis_recomendaciones_recibidas.html',
-        {'form_search': searchbox, 
+        {'form_search': searchbox,
         'recomendaciones': items,
         'notificaciones_noleidas': notificaciones_noleidas, 'is_fan': False},
         context_instance=RequestContext(request))
@@ -345,10 +347,12 @@ def following(request):
     followings = request.user.persona.following.all()
     active_followings = followings.filter(is_active=True)
     cant_following = active_followings.count()
+    cant_followers = get_active_followers(request)
     return render_to_response('dash/following.html',
         {'form_search': searchbox,
          'active_followings': active_followings,
-         'cant_following': cant_following},
+         'cant_following': cant_following,
+         'cant_followers': cant_followers },
         context_instance=RequestContext(request))
 
 
@@ -358,17 +362,24 @@ def followers(request):
     messages.add_message(request, messages.INFO, 'Estos usuarios te estan siguiendo')
     followers = request.user.persona.following.all()
     active_followers = followers.filter(is_active=True)
+    cant_followers = active_followers.count()
     cant_following = get_active_followings(request)
     return render_to_response('dash/followers.html',
         {'form_search': searchbox,
-        'followers': active_followers,
-        'cant_following': cant_following},
+        'active_followers': active_followers,
+        'cant_following': cant_following,
+        'cant_followers': cant_followers},
         context_instance=RequestContext(request))
 
 def get_active_followings(request):
     followings = request.user.persona.following.all()
     active_followings = followings.filter(is_active=True)
     return active_followings.count()
+
+def get_active_followers(request):
+    followers = request.user.persona.following.all()
+    active_followers = followers.filter(is_active=True)
+    return active_followers.count()
 
 @login_required(login_url='/accounts/user/')
 def edit_account(request):
@@ -518,6 +529,9 @@ def dejar_de_seguir_usuarios(request):
     notificaciones_noleidas = get_cant_notificaciones(request)
     recomendaciones_noleidas = get_cant_recomendaciones(request)
     mensajes_nolidas = get_cant_mensajes(request)
+    followings = request.user.persona.following.all()
+    active_followings = followings.filter(is_active=True)
+    cant_following = active_followings.count()
     if request.method == 'POST':
         my_profile = request.user.persona
         lista_dejar_de_seguir = request.POST.getlist('eliminados')
@@ -530,5 +544,7 @@ def dejar_de_seguir_usuarios(request):
             {'form_search': searchbox,
             'notificaciones_noleidas': notificaciones_noleidas,
             'recomendaciones_noleidas': recomendaciones_noleidas,
-            'mensajes_nolidas': mensajes_nolidas},
+            'mensajes_nolidas': mensajes_nolidas,
+            'active_followings': active_followings,
+            'cant_following': cant_following},
             context_instance=RequestContext(request))

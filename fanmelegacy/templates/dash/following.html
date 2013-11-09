@@ -39,7 +39,11 @@
                                 </div>
                             </a>
                             <a href="/dash/logbook/{{ user.id }}">
-                                <div class="result-descripcion">{{ user.first_name }} {{ user.last_name }}</div>
+                                {% if user.first_name == "" %}
+                                    <div class="result-descripcion">{{ user.empresa.razon_social }}</div>
+                                {% else %}
+                                    <div class="result-descripcion">{{ user.first_name }} {{ user.last_name }}</div>
+                                {% endif %}
                             </a>
                         </div>
                 {% endfor %}
