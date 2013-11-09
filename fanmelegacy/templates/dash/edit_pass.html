@@ -11,7 +11,6 @@
 {% block myjavascript %}
     <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
-    <script src="{{ STATIC_URL }}js/tour/bootstrap.js"></script>
     <script language="javascript">
         function comparePass() {
             var new_pass = document.getElementById('id_new_pass').value;
@@ -48,11 +47,6 @@
 {% endblock menuOptionsSelected %}
 
 {% block content %}
-    <div class="item-messages">
-        {% for message in messages %}
-            <p class="message">{{ message }}</p>
-        {% endfor %}
-    </div>
     <div class="edit-text">
         <p>Cambiar Contraseña</p>
     </div>

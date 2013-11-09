@@ -90,7 +90,6 @@ def empresa(request, empresa_id):
 @login_required(login_url='/accounts/user/')
 def register_item(request):
     searchbox = SearchBox()
-    messages = []
     if request.method == 'POST':
         form_register = ItemRegisterForm(request.POST, request.FILES)
         if form_register.is_valid():
@@ -117,14 +116,13 @@ def register_item(request):
                 itemimagen.save()
             except KeyError:
                 print 'Excepcion en items/view.register_item'
-            messages.append("Se creo el Item exitosamente")
+                messages.add_message(request, messages.SUCCESS, "Se creo el Item exitosamente")
             form_register = ItemRegisterForm()
     else:
         form_register = ItemRegisterForm()
     return render_to_response('items/register_item.html',
         {'form_search': searchbox,
-        'form_register': form_register,
-        'messages': messages},
+        'form_register': form_register},
         context_instance=RequestContext(request))
 
 
@@ -132,13 +130,12 @@ def register_item(request):
 def fan(request, item_id):
     searchbox = SearchBox()
     comment_form = CommentForm()
-    messages = []
     try:
         item = Item.objects.get(pk=item_id)
         is_fan = request.user.persona.items.filter(nombre=item.nombre)
         comments = item.comentarios_recibidos.all().order_by('fecha')
         if is_fan:
-            messages.append(u"Ya sos fan de {0}".format(item.nombre))
+            messages.add_message(request, messages.INFO, u"Ya sos fan de {0}".format(item.nombre))
         else:
             request.user.persona.items.add(item)
             item.cantidad_fans += 1
@@ -153,13 +150,13 @@ def fan(request, item_id):
             actividad.item = item
             actividad.usuario_origen = request.user
             actividad.save()
-            messages.append(u"Te has hecho fan de {0}".format(item.nombre))
+            messages.add_message(request, messages.SUCCESS, u"Te has hecho fan de {0}".format(item.nombre))
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'messages': messages, 'is_fan': is_fan,
+        'item': item, 'is_fan': is_fan,
         'comment_form': comment_form, 'comments': comments},
         context_instance=RequestContext(request))
 
@@ -168,7 +165,6 @@ def fan(request, item_id):
 def unfan(request, item_id):
     searchbox = SearchBox()
     comment_form = CommentForm()
-    messages = []
     try:
         item = Item.objects.get(pk=item_id)
         request.user.persona.items.remove(item)
@@ -176,20 +172,19 @@ def unfan(request, item_id):
             item.cantidad_fans -= 1
         item.save()
         request.user.save()
-        messages.append(u"Ya no sos fan de {0}".format(item.nombre))
+        messages.add_message(request, messages.SUCCESS, u"Ya no sos fan de {0}".format(item.nombre))
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'messages': messages, 'comment_form': comment_form},
+        'item': item, 'comment_form': comment_form},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def comment(request, item_id):
     searchbox = SearchBox()
-    messages = []
     try:
         item = Item.objects.get(pk=item_id)
     except Item.DoesNotExist:
@@ -206,7 +201,7 @@ def comment(request, item_id):
             comentario.me_gusta = 0
             comentario.denuncias = 0
             comentario.save()
-            messages.append(u"Has comentado el producto {0}".format(
+            messages.add_message(request, messages.SUCCESS, u"Has comentado el producto {0}".format(
                 item.nombre))
             comment_form = CommentForm()
             actividad = Actividad()
@@ -221,8 +216,7 @@ def comment(request, item_id):
         comment_form = CommentForm()
     comments = item.comentarios_recibidos.all().order_by('fecha')
     return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'comment_form': comment_form, 'messages': messages,
-        'comments': comments},
+        'item': item, 'comment_form': comment_form, 'comments': comments},
         context_instance=RequestContext(request))
 
 
@@ -320,7 +314,6 @@ def delete_own_comment(request, comment_id, next=None):
 @login_required(login_url='/accounts/user')
 def denunciar_item(request, item_id):
     searchbox = SearchBox()
-    messages = []
     comment_form = CommentForm()
     item = Item.objects.get(pk=item_id)
     denuncia = ItemDenuncias()
@@ -329,8 +322,7 @@ def denunciar_item(request, item_id):
     denuncia.save()
     mostrar_denuncia = verificar_si_existe_denuncia(request, item)
     return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'comment_form': comment_form, 'messages': messages,
-        'comments': comments, 'mostrar_denuncia': mostrar_denuncia},
+        'item': item, 'comment_form': comment_form, 'comments': comments, 'mostrar_denuncia': mostrar_denuncia},
         context_instance=RequestContext(request))
 
 

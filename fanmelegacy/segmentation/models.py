@@ -65,12 +65,11 @@ class AnalisisDenuncia(models.Model):
     fecha_resolucion = models.DateTimeField(auto_now=True)
     moderador = models.ForeignKey(User, null=True, blank=True)
     descripcion = models.TextField(blank=True, null=True)
-    accion_tomada = models.ForeignKey(AccionAnalisisDenuncia)
     estado = models.ForeignKey(EstadoAnalisisDenuncia)
     content_type = models.ForeignKey(ContentType,
-            verbose_name='content type',
+            verbose_name='Contenido denunciado',
             related_name="content_type_set_for_%(class)s")
-    object_id = models.PositiveIntegerField()
+    object_id = models.PositiveIntegerField('Id del contenido')
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     class Meta:
@@ -79,4 +78,4 @@ class AnalisisDenuncia(models.Model):
         verbose_name_plural = "Analisis de denuncias"
 
     def __unicode__(self):
-        return "Analisis de denuncia: {}".format(content_object)
+        return "Analisis de denuncia: {}".format(self.content_type)

@@ -200,7 +200,6 @@ def get_cant_notificaciones(request):
 @login_required(login_url='/accounts/user/')
 def new_message(request):
     searchbox = SearchBox()
-    messages=[]
     list_ids = request.user.followers.values_list('user', flat=True)
     users = User.objects.filter(id__in=list_ids).filter(is_active=True)
     recomendaciones_noleidas = get_cant_recomendaciones(request)
@@ -216,7 +215,7 @@ def new_message(request):
             message.mensaje = mensaje
             message.fecha = datetime.now()
             message.save()
-            messages.append("Tu mensaje ha sido enviado exitosamente")
+            messages.add_message(request, messages.SUCCESS, "Tu mensaje ha sido enviado exitosamente")
             form_new_message = MessageForm()
             return HttpResponseRedirect('/social/new_message/')
     else:
@@ -226,8 +225,7 @@ def new_message(request):
         form_new_message.fields["user_to_id"].queryset = users
     return render_to_response('social/new_message.html',
         {'form_new_message': form_new_message,
-        'form_search': searchbox, 'recomendaciones_noleidas': recomendaciones_noleidas,
-        'messages': messages},
+        'form_search': searchbox, 'recomendaciones_noleidas': recomendaciones_noleidas},
         context_instance=RequestContext(request))
 
 
@@ -290,27 +288,26 @@ def company_query(request, company_id):
             consulta.fecha = datetime.now()
             consulta.estado = "noleido"
             consulta.save()
-            messages.append("Tu consulta ha sido enviada exitosamente")
+            messages.add_message(request, messages.SUCCESS, "Tu consulta ha sido enviada exitosamente")
             form_query_message = MessageQueryForm()
         else:
             items_plan = items_en_plan_vigente(company_id)
             if items_plan == None or items_plan.count() == 0:
-                messages.append("La empresa no posee items registrados. No se le podrá enviar ninguna consulta.")
+                messages.add_message(request, messages.ERROR, "La empresa no posee items registrados. No se le podrá enviar ninguna consulta.")
                 no_posee_items = True
             form_query_message.fields["item"].queryset = items_plan
     else:
         form_query_message = MessageQueryForm()
         items_plan = items_en_plan_vigente(company_id)
         if items_plan == None or items_plan.count() == 0:
-            messages.append("La empresa no posee items registrados. No se le podrá enviar ninguna consulta.")
+            messages.add_message(request, messages.ERROR, "La empresa no posee items registrados. No se le podrá enviar ninguna consulta.")
             no_posee_items = True
         form_query_message.fields["item"].queryset = items_plan
     return render_to_response('social/consulta_a_empresa.html', {
         'form_search': searchbox,
         'company_id': company_id,
         'form_query_message': form_query_message,
-        'no_posee_items': no_posee_items,
-        'messages': messages},
+        'no_posee_items': no_posee_items},
         context_instance=RequestContext(request))
 
 
