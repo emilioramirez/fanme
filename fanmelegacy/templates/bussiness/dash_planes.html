@@ -1,0 +1,64 @@
+{% extends "dash/base_dash.html" %}
+
+{% load bussiness_filter %}
+
+{% block mystylesheet %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/bussiness/dash_empresa/">Dashboard</a></li>
+      <li class="active" ><a href="/bussiness/dash_planes/">Planes</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    {% if not posee_plan %}
+    <div class="item-messages">
+        <p class="message">{{ message }}</p>
+    </div>
+    {% else %}
+    <div class="item-messages">
+        <p class="message">Su plan vigente es: {{ plan.plan.nombre }}</p>
+        <p class="message">Le quedan  {{ plan.plan.cant_items|restar:plan.item.count }} items por registrar su enlace.</p>
+    </div>
+    {% endif %}
+{% endblock dashboard %}
+
+{% block sidebar %}
+<div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">{{ user.empresa.razon_social }}</div>
+            <div class="user-stars">
+                <ul>
+                    {% for estrella in user.empresa.cantidad_estrellas %}
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <a href="/social/company_messages/">
+            <div class="menu-indicators-mati">Mensajes
+                {% if user.mensajes_recibidos.count > 0 %}
+                    ({{ user.mensajes_recibidos.count }})
+                {% endif %}
+            </div>
+        </a>
+        <a href="/social/ver_consultas/">
+            <div class="menu-indicators-mati">Consultas
+                {% if consultas_noleidas > 0 %}
+                    ({{ consultas_noleidas }})
+                {% endif %}
+            </div>
+        </a>
+        <a href="/social/notificaciones/">
+            <div class="menu-indicators-mati">Notificaciones</div>
+        </a>
+        <div class="sidebar-new-item-mati">
+            <a href="/bussiness/elegir_plan/"><div class="new-item-buttom-mati">Elegir Plan</div></a>
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}

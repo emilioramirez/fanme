@@ -1,0 +1,105 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}
+<title>Dash</title>
+{% endblock title %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/custom.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/fanme_heritage.css">
+{% endblock extracss %}
+
+{% block description %}{% endblock description %}
+
+{% block central-content-dashboard %}
+    <div class="row">
+        <div class="span8">
+            <div class="well well-large upper-bar"></div>
+        </div>
+    </div>
+    <div class="span8">
+        <ul class="thumbnails">
+            {% for items in recomended_items %}
+            <div class="thumbnail-horiz thumbnail" style="height: 270px; margin-top:25px;">
+                <div class="item-header" style="margin-bottom: 25px;">
+                    <a href="#" class="item-title">{{ items }}</a>
+                    <div class="item-score">
+                        <img src="{{ STATIC_URL }}img/dashboard-content-item-header-score.png" alt="Score" class="item-score-image"title="Cantidad de fans">25
+                    </div>
+                </div>
+                <div id="body" style="width: 615px; height: 170px;">
+                    <img src="{{ STATIC_URL }}img/princ2.150x150.jpeg" class="img-polaroid" alt="" style="margin-left:10px;" class="pull-left">
+                    <div class="caption item-description-dashboard">
+                        Partiendo de la atenta mirada del propio autor, encarnado en sí mismo (en un piloto de aviones), comienza narrando la frustración de su infancia y los impedimentos de sus mayores para llevar a cavo sus dibujos de niñez. Todos esos sentimientos de soledad y incomprensión almacenados en la infancia desaparecen con la llegada del principito, estrambótico y .
+                    </div>
+                </div>
+                    <div class="item-buttons-dashboard">
+                        <a href="#" class="btn btn-primary">Fan</a>
+                        <a href="#" class="btn btn-primary">Recomendar</a>
+                    </div>
+            </div>
+            {% endfor %}
+          </ul>
+      </div>
+{% endblock central-content-dashboard %}
+
+{% block right-content %}
+<div class="well well-large side-bar-content">
+    <div class="user-name-sidebar">Matias Muñoz</div>
+    <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}img/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+    <div class="sidebar-stadistic">
+        <a href="#">
+            <div class="stadistic-fan sidebar-stadistic-item" title="Consultá de que items sos Fan">
+                <div class="stadistic-num">5<!--{{ user.persona.items.count }}--></div>
+                <div class="stadistic-nom">Fan<!--{% if user.persona.items.count > 1 %}s{% endif %}--></div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="stadistic-recomendations sidebar-stadistic-item" title="Consultá cuantas recomendaciones hiciste y a quien">
+                <div class="stadistic-num">5<!--{{ user.recomendaciones_enviadas.count }}-->
+                </div>
+                <div class="stadistic-nom">Mis recomendaciones</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="stadistic-comments sidebar-stadistic-item" title="Consultá los items que has comentado">
+                <div class="stadistic-num">5<!--{{ user.comentarios_realizados.count }}--></div>
+                <div class="stadistic-nom">Comentario<!--{% if user.comentarios_realizados.count > 1 %}s{% endif %}--></div>
+            </div>
+        </a>
+    </div>
+    <div class="sidebar-menu-indicators">
+        <a href="#">
+            <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                <!--{% if mensajes_nolidas > 0 %}({{ mensajes_nolidas }}){% endif %}-->
+            </div>
+        </a>
+        <a href="#">
+
+            <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                <!--{% if eventos_nolidas > 0 %}({{ eventos_nolidas }}){% endif %}-->
+            </div>
+        </a>
+        <a href="#">
+            <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                <!--{% if notificaciones_nolidas > 0 %}({{ notificaciones_nolidas }}){% endif %}-->
+            </div>
+        </a>
+        <a href="#">
+            <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                <!--{% if recomendaciones_noleidas > 0 %}({{ recomendaciones_noleidas }}){% endif %}-->
+            </div>
+        </a>
+    </div>
+    <a href="/core/item/crear/" class="btn btn-danger" id="crear_item" style="margin-left: 40px;">Crear Producto</a>
+</div>
+{% endblock right-content %}
