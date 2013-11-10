@@ -14,12 +14,14 @@ from dash.forms import SearchBox, UserUpdateForm, PassUpdateForm
 from items.models import Item
 from accounts.models import Persona, Empresa
 from segmentation.models import Topico
-from items.models import Recomendacion
+from items.models import Recomendacion, Comentario
 from fanmelegacy import recommendations
 from accounts.forms import UserLogin
 from itertools import chain
 from operator import attrgetter
 from django.contrib.auth import logout
+from social.models import Actividad
+import datetime
 
 
 @login_required(login_url='/accounts/user/')
@@ -564,5 +566,56 @@ def dashboard_ayuda(request):
         'item': item, 'r_topics': root_topics,
         'form_login': form_login,
         'form_search': searchbox},
+        context_instance=RequestContext(request))
+
+
+def logbook_ayuda(request):
+    user = request.user
+    searchbox = None
+    actividades = []
+    user = User()
+    #Creo el usuario
+    user.first_name = 'Gabriel'
+    user.last_name = 'Arcos'
+    actividad = Actividad()
+    #Creo la primer actividad
+    actividad.item = Item.objects.get(pk=1)
+    actividad.usuario_origen = user
+    actividad.tipo = "fan"
+    actividad.fecha = datetime.datetime.now()
+    actividad.descripcion = "se hizo fan de"
+    actividades.append(actividad)
+    #Creo la segunda actividad
+    comentario = Comentario()
+    comentario.comentario = "Muy buena peli!"
+    actividad = Actividad()
+    actividad.item = Item.objects.get(pk=2)
+    actividad.usuario_origen = user
+    actividad.tipo = "comentario"
+    actividad.fecha = datetime.datetime.now()
+    actividad.descripcion = "realizo un comentario en"
+    actividad.comentario = comentario
+    actividades.append(actividad)
+    #Creo la tercer actividad
+    actividad = Actividad()
+    actividad.item = Item.objects.get(pk=2)
+    actividad.usuario_origen = user
+    actividad.tipo = "recomendacion"
+    actividad.fecha = datetime.datetime.now()
+    actividad.descripcion = "recomendado el siguiente item"
+    actividad.comentario = comentario
+    actividades.append(actividad)
+    if user.is_authenticated():
+        searchbox = SearchBox()
+    try:
+        item = Item.objects.get(pk=1)
+        form_login = UserLogin()
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('dash/logbook_ayuda.html', {
+        'item': item,
+        'form_login': form_login,
+        'form_search': searchbox,
+        'actividades': actividades},
         context_instance=RequestContext(request))
 
