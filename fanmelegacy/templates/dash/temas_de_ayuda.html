@@ -204,23 +204,38 @@
 {% block body-help %}
     <div class="help-content-temas">
         <img src="{{ STATIC_URL }}images/ayuda/dashboard.jpg" width="50" height="50">
-        <div id="dash" class="help-temas-titles" onclick=escribirDashboard() onmouseover="this.style.cursor='pointer';">Dashboard</div>
+        <!--<div id="dash" class="help-temas-titles" onclick=escribirDashboard() onmouseover="this.style.cursor='pointer';">Dashboard</div>-->
+        <div id="dash" class="help-temas-titles" onmouseover="this.style.cursor='pointer';">
+            <a href="/dash/dashboard_ayuda">Dashboard</a>
+        </div>
     </div>
     <div class="help-content-temas">
         <img src="{{ STATIC_URL }}images/ayuda/logbook.jpg" width="50" height="50">
-        <div class="help-temas-titles" onclick=escribirLogbook() onmouseover="this.style.cursor='pointer';">Logbook</div>
+        <!--<div class="help-temas-titles" onclick=escribirLogbook() onmouseover="this.style.cursor='pointer';">Logbook</div>-->
+        <div class="help-temas-titles" onmouseover="this.style.cursor='pointer';">
+            <a href="#">Logbook</a>
+        </div>
     </div>
     <div class="help-content-temas">
         <img src="{{ STATIC_URL }}images/ayuda/mensaje.jpg" width="50" height="50">
-        <div class="help-temas-titles" onclick=escribirMensajes() onmouseover="this.style.cursor='pointer';">Mensajes</div>
+        <!--<div class="help-temas-titles" onclick=escribirMensajes() onmouseover="this.style.cursor='pointer';">Mensajes</div>-->
+        <div class="help-temas-titles" onmouseover="this.style.cursor='pointer';">
+            <a href="#">Mensajes</a>
+        </div>
     </div>
     <div class="help-content-temas">
         <img src="{{ STATIC_URL }}images/ayuda/evento.jpg" width="50" height="50">
-        <div class="help-temas-titles" onclick=escribirEventos() onmouseover="this.style.cursor='pointer';">Eventos</div>
+        <!--<div class="help-temas-titles" onclick=escribirEventos() onmouseover="this.style.cursor='pointer';">Eventos</div>-->
+        <div class="help-temas-titles" onmouseover="this.style.cursor='pointer';">
+            <a href="#">Eventos</a>
+        </div>
     </div>
     <div class="help-content-temas">
         <img src="{{ STATIC_URL }}images/ayuda/mensaje3.jpg" width="50" height="50">
-        <div class="help-temas-titles" onclick=escribirNotificaciones() onmouseover="this.style.cursor='pointer';">Notificaciones</div>
+        <!--<div class="help-temas-titles" onclick=escribirNotificaciones() onmouseover="this.style.cursor='pointer';">Notificaciones</div>-->
+        <div class="help-temas-titles" onmouseover="this.style.cursor='pointer';">
+            <a href="#">Notificaciones</a>
+        </div>
     </div>
     <div id="content" class="help-respuestas-temas">
         <ol id="preguntas">

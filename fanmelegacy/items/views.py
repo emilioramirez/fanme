@@ -226,6 +226,9 @@ def recomendation(request, item_id):
     usuarios_ya_recomendados = request.user.recomendaciones_enviadas.filter(
         item=item_id).values_list('user_destino', flat=True)
     seguidores = request.user.followers.exclude(user__in=usuarios_ya_recomendados)
+    print seguidores
+    print request.user.followers.all()
+    #seguidores_activos = seguidores.filter(is_active=True)
     usuarios = []
     try:
         item = Item.objects.get(pk=item_id)

@@ -352,7 +352,7 @@ def following(request):
         {'form_search': searchbox,
          'active_followings': active_followings,
          'cant_following': cant_following,
-         'cant_followers': cant_followers },
+         'cant_followers': cant_followers},
         context_instance=RequestContext(request))
 
 
@@ -360,26 +360,25 @@ def following(request):
 def followers(request):
     searchbox = SearchBox()
     messages.add_message(request, messages.INFO, 'Estos usuarios te estan siguiendo')
-    followers = request.user.persona.following.all()
-    active_followers = followers.filter(is_active=True)
-    cant_followers = active_followers.count()
+    cant_followers = get_active_followers(request)
     cant_following = get_active_followings(request)
     return render_to_response('dash/followers.html',
         {'form_search': searchbox,
-        'active_followers': active_followers,
-        'cant_following': cant_following,
-        'cant_followers': cant_followers},
+        'cant_followers': cant_followers,
+        'cant_following': cant_following},
         context_instance=RequestContext(request))
+
 
 def get_active_followings(request):
     followings = request.user.persona.following.all()
     active_followings = followings.filter(is_active=True)
     return active_followings.count()
 
+
 def get_active_followers(request):
-    followers = request.user.persona.following.all()
-    active_followers = followers.filter(is_active=True)
-    return active_followers.count()
+    followers = request.user.followers
+    return followers.count()
+
 
 @login_required(login_url='/accounts/user/')
 def edit_account(request):
@@ -548,3 +547,22 @@ def dejar_de_seguir_usuarios(request):
             'active_followings': active_followings,
             'cant_following': cant_following},
             context_instance=RequestContext(request))
+
+
+def dashboard_ayuda(request):
+    user = request.user
+    searchbox = None
+    if user.is_authenticated():
+        searchbox = SearchBox()
+    try:
+        root_topics = Topico.objects.filter(padre=None)
+        item = Item.objects.get(pk=1)
+        form_login = UserLogin()
+    except Persona.DoesNotExist:
+        return HttpResponseRedirect('/dash/empresa/')
+    return render_to_response('dash/dashboard_ayuda.html', {
+        'item': item, 'r_topics': root_topics,
+        'form_login': form_login,
+        'form_search': searchbox},
+        context_instance=RequestContext(request))
+

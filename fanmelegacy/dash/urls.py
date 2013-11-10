@@ -28,4 +28,5 @@ urlpatterns = patterns('',
     (r'^activar_cuenta', views.activar_cuenta),
     (r'^unfollow/(?P<user_id>\d+)$', views.dejar_de_seguir_usuario),
     (r'^dejar_de_seguir', views.dejar_de_seguir_usuarios),
+    (r'^dashboard_ayuda', views.dashboard_ayuda),
 )

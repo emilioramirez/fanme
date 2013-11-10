@@ -52,11 +52,7 @@
     if (tour.ended()) {
       //$('<div class="alert alert-warning"><button class="close" data-dismiss="alert">&times;</button>You ended the demo tour. <a href="#" class="start">Restart the demo tour.</a></div>').prependTo(".content").alert();
     }
-    $(document).on("click", ".start", function(e) {
-      e.preventDefault();
-      if ($(this).hasClass("disabled")) {
-        return false;
-      }
+    $(document).ready(function() {
       tour.restart();
       return $(".alert").alert("close");
     });
