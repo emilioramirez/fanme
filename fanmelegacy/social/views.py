@@ -19,6 +19,7 @@ from social.models import Evento, Consulta, Notificacion
 #from support.models import Notificacion
 from items.models import Item
 from django.db.models import Q
+from accounts.forms import UserLogin
 
 
 @login_required(login_url='/accounts/user/')
@@ -624,3 +625,26 @@ def get_cant_recomendaciones(request):
 def get_cant_mensajes(request):
     return request.user.mensajes_recibidos.filter(
             estado='noleido').count()
+
+
+def messages_ayuda(request):
+    user = request.user
+    searchbox = None
+    if user.is_authenticated():
+        searchbox = SearchBox()
+    mensaje = Mensaje()
+    user_to1 = User()
+    user_to1.first_name = 'Fabiana'
+    user_to1.last_name = 'Batallanos'
+    user_to2 = User()
+    user_to2.first_name = 'Paula'
+    user_to2.last_name = 'Rivarola'
+    usuarios = []
+    usuarios.append(user_to1)
+    usuarios.append(user_to2)
+    form_login = UserLogin()
+    return render_to_response('social/messages_ayuda.html', {
+        'form_login': form_login,
+        'usuarios': usuarios,
+        'form_search': searchbox},
+        context_instance=RequestContext(request))
