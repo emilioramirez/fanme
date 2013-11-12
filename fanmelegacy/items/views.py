@@ -9,6 +9,7 @@ from django.contrib import comments
 from django.contrib.comments.views.moderation import perform_delete
 from django.contrib.comments.views.utils import next_redirect
 from django.contrib.comments import Comment
+from django.core.urlresolvers import reverse
 
 from datetime import datetime, date
 
@@ -257,7 +258,7 @@ def recomendation(request, item_id):
                 actividad.usuario_origen = request.user
                 actividad.recomendacion = recomendacion
                 actividad.save()
-        return HttpResponseRedirect('/dash/dashboard/')
+        return HttpResponseRedirect(reverse('item-detail', args=[item.pk]))
     return render_to_response('items/recomendacion.html',
         {'form_search': searchbox, 'usuarios': seguidores, 'item': item},
         context_instance=RequestContext(request))
