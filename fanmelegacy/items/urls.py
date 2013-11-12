@@ -1,10 +1,10 @@
-from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import patterns, url
 from items import views
 
 
 urlpatterns = patterns('',
     #(r'^user/', views.register_user),
-    (r'^item/(?P<item_id>\d+)/$', views.item),
+    url(r'^item/(?P<item_id>\d+)/$', views.item, name="item-detail"),
     (r'^empresa/(?P<empresa_id>\d+)/$', views.empresa),
     (r'^item/register/$', views.register_item),
     (r'^fan/(?P<item_id>\d+)/$', views.fan),

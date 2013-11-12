@@ -1,9 +1,9 @@
-from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import patterns, url
 from social import views
 
 
 urlpatterns = patterns('',
-    (r'^messages/$', views.messages),
+    url(r'^mensajes/$', views.mensajes, name="social-mensajes"),
     (r'^new_message/$', views.new_message),
     (r'^messages_user/(?P<user_id>\d+)$', views.messages_user),
     (r'^consulta_a_empresa/(?P<company_id>\d+)$', views.company_query),
