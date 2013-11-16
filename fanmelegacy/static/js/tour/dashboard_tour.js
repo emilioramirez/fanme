@@ -54,9 +54,7 @@
     }
     $(document).ready(function() {
       tour.restart();
-      return $(".alert").alert("close");
     });
-    return $("html").smoothScroll();
   });
 
 }).call(this);
