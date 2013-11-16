@@ -13,20 +13,17 @@
     });
     tour.addSteps([
 	{
-        element: "#content-messages",
+        element: "#messages",
         placement: "right",
         title: "Mensajes",
-        content: "Consulta los mensajes que otros usuarios te han mandado.",
+        content: "Podras ver todos los mensajes que has enviado con otro usuario en forma de conversación.",
         backdrop: true
       }, {
-        element: "#new-message",
+        element: "#responder",
         placement: "right",
-        title: "Nuevo mensaje",
-        content: "Apretando el botón podrás enviar un mensaje a diferentes usuarios.",
+        title: "Responder",
+        content: "Podrás usar este campo de texto para responder el mensaje.",
         backdrop: true
-      }, {
-        element: ".sidebar-stadistic",
-        path: "http://127.0.0.1:8000/social/messages_user_ayuda/"
       }
     ]);
     tour.start();
