@@ -5,6 +5,8 @@ from django.shortcuts import render_to_response
 from support.models import TipoNotificacion
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
 from social.forms import MessageForm, MessageResponseForm
 from social.forms import MessageQueryForm
 from dash.forms import SearchBox
@@ -171,7 +173,7 @@ def cancelar_evento(request, evento_id):
 
 
 @login_required(login_url='/accounts/user/')
-def messages(request):
+def mensajes(request):
     searchbox = SearchBox()
     try:
         mensajes_recibidos = request.user.mensajes_recibidos.all().values(
@@ -216,6 +218,7 @@ def new_message(request):
             message.mensaje = mensaje
             message.fecha = datetime.now()
             message.save()
+            # import pdb; pdb.set_trace()
             messages.add_message(request, messages.SUCCESS, "Tu mensaje ha sido enviado exitosamente")
             form_new_message = MessageForm()
             return HttpResponseRedirect('/social/new_message/')

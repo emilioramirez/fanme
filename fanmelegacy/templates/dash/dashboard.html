@@ -118,7 +118,7 @@
             </a>
         </div>
         <div class="sidebar-menu-indicators">
-            <a href="/social/messages/">
+            <a href="{% url 'social-mensajes' %}">
                 <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
                     {% if mensajes_nolidas > 0 %}({{ mensajes_nolidas }}){% endif %}
                 </div>
