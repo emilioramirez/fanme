@@ -13,31 +13,20 @@
     });
     tour.addSteps([
 	{
-		title: "Dashboard",
-		content: "Dentro de esta sección podras ver todas las recomendaciones que FanMe ha encontrado para ti!",
+		title: "Logbook",
+		content: "Dentro de esta sección podras tener un historial de las actividades de los usuarios que sigues dentro del FanMe!",
 		orphan: true
 	}, {
-        element: "#filter-content",
+        element: "#logbook",
         placement: "right",
-        title: "Filtros",
-        content: "Podras filtrar los items recomendados según el Tópico que quieras ver!",
-        backdrop: true
-      }, {
-        element: "#recomendaciones-content",
-        title: "Recomendaciones",
-        content: "Podras visualizar los items recomendados por FanMe.",
-        backdrop: true
-      }, {
-        element: "#item-botones",
-        placement: "left",
-        title: "Acciones",
-        content: "Podras hacerte Fan de un Item o recomendar a una persona que te siga",
+        title: "Actividades",
+        content: "Podras ver si un usuario al que sigues: se hizo fan, ha comentado, o si ha recomendado algun ítem en particular!",
         backdrop: true
       }, {
         element: ".sidebar-stadistic",
         placement: "left",
-        title: "Estadisticas",
-        content: "Visualiza tu participacion en FanMe.",
+        title: "Estadísticas",
+        content: "Puedes consultar: la cantidad de ítems de los cuales eres fan, y tambien los usuarios que sigues y te siguen.",
         backdrop: true
       }, {
 		element: ".sidebar-menu-indicators",
@@ -52,15 +41,9 @@
     if (tour.ended()) {
       //$('<div class="alert alert-warning"><button class="close" data-dismiss="alert">&times;</button>You ended the demo tour. <a href="#" class="start">Restart the demo tour.</a></div>').prependTo(".content").alert();
     }
-    $(document).on("click", ".start", function(e) {
-      e.preventDefault();
-      if ($(this).hasClass("disabled")) {
-        return false;
-      }
+    $(document).ready(function() {
       tour.restart();
-      return $(".alert").alert("close");
     });
-    return $("html").smoothScroll();
   });
 
 }).call(this);

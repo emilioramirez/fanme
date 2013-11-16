@@ -21,6 +21,7 @@ from social.models import Evento, Consulta, Notificacion
 #from support.models import Notificacion
 from items.models import Item
 from django.db.models import Q
+from accounts.forms import UserLogin
 
 
 @login_required(login_url='/accounts/user/')
@@ -627,3 +628,69 @@ def get_cant_recomendaciones(request):
 def get_cant_mensajes(request):
     return request.user.mensajes_recibidos.filter(
             estado='noleido').count()
+
+
+def messages_ayuda(request):
+    user = request.user
+    searchbox = None
+    if user.is_authenticated():
+        searchbox = SearchBox()
+    user_to1 = User()
+    user_to1.first_name = 'Fabiana'
+    user_to1.last_name = 'Batallanos'
+    user_to2 = User()
+    user_to2.first_name = 'Paula'
+    user_to2.last_name = 'Rivarola'
+    usuarios = []
+    usuarios.append(user_to1)
+    usuarios.append(user_to2)
+    form_login = UserLogin()
+    return render_to_response('social/messages_ayuda.html', {
+        'form_login': form_login,
+        'usuarios': usuarios,
+        'form_search': searchbox},
+        context_instance=RequestContext(request))
+
+
+def messages_user_ayuda(request):
+    user = request.user
+    searchbox = None
+    if user.is_authenticated():
+        searchbox = SearchBox()
+    user_to = User()
+    user_to.first_name = 'Fabiana'
+    user_to.last_name = 'Batallanos'
+    user_to.sexo = "F"
+    user_from = User()
+    user_from.first_name = 'Alan'
+    user_from.last_name = 'Karl'
+    user_from.sexo = "M"
+    mensajes_enviados = []
+    mensajes_recibidos = []
+    message = Mensaje()
+    message.user_from = user_from
+    message.user_to = user_to
+    message.mensaje = "Hola! como estas?"
+    message.fecha = datetime.strptime('Jun 1 2013  1:33PM', '%b %d %Y %I:%M%p')
+    mensajes_enviados.append(message)
+    message2 = Mensaje()
+    message2.user_from = user_to
+    message2.user_to = user_from
+    message2.mensaje = "Bien, y vos?"
+    message2.fecha = datetime.strptime('Jun 2 2013  5:00PM', '%b %d %Y %I:%M%p')
+    mensajes_recibidos.append(message2)
+    message3 = Mensaje()
+    message3.user_from = user_from
+    message3.user_to = user_to
+    message3.mensaje = "La verdad que no me quejo..."
+    message3.fecha = datetime.strptime('Jun 2 2013  5:30PM', '%b %d %Y %I:%M%p')
+    mensajes_enviados.append(message3)
+    #mensajes_enviados.fecha = datetime.now()
+    mensajes = sorted(chain(mensajes_enviados, mensajes_recibidos),
+        key=attrgetter('fecha'))
+    form_response_message = MessageResponseForm()
+    return render_to_response('social/messages_user_ayuda.html', {
+        'form_search': searchbox,
+        'form_response_message': form_response_message,
+        'mensajes': mensajes},
+        context_instance=RequestContext(request))

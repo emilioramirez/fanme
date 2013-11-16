@@ -10,6 +10,12 @@
     {% block mystylesheet-dashboard %}{% endblock mystylesheet-dashboard%}
 {% endblock mystylesheet%}
 
+{% block myjavascript %}
+    <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/dashboard_tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+{% endblock myjavascript %}
+
 {% block menuOptionsSelected %}
     <ul class="nav nav-pills header-tab">
       <li class="active"><a href="/dash/dashboard/">Dashboard</a></li>
@@ -43,100 +49,96 @@
         </ul>
     </div>
     <div class="dashboard-list-items">
-        {% for items in topicos %}
-            {% for item in items %}
-                <div id="recomendaciones-content" class="item-content">
-                    <div class="item-header">
-                        <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
-                        <div class="item-nombre"><a href="/items/item/{{ item.id }}">{{ item }}</a></div>
-                        <div class="item-score" title="Cantidad de fans">
-                            <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
-                            {{ item.cantidad_fans }}
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="item-body">
-                        <div class="item-image" title="Imagen ilustrativa del item">
-                            {% if item.mis_imagenes.count %}
-                                <img src="{{ item.first_image }}" alt="Score">
-                            {% else %}
-                                <img src="{{ STATIC_URL }}images/298.png" alt="Score">
-                            {% endif %}
-                        </div>
-                        <div class="item-descripcion" title="Descripcion del item">{{ item.descripcion|truncatewords:70 }}</div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="item-footer">
-                        <div class="item-topico">{{ item.topico }}</div>
-                        <div id="item-botones" class="item-buttons">
-                            {% if user.is_active %}
-                                <a href="/items/fan/{{ item.id }}" title="Hazte Fan de este item"><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
-                                <a href="/items/recomendation/{{ item.id }}" title="Recomendá este item a tus seguidores"><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
-                            {% endif %}
-                        </div>
-                        <div class="clear"></div>
-                    </div>
+        <div id="recomendaciones-content" class="item-content">
+            <div class="item-header">
+                <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
+                <div class="item-nombre"><a href="/items/item/{{ item.id }}">{{ item }}</a></div>
+                <div class="item-score" title="Cantidad de fans">
+                    <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
+                    {{ item.cantidad_fans }}
                 </div>
-            {% endfor %}
-        {% endfor %}
+                <div class="clear"></div>
+            </div>
+            <div class="item-body">
+                <div class="item-image" title="Imagen ilustrativa del item">
+                    {% if item.mis_imagenes.count %}
+                        <img src="{{ item.first_image }}" alt="Score">
+                    {% else %}
+                        <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                    {% endif %}
+                </div>
+                <div class="item-descripcion" title="Descripcion del item">{{ item.descripcion|truncatewords:70 }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class="item-footer">
+                <div class="item-topico">{{ item.topico }}</div>
+                <div id="item-botones" class="item-buttons">
+                    {% if user.is_active %}
+                        <a href="#" title="Hazte Fan de este item"><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
+                        <a href="#" title="Recomendá este item a tus seguidores"><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
     </div>
 {% endblock dashboard %}
 
 
 {% block sidebar %}
     <div class="sidebar-content">
+            <div class="user-name">Gabriel Arcos</div>
         <div class="sidebar-user">
-            <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
             <div class="user-stars">
                 <ul>
-                    {% for estrella in user.persona.cantidad_estrellas %}
                     <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
-                    {% endfor %}
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
                 </ul>
             </div>
         </div>
         <div class="sidebar-stadistic">
             <a href="/dash/fans/">
                 <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
-                    <div class="stadistic-num">{{ user.persona.items.count }}</div>
-                    <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
+                    <div class="stadistic-num">34</div>
+                    <div class="stadistic-nom">Fans</div>
                 </div>
             </a>
             <a href="/dash/recomendated/">
                 <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
                     <div class="stadistic-num">
-                        {{ user.recomendaciones_enviadas.count }}
+                        24
                     </div>
                     <div class="stadistic-nom">Mis recomendaciones</div>
                 </div>
             </a>
             <a href="/dash/comments/">
                 <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
-                    <div class="stadistic-num">{{ user.comentarios_realizados.count }}</div>
-                    <div class="stadistic-nom">Comentario{% if user.comentarios_realizados.count > 1 %}s{% endif %}</div>
+                    <div class="stadistic-num">2</div>
+                    <div class="stadistic-nom">Comentarios</div>
                 </div>
             </a>
         </div>
         <div class="sidebar-menu-indicators">
-            <a href="{% url 'social-mensajes' %}">
+            <a href="/social/messages/">
                 <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
-                    {% if mensajes_nolidas > 0 %}({{ mensajes_nolidas }}){% endif %}
+                    (3)
                 </div>
             </a>
             <a href="/social/eventos/">
 
                 <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
-                    {% if eventos_nolidas > 0 %}({{ eventos_nolidas }}){% endif %}
+                    (6)
                 </div>
             </a>
             <a href="/social/user_main_notification/">
                 <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
-                    {% if notificaciones_noleidas > 0 %}({{ notificaciones_noleidas }}){% endif %}
+                    (2)
                 </div>
             </a>
             <a href="/dash/recomendation/">
                 <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
-                    {% if recomendaciones_noleidas > 0 %}({{ recomendaciones_noleidas }}){% endif %}
+                    (8)
                 </div>
             </a>
         </div>
@@ -158,7 +160,6 @@
         <a href="/dash/preguntas_mas_frecuentes/">Ayuda</a> |
         <a href="#">Sobre Nosotros</a> |
         <a href="#">Condiciones</a> |
-        <a href="#">Copyright</a> |
-        <a href="#" class="start">Tour</a>
+        <a href="#">Copyright</a>
     </div>
 {% endblock%}
