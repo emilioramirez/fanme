@@ -1,0 +1,62 @@
+{% extends "admin/base.html" %}
+
+{% block title %}'FanMe' | {{ site_title }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">FanMe</a></h1>
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}
+
+{% block extrahead %}
+<script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
+<script src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script>
+function myFunction()
+{
+alert("I am an alert box!");
+}
+</script>
+<script>
+$(function () {
+        $('#usuarios_creados').highcharts({
+            title: {
+                text: 'Cantidad de usuarios creados',
+            },
+            xAxis: {
+                categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                    'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Cant. usuarios'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: '2013',
+                data: [{{usuarios_enero}}, {{usuarios_febrero}}, {{usuarios_marzo}},
+                    {{usuarios_abril}}, {{usuarios_mayo}}, {{usuarios_junio}},
+                    {{usuarios_julio}}, {{usuarios_agosto}}, {{usuarios_septiembre}},
+                    {{usuarios_octubre}}, {{usuarios_noviembre}}, {{usuarios_diciembre}}]
+            }]
+        });
+    });
+</script>
+{% endblock extrahead %}
+
+{% block content %}
+<div id="usuarios_creados" style="width:100%; height:400px;"></div>
+{% endblock content %}
+
