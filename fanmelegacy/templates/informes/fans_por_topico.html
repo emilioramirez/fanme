@@ -33,12 +33,10 @@ $(function () {
                 }
             },
             tooltip: {
-                headerFormat: '<span style="font-size:10px"></span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y}</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
+                formatter: function() {
+                    return '<b>'+ 'Fans por tópicos' +'</b><br/>'+
+                        this.series.name +': '+ this.y +'<br/>';
+                }
             },
             plotOptions: {
                 column: {
