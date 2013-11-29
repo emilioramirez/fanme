@@ -3,6 +3,8 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from datetime import date
+from segmentation.models import Topico
+from items.models import Item
 
 
 @staff_member_required
@@ -49,4 +51,22 @@ def progreso(request):
         'usuarios_julio': usuarios_julio, 'usuarios_agosto': usuarios_agosto,
         'usuarios_septiembre': usuarios_septiembre, 'usuarios_octubre': usuarios_octubre,
         'usuarios_noviembre': usuarios_noviembre, 'usuarios_diciembre': usuarios_diciembre},
+        context_instance=RequestContext(request))
+
+
+@staff_member_required
+def fans_por_topicos(request):
+    topicos = Topico.objects.filter(padre=None)
+    dict = {}
+    for topico in topicos:
+        items_por_topico = Item.objects.filter(topico=topico)
+        cant_fans = 0
+        for item in items_por_topico:
+            cant_fans = cant_fans + item.cantidad_fans
+        dict[topico] = cant_fans;
+    print dict
+    length = len(dict)
+    return render_to_response('informes/fans_por_topico.html',
+        #{'fans_por_topicos': dict},
+        {'fans_por_topicos': dict, 'length': length},
         context_instance=RequestContext(request))
