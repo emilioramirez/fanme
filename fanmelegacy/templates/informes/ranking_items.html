@@ -13,19 +13,13 @@
 <script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
 <script src="{{ STATIC_URL }}js/highcharts.js"></script>
 <script>
-function myFunction()
-{
-alert("I am an alert box!");
-}
-</script>
-<script>
 $(function () {
-        $('#usuarios_activos').highcharts({
+        $('#items').highcharts({
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'Fans por tópicos'
+                text: 'Fans por Item'
             },
             yAxis: {
                 title: {
@@ -34,7 +28,7 @@ $(function () {
             },
             tooltip: {
                 formatter: function() {
-                    return '<b>'+ 'Fans por tópicos' +'</b><br/>'+
+                    return '<b>'+ 'Fans por item' +'</b><br/>'+
                         this.series.name +': '+ this.y +'<br/>';
                 }
             },
@@ -45,9 +39,9 @@ $(function () {
                 }
             },
             series: [
-                {% for topico, cant_fans in fans_por_topicos.items %}
+                {% for item, cant_fans in fans_por_item.items %}
                     {
-                        name: '{{topico}}',
+                        name: '{{item}}',
                         data: [{{cant_fans}}]
                     },
                 {% endfor %}
@@ -58,6 +52,6 @@ $(function () {
 {% endblock extrahead %}
 
 {% block content %}
-<div id="usuarios_activos" style="width:100%; height:400px;"></div>
+<div id="items" style="width:100%; height:400px;"></div>
 {% endblock content %}
 

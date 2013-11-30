@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from datetime import date
 from segmentation.models import Topico
 from items.models import Item
+import operator
 
 
 @staff_member_required
@@ -69,4 +70,16 @@ def fans_por_topicos(request):
     return render_to_response('informes/fans_por_topico.html',
         #{'fans_por_topicos': dict},
         {'fans_por_topicos': dict, 'length': length},
+        context_instance=RequestContext(request))
+
+
+@staff_member_required
+def item_fans(request):
+    top_items = Item.objects.order_by('-cantidad_fans')[:10]
+    dict = {}
+    for item in top_items:
+        dict[item] = item.cantidad_fans
+    print dict
+    return render_to_response('informes/ranking_items.html',
+        {'fans_por_item': dict},
         context_instance=RequestContext(request))

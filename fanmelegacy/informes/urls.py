@@ -6,4 +6,5 @@ urlpatterns = patterns('',
     (r'^mypage/', views.my_admin_view),
     (r'^progreso/', views.progreso),
     (r'^fans_por_topicos/', views.fans_por_topicos),
+    (r'^item_fans/', views.item_fans),
 )
