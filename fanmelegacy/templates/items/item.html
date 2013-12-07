@@ -128,6 +128,7 @@
                     </p>
                     <p class="comment-text">{{ comment.comment }}</p>
                 </div>
+                <!--
                 <div class="comment-options">
                     <div class="me-gusta-comentario">
                         {% count_likes for comment as cant_likes %}
@@ -145,6 +146,14 @@
                     <div><a href="/items/comment/eliminar/{{ comment.id }}">Borrar</a></div>
                     {% endif %}
                 </div>
+                -->
+                <div>
+                    <ul>
+                        <li><span class="glyphicon glyphicon-search"></span></li>
+                        <li><span class="glyphicon glyphicon-search"></span></li>
+                        <li><span class="glyphicon glyphicon-search"></span></li>
+                    </ul>
+                </div>
             </div>
         {% endfor %}
         <div class="comment-add">
@@ -153,12 +162,6 @@
                 </div>
                 <div class="comment-user-add">
                     <p class="comment-username-add">{{ user.first_name }} {{ user.last_name }}</p>
-                    <!-- {#
-                        <form action="/items/comment/{{ item.id }}" method="post">{% csrf_token %}
-                            {{ comment_form.as_p }}
-                            <input type="submit" value="Comentar" class="submit" style="float: right; margin-right: 63px; margin-top: -4px;"/>
-                        </form>
-                     #} -->
                      {% if user.is_authenticated %}
                         {% get_comment_form for item as form %}
                         <form action="{% comment_form_target %}" method="POST">
