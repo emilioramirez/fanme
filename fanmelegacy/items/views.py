@@ -183,42 +183,42 @@ def unfan(request, item_id):
         context_instance=RequestContext(request))
 
 
-@login_required(login_url='/accounts/user/')
-def comment(request, item_id):
-    searchbox = SearchBox()
-    try:
-        item = Item.objects.get(pk=item_id)
-    except Item.DoesNotExist:
-        raise Http404
-    if request.method == 'POST':
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            comentario_text = comment_form.cleaned_data['texto']
-            comentario = Comentario()
-            comentario.comentario = comentario_text
-            comentario.item = item
-            comentario.user = request.user
-            comentario.fecha = datetime.now()
-            comentario.me_gusta = 0
-            comentario.denuncias = 0
-            comentario.save()
-            messages.add_message(request, messages.SUCCESS, u"Has comentado el producto {0}".format(
-                item.nombre))
-            comment_form = CommentForm()
-            actividad = Actividad()
-            actividad.descripcion = "realizo un comentario en "
-            actividad.tipo = "comentario"
-            actividad.fecha = datetime.now()
-            actividad.item = item
-            actividad.usuario_origen = request.user
-            actividad.comentario = comentario
-            actividad.save()
-    else:
-        comment_form = CommentForm()
-    comments = item.comentarios_recibidos.all().order_by('fecha')
-    return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'comment_form': comment_form, 'comments': comments},
-        context_instance=RequestContext(request))
+# @login_required(login_url='/accounts/user/')
+# def comment(request, item_id):
+#     searchbox = SearchBox()
+#     try:
+#         item = Item.objects.get(pk=item_id)
+#     except Item.DoesNotExist:
+#         raise Http404
+#     if request.method == 'POST':
+#         comment_form = CommentForm(request.POST)
+#         if comment_form.is_valid():
+#             comentario_text = comment_form.cleaned_data['texto']
+#             comentario = Comentario()
+#             comentario.comentario = comentario_text
+#             comentario.item = item
+#             comentario.user = request.user
+#             comentario.fecha = datetime.now()
+#             comentario.me_gusta = 0
+#             comentario.denuncias = 0
+#             comentario.save()
+#             messages.add_message(request, messages.SUCCESS, u"Has comentado el producto {0}".format(
+#                 item.nombre))
+#             comment_form = CommentForm()
+#             actividad = Actividad()
+#             actividad.descripcion = "realizo un comentario en "
+#             actividad.tipo = "comentario"
+#             actividad.fecha = datetime.now()
+#             actividad.item = item
+#             actividad.usuario_origen = request.user
+#             actividad.comentario = comentario
+#             actividad.save()
+#     else:
+#         comment_form = CommentForm()
+#     comments = item.comentarios_recibidos.all().order_by('fecha')
+#     return render_to_response('items/item.html', {'form_search': searchbox,
+#         'item': item, 'comment_form': comment_form, 'comments': comments},
+#         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
@@ -267,19 +267,19 @@ def recomendation(request, item_id):
         context_instance=RequestContext(request))
 
 
-@login_required(login_url='/accounts/user/')
-def me_gusta_comentario(request, comentario_id):
-    comments = Comment.objects.for_model(Item).filter(object_pk=5).filter(
-        user_id=5)
-    print comments
-    print comentario_id
-    try:
-        comentario = Comentario.objects.get(pk=comentario_id)
-    except Comentario.DoesNotExist:
-        raise Http404
-    comentario.me_gusta += 1
-    comentario.save()
-    comments = item.comentario_set.all().order_by('fecha')
+# @login_required(login_url='/accounts/user/')
+# def me_gusta_comentario(request, comentario_id):
+#     comments = Comment.objects.for_model(Item).filter(object_pk=5).filter(
+#         user_id=5)
+#     print comments
+#     print comentario_id
+#     try:
+#         comentario = Comentario.objects.get(pk=comentario_id)
+#     except Comentario.DoesNotExist:
+#         raise Http404
+#     comentario.me_gusta += 1
+#     comentario.save()
+#     comments = item.comentario_set.all().order_by('fecha')
     return HttpResponseRedirect('/items/item/{0}'.format(comentario.item.id))
 #    return render_to_response('items/item.html', {'form_search': searchbox,
 #        'item': item, 'comment_form': comment_form, 'messages': messages,
@@ -287,15 +287,15 @@ def me_gusta_comentario(request, comentario_id):
 #        context_instance=RequestContext(request))
 
 
-@login_required(login_url='/accounts/user/')
-def denunciar_comentario(request, comentario_id):
-    try:
-        comentario = Comentario.objects.get(pk=comentario_id)
-    except Comentario.DoesNotExist:
-        raise Http404
-    comentario.denuncias += 1
-    comentario.save()
-    return HttpResponseRedirect('/items/item/{0}'.format(comentario.item.id))
+# @login_required(login_url='/accounts/user/')
+# def denunciar_comentario(request, comentario_id):
+#     try:
+#         comentario = Comentario.objects.get(pk=comentario_id)
+#     except Comentario.DoesNotExist:
+#         raise Http404
+#     comentario.denuncias += 1
+#     comentario.save()
+#     return HttpResponseRedirect('/items/item/{0}'.format(comentario.item.id))
 
 
 @login_required(login_url='/accounts/user')
