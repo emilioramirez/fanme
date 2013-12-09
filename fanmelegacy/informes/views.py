@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from datetime import date
 from segmentation.models import Topico
 from items.models import Item
-import operator
 
 
 @staff_member_required
@@ -13,45 +12,8 @@ def my_admin_view(request):
     active_users = User.objects.filter(is_active=True)
     inactive_users = User.objects.filter(is_active=False)
     return render_to_response('informes/my_template.html',
-        {'active_users': active_users.count(), 'inactive_users': inactive_users.count()},
-        context_instance=RequestContext(request))
-
-
-@staff_member_required
-def progreso(request):
-    current_year = date.today().year
-    current_year = 2011
-    usuarios_enero = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=1).count()
-    usuarios_febrero = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=2).count()
-    usuarios_marzo = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=3).count()
-    usuarios_abril = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=4).count()
-    usuarios_mayo = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=5).count()
-    usuarios_junio = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=6).count()
-    usuarios_julio = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=7).count()
-    usuarios_agosto = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=8).count()
-    usuarios_septiembre = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=9).count()
-    usuarios_octubre = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=10).count()
-    usuarios_noviembre = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=11).count()
-    usuarios_diciembre = User.objects.filter(date_joined__year=current_year).filter(
-        date_joined__month=12).count()
-    return render_to_response('informes/progreso.html',
-        {'usuarios_enero': usuarios_enero, 'usuarios_febrero': usuarios_febrero,
-        'usuarios_marzo': usuarios_marzo, 'usuarios_abril': usuarios_abril,
-        'usuarios_mayo': usuarios_mayo, 'usuarios_junio': usuarios_junio,
-        'usuarios_julio': usuarios_julio, 'usuarios_agosto': usuarios_agosto,
-        'usuarios_septiembre': usuarios_septiembre, 'usuarios_octubre': usuarios_octubre,
-        'usuarios_noviembre': usuarios_noviembre, 'usuarios_diciembre': usuarios_diciembre},
+        {'active_users': active_users.count(),
+        'inactive_users': inactive_users.count()},
         context_instance=RequestContext(request))
 
 
@@ -64,8 +26,7 @@ def fans_por_topicos(request):
         cant_fans = 0
         for item in items_por_topico:
             cant_fans = cant_fans + item.cantidad_fans
-        dict[topico] = cant_fans;
-    print dict
+        dict[topico] = cant_fans
     length = len(dict)
     return render_to_response('informes/fans_por_topico.html',
         #{'fans_por_topicos': dict},
@@ -75,11 +36,68 @@ def fans_por_topicos(request):
 
 @staff_member_required
 def item_fans(request):
-    top_items = Item.objects.order_by('-cantidad_fans')[:10]
-    dict = {}
-    for item in top_items:
-        dict[item] = item.cantidad_fans
-    print dict
+    mostrar_form = True
     return render_to_response('informes/ranking_items.html',
-        {'fans_por_item': dict},
+        {'mostrar_form': mostrar_form},
+        context_instance=RequestContext(request))
+
+
+@staff_member_required
+def cant_items_fans(request, cant_items):
+    mostrar_form = False
+    if cant_items != 0:
+        top_items = Item.objects.order_by('-cantidad_fans')[:cant_items]
+        dict = {}
+        for item in top_items:
+            dict[item] = item.cantidad_fans
+    return render_to_response('informes/ranking_items.html',
+        {'fans_por_item': dict, 'mostrar_form': mostrar_form},
+        context_instance=RequestContext(request))
+
+
+@staff_member_required
+def progreso(request):
+    mostrar_form = True
+    return render_to_response('informes/progreso.html',
+        {'fans_por_item': dict, 'mostrar_form': mostrar_form},
+        context_instance=RequestContext(request))
+
+
+@staff_member_required
+def progreso_anios(request, cant_anios):
+    mostrar_form = False
+    current_year = date.today().year
+    anios_a_restar = int(cant_anios)
+    year_base = current_year - anios_a_restar
+    anios = range(year_base, current_year + 1)
+    dict = {}
+    for year in anios:
+        dict_cant = {}
+        dict_cant['enero'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=1).count()
+        dict_cant['febrero'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=2).count()
+        dict_cant['marzo'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=3).count()
+        dict_cant['abril'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=4).count()
+        dict_cant['mayo'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=5).count()
+        dict_cant['junio'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=6).count()
+        dict_cant['julio'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=7).count()
+        dict_cant['agosto'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=8).count()
+        dict_cant['septiembre'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=9).count()
+        dict_cant['octubre'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=10).count()
+        dict_cant['noviembre'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=11).count()
+        dict_cant['diciembre'] = User.objects.filter(date_joined__year=year).filter(
+            date_joined__month=12).count()
+        dict[year] = dict_cant
+    return render_to_response('informes/progreso.html',
+        {'dict': dict, 'mostrar_form': mostrar_form},
         context_instance=RequestContext(request))

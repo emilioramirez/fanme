@@ -36,7 +36,7 @@ class Like(BaseRating):
 class Dislike(BaseRating):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'),
                     blank=True, null=True, related_name="%(class)s_dislikes")
-    date_created = models.DateTimeField(auto_now=True)    
+    date_created = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('date_created',)

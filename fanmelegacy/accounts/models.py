@@ -43,19 +43,11 @@ class AbstractProfile(models.Model):
             - 1 * cantidad de topicos creados
             - 5 * cantidad de analisis de denuncias con accion borrado de un comentario relacionado con el user
             -10 * cantidad de analisis de denuncias con accion borrado de un item relacionado con el usuario
-            - 
+            -
         """
-        cantidad_items_fan = self.items.all().count()
 
-        comment_ctype = ContentType.objects.get(app_label='comments', model="comment")
-        cantidad_me_gusta_comentarios = self.user.like_likes.filter(content_type=comment_ctype).count()
-
-        # estado_analisis_denuncia_borrado = EstadoAnalisisDenuncia.objects.get_or_create(estado="borrado")
-        # cantidad_analisis_denuncia_borrado_comentario = ""
-        
-        v = settings.PUNTAJES
+        puntaje = self.puntaje()
         e = settings.ESTRELLAS
-        puntaje = v["item_fan"] * cantidad_items_fan + v["comment_like"] * cantidad_me_gusta_comentarios
         estrellas = 0
         if puntaje <= e["1"]:
             estrellas = 1
@@ -69,6 +61,25 @@ class AbstractProfile(models.Model):
             estrellas = 5
         return range(estrellas)
 
+    def set_puntaje(self):
+        if not isinstance(self, Persona):
+            return 0
+        cantidad_items_fan = self.items.all().count()
+
+        comment_ctype = ContentType.objects.get(app_label='comments', model="comment")
+        cantidad_me_gusta_comentarios = self.user.like_likes.filter(content_type=comment_ctype).count()
+
+        # estado_analisis_denuncia_borrado = EstadoAnalisisDenuncia.objects.get_or_create(estado="borrado")
+        # cantidad_analisis_denuncia_borrado_comentario = ""
+
+        v = settings.PUNTAJES
+        puntaje = v["item_fan"] * cantidad_items_fan + v["comment_like"] * cantidad_me_gusta_comentarios
+        profile = self
+        profile.puntaje = puntaje
+        profile.save()
+
+        return puntaje
+
 
 class Persona(AbstractProfile):
     fecha_nacimiento = models.DateField()
@@ -76,6 +87,7 @@ class Persona(AbstractProfile):
     items = models.ManyToManyField(Item, null=True, blank=True)
     following = models.ManyToManyField(User, null=True, blank=True,
         related_name='followers')
+    puntaje = models.IntegerField(default=0)
 
     class Meta:
 #        verbose_name = ''

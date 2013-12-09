@@ -1,4 +1,5 @@
 {% extends "admin/base.html" %}
+{% load is_false_filter %}
 
 {% block title %}'FanMe' | {{ site_title }}{% endblock %}
 
@@ -19,6 +20,7 @@ alert("I am an alert box!");
 }
 </script>
 <script>
+{% if mostrar_form|is_false %}
 $(function () {
         $('#usuarios_creados').highcharts({
             title: {
@@ -44,19 +46,59 @@ $(function () {
                 verticalAlign: 'middle',
                 borderWidth: 0
             },
-            series: [{
-                name: '2013',
-                data: [{{usuarios_enero}}, {{usuarios_febrero}}, {{usuarios_marzo}},
-                    {{usuarios_abril}}, {{usuarios_mayo}}, {{usuarios_junio}},
-                    {{usuarios_julio}}, {{usuarios_agosto}}, {{usuarios_septiembre}},
-                    {{usuarios_octubre}}, {{usuarios_noviembre}}, {{usuarios_diciembre}}]
-            }]
+            series: [
+                {% for year, meses_cant in dict.items %}
+                    {
+                        name: '{{year}}',
+                        data: [
+                        {% for mes, cant in meses_cant.items %}
+                            {{cant}},
+                        {% endfor %}
+                        ]
+                    },
+                {% endfor %}
+            ]
         });
     });
+{% endif %}
+</script>
+<script>
+function myFunction()
+{
+    var e = document.getElementById("fecha_desde");
+    var fecha_desde = e.options[e.selectedIndex].text;
+    e = document.getElementById("fecha_hasta");
+    var fecha_hasta = e.options[e.selectedIndex].text;
+    var desde = parseInt(fecha_desde);
+    var hasta = parseInt(fecha_hasta);
+    var cant_anios = hasta - desde
+    window.location.assign("/admin/informes/progreso_anios/" + cant_anios);
+}
 </script>
 {% endblock extrahead %}
 
 {% block content %}
+{% if mostrar_form %}
+<div>
+    Desde:
+    <select id="fecha_desde">
+      <option >2013</option>
+      <option >2012</option>
+      <option>2011</option>
+      <option selected>2010</option>>
+    </select>
+    <br/>
+    Hasta:
+    <select id="fecha_hasta" style="margin-left: 3px;">
+      <option>2013</option>
+      <option>2012</option>
+      <option>2011</option>
+      <option>2010</option>
+    </select>
+    <br/>
+    <button style="margin-left:45px;" onclick="myFunction()">Aceptar</button>
+</div>
+{% endif %}
 <div id="usuarios_creados" style="width:100%; height:400px;"></div>
 {% endblock content %}
 

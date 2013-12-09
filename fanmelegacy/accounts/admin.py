@@ -6,11 +6,15 @@ class PersonaAdmin(admin.ModelAdmin):
     date_hierarchy = 'fecha_nacimiento'
 #    fields =
     filter_horizontal = ('items', 'following')
-    list_display = ('__unicode__', 'fecha_nacimiento', 'sexo', 'is_first_time')
+    list_display = ('__unicode__', 'fecha_nacimiento', 'sexo', 'puntaje_persona')
     list_filter = ('sexo', 'is_first_time')
     list_per_page = 50
     ordering = ('user', 'fecha_nacimiento', 'sexo')
     search_fields = ['user__first_name', 'user__last_name', 'user__email']
+
+    def puntaje_persona(self, obj):
+        return obj.set_puntaje()
+    puntaje_persona.admin_order_field = 'puntaje'
 
 
 class EmpresaAdmin(admin.ModelAdmin):
