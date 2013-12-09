@@ -1,0 +1,16 @@
+{% extends "registration/base_registration.html" %}
+
+{% block title %}
+<title>Activacion Fallida</title>
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="span20">
+        <div class="alert alert-info">
+            <h2>La activacion Fallo</h2>
+            <p>Su clave de activacion fallo: {{ activation_key }}</p>
+        </div>
+    </div>
+</div>
+{% endblock container %}

@@ -1,0 +1,20 @@
+{% comment %}
+Context variables:
+- url: the url for like, when like exist this is a "#"
+- content_type: Contenttype instance of the model to like
+{% endcomment %}
+{% if url == '#' %}
+<a href="{{ url }}" title="Te gusta">
+    <div class="me-gusta-img-green"></div>
+</a>
+{# DELETE THIS SECTION #}
+{% elif url == '#1' %}
+<a href="#" title="Ya lo denunciaste, no puedes dar Me gusta">
+    <div class="me-gusta-img-grey"></div>
+</a>
+{# DELETE THIS SECTION #}
+{% else %}
+<a href="{{ url }}?ctype={{ content_type.pk }}" title="Me gusta">
+    <div class="me-gusta-img"></div>
+</a>
+{% endif %}

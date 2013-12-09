@@ -1,0 +1,247 @@
+{% extends "dash/base_ayuda.html" %}
+
+{% load dash_filters %}
+
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block register_form %}
+    <p>
+        <input id="password-clear" type="text" value="Password" autocomplete="off" class="accounts-register-form-field"/>
+    </p>
+{% endblock register_form %}
+
+{% block myjavascript %}
+    <script language="javascript">
+    function escribirDashboard()
+    {
+        borrarPreguntas()
+        var preguntas=new Array();
+        var respuestas=new Array();
+        preguntas[0] = "¿Qué es el Dashboard?";
+        preguntas[1] = "¿Qué son las recomendaciones?";
+        preguntas[2] = "¿Cómo me recomienda FanME?";
+        preguntas[3] = "¿Cómo hago para que me recomiende?";
+        preguntas[4] = "¿Qué precisión puedo esperar de las recomendaciones que me de FanME?";
+        preguntas[5] = "¿Qué significan las estrellas debajo de tu foto?";
+        preguntas[6] = "¿Cómo los usuarios aportan conocimiento a FanME?";
+        preguntas[7] = "¿Por qué tengo que crear una cuenta para podes tener las recomendaciones de FanME?";
+        preguntas[8] = "¿Qué significa seguir a alguien? ";
+        preguntas[9] = "¿Si yo sigo a alguien esa persona, también me tiene que seguir?";
+        respuestas[0] = "El Dashboard es la recomendación de diferentes productos y/o servicios que FanMe realiza a un Usuario";
+        respuestas[1] = "Las recomendaciones son los productos y/o servicios que FanME cree que te gustan";
+        respuestas[2] = "FanME recomienda en base al perfil de gustos que va armando del Usuario";
+        respuestas[3] = "Para que FanME te recomiende selecciona la opción Dashboard del Menú y se desplegará las recomendaciones";
+        respuestas[4] = "La precisión de FanME va a depender de la interacción del Usuario con el Sistema, cada vez que recomiendes, te hagas Fan o comentes un ítem FanME retroalimentará tu perfil para conocer tus gustos";
+        respuestas[5] = "Corresponder a la credibilidad que tienes como Usuario";
+        respuestas[6] = "A través de sus comentarios, recomendaciones, ítems a los que hace fan";
+        respuestas[7] = "Porque FanME necesita almacenar los gustos de los Usuarios para poder realizar las recomendaciones";
+        respuestas[8] = "Si sigues a un Usuario vas a poder conocer todo lo que hace en fanME como las recomendaciones que realiza, los comentarios, ítems que es fan";
+        respuestas[9 ] = "No es necesario, puedes seguir a alguien sin necesidad de que te sigan";
+        var list = document.getElementById("preguntas");
+        for (i = 0; i < preguntas.length ; i++)
+        {
+            var li = document.createElement("li");
+            li.className = "help-question";
+            li.innerHTML = preguntas[i];
+            list.appendChild(li);
+            var newdiv = document.createElement('p');
+            newdiv.innerHTML = respuestas[i];
+            newdiv.className= "help-answers";
+            li.appendChild(newdiv);
+        }
+    }
+
+    function escribirLogbook()
+    {
+        borrarPreguntas()
+        var preguntas=new Array();
+        var respuestas=new Array();
+        preguntas[0] = "¿Qué es el Logbook?";
+        preguntas[1] = "¿Qué datos me muestra el Logbook?";
+        preguntas[2] = "¿Cómo agrego una foto a mi Perfil?";
+        preguntas[3] = "¿Cómo cambio mi foto?";
+        preguntas[4] = "¿Qué son los Usuarios que sigo?";
+        preguntas[5] = "¿Qué son los Usuarios que me siguen?";
+        respuestas[0] = "El logbook es la pantalla que te va a mostrar la interacción de los Usuarios que sigues con el sistema, además de tu propio comportamiento";
+        respuestas[1] = "El logbook va a mostrarte las recomendaciones, ítems que sos fan, y comentarios ";
+        respuestas[2] = "Haz clic en tu nombre y se abrirá la pantalla con los datos de tu cuenta, selecciona el botón agregar imagen y elige el archivo que contiene la imagen que deseas para tu perfil";
+        respuestas[3] = "Haz clic en tu nombre y se abrirá la pantalla con los datos de tu cuenta con la imagen previa que tienes en el perfil para cambiarla selecciona el botón agregar imagen y elige el archivo que contiene la imagen que deseas para tu perfil";
+        respuestas[4] = "Son aquellos Usuarios de los que deseas conocer cuáles son sus gustos";
+        respuestas[5] = "Son aquellos Usuarios que desean conocer cuáles son tus gustos ";
+        var list = document.getElementById("preguntas");
+        for (i = 0; i < preguntas.length ; i++)
+        {
+            var li = document.createElement("li");
+            li.className = "help-question";
+            li.innerHTML = preguntas[i];
+            list.appendChild(li);
+            var newdiv = document.createElement('p');
+            newdiv.innerHTML = respuestas[i];
+            newdiv.className= "help-answers";
+            li.appendChild(newdiv);
+        }
+    }
+
+    function escribirMensajes()
+    {
+        borrarPreguntas()
+        var preguntas=new Array();
+        var respuestas=new Array();
+        preguntas[0] = "¿Cómo se organizan los mensajes?";
+        preguntas[1] = "¿Cómo mandar un mensaje?";
+        preguntas[2] = "¿Qué pasa cuando envío un mensaje a alguien?";
+        preguntas[3] = "¿Puedo cancelar el envío de un mensaje que ya he enviado?";
+        preguntas[4] = "¿A cuántas personas puedo enviar un mensaje al mismo tiempo?";
+        preguntas[5] = "¿Cómo elimino un mensaje concreto de una conversación?";
+        //preguntas[6] = "¿Cómo puedo ver los mensajes que he enviado?";
+        //preguntas[8] = "¿Puedo recuperar los mensajes eliminados?";
+        //preguntas[9] = "¿Cómo controlo quién puede enviarme mensajes?";
+        //preguntas[9] = "¿Cómo denuncio un mensaje como correo no deseado?";
+        respuestas[0] ="Los mensajes se agrupan en una conversación continua con cada amigo o grupo de amigos, no por fecha o por asunto. Gracias a un filtrado inteligente, siempre podrás ver los mensajes de tus amigos y de los amigos de tus amigos, en primer lugar.";
+        respuestas[1] ="Clic en el link 'Mensaje' en el lado derecho donde esta tu foto y nombre. Escribe el nombre de la persona que le quieras mandar el mensaje y un asunto (opcional). Presionar 'Enviar'. ";
+        respuestas[2] ="Cuando envías un mensaje a alguien, se entrega en los Mensajes de FanME de esa persona. Aparece una alerta en el Dashboard y en el Logbook de la persona. Si intercambias varios mensajes con una persona, estos van apareceran como una cadena de conversación única en los Mensajes de cada uno.";
+        respuestas[3] ="Los mensajes enviados no pueden cancelarse ni eliminarse de los 	mensajes del destinatario. Sí puedo cancelar el mensaje antes de enviarlo.";
+        respuestas[4] ="Se puede enviar un mensaje a una sola persona (previamente lo tienes que seguir)";
+        respuestas[5] ="Solamente debes seleccionar el mensaje y hacer clic en el botón de eliminar";
+        var list = document.getElementById("preguntas");
+        for (i = 0; i < preguntas.length ; i++)
+        {
+            var li = document.createElement("li");
+            li.className = "help-question";
+            li.innerHTML = preguntas[i];
+            list.appendChild(li);
+            var newdiv = document.createElement('p');
+            newdiv.innerHTML = respuestas[i];
+            newdiv.className= "help-answers";
+            li.appendChild(newdiv);
+        }
+    }
+
+    function escribirEventos()
+    {
+        borrarPreguntas()
+        var preguntas=new Array();
+        var respuestas=new Array();
+        preguntas[0] = "¿Cómo puedo acceder a mis invitaciones y eventos próximos?";
+        preguntas[1] = "¿Cómo puedo añadir fotos a un evento?";
+        preguntas[2] = "¿Cómo veo mis eventos antiguos?";
+        preguntas[3] = "¿Cómo se crea un evento?";
+        //preguntas[9] = "¿Cómo invito a alguien a mi evento?";
+        //preguntas[10] = "¿A quién puedo invitar a un evento?";
+        //preguntas[11] = "¿Cómo envío un mensaje a toda mi lista de invitados a un evento?";
+        //preguntas[12] = "¿Cómo puedo eliminar o cancelar un evento que he creado?";
+        //preguntas[13] = "¿Cómo puedo cambiar la hora o la fecha de mi evento?";
+        //preguntas[14] = "¿Puedo cambiar el nombre de mi evento?";
+        //preguntas[6] = "¿Cuáles son las opciones de privacidad de los eventos?";
+        //preguntas[7] = "¿Puedo evitar que mis seguidores vean a qué eventos voy a asistir?";
+        //preguntas[1] = "¿Cómo confirmo mi asistencia a un evento?";
+        //preguntas[1] = "¿Cómo puedo eliminar un evento de mis próximos eventos?";
+        //preguntas[4] = "¿Cómo puedo añadir vídeos a un evento?";
+        respuestas[0] = "Desde el sidebar debe seleccionar la opción 'Evento' y allí podrás visualizar todos los eventos que te han invitado";
+        respuestas[1] = "Accediendo al evento creado por tí, y selecciona la opción 'Imagen'. Luego elige la imagen que desea que aparezca en el evento creado";
+        respuestas[2] = "Desde el sidebar accediendo a la opción 'Eventos' podrás visualizar todos tus eventos"
+        respuestas[3] = "Desde el sidebar accediendo a la opción 'EVentos' podrás seleccionar la opción 'Crear Evento' desde tu sidebar"
+        var list = document.getElementById("preguntas");
+        for (i = 0; i < preguntas.length ; i++)
+        {
+            var li = document.createElement("li");
+            li.className = "help-question";
+            li.innerHTML = preguntas[i];
+            list.appendChild(li);
+            var newdiv = document.createElement('p');
+            newdiv.innerHTML = respuestas[i];
+            newdiv.className= "help-answers";
+            li.appendChild(newdiv);
+        }
+    }
+
+    function escribirNotificaciones()
+    {
+        borrarPreguntas()
+        var preguntas=new Array();
+        var respuestas=new Array();
+        preguntas[0] = "¿Qué son las notificaciones?";
+        preguntas[1] = "¿Todos los usuarios pueden crearlas?";
+        preguntas[2] = "¿Cómo creo una notificación?";
+        preguntas[3] = "¿Puedo cargar fotos a una notificación? ¿Cómo?";
+        preguntas[4] = "¿A quiénes se puede enviar notificaciones?";
+        preguntas[5] = "¿Hay un límite en la cantidad de notificaciones que se pueden enviar?";
+        respuestas[0] = "Son mensajes enviados por las Empresas a las que sigues, a través de las notificaciones vas a poder recibir promociones, descuentos, etc.";
+        respuestas[1] = "No, las notificaciones solamente las pueden crear las empresas";
+        respuestas[2] = "Selecciona la opción notificación, clic en el botón nueva notificación, luego completa los datos que te solicita y selecciona en el botón crear ";
+        respuestas[3] = "Si selecciona la opción cargar imagen y luego elige el archivo donde se encuentre la imagen que tendrá tu notificación";
+        respuestas[4] = "A los Usuarios que te siguen";
+        respuestas[5] = "Si va a depender de la cantidad de Usuarios seguidores";
+        var list = document.getElementById("preguntas");
+        for (i = 0; i < preguntas.length ; i++)
+        {
+            var li = document.createElement("li");
+            li.className = "help-question";
+            li.innerHTML = preguntas[i];
+            list.appendChild(li);
+            var newdiv = document.createElement('p');
+            newdiv.innerHTML = respuestas[i];
+            newdiv.className= "help-answers";
+            li.appendChild(newdiv);
+        }
+    }
+
+    function borrarPreguntas()
+    {
+        var elemento = document.getElementById("preguntas");
+        while (elemento.firstChild)
+        {
+            elemento.removeChild(elemento.firstChild);
+        }
+    }
+    </script>
+{% endblock myjavascript %}
+
+{% block body-help %}
+    <div class="help-content-temas">
+        <img src="{{ STATIC_URL }}images/ayuda/dashboard.jpg" width="50" height="50">
+        <!--<div id="dash" class="help-temas-titles" onclick=escribirDashboard() onmouseover="this.style.cursor='pointer';">Dashboard</div>-->
+        <div id="dash" class="help-temas-titles" onmouseover="this.style.cursor='pointer';">
+            <a href="/dash/dashboard_ayuda">Dashboard</a>
+        </div>
+    </div>
+    <div class="help-content-temas">
+        <img src="{{ STATIC_URL }}images/ayuda/logbook.jpg" width="50" height="50">
+        <!--<div class="help-temas-titles" onclick=escribirLogbook() onmouseover="this.style.cursor='pointer';">Logbook</div>-->
+        <div class="help-temas-titles" onmouseover="this.style.cursor='pointer';">
+            <a href="/dash/logbook_ayuda">Logbook</a>
+        </div>
+    </div>
+    <div class="help-content-temas">
+        <img src="{{ STATIC_URL }}images/ayuda/mensaje.jpg" width="50" height="50">
+        <!--<div class="help-temas-titles" onclick=escribirMensajes() onmouseover="this.style.cursor='pointer';">Mensajes</div>-->
+        <div class="help-temas-titles" onmouseover="this.style.cursor='pointer';">
+            <a href="/social/messages_ayuda">Mensajes</a>
+        </div>
+    </div>
+    <div class="help-content-temas">
+        <img src="{{ STATIC_URL }}images/ayuda/evento.jpg" width="50" height="50">
+        <!--<div class="help-temas-titles" onclick=escribirEventos() onmouseover="this.style.cursor='pointer';">Eventos</div>-->
+        <div class="help-temas-titles" onmouseover="this.style.cursor='pointer';">
+            <a href="#">Eventos</a>
+        </div>
+    </div>
+    <div class="help-content-temas">
+        <img src="{{ STATIC_URL }}images/ayuda/mensaje3.jpg" width="50" height="50">
+        <!--<div class="help-temas-titles" onclick=escribirNotificaciones() onmouseover="this.style.cursor='pointer';">Notificaciones</div>-->
+        <div class="help-temas-titles" onmouseover="this.style.cursor='pointer';">
+            <a href="#">Notificaciones</a>
+        </div>
+    </div>
+    <div id="content" class="help-respuestas-temas">
+        <ol id="preguntas">
+        </ol>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock sidebar %}

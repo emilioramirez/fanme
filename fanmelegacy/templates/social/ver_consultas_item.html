@@ -1,0 +1,47 @@
+{% extends "bussiness/dash_empresa.html" %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/bussiness/dash_empresa/">Dashboard</a></li>
+        <li class="menu-item"><a href="/bussiness/planes/">Planes</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="title-messages">Consultas</div>
+    <div class="list-content-user-messages">
+        <ul>
+            {% for usuario in usuario_consulta_item %}
+                <li class="content-user-messages">
+                    <div class="user-message-image">
+                        {% if usuario.persona.avatar %}
+                                <img src="{{ usuario.persona.avatar.url_50x50 }}" alt="Logo" />
+                        {% else %}
+                            {% if usuario.persona %}
+                                {% if usuario.persona.sexo == "M" %}
+                                    <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
+                                {% else %}
+                                    <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
+                                {% endif%}
+                            {% else %}
+                                    <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
+                            {% endif%}
+                        {% endif%}
+                    </div>
+                    <div class="user-message-name">
+                        <a href="/social/ver_consulta_item_usuario/{{ item_id }}/{{ usuario.id }}">
+                            {{ usuario.first_name }} {{ usuario.last_name }}
+                        </a>
+                        <p>{{ usuario.consultas_enviadas.user_from }}</p>
+                    </div>
+                    <div class="user-message-last"></div>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock dashboard %}

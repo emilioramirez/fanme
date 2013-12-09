@@ -1,0 +1,49 @@
+{% extends "base_menu.html" %}
+
+{% block title %}
+<title>Create Profile</title>
+{% endblock title %}
+
+{% block description %}{% endblock description %}
+
+{% block extracss %}
+<!-- datepicker CSS -->
+<link rel="stylesheet" href="{{ STATIC_URL }}bootstrap-datepicker/css/datepicker.css">
+{% endblock extracss %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <h1>{{ page_title }}</h1>
+            <p>Complete los siguientes datos para crear su perfil. Solo debe hacerlo una vez, puede editar sus datos mas tarde si asi lo desea.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <form method="POST" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+                {% csrf_token %}
+                {{ profile_user_form }}
+                <div>
+                    <input type="submit" value="Guardar" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12"><a href="#">Si eres una empresa, click aqui</a></div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extrajs %}
+<!-- datepicker JS -->
+<script src="{{ STATIC_URL }}bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="{{ STATIC_URL }}bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js"></script>
+<script>
+    $('#id_birthday').datepicker({
+        format: 'dd/mm/yyyy',
+        language: 'es',
+    });
+</script>
+{% endblock extrajs %}
