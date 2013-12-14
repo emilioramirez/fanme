@@ -221,5 +221,3 @@ ESTRELLAS = {
     "4": 400,
     "5": 600
 }
-
-#from local_settings import *
