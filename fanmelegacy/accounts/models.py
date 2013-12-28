@@ -45,8 +45,9 @@ class AbstractProfile(models.Model):
             -10 * cantidad de analisis de denuncias con accion borrado de un item relacionado con el usuario
             -
         """
-
-        puntaje = self.puntaje()
+        if not isinstance(self, Persona):
+            return range(0)
+        puntaje = self.puntaje
         e = settings.ESTRELLAS
         estrellas = 0
         if puntaje <= e["1"]:
