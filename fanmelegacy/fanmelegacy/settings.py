@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'fanme.db.emi',                      # Or path to database file if using sqlite3.
+        'NAME': 'fanme.db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -221,5 +221,3 @@ ESTRELLAS = {
     "4": 400,
     "5": 600
 }
-
-#from local_settings import *
