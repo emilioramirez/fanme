@@ -6,6 +6,15 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
 {% endblock mystylesheet%}
 
+{% block myjavascript %}
+    <script language="javascript">
+    function setNewImage(url)
+    {
+        document.getElementById("imagen_grande").src=url;
+    }
+    </script>
+{% endblock myjavascript %}
+
 {% block menuOptionsSelected %}
     {% if user.persona %}
         <ul class="nav nav-pills header-tab">
@@ -35,7 +44,7 @@
         <div class="item-body">
             <div class="item-image-big">
                 {% if item.mis_imagenes.count %}
-                    <img src="{{ item.first_image_big }}" alt="Score">
+                    <img id="imagen_grande" src="{{ item.first_image_big }}" alt="Score">
                 {% else %}
                     <img src="{{ STATIC_URL }}images/298.png" alt="Score">
                 {% endif %}
@@ -44,7 +53,12 @@
             <div class="item-images">
                 <ul class="image-list">
                     {% for itemimage in item.mis_imagenes.all %}
-                        <li class="image-little"><img src="{{ itemimage.imagen.url_50x50 }}" alt="Score"></li>
+                        <li class="image-little">
+                            <a href="#" onClick="setNewImage('{{ itemimage.image_big }}')">
+                                <img src="{{ itemimage.imagen.url_50x50 }}" />
+                            </a>
+                            <input id="imagen + 'itemimage'" type="hidden" value="{{ itemimage.image_big }}" />
+                        </li>
 <!--
                     <li class="image-little"><img src="{{ STATIC_URL }}images/206.png" alt="Score"></li>
                     <li class="image-little"><img src="{{ STATIC_URL }}images/207.png" alt="Score"></li>

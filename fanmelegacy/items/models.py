@@ -90,6 +90,12 @@ class ItemImagen(models.Model):
     def __unicode__(self):
         return u'{0} ({1})'.format(self.item, self.imagen.name)
 
+    def image_big(self):
+        try:
+            return self.imagen.url_200x200
+        except:
+            return 'no pibe'
+
 
 class ItemDenuncias(models.Model):
     item = models.ForeignKey(Item, related_name="item_denunciado")
