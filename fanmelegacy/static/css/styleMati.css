@@ -197,6 +197,7 @@ sidebar-follow-user{}
 .item-content-mati{
     border: 1px solid #BBBBBB;
     margin: 10px 130px;
+    height: 325px;
 }
 .item-registration{}
     .item-registration p{
@@ -228,7 +229,14 @@ sidebar-follow-user{}
         border: none;
         padding: 7px 23px 15px 6px;
         color: white;
-        margin-left: 515px;
+        //margin-left: 515px;
+        background: url("../images/crear-item.png") no-repeat scroll 0 0 transparent;
+    }
+    .item-cancelar-registracion
+    {
+        border: none;
+        padding: 7px 23px 21px 15px;
+        color: white;
         background: url("../images/crear-item.png") no-repeat scroll 0 0 transparent;
     }
     .item-registration ul.errorlist{
