@@ -261,7 +261,7 @@ def recomendation(request, item_id):
                 actividad.usuario_origen = request.user
                 actividad.recomendacion = recomendacion
                 actividad.save()
-        return HttpResponseRedirect(reverse('item-detail', args=[item.pk]))
+                messages.add_message(request, messages.SUCCESS, u"Se han enviado las recomendaciones correctamente.")
     return render_to_response('items/recomendacion.html',
         {'form_search': searchbox, 'usuarios': seguidores, 'item': item},
         context_instance=RequestContext(request))

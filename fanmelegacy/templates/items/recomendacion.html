@@ -1,5 +1,9 @@
 {% extends "dash/dashboard.html" %}
 
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet %}
+
 {% block myjavascript %}
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
 {% endblock myjavascript %}
