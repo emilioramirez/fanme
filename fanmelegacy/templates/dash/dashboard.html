@@ -36,9 +36,15 @@
                 </li>
             {% endfor %}
             <li>
-                <a href="/dash/dashboard/">
-                    <div class="list-item-topico list-item-topico-all" title="Todos"></div>
-                </a>
+                {% if all_topics %}
+                    <a href="/dash/dashboard/all">
+                        <div class="list-item-topico list-item-topico-all" title="Todos"></div>
+                    </a>
+                {% else %}
+                    <a href="/dash/dashboard/all">
+                        <div class="list-item-topico un-list-item-topico-all" title="Todos"></div>
+                    </a>
+                {% endif %}
             </li>
         </ul>
     </div>

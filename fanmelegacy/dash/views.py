@@ -43,7 +43,8 @@ def dashboard(request):
                 items_by_topics.append(lista)
         else:
             for rank, itemname in ranking:
-                lista = Item.objects.filter(nombre=itemname)
+                lista = Item.objects.filter(nombre=itemname).filter(
+                    topico__in=my_profile.topicos.all())
                 items_by_topics.append(lista)
         notificaciones_noleidas = get_cant_notificaciones(request)
         recomendaciones_noleidas = get_cant_recomendaciones(request)
@@ -59,41 +60,55 @@ def dashboard(request):
         context_instance=RequestContext(request))
 
 
+#@login_required(login_url='/accounts/user/')
+#def dashboard_topic(request, topic_id):
+#    searchbox = SearchBox()
+#    lista = []
+#    try:
+#        #block recommendation
+#        recommendations.diccionario = recommendations.getMatrix()
+#        ranking = recommendations.getRecommendations(
+#            recommendations.diccionario, request.user.username)
+#        #block recommendation
+#        root_topics = Topico.objects.filter(padre=None)
+#        topico = Topico.objects.get(id=topic_id)
+#        yes = request.user.persona.topicos.get(id=topic_id)
+##        if yes:
+##            lista.append(Item.objects.filter(topico__exact=topico).order_by(
+##                '-cantidad_fans'))
+#        if yes:
+#            if ranking != []:
+#                for rank, itemname in ranking:
+#                    lista.append(Item.objects.filter(nombre=itemname,
+#                        topico__exact=topico).order_by('-cantidad_fans'))
+#            else:
+#                lista.append(Item.objects.filter(topico__exact=topico).order_by(
+#                '-cantidad_fans'))
+#
+#    except Persona.DoesNotExist:
+#        return HttpResponseRedirect('/dash/empresa/')
+#    except Topico.DoesNotExist:
+#        return render_to_response('dash/dashboard.html',
+#            {'form_search': searchbox, 'topicos': lista,
+#                'r_topics': root_topics},
+#            context_instance=RequestContext(request))
+#    return render_to_response('dash/dashboard.html', {'form_search': searchbox,
+#        'topicos': lista, 'r_topics': root_topics},
+#        context_instance=RequestContext(request))
+
+
 @login_required(login_url='/accounts/user/')
 def dashboard_topic(request, topic_id):
-    searchbox = SearchBox()
-    lista = []
     try:
-        #block recommendation
-        recommendations.diccionario = recommendations.getMatrix()
-        ranking = recommendations.getRecommendations(
-            recommendations.diccionario, request.user.username)
-        #block recommendation
-        root_topics = Topico.objects.filter(padre=None)
-        topico = Topico.objects.get(id=topic_id)
-        yes = request.user.persona.topicos.get(id=topic_id)
-#        if yes:
-#            lista.append(Item.objects.filter(topico__exact=topico).order_by(
-#                '-cantidad_fans'))
-        if yes:
-            if ranking != []:
-                for rank, itemname in ranking:
-                    lista.append(Item.objects.filter(nombre=itemname,
-                        topico__exact=topico).order_by('-cantidad_fans'))
-            else:
-                lista.append(Item.objects.filter(topico__exact=topico).order_by(
-                '-cantidad_fans'))
-
-    except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        top = Topico.objects.get(id=topic_id)
+        profile = request.user.persona
+        profile.topicos.remove(top)
+        profile.save()
     except Topico.DoesNotExist:
-        return render_to_response('dash/dashboard.html',
-            {'form_search': searchbox, 'topicos': lista,
-                'r_topics': root_topics},
-            context_instance=RequestContext(request))
-    return render_to_response('dash/dashboard.html', {'form_search': searchbox,
-        'topicos': lista, 'r_topics': root_topics},
-        context_instance=RequestContext(request))
+        pass
+    except Persona.DoesNotExist:
+        pass
+    return HttpResponseRedirect('/dash/dashboard/')
 
 
 @login_required(login_url='/accounts/user/')
@@ -108,6 +123,39 @@ def dashboard_topic_add(request, topic_id):
     except Persona.DoesNotExist:
         pass
     return HttpResponseRedirect('/dash/dashboard/')
+
+
+@login_required(login_url='/accounts/user/')
+def dashboard_all(request):
+    searchbox = SearchBox()
+    root_topics = Topico.objects.filter(padre=None)
+    profile = request.user.persona
+    items_by_topics = []
+    if set(profile.topicos.all()) == set(root_topics):
+        profile.topicos = []
+        profile.save()
+        all_topics = False
+    else:
+        try:
+            profile.topicos = root_topics
+            profile.save()
+            all_topics = True
+            lista = Item.objects.all().order_by('-cantidad_fans')
+            items_by_topics.append(lista)
+        except Topico.DoesNotExist:
+            pass
+        except Persona.DoesNotExist:
+            pass
+    notificaciones_noleidas = get_cant_notificaciones(request)
+    recomendaciones_noleidas = get_cant_recomendaciones(request)
+    mensajes_nolidas = get_cant_mensajes(request)
+    return render_to_response('dash/dashboard.html', {'form_search': searchbox,
+        'all_topics': all_topics, 'r_topics': root_topics,
+        'topicos': items_by_topics,
+        'notificaciones_noleidas': notificaciones_noleidas,
+        'recomendaciones_noleidas': recomendaciones_noleidas,
+        'mensajes_nolidas': mensajes_nolidas},
+        context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
