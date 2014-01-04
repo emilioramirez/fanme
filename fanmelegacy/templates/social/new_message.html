@@ -7,20 +7,6 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.minified.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.packed.js"></script>
-    <script language="javascript">
-        $(function(){
-            $("#id_string input").autoSuggest(data);
-        });
-        var data = {items: [
-            {value: "21", name: "Mick Jagger"},
-            {value: "43", name: "Johnny Storm"},
-            {value: "46", name: "Richard Hatch"},
-            {value: "54", name: "Kelly Slater"},
-            {value: "55", name: "Rudy Hamilton"},
-            {value: "79", name: "Michael Jordan"}
-            ]};
-            $("#id_string").autoSuggest(data.items);
-    </script>
 {% endblock myjavascript %}
 
 {% block mystylesheet-dashboard %}
