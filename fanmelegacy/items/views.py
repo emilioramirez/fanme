@@ -117,7 +117,7 @@ def register_item(request):
                 itemimagen.save()
             except KeyError:
                 print 'Excepcion en items/view.register_item'
-                messages.add_message(request, messages.SUCCESS, "Se creo el Item exitosamente")
+            messages.add_message(request, messages.SUCCESS, "Se creo el Item exitosamente")
             form_register = ItemRegisterForm()
     else:
         form_register = ItemRegisterForm()
