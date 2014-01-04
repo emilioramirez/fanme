@@ -92,7 +92,7 @@
 {% block sidebar %}
     <div class="sidebar-content">
         <div class="sidebar-user">
-            <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+            <span class="user-name">{{ user.first_name }} {{ user.last_name }}</span>
             <div class="user-stars">
                 <ul>
                     {% for estrella in user.persona.cantidad_estrellas %}
