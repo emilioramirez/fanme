@@ -430,22 +430,24 @@ body{}
         }
             .sidebar-content{}
                 .sidebar-user{
-                    float: right;
                     width: 230px;
+                    text-align: center;
                 }
                     .logbook-user-image{
                         border: 1px solid;
                         box-shadow: 0 0 5px #000000;
                         height: 100px;
-                        margin: 4px 5px;
+                        margin: 30px auto 5px;
                         width: 100px;
                     }
                     .user-name{
                         color: #646464;
                         font-size: 18px;
                         font-weight: bold;
-                        text-align: right;
-                        margin: 17px 50px 0px 0px;
+                        margin: 15px 0px 0px 0px;
+                        display: inline-block;
+                        vertical-align: middle;
+                        line-height: normal;
                     }
                     .user-stars{
                         float: right;
