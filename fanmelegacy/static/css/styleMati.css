@@ -231,6 +231,8 @@ sidebar-follow-user{}
         color: white;
         //margin-left: 515px;
         background: url("../images/crear-item.png") no-repeat scroll 0 0 transparent;
+        font-size: 14px;
+        font-weight: bold;
     }
     .item-cancelar-registracion
     {
@@ -238,6 +240,8 @@ sidebar-follow-user{}
         padding: 7px 23px 21px 15px;
         color: white;
         background: url("../images/crear-item.png") no-repeat scroll 0 0 transparent;
+        font-size: 14px;
+        font-weight: bold;
     }
     .item-registration ul.errorlist{
         color: red;
