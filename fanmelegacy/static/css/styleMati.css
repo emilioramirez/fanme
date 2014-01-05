@@ -676,7 +676,7 @@ sidebar-follow-user{}
     /*Begining of the new evento page*/
         .content-form-evento{}
             .evento-name-label{
-                margin-left: 43px;
+                margin-left: 54px;
             }
             .evento-name-field{
                 width: 422px;
@@ -688,10 +688,10 @@ sidebar-follow-user{}
                 margin-left: 22px;
             }
             .evento-date-fin-label{
-                margin-left: 34px;
+                margin-left: 37px;
             }
             .evento-tipo-label{
-                margin-left: 64px;
+                margin-left: 75px;
             }
             .evento-description-label{
                 float: left;

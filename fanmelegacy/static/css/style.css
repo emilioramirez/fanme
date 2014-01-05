@@ -344,6 +344,7 @@ body{}
                 padding: 0px;
                 font-size: 10px;
                 color: red;
+                margin-left: 50px;
             }
             .new-evento-table{}
             .new-evento-table tr{}

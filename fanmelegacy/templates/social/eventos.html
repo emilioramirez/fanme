@@ -25,7 +25,7 @@
                 {% for evento in eventos_creados %}
                     <div class='i-content'>
                         <div class="i-title">
-                                {{ evento.nombre }}   {{ evento.fecha_inicio }}
+                                <a href='/social/evento/{{ evento.id }}'>{{ evento.nombre }}</a>   {{ evento.fecha_inicio }}
                                 {% if evento.estado != 'leido' %}
                                     ({{ evento.estado }})
                                 {% endif %}
@@ -35,7 +35,7 @@
                                 </div>
                         </div>
                         <div class="i-body">
-                            <a href='/social/evento/{{ evento.id }}'>{{ evento.descripcion }}</a> creado por tí.
+                            {{ evento.descripcion }} creado por tí.
                         </div>
                     </div>
                 {% endfor%}
@@ -47,14 +47,14 @@
                 {% for evento in eventos_invitado %}
                     <div class='i-content'>
                         <div class="i-title">
+                        <a href='/social/evento/{{ evento.id }}'>{{ evento.nombre }}</a>   {{ evento.fecha_inicio }}
                         {{ evento.fecha_inicio }}
                         {% if evento.estado == 'cancelado' %}
                             <span style="color:red; margin-left:10px;">EVENTO CANCELADO</span>
                         {% endif%}
                         </div>
                         <div class="i-body">
-                            <a href='/social/evento/{{ evento.id }}'>{{ evento.descripcion }}</a>
-                             creado por <a href="/dash/logbook/{{ evento.creador.id }}">{{ evento.creador.first_name }} {{ evento.creador.last_name }}</a>.
+                            {{ evento.descripcion }} creado por <a href="/dash/logbook/{{ evento.creador.id }}">{{ evento.creador.first_name }} {{ evento.creador.last_name }}</a>.
                         </div>
                     </div>
                 {% endfor%}
