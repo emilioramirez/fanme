@@ -80,6 +80,7 @@ def new_evento(request):
             form.save_m2m()
             return HttpResponseRedirect('/social/eventos/')
         else:
+            recomendaciones_noleidas = get_cant_recomendaciones(request)
             print form.errors
     else:
         form = EventoForm()
