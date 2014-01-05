@@ -35,7 +35,7 @@ def eventos(request):
         eventos_creados = []
     try:
         eventos_invitado = request.user.eventos_invitado.all().order_by(
-            'fecha_inicio').filter(creador__is_active=True)
+            '-fecha_inicio').filter(creador__is_active=True).exclude(estado__exact="finalizado")
         eventos_noleidos = request.user.eventos_invitado.filter(
             estado="noleido").filter(creador__is_active=True)
         for evento in eventos_noleidos:
