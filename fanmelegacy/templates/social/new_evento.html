@@ -152,12 +152,14 @@
                     {{ form.fecha_inicio.errors }}
                     <label for="id_user_to_id" class="evento-date-desde-label">Fecha Inicio:</label>
                     {{ form.fecha_inicio }}
+                    <label style="margin-left: 115px; font-size: 12px;">Formato: dd/mm/aaaa hh:mm<label>
                 </div>
                 <div class="new-notification-clear"></div>
                 <div class="content-form-evento">
                     {{ form.fecha_fin.errors }}
                     <label for="id_user_to_id" class="evento-date-fin-label">Fecha Fin:</label>
                     {{ form.fecha_fin }}
+                    <label style="margin-left: 115px; font-size: 12px;">Formato: dd/mm/aaaa hh:mm<label>
                 </div>
                 <div class="new-notification-clear"></div>
                 <div class="content-form-evento">
@@ -177,7 +179,7 @@
                 <div class="content-form-notification">
                     {{ form.imagen.errors }}
                     <label for="fecha_expiracion" class="notification-imagen-label">Imagen:</label>
-                    {{ form.imagen }}
+                    <p style="margin-left:50px;">{{ form.imagen }}</p>
                 </div>
                 <input type="hidden" name="latitud" id="latitud" value="" />
                 <input type="hidden" name="longitud" id="longitud" value="" />
