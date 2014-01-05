@@ -76,6 +76,7 @@ def new_evento(request):
             except KeyError:
                 pass
             evento.save()
+            messages.add_message(request, messages.SUCCESS, "Evento creado exitosamente")
             form.save_m2m()
             return HttpResponseRedirect('/social/eventos/')
         else:
