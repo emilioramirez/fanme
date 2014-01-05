@@ -624,13 +624,13 @@ sidebar-follow-user{}
                 margin-bottom: 12px;
             }
             .notification-name-label{
-                margin-left: 43px;
+                margin-left: 52px;
             }
             .notification-name-field{
                 width: 422px;
             }
             .notification-date-label{
-                margin-left: 37px;
+                margin-left: 40px;
             }
             .notification-date-desde-label{
                 margin-left: 21px;
@@ -655,7 +655,7 @@ sidebar-follow-user{}
                 width: 421px;
             }
             .notification-imagen-label{
-                margin-left: 48px;
+                margin-left: 50px;
             }
             .content-form-notification-imagen{
                 margin-bottom: 35px;
