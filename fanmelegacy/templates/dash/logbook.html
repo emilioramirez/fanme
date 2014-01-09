@@ -28,9 +28,9 @@
 
                         </div>
                         <div class="actividad-desc-content">
-                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
+                            <div class="actividad-imagen"><a href="/dash/logbook/{{ actividad.usuario_origen.id }}">{{ actividad.usuario_origen.first_name }}</a></div>
                             <div class="actividad-desc">{{ actividad.descripcion }}</div>
-                            <div class="actividad-item" >{{ actividad.item}}</div>
+                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
                             <div class="actividad-fecha">{{ actividad.fecha }}</div>
 
                         </div>
@@ -44,9 +44,9 @@
 
                         </div>
                         <div class="actividad-desc-content">
-                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
+                            <div class="actividad-imagen"><a href="/dash/logbook/{{ actividad.usuario_origen.id }}">{{ actividad.usuario_origen.first_name }}</a></div>
                             <div class="actividad-desc">{{ actividad.descripcion }}</div>
-                            <div class="actividad-item" >{{ actividad.item}}</div>
+                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
                             <div class="" >"{{ actividad.comentario.comentario }}"</div>
                             <div class="actividad-fecha">{{ actividad.fecha }}</div>
 
@@ -61,9 +61,9 @@
 
                         </div>
                         <div class="actividad-desc-content">
-                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
+                            <div class="actividad-imagen"><a href="/dash/logbook/{{ actividad.usuario_origen.id }}">{{ actividad.usuario_origen.first_name }}</a></div>
                             <div class="actividad-desc">{{ actividad.descripcion }}</div>
-                            <div class="actividad-item" >{{ actividad.item}}</div>
+                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
                             <div class="actividad-fecha">{{ actividad.fecha }}</div>
                         </div>
                     </div>

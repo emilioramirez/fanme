@@ -298,13 +298,19 @@ def logbook_user(request, user_id):
     try:
         user_logbook = User.objects.get(id=user_id)
         my_profile = request.user.persona
-        print user_logbook
         if not my_profile.following.filter(id=user_logbook.id):
             return HttpResponseRedirect('/dash/follow/{0}'.format(user_id))
+        else:
+            actividades = []
+            actividades = sorted(
+                chain(
+                    user_logbook.act_origen.all(), actividades),
+                key=attrgetter('fecha'), reverse=True)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/logbook_user.html',
-        {'form_search': searchbox, 'user_logbook': user_logbook},
+        {'form_search': searchbox, 'user_logbook': user_logbook,
+        'actividades': actividades},
         context_instance=RequestContext(request))
 
 
