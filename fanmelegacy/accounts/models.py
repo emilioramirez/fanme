@@ -4,10 +4,9 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from support.models import Rubro
 from segmentation.models import Topico, AnalisisDenuncia, EstadoAnalisisDenuncia
-from items.models import Item, ItemDenuncias
+from items.models import Item
 from fanmelegacy.thumbs import ImageWithThumbsField
-from rathings.models import dislike_created, Dislike
-from django.db.models.signals import post_save
+from rathings.models import dislike_created, Dislike, Like
 
 
 # Create your models here.
@@ -16,20 +15,15 @@ class AbstractProfile(models.Model):
     user = models.OneToOneField(User, related_name='%(class)s',
         verbose_name=u'Django user', unique=True,)
     #Common fields
-    #rol = models.TextField()
-    #credibilidad = models.OneToOneField(Credibilidad)
     topicos = models.ManyToManyField(Topico, null=True, blank=True)
     is_first_time = models.BooleanField()
     avatar = ImageWithThumbsField(upload_to='avatares',
-#    avatar = models.ImageField(upload_to='avatares',
         default='',
         sizes=((50, 50), (100, 100)),
         null=True, blank=True)
 
     class Meta:
         abstract = True
-#        verbose_name = ''
-#        verbose_name_plural = "stories"
 
     def __unicode__(self):
         return u'{0} {1} <{2}>'.format(self.user.first_name,
@@ -46,7 +40,7 @@ class Persona(AbstractProfile):
     puntaje = models.IntegerField(default=0)
 
     class Meta:
-#        verbose_name = ''
+        verbose_name = 'Persona'
         verbose_name_plural = "Personas"
     
     def cantidad_estrellas(self):
@@ -54,7 +48,7 @@ class Persona(AbstractProfile):
         La cantidad de estrellas se define por:
             - 2 * cantidad de items de los cuales es fan
             - 2 * cantidad de me gustas que tienen mis comentarios
-            - 1 * cantidad de topicos creados
+            - 1 * cantidad de topicos creados (no esta en uso)
             - 5 * cantidad de analisis de denuncias con accion borrado de un comentario relacionado con el user
             -10 * cantidad de analisis de denuncias con accion borrado de un item relacionado con el usuario
             -
@@ -80,14 +74,19 @@ class Persona(AbstractProfile):
         # De todos mis comentarios, cuantos likes suman en total
         mis_comentarios = self.user.comment_comments.all()
         cantidad_likes_comentarios = 0
+        cantidad_analisdenuncias_borrados = 0
+        estado, created_e = EstadoAnalisisDenuncia.objects.get_or_create(
+            estado="borrado", descripcion="Se ha borrado el contenido asociado")
         for comentario in mis_comentarios:
             cantidad_likes_comentarios += Like.objects.get_for_obj(comentario).count()
+            cantidad_analisdenuncias_borrados += AnalisisDenuncia.objects.filter(
+            estado=estado, # es accion que se toma para esta denuncia
+            content_type=ContentType.objects.get_for_model(comentario),
+            object_id=comentario.pk,
+            ).count()
 
-        # estado_analisis_denuncia_borrado = EstadoAnalisisDenuncia.objects.get_or_create(estado="borrado")
-        # cantidad_analisis_denuncia_borrado_comentario = ""
-
-        item_fan, comment_like = settings.PUNTAJES["item_fan"], settings.PUNTAJES["comment_like"]
-        self.puntaje = (item_fan * cantidad_items_fan) + (comment_like * cantidad_likes_comentarios)
+        item_fan, comment_like, comment_denuncias = settings.PUNTAJES["item_fan"], settings.PUNTAJES["comment_like"], settings.PUNTAJES["comment_denuncias"]
+        self.puntaje = ((item_fan * cantidad_items_fan) + (comment_like * cantidad_likes_comentarios) - (cantidad_analisdenuncias_borrados * comment_denuncias))
         self.save()
 
         return self.puntaje 
@@ -129,20 +128,4 @@ def analisis_denuncias(sender, **kwargs):
         a_denuncia.object_id = object_id
         a_denuncia.save()
 
-
-# def analisis_denuncias_viejo(sender, instance, created, raw, using, update_fields, **kwargs):
-#     ctype = ContentType.objects.get(app_label="items", model="item")
-#     object_id = instance.item.pk
-#     qs = ItemDenuncias.objects.filter(item=instance.item)
-#     cant_denuncias = qs.count()
-#     if cant_denuncias >= settings.CANTIDAD_DENUNCIAS:
-#         estado, created_e = EstadoAnalisisDenuncia.objects.get_or_create(
-#             estado="creado", descripcion="Denuncia creada")
-#         a_denuncia = AnalisisDenuncia()
-#         a_denuncia.estado = estado
-#         a_denuncia.content_type = ctype
-#         a_denuncia.object_id = object_id
-#         a_denuncia.save()
-
 dislike_created.connect(analisis_denuncias)
-# post_save.connect(analisis_denuncias_viejo, sender=ItemDenuncias)

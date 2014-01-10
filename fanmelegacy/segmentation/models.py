@@ -65,7 +65,7 @@ class AnalisisDenuncia(models.Model):
     fecha_resolucion = models.DateTimeField(auto_now=True)
     moderador = models.ForeignKey(User, null=True, blank=True)
     descripcion = models.TextField(blank=True, null=True)
-    estado = models.ForeignKey(EstadoAnalisisDenuncia)
+    estado = models.ForeignKey(EstadoAnalisisDenuncia, verbose_name=u'Accion')
     content_type = models.ForeignKey(ContentType,
             verbose_name='Contenido denunciado',
             related_name="content_type_set_for_%(class)s")
