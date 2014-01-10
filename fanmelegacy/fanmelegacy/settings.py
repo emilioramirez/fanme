@@ -199,9 +199,22 @@ ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, us
 from django.contrib.messages import constants as message_constants
 MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
 
-# python -m smtpd -n -c DebuggingServer localhost:1025
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+DEFAULT_FROM_EMAIL = 'website@fanme.com.ar'
+DEFAULT_TO_EMAIL = 'no-reply@afanme.com.ar'
+EMAIL_HOST_USER = os.environ.setdefault("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.setdefault("EMAIL_HOST_PASSWORD", "")
+if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
+    # Si no esta definida en el entorno del sistema alguna de estas variables,
+    # se usa un servidor local de pruebas
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+else:
+    # python -m smtpd -n -c DebuggingServer localhost:1025
+    EMAIL_HOST = 'localhost'
+    EMAIL_PORT = 1025
+
+
 
 # Cantidad de denuncias permitidas: el algoritmo es
 # if denuncias.count >= CANTIDAD_DENUNCIAS
