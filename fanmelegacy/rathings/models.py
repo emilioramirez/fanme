@@ -43,10 +43,6 @@ class Like(BaseRating):
         verbose_name = _('Me gusta')
         verbose_name_plural = _('Me gusta')
 
-    def get_like_for_obj(self, obj):
-        content_object = ""
-        return self.objects.filter(content_object=content_object).count()
-
 
 class Dislike(BaseRating):
     # User has vote

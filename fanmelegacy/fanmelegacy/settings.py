@@ -212,6 +212,8 @@ CANTIDAD_DENUNCIAS = 2
 PUNTAJES = {
     'item_fan': 2,
     'comment_like': 2,
+    'comment_denuncias': 5,
+    'item_denuncias': 10
 
 }
 ESTRELLAS = {

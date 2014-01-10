@@ -142,7 +142,6 @@
                     </p>
                     <p class="comment-text">{{ comment.comment }}</p>
                 </div>
-                <!--
                 <div class="comment-options">
                     <div class="me-gusta-comentario">
                         {% count_likes for comment as cant_likes %}
@@ -159,14 +158,6 @@
                     {% if comment.user == user %}
                     <div><a href="/items/comment/eliminar/{{ comment.id }}">Borrar</a></div>
                     {% endif %}
-                </div>
-                -->
-                <div>
-                    <ul>
-                        <li><span class="glyphicon glyphicon-search"></span></li>
-                        <li><span class="glyphicon glyphicon-search"></span></li>
-                        <li><span class="glyphicon glyphicon-search"></span></li>
-                    </ul>
                 </div>
             </div>
         {% endfor %}
