@@ -35,51 +35,6 @@ class AbstractProfile(models.Model):
         return u'{0} {1} <{2}>'.format(self.user.first_name,
             self.user.last_name, self.user.username)
 
-    def cantidad_estrellas(self):
-        """
-        La cantidad de estrellas se define por:
-            - 2 * cantidad de items de los cuales es fan
-            - 2 * cantidad de me gustas a comentarios
-            - 1 * cantidad de topicos creados
-            - 5 * cantidad de analisis de denuncias con accion borrado de un comentario relacionado con el user
-            -10 * cantidad de analisis de denuncias con accion borrado de un item relacionado con el usuario
-            -
-        """
-        if not isinstance(self, Persona):
-            return range(0)
-        puntaje = self.puntaje
-        e = settings.ESTRELLAS
-        estrellas = 0
-        if puntaje <= e["1"]:
-            estrellas = 1
-        elif puntaje <= e["2"]:
-            estrellas = 2
-        elif puntaje <= e["3"]:
-            estrellas = 3
-        elif puntaje <= e["4"]:
-            estrellas = 4
-        else:
-            estrellas = 5
-        return range(estrellas)
-
-    def set_puntaje(self):
-        if not isinstance(self, Persona):
-            return 0
-        cantidad_items_fan = self.items.all().count()
-
-        comment_ctype = ContentType.objects.get(app_label='comments', model="comment")
-        cantidad_me_gusta_comentarios = self.user.like_likes.filter(content_type=comment_ctype).count()
-
-        # estado_analisis_denuncia_borrado = EstadoAnalisisDenuncia.objects.get_or_create(estado="borrado")
-        # cantidad_analisis_denuncia_borrado_comentario = ""
-
-        v = settings.PUNTAJES
-        puntaje = v["item_fan"] * cantidad_items_fan + v["comment_like"] * cantidad_me_gusta_comentarios
-        profile = self
-        profile.puntaje = puntaje
-        profile.save()
-
-        return puntaje
 
 
 class Persona(AbstractProfile):
@@ -93,6 +48,49 @@ class Persona(AbstractProfile):
     class Meta:
 #        verbose_name = ''
         verbose_name_plural = "Personas"
+    
+    def cantidad_estrellas(self):
+        """
+        La cantidad de estrellas se define por:
+            - 2 * cantidad de items de los cuales es fan
+            - 2 * cantidad de me gustas que tienen mis comentarios
+            - 1 * cantidad de topicos creados
+            - 5 * cantidad de analisis de denuncias con accion borrado de un comentario relacionado con el user
+            -10 * cantidad de analisis de denuncias con accion borrado de un item relacionado con el usuario
+            -
+        """
+        e = settings.ESTRELLAS
+        estrellas = 0
+        if self.puntaje <= e["1"]:
+            estrellas = 1
+        elif self.puntaje <= e["2"]:
+            estrellas = 2
+        elif self.puntaje <= e["3"]:
+            estrellas = 3
+        elif self.puntaje <= e["4"]:
+            estrellas = 4
+        else:
+            estrellas = 5
+        return range(estrellas)
+
+    def set_puntaje(self):
+        # Contar todos los items a los cuales estoy asociado mediante un fanme
+        cantidad_items_fan = self.items.all().count()
+
+        # De todos mis comentarios, cuantos likes suman en total
+        mis_comentarios = self.user.comment_comments.all()
+        cantidad_likes_comentarios = 0
+        for comentario in mis_comentarios:
+            cantidad_likes_comentarios += Like.objects.get_for_obj(comentario).count()
+
+        # estado_analisis_denuncia_borrado = EstadoAnalisisDenuncia.objects.get_or_create(estado="borrado")
+        # cantidad_analisis_denuncia_borrado_comentario = ""
+
+        item_fan, comment_like = settings.PUNTAJES["item_fan"], settings.PUNTAJES["comment_like"]
+        self.puntaje = (item_fan * cantidad_items_fan) + (comment_like * cantidad_likes_comentarios)
+        self.save()
+
+        return self.puntaje 
 
 
 class Empresa(AbstractProfile):
