@@ -1,5 +1,7 @@
 {% extends "dash/base_dash.html" %}
 
+{% load avatar_tags %}
+
 {% load dash_filters %}
 
 {% block mystylesheet %}
@@ -16,8 +18,55 @@
 
 
 {% block dashboard %}
-    <div class="logbook_follow">
-        <p>Enhorabuena, ya estas siguiendo a este usuario.</p>
+    <h1 style="margin-left: 120px; margin-top: 35px;">Actividad del usuario</h1>
+    <div class="logbook-content-list">
+        {% if actividades %}
+            {% for actividad in actividades %}
+                {% if actividad.tipo == "fan" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if actividad.tipo == "comentario" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
+                            <div class="" >"{{ actividad.comentario.comentario }}"</div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if actividad.tipo == "recomendacion" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            Los usuarios que siguen no han realizado ninguna actividad en el sistema
+        {% endif %}
     </div>
 {% endblock dashboard %}
 
