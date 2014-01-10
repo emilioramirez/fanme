@@ -1,0 +1,38 @@
+{% extends "items/base_items.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet %}
+
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block item %}
+    <div class="item-content-mati">
+        <div class="item-header">
+            <div class="item-topico"></div>
+            <div class="item-nombre">Nuevo Item</div>
+            <div class="item-score">
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="item-body">
+            <div class="item-registration" style="margin-top: 10px;">
+                <form action="/items/item/register/" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    {{ form_register.as_p }}
+                    <div style="float:right;">
+                        <button type="submit" value="crear" name="crear" class="item-registration-submit">Crear Item</button>
+                        <input type="button" value="Cancelar" class="item-cancelar-registracion" onclick="location.href='../../../dash/dashboard';">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock item %}

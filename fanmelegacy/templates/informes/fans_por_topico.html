@@ -1,0 +1,63 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}'FanMe' | {{ site_title }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">FanMe</a></h1>
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}
+
+{% block extrahead %}
+<script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
+<script src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script>
+function myFunction()
+{
+alert("I am an alert box!");
+}
+</script>
+<script>
+$(function () {
+        $('#usuarios_activos').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Fans por tópicos'
+            },
+            yAxis: {
+                title: {
+                    text: 'Cant. fans'
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ 'Fans por tópicos' +'</b><br/>'+
+                        this.series.name +': '+ this.y +'<br/>';
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [
+                {% for topico, cant_fans in fans_por_topicos.items %}
+                    {
+                        name: '{{topico}}',
+                        data: [{{cant_fans}}]
+                    },
+                {% endfor %}
+            ]
+        });
+    });
+</script>
+{% endblock extrahead %}
+
+{% block content %}
+<div id="usuarios_activos" style="width:100%; height:400px;"></div>
+{% endblock content %}
+
