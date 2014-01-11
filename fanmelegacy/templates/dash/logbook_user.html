@@ -110,7 +110,7 @@
                 </div>
                 <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
                     <div class="stadistic-num">{{ user_logbook.comentarios_realizados.count }}</div>
-                    <div class="stadistic-nom">Sus Comentario{% if user.comentarios_realizados.count > 1 %}s{% endif %}</div>
+                    <div class="stadistic-nom">Sus Comentario{% if user_logbook.comentarios_realizados.count > 1 %}s{% endif %}</div>
                 </div>
                 <div class="sidebar-follow-user">
                     <a href="/dash/unfollow/{{ user_logbook.id }}"><div class="new-item-buttom-mati" style="margin: 10px!important;">Dejar de seguir</div></a>
