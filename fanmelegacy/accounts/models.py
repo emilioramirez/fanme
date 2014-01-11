@@ -42,8 +42,12 @@ class Persona(AbstractProfile):
     class Meta:
         verbose_name = 'Persona'
         verbose_name_plural = "Personas"
-    
+
     def cantidad_estrellas(self):
+        cant_estrellas = self.get_cant_estrellas()
+        return range(cant_estrellas)
+
+    def get_cant_estrellas(self):
         """
         La cantidad de estrellas se define por:
             - 2 * cantidad de items de los cuales es fan
@@ -65,7 +69,7 @@ class Persona(AbstractProfile):
             estrellas = 4
         else:
             estrellas = 5
-        return range(estrellas)
+        return estrellas
 
     def set_puntaje(self):
         # Contar todos los items a los cuales estoy asociado mediante un fanme
@@ -89,7 +93,7 @@ class Persona(AbstractProfile):
         self.puntaje = ((item_fan * cantidad_items_fan) + (comment_like * cantidad_likes_comentarios) - (cantidad_analisdenuncias_borrados * comment_denuncias))
         self.save()
 
-        return self.puntaje 
+        return self.puntaje
 
 
 class Empresa(AbstractProfile):
