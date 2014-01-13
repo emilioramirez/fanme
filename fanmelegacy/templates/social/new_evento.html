@@ -15,12 +15,14 @@
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
     <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" type="text/css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/use for pines style icons/jquery.pnotify.default.icons.css<" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/use for pines style icons/jquery.pnotify.default.icons.css" type="text/css" />
+    <link href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" media="all" rel="stylesheet" type="text/css" />
 {% endblock mystylesheet-dashboard %}
 
 {% block myjavascript %}
-    <script language="javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
     <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}dist/js/bootstrap.js"></script>
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
     <script>
         var myCalendar;
@@ -42,13 +44,18 @@
         function hayMarcador(){
             if(!marker){
                 $.pnotify({
-                title: 'Error',
-                text: 'Es necesario que marque un lugar en el mapa',
-                type: 'Error',
-                hide: true
+                    title: 'Error!',
+                    text: 'Es necesario que marque un lugar en el mapa.',
+                    type: 'error',
+                    hide: false
                 });
                 document.getElementById('my-form').onsubmit = function() {
                     return false;
+                }
+            }
+            else{
+                document.getElementById('my-form').onsubmit = function() {
+                    return true;
                 }
             }
         }
@@ -90,6 +97,11 @@
                 longitud = location.lng();
                 document.getElementById('longitud').value = longitud;
                 document.getElementById('latitud').value = latitud;
+                var my_elems = document.getElementsByClassName("ui-pnotify ");
+                for(k=my_elems.length-1;k>=0; --k)
+                {
+                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                }
             }
             else{
                 marker.setPosition(location);
@@ -180,6 +192,8 @@
                     {{ form.imagen.errors }}
                     <label for="fecha_expiracion" class="notification-imagen-label">Imagen:</label>
                     <p style="margin-left:50px;">{{ form.imagen }}</p>
+                </div>
+                <div class="logbook-user-image" style="margin-left: 50px!important;">
                 </div>
                 <input type="hidden" name="latitud" id="latitud" value="" />
                 <input type="hidden" name="longitud" id="longitud" value="" />
