@@ -36,22 +36,22 @@
 				hi_hnd: "ui-icon ui-icon-grip-dotted-horizontal"
 			},
 			bootstrap: {
-				container: "alert",
-				notice: "",
-				notice_icon: "icon-exclamation-sign",
-				info: "alert-info",
-				info_icon: "icon-info-sign",
-				success: "alert-success",
-				success_icon: "icon-ok-sign",
-				error: "alert-error",
-				error_icon: "icon-warning-sign",
-				closer: "icon-remove",
-				pin_up: "icon-pause",
-				pin_down: "icon-play",
-				hi_menu: "well",
-				hi_btn: "btn",
-				hi_btnhov: "",
-				hi_hnd: "icon-chevron-down"
+			    container: "alert",
+			    notice: "alert-warning",
+			    notice_icon: "icon-exclamation-sign",
+			    info: "alert-info",
+			    info_icon: "icon-info-sign",
+			    success: "alert-success",
+			    success_icon: "icon-ok-sign",
+			    error: "alert-danger",
+			    error_icon: "icon-warning-sign",
+			    closer: "icon-remove",
+			    pin_up: "icon-pause",
+			    pin_down: "icon-play",
+			    hi_menu: "well",
+			    hi_btn: "btn",
+			    hi_btnhov: "",
+			    hi_hnd: "icon-chevron-down"
 			}
 		};
 	// Set global variables.
