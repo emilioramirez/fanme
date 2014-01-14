@@ -12,6 +12,7 @@
 {% block extrahead %}
 <script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
 <script src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script src="{{ STATIC_URL }}js/drilldown.js"></script>
 <script>
 function myFunction()
 {
@@ -19,40 +20,74 @@ alert("I am an alert box!");
 }
 </script>
 <script>
-$(function () {
+    $(function () {
+        // Create the chart
         $('#usuarios_activos').highcharts({
             chart: {
-                type: 'column'
+                type: 'column',
+                events: {
+                    drilldown: function (e) {
+                        if (!e.seriesOptions) {
+                            var chart = this,
+                                drilldowns = {
+                                    {% for topico, items in items_dict.iteritems %}
+                                    '{{topico}}': {
+                                            name: '{{topico}}',
+                                            data: [
+                                            {% for item, cant_fans in items.iteritems %}
+                                                ['{{item}}', {{cant_fans}}],
+                                            {% endfor %}
+                                            ]
+                                        },
+                                    {% endfor %}
+                                },
+                                series = drilldowns[e.point.name];
+
+                            // Show the loading label
+                            chart.showLoading('Procesando ...');
+
+                            setTimeout(function () {
+                                chart.hideLoading();
+                                chart.addSeriesAsDrilldown(e.point, series);
+                            }, 1000);
+                        }
+                    }
+                }
             },
             title: {
                 text: 'Fans por tópicos'
             },
-            yAxis: {
-                title: {
-                    text: 'Cant. fans'
+            xAxis: {
+                type: 'category'
+            },
+            legend: {
+                enabled: false
+            },
+             plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                    }
                 }
             },
-            tooltip: {
-                formatter: function() {
-                    return '<b>'+ 'Fans por tópicos' +'</b><br/>'+
-                        this.series.name +': '+ this.y +'<br/>';
-                }
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: [
-                {% for topico, cant_fans in fans_por_topicos.items %}
+            series: [{
+                name: 'Fans por Topico',
+                colorByPoint: true,
+                data: [
+                    {% for topico, cant_fans in fans_por_topicos.items %}
                     {
                         name: '{{topico}}',
-                        data: [{{cant_fans}}]
+                        y: {{cant_fans}},
+                        drilldown: true
                     },
-                {% endfor %}
-            ]
-        });
+                    {% endfor %}
+                ]
+            }],
+            drilldown: {
+                series: []
+            }
+        })
     });
 </script>
 {% endblock extrahead %}

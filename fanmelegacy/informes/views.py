@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from datetime import date
 from segmentation.models import Topico
 from items.models import Item
+from collections import defaultdict
 
 
 @staff_member_required
@@ -20,17 +21,21 @@ def my_admin_view(request):
 @staff_member_required
 def fans_por_topicos(request):
     topicos = Topico.objects.filter(padre=None)
-    dict = {}
+    dict_topico = {}
+    category_dict = defaultdict()
     for topico in topicos:
+        item_dict = {}
         items_por_topico = Item.objects.filter(topico=topico)
         cant_fans = 0
         for item in items_por_topico:
             cant_fans = cant_fans + item.cantidad_fans
-        dict[topico] = cant_fans
-    length = len(dict)
+            item_dict[item] = item.cantidad_fans
+        dict_topico[topico] = cant_fans
+        category_dict[topico] = item_dict
+    length = len(dict_topico)
     return render_to_response('informes/fans_por_topico.html',
-        #{'fans_por_topicos': dict},
-        {'fans_por_topicos': dict, 'length': length},
+        {'fans_por_topicos': dict_topico, 'length': length,
+        'items_dict': category_dict },
         context_instance=RequestContext(request))
 
 
