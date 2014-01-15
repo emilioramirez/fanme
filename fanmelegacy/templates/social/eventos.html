@@ -29,10 +29,12 @@
                                 {% if evento.estado != 'leido' %}
                                     ({{ evento.estado }})
                                 {% endif %}
-                                <div class="i-title-options">
-                                    <a href="/social/evento/edit/{{ evento.id }}" title="Editar este evento"><div class="i-title-options-edit"></div></a>
-                                    <a href="/social/evento/delete/{{ evento.id }}" title="Cancelar este evento"><div class="i-title-options-delete"></div></a>
-                                </div>
+                                {% if evento.estado != 'cancelado' %}
+                                    <div class="i-title-options">
+                                        <a href="/social/evento/edit/{{ evento.id }}" title="Editar este evento"><div class="i-title-options-edit"></div></a>
+                                        <a href="/social/evento/delete/{{ evento.id }}" title="Cancelar este evento"><div class="i-title-options-delete"></div></a>
+                                    </div>
+                                {% endif %}
                         </div>
                         <div class="i-body">
                             {{ evento.descripcion }} creado por tí.

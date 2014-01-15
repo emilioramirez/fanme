@@ -11,68 +11,121 @@
 {% endblock %}
 
 {% block extrahead %}
-<link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" type="text/css" />
-<link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/use for pines style icons/jquery.pnotify.default.icons.css<" type="text/css" />
-<script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
-<script src="{{ STATIC_URL }}js/highcharts.js"></script>
-<script language="javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
-<script>
-{% if mostrar_form|is_false %}
-$(function () {
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/use for pines style icons/jquery.pnotify.default.icons.css" type="text/css" />
+    <link href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}dist/css/bootstrap.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/bootstrap-fanme.css" rel="stylesheet">
+    <script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}dist/js/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}js/highcharts.js"></script>
+    <script src="{{ STATIC_URL }}js/drilldown.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
+
+    <script>
+    {% if mostrar_form|is_false %}
+    $(function () {
+        // Create the chart
         $('#items').highcharts({
             chart: {
-                type: 'column'
+                type: 'column',
+                events: {
+                    drilldown: function (e) {
+                        if (!e.seriesOptions) {
+                            var chart = this,
+                                drilldowns = {
+                                    'El Principito': {
+                                        name: 'Animals',
+                                        data: [
+                                            ['Cows', 2],
+                                            ['Sheep', 3]
+                                        ]
+                                    },
+                                    'Fruits': {
+                                        name: 'Fruits',
+                                        data: [
+                                            ['Apples', 5],
+                                            ['Oranges', 7],
+                                            ['Bananas', 2]
+                                        ]
+                                    },
+                                    'Cars': {
+                                        name: 'Cars',
+                                        data: [
+                                            ['Toyota', 1],
+                                            ['Volkswagen', 2],
+                                            ['Opel', 5]
+                                        ]
+                                    }
+                                },
+                                series = drilldowns[e.point.name];
+
+                            // Show the loading label
+                            chart.showLoading('Procesando ...');
+
+                            setTimeout(function () {
+                                chart.hideLoading();
+                                chart.addSeriesAsDrilldown(e.point, series);
+                            }, 1000);
+                        }
+                    }
+                }
             },
             title: {
                 text: 'Fans por Item'
             },
-            yAxis: {
-                title: {
-                    text: 'Cant. fans'
+            xAxis: {
+                type: 'category'
+            },
+            legend: {
+                enabled: false
+            },
+             plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                    }
                 }
             },
-            tooltip: {
-                formatter: function() {
-                    return '<b>'+ 'Fans por item' +'</b><br/>'+
-                        this.series.name +': '+ this.y +'<br/>';
-                }
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: [
-                {% for item, cant_fans in fans_por_item.items %}
+            series: [{
+                name: 'Fans por Item',
+                colorByPoint: true,
+                data: [
+                    {% for item, cant_fans in fans_por_item.items %}
                     {
                         name: '{{item}}',
-                        data: [{{cant_fans}}]
+                        y: {{cant_fans}},
+                        drilldown: true
                     },
-                {% endfor %}
-            ]
-        });
+                    {% endfor %}
+                ]
+            }],
+            drilldown: {
+                series: []
+            }
+        })
     });
-{% endif %}
-</script>
-<script>
-function myFunction()
-{
-    var cant = document.getElementsByName('cant')[0].value
-    if (cant == 0 || cant == null)
+    {% endif %}
+    </script>
+    <script>
+    function myFunction()
     {
-        $.pnotify({
-                title: 'Error',
-                text: 'Debe ingresar una cantidad de ítems.',
-                type: 'Error',
-                hide: true
-                });
+        var cant = document.getElementsByName('cant')[0].value
+        if (cant == 0 || cant == null)
+        {
+            $.pnotify({
+                    title: 'Error',
+                    text: 'Debe ingresar una cantidad de ítems.',
+                    type: 'Error',
+                    hide: true
+                    });
+        }
+        else{
+            window.location.assign("/admin/informes/item_fanes/" + cant);
+        }
     }
-    else{
-        window.location.assign("/admin/informes/item_fanes/" + cant);
-    }
-}
-</script>
+    </script>
 {% endblock extrahead %}
 
 {% block content %}
