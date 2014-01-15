@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from support.models import Localizacion
 from items.models import Item, Comentario, Recomendacion
 
 
@@ -16,8 +15,8 @@ class Evento(models.Model):
         related_name="eventos_invitado")
     nombre = models.CharField(default="Nombre", max_length=30)
     descripcion = models.TextField(max_length=300)
-    fecha_inicio = models.DateField()
-    fecha_fin = models.DateField()
+    fecha_inicio = models.DateTimeField()
+    fecha_fin = models.DateTimeField()
     fecha_creacion = models.DateField()
     creador = models.ForeignKey(User, related_name="eventos_creados")
     estado = models.CharField(default="noleido", max_length=30)
@@ -29,6 +28,12 @@ class Evento(models.Model):
 
     def __unicode__(self):
         return self.descripcion
+
+
+class EstadoxInvitado(models.Model):
+    evento = models.ForeignKey(Evento, default="", null=True, blank=True)
+    invitado = models.ForeignKey(User, related_name='invitacion_eventos')
+    estado = models.CharField(default="noleido", max_length=30)
 
 
 class Mensaje(models.Model):
