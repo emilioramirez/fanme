@@ -17,8 +17,7 @@ from operator import attrgetter
 from datetime import datetime, date
 
 from social.forms import EventoForm, NotificationForm
-from social.models import Evento, Consulta, Notificacion
-#from support.models import Notificacion
+from social.models import Evento, Consulta, Notificacion, EstadoxInvitado
 from items.models import Item
 from django.db.models import Q
 from accounts.forms import UserLogin
@@ -30,7 +29,7 @@ def eventos(request):
     no_hay_eventos = True
     try:
         eventos_creados = request.user.eventos_creados.all().order_by(
-            'fecha_inicio')
+            '-fecha_inicio')
     except Evento.DoesNotExist:
         eventos_creados = []
     try:
@@ -43,6 +42,7 @@ def eventos(request):
             evento.save()
         notificaciones_noleidas = get_cant_notificaciones(request)
         recomendaciones_noleidas = get_cant_recomendaciones(request)
+        eventos_noleidos = get_cant_eventos(request)
     except Evento.DoesNotExist:
         eventos_invitado = []
     if eventos_creados or eventos_invitado:
@@ -50,7 +50,8 @@ def eventos(request):
     temp = RequestContext(request, {'eventos_creados': eventos_creados,
         'eventos_invitado': eventos_invitado, 'no_hay_eventos': no_hay_eventos,
         'form_search': searchbox, 'notificaciones_noleidas': notificaciones_noleidas,
-        'recomendaciones_noleidas': recomendaciones_noleidas})
+        'recomendaciones_noleidas': recomendaciones_noleidas,
+        'eventos_noleidos': eventos_noleidos})
     return render_to_response('social/eventos.html', temp)
 
 
@@ -78,6 +79,12 @@ def new_evento(request):
             evento.save()
             messages.add_message(request, messages.SUCCESS, "Evento creado exitosamente")
             form.save_m2m()
+            for invitado in users:
+                evento_x_invitado = EstadoxInvitado()
+                evento_x_invitado.evento =  evento
+                evento_x_invitado.invitado = invitado
+                evento_x_invitado.estado = 'noleido'
+                evento_x_invitado.save()
             return HttpResponseRedirect('/social/eventos/')
         else:
             recomendaciones_noleidas = get_cant_recomendaciones(request)
@@ -189,11 +196,13 @@ def mensajes(request):
             msj.save()
         notificaciones_noleidas = get_cant_notificaciones(request)
         recomendaciones_noleidas = get_cant_recomendaciones(request)
+        eventos_noleidos = get_cant_eventos(request)
     except Persona.DoesNotExist:  # Esto para que esta?
         return HttpResponseRedirect('/dash/empresa/')  # Esto para que esta?
     return render_to_response('social/messages.html', {'form_search': searchbox,
         'usuarios': usuarios, 'notificaciones_noleidas': notificaciones_noleidas,
-        'recomendaciones_noleidas':recomendaciones_noleidas},
+        'recomendaciones_noleidas':recomendaciones_noleidas,
+        'eventos_noleidos': eventos_noleidos},
         context_instance=RequestContext(request))
 
 
@@ -581,11 +590,12 @@ def user_main_view_notifications(request):
             usuarios.append(User.objects.get(id=dict['empresa']))
         notificaciones_noleidas = get_cant_notificaciones(request)
         recomendaciones_noleidas = get_cant_recomendaciones(request)
+        eventos_noleidos = get_cant_eventos(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/user_main_notification.html', {
         'form_search': searchbox,
-        'notificaciones_recibidas': usuarios,
+        'notificaciones_recibidas': usuarios, 'eventos_noleidos': eventos_noleidos,
         'notificaciones_noleidas': notificaciones_noleidas,
         'recomendaciones_noleidas': recomendaciones_noleidas},
         context_instance=RequestContext(request))
@@ -696,3 +706,8 @@ def messages_user_ayuda(request):
         'form_response_message': form_response_message,
         'mensajes': mensajes},
         context_instance=RequestContext(request))
+
+
+def get_cant_eventos(request):
+    return request.user.invitacion_eventos.filter(
+            estado='noleido').count()
