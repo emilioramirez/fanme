@@ -1,0 +1,40 @@
+{% extends "items/base_items.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block item %}
+    <div class="item-messages">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
+    <div class="item-content-mati">
+        <div class="item-header">
+            <div class="item-topico"></div>
+            <div class="item-nombre">Nuevo Item</div>
+            <div class="item-score">
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="item-body">
+            <div class="item-registration">
+                <form action="/items/item/register/" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    {{ form_register.as_p }}
+                    <input type="submit" value="Crear Item" class="item-registration-submit"/>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock item %}

@@ -1,0 +1,56 @@
+{% extends "dash/logbook.html" %}
+
+
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+
+{% block dashboard %}
+    <div class="result-result">
+        <div class="result-content">
+<!--
+            <div class="result-header">
+                <div class="result-name">Usuarios ({{ user.persona.following.count }})</div>
+            </div>
+-->
+            <div class="result-body">
+                {% for user in active_followings %}
+                        <div class="result-hit">
+                            <a href="/dash/logbook/{{ user.id }}">
+                                <div class="result-image">
+                                    {% if user.persona.avatar %}
+                                        <img src="{{ user.persona.avatar.url_50x50 }}" alt="Logo" />
+                                    {% else %}
+                                        {% if user.persona %}
+                                            {% if user.persona.sexo == "M" %}
+                                                <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
+                                            {% else %}
+                                                <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
+                                            {% endif%}
+                                        {% else %}
+                                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
+                                        {% endif%}
+                                    {% endif%}
+                                </div>
+                            </a>
+                            <a href="/dash/logbook/{{ user.id }}">
+                                {% if user.first_name == "" %}
+                                    <div class="result-descripcion">{{ user.empresa.razon_social }}</div>
+                                {% else %}
+                                    <div class="result-descripcion">{{ user.first_name }} {{ user.last_name }}</div>
+                                {% endif %}
+                            </a>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% if user.persona.following.all.count > 0 %}
+            <a href="/dash/dejar_de_seguir_usuarios" class="button-input" style="text-decoration: none; padding: 1px 13px; margin-right:-32px;">Dejar de seguir</a>
+        {% endif %}
+    </div>
+{% endblock dashboard %}

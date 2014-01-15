@@ -1,0 +1,100 @@
+.user-name-sidebar{
+    color: #646464;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.sidebar-stadistic{
+    float: left;
+    width: 200px;
+    margin-top: 20px;
+}
+
+.sidebar-stadistic a{
+    text-decoration: none;
+}
+.sidebar-stadistic-item{
+    background: none repeat scroll 0 0 #F6F4F4;
+    border-radius: 5px 5px 5px 5px;
+    height: 22px;
+    margin: 10px 0px;
+    box-shadow: 0px 0px 3px #646464;
+    color: #646464;
+}
+.sidebar-stadistic-item:hover {box-shadow: 0px 0px 8px #646464;}
+
+.stadistic-num{
+    color: #646464;
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 1px 5px;
+}
+
+.stadistic-nom{
+    color: #646464;
+    font-size: 14px;
+    padding: 1px;
+}
+
+.sidebar-menu-indicators{
+    float: left;
+    margin: 10px 7px;
+}
+
+    .menu-indicators{
+        color: #646464;
+        margin: 6px 0px;
+    }
+    .menu-indicators:hover { text-shadow: 1px 1px 1px #646464;}
+
+.user-stars{
+    float: right;
+    margin: 0;
+    width: 120px;
+}
+    .user-stars ul {
+        list-style: none outside none;
+        margin: 0px;
+        padding: 0px;
+    }
+    .user-stars ul li {
+        float: left;
+    }
+
+/* Item section */
+    .item-image-big{
+        border: 1px solid #9F9F9F;
+        height: 206px;
+        width: 206px;
+        margin: 30px 0px 0 20px;
+        float: left;
+    }
+    .item-header{
+        height: 45px;
+        overflow: hidden;
+    }
+    .item-score{
+        float: right;
+        margin: 12px 15px;
+    }
+
+    .extra-tags{
+        border: 1px solid #DDDDDD;
+        border-radius: 4px 4px 4px 4px;
+        float: left;
+        height: 160px;
+        margin-top: 20px;
+        width: 215px;
+    }
+
+    .extra-links{
+        border: 1px solid #DDDDDD;
+        border-radius: 4px 4px 4px 4px;
+        height: 160px;
+        margin-left: 224px;
+        margin-top: 20px;
+        width: 799px;
+    }
+/*End Item section*/

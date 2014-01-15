@@ -1,0 +1,57 @@
+{% extends "dash/base_dash.html" %}
+
+{% load dash_filters %}
+
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/style-icon-images.css" type="text/css" />
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+
+{% block menuOptionsSelected %}
+    {% if user.is_authenticated %}
+        <ul class="menu-options">
+            <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+            <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+            <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+        </ul>
+    {% endif %}
+{% endblock menuOptionsSelected %}
+
+
+{% block messages %}
+{% endblock messages %}
+
+
+{% block dashboard %}
+    <div class="title-messages-help">Ayuda</div>
+    <div class="help-content">
+        <div class="help-content-left-bar">
+            <image src="/mymedia/images/ayuda/buscar.png" width="40" height="40">
+            <p class="help-content-label">Buscar</p>
+        <div>
+        <div class="help-clear"></div>
+        <div class="help-content-left-bar">
+            <image src="/mymedia/images/ayuda/temas_de_ayuda.jpg" width="40" height="40">
+            <a href="/dash/temas_de_ayuda">
+                <p class="help-content-label">Temas de Ayuda</p>
+            </a>
+        <div>
+        <div class="help-clear"></div>
+        <div class="help-content-left-bar">
+            <image src="/mymedia/images/ayuda/preguntas_mas_frecuentes.jpg" width="40" height="40">
+            <a href="/dash/preguntas_mas_frecuentes">
+                <p class="help-content-label">Preguntas más frecuentes</p>
+            </a>
+        <div>
+        <div class="help-content-body">
+            {% block body-help %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock dashboard %}
+
+
+{% block sidebar %}
+{% endblock sidebar %}

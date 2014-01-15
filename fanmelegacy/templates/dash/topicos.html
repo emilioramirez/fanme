@@ -1,0 +1,23 @@
+{% extends "dash/base_dash.html" %}
+
+{% block menuOptionsSelected %}
+    <!--<ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item-selected"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>-->
+    <ul class="nav nav-pills header-tab">
+        <li><a href="/dash/dashboard/">Dashboard</a></li>
+        <li><a href="/dash/logbook/">Logbook</a></li>
+        <li class="active"><a href="#">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+
+
+{% block dashboard %}
+    <h1>Seccion Topicos en construccion</h1>
+{% endblock dashboard %}
+
+{% block sidebar %}
+{% endblock sidebar %}

@@ -1,0 +1,158 @@
+{% extends "dash/base_dash.html" %}
+
+{% load avatar_tags %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/dash/dashboard/">Dashboard</a></li>
+      <li class="active"><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+
+{% block dashboard %}
+    <h1>Actividad de los usuarios que tu sigues</h1>
+    <div class="logbook-content-list">
+        {% if actividades %}
+            {% for actividad in actividades %}
+                {% if actividad.tipo == "fan" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
+
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-imagen"><a href="/dash/logbook/{{ actividad.usuario_origen.id }}">{{ actividad.usuario_origen.first_name }}</a></div>
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if actividad.tipo == "comentario" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
+
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-imagen"><a href="/dash/logbook/{{ actividad.usuario_origen.id }}">{{ actividad.usuario_origen.first_name }}</a></div>
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
+                            <div class="" >"{{ actividad.comentario.comentario }}"</div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if actividad.tipo == "recomendacion" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
+
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-imagen"><a href="/dash/logbook/{{ actividad.usuario_origen.id }}">{{ actividad.usuario_origen.first_name }}</a></div>
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            Los usuarios que siguen no han realizado ninguna actividad en el sistema
+        {% endif %}
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    <div class="sidebar-content">
+            <div class="sidebar-user">
+                <span class="user-name">{{ user.first_name }} {{ user.last_name }}</span>
+                <div class="user-stars">
+                    <ul>
+                        {% for estrella in user.persona.cantidad_estrellas %}
+                            <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                        {% endfor %}
+                        {% with cant_estrellas=5|subtract:user.persona.get_cant_estrellas %}
+                            {% for i in cant_estrellas|range %}
+                                <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings-blanca.png" alt="Star" /></li>
+                            {% endfor %}
+                    {% endwith %}
+                    </ul>
+                </div>
+            </div>
+            <div class="sidebar-stadistic">
+                <a href="/dash/fans/">
+                    <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+                        <div class="stadistic-num">{{ user.persona.items.count }}</div>
+                        <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
+                    </div>
+                </a>
+                <a href="/dash/following/">
+                    <div class="stadistic-recomendations sidebar-stadistic-item">
+                        <div class="stadistic-num">{{ cant_following }}</div>
+                        <div class="stadistic-nom">
+                            {% if user.persona.following.count > 1 %}
+                                Usuarios que sigo
+                            {% else %}
+                                Usuario que sigo
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+                <a href="/dash/followers/">
+                    <div class="stadistic-comments sidebar-stadistic-item">
+                        <div class="stadistic-num">{{ cant_followers }}</div>
+                        <div class="stadistic-nom">
+                            {% if user.followers.count > 1 %}
+                                Usuarios me siguen
+                            {% else %}
+                                Usuario me sigue
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="sidebar-menu-indicators">
+                <a href="{% url 'social-mensajes' %}">
+                    <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                        {% if mensajes_nolidas > 0 %}({{ mensajes_nolidas }}){% endif %}
+                    </div>
+                </a>
+                <a href="/social/eventos/">
+
+                    <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                        {% if eventos_nolidas > 0 %}({{ eventos_nolidas }}){% endif %}
+                    </div>
+                </a>
+                <a href="/social/user_main_notification/">
+                    <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                        {% if notificaciones_noleidas > 0 %}({{ notificaciones_noleidas }}){% endif %}
+                    </div>
+                </a>
+                <a href="/dash/recomendation/">
+                    <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                        {% if recomendaciones_noleidas > 0 %}({{ recomendaciones_noleidas }}){% endif %}
+                    </div>
+                </a>
+            </div>
+            </div>
+            <div class="sidebar-new-item">
+                <a href="/items/item/register/"><div class="new-item-buttom">Crear Item</div></a>
+            </div>
+            <div class="clear"></div>
+        </div>
+{% endblock sidebar %}
