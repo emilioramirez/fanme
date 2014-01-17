@@ -156,7 +156,7 @@
                         <div class="clear"></div>
                     </div>
                     {% if comment.user == user %}
-                    <div><a href="/items/comment/eliminar/{{ comment.id }}">Borrar</a></div>
+                    <div><a href="/items/comment/eliminar/{{ comment.id }}" onclick="return confirm('¿Seguro desea eliminar este comentario?')"><span class="glyphicon glyphicon-remove-circle" title="Borrar"></span></a></div>
                     {% endif %}
                 </div>
             </div>
@@ -179,7 +179,11 @@
                             <input type="hidden" name="next" value="/items/item/{{ item.id }}" />
                             <input type="hidden" name="mostrar_denuncia" value="{{ mostrar_denuncia }}" />
                             <p>{{ form.comment }}</p>
-                            <p><input type="submit" value="Comentar" id="id_submit" /></p>
+                            <p>
+                                <button class="btn btn-default" id="id_submit">
+                                    <span class="glyphicon glyphicon-pencil"></span> Comentar
+                                </button>
+                            </p>
                         </form>
                     {% else %}
                         <p>Por favor <a href="{% url 'auth_login' %}">ingrese al sistema</a> para poder comentar.</p>
