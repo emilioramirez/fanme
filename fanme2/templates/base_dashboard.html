@@ -1,0 +1,24 @@
+{% extends "base_menu.html" %}
+
+{% block title %}
+{% endblock title %}
+
+{% block extracss %}
+{% endblock extracss %}
+
+{% block description %}{% endblock description %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span9">
+        <div class="container" style="margin-left:20%;">
+            {% block central-content-dashboard%}{% endblock central-content-dashboard %}
+        </div>
+    </div>
+    <div class="span3">
+      {% block right-content %}{% endblock right-content %}
+    </div>
+  </div>
+</div>
+{% endblock content %}
