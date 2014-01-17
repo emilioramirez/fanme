@@ -301,18 +301,11 @@ def recomendation(request, item_id):
 @login_required(login_url='/accounts/user')
 def delete_own_comment(request, comment_id, next=None):
     comment = get_object_or_404(comments.get_model(), id=comment_id)
-    # Delete on POST
-    if request.method == 'POST':
-        if comment.user.id != request.user.id:
-            raise Http404
-        perform_delete(request, comment)
-        return next_redirect(request, fallback=next or 'comments-approve-done',
-                c=comment.pk)
-    else:
-        return render_to_response('comments/approve.html',
-            {'comment': comment, "next": next},
-            RequestContext(request)
-        )
+    if comment.user.id != request.user.id:
+        raise Http404
+    perform_delete(request, comment)
+    return next_redirect(request, fallback=next or 'comments-approve-done',
+            c=comment.pk)
 
 
 @login_required(login_url='/accounts/user')
