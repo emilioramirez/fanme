@@ -45,6 +45,7 @@
             var fecha_inicio_as_date = new Date(fecha_inicio);
             var fecha_fin_as_date = new Date(fecha_fin);
             var today = new Date();
+            var respuesta_correcta = true;
             if(fecha_inicio_as_date > today)
             {
                 $.pnotify({
@@ -53,6 +54,7 @@
                     type: 'error',
                     hide: false
                 });
+                respuesta_correcta = false;
             }
             if(fecha_fin_as_date < fecha_inicio_as_date)
             {
@@ -62,6 +64,7 @@
                     type: 'error',
                     hide: false
                 });
+                respuesta_correcta = false;
             }
             if(!marker){
                 $.pnotify({
@@ -70,14 +73,10 @@
                     type: 'error',
                     hide: false
                 });
-                document.getElementById('my-form').onsubmit = function() {
-                    return false;
-                }
+                respuesta_correcta = false;
             }
-            else{
-                document.getElementById('my-form').onsubmit = function() {
-                    return true;
-                }
+            document.getElementById('my-form').onsubmit = function() {
+                return respuesta_correcta;
             }
         }
 
@@ -121,7 +120,9 @@
                 var my_elems = document.getElementsByClassName("ui-pnotify ");
                 for(k=my_elems.length-1;k>=0; --k)
                 {
-                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                    if(my_elems[k].innerHTML.indexOf("mapa") != -1) {
+                        my_elems[k].parentElement.removeChild(my_elems[k]);
+                    }
                 }
             }
             else{
@@ -156,6 +157,26 @@
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <script>
+        $("#id_fecha_inicio").click(function (e) {
+            var my_elems = document.getElementsByClassName("ui-pnotify ");
+            for(k=my_elems.length-1;k>=0; --k)
+            {
+                if(my_elems[k].innerHTML.indexOf("La fecha de inicio") != -1) {
+                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                }
+            }
+        });
+        $("#id_fecha_fin").click(function (e) {
+            var my_elems = document.getElementsByClassName("ui-pnotify ");
+            for(k=my_elems.length-1;k>=0; --k)
+            {
+                if(my_elems[k].innerHTML.indexOf("fin") != -1) {
+                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                }
+            }
+        });
     </script>
 {% endblock myjavascript %}
 
