@@ -4,6 +4,21 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
 {% endblock mystylesheet-dashboard%}
 
+{% block myjavascript %}
+<script>
+    $(".cancelar").click(function(e){
+        e.preventDefault();
+        var href = $(this).attr("href");
+
+        var confirmacion = confirm("¿Esta seguro que desea cancelar el evento seleccionado?");
+        if(confirmacion)
+        {
+            window.location = href;
+        }
+    });
+</script>
+{% endblock myjavascript %}
+
 {% block menuOptionsSelected %}
     <ul class="nav nav-pills header-tab">
       <li><a href="/dash/dashboard/">Dashboard</a></li>
@@ -32,7 +47,7 @@
                                 {% if evento.estado != 'cancelado' %}
                                     <div class="i-title-options">
                                         <a href="/social/evento/edit/{{ evento.id }}" title="Editar este evento"><div class="i-title-options-edit"></div></a>
-                                        <a href="/social/evento/delete/{{ evento.id }}" title="Cancelar este evento"><div class="i-title-options-delete"></div></a>
+                                        <a href="/social/evento/delete/{{ evento.id }}" class="cancelar" title="Cancelar este evento" onclick="ConfirmarCancelacion()"><div class="i-title-options-delete"></div></a>
                                     </div>
                                 {% endif %}
                         </div>

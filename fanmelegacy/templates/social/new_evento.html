@@ -1,6 +1,5 @@
 {% extends "dash/dashboard.html" %}
 
-
 {% block menuOptionsSelected %}
     <ul class="nav nav-pills header-tab">
       <li><a href="/dash/dashboard/">Dashboard</a></li>
@@ -8,7 +7,6 @@
       <li><a href="/dash/topicos/">Topicos</a></li>
     </ul>
 {% endblock menuOptionsSelected %}
-
 
 {% block mystylesheet-dashboard %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
@@ -42,6 +40,29 @@
         var latitud, longitud;
 
         function hayMarcador(){
+            var fecha_inicio = document.getElementById('id_fecha_inicio').value;
+            var fecha_fin = document.getElementById('id_fecha_fin').value;
+            var fecha_inicio_as_date = new Date(fecha_inicio);
+            var fecha_fin_as_date = new Date(fecha_fin);
+            var today = new Date();
+            if(fecha_inicio_as_date > today)
+            {
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'La fecha de inicio del evento debe ser superior a la de hoy dia.',
+                    type: 'error',
+                    hide: false
+                });
+            }
+            if(fecha_fin_as_date < fecha_inicio_as_date)
+            {
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'La fecha fin debe ser superior a la de inicio.',
+                    type: 'error',
+                    hide: false
+                });
+            }
             if(!marker){
                 $.pnotify({
                     title: 'Error!',

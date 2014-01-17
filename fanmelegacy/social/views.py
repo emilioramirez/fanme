@@ -157,6 +157,7 @@ def delete_evento(request, evento_id):
         if (evento_db.creador == request.user):
             evento_db.estado = 'cancelado'
             evento_db.save()
+        messages.add_message(request, messages.SUCCESS, "El evento ha sido cancelado exitosamente.")
         return HttpResponseRedirect('/social/eventos/')
     except Evento.DoesNotExist:
         return HttpResponseRedirect('/social/eventos/')
