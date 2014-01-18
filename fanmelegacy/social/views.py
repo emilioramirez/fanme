@@ -60,11 +60,17 @@ def new_evento(request):
     searchbox = SearchBox()
     if request.method == "POST":
         form = EventoForm(request.POST, request.FILES)
-        list_ids = request.user.followers.values_list('user', flat=True)
-        users = User.objects.filter(id__in=list_ids)
-        form.fields["invitados"].queryset = users
+#        list_ids = request.user.followers.values_list('user', flat=True)
+#        users = User.objects.filter(id__in=list_ids)
+#        form.fields["invitados"].queryset = users
         latitud = request.POST.get("latitud", "")
         longitud = request.POST.get("longitud", "")
+        invitados = request.POST.get("usuarios", "")
+        a_split = invitados.split(',')
+        usuarios_invitados = []
+        for invitado in a_split:
+            usuario = User.objects.get(id=invitado)
+            usuarios_invitados.append(usuario)
         if form.is_valid():
             evento = form.save(commit=False)
             creador = request.user
@@ -79,7 +85,9 @@ def new_evento(request):
             evento.save()
             messages.add_message(request, messages.SUCCESS, "Evento creado exitosamente")
             form.save_m2m()
-            for invitado in users:
+            for invitado in usuarios_invitados:
+                evento.invitados.add(invitado)
+            for invitado in usuarios_invitados:
                 evento_x_invitado = EstadoxInvitado()
                 evento_x_invitado.evento =  evento
                 evento_x_invitado.invitado = invitado
@@ -96,7 +104,8 @@ def new_evento(request):
         form.fields["invitados"].queryset = users
         recomendaciones_noleidas = get_cant_recomendaciones(request)
     template_vars = RequestContext(request, {"form": form,
-        'form_search': searchbox, 'recomendaciones_noleidas':recomendaciones_noleidas})
+        'form_search': searchbox, 'recomendaciones_noleidas':recomendaciones_noleidas,
+        'users': users})
     return render_to_response('social/new_evento.html', template_vars)
 
 
@@ -130,6 +139,13 @@ def edit_evento(request, evento_id):
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
         form.fields["invitados"].queryset = users
+        invitados = request.POST.get("usuarios", "")
+        a_split = invitados.split(',')
+        usuarios_invitados = []
+        for invitado in a_split:
+            usuario = User.objects.get(id=invitado)
+            usuarios_invitados.append(usuario)
+        users_invitados = usuarios_invitados
         if form.is_valid():
             evento = form.save(commit=False)
             try:
@@ -138,14 +154,18 @@ def edit_evento(request, evento_id):
                 pass
             evento.save()
             form.save_m2m()
+            for invitado in usuarios_invitados:
+                evento.invitados.add(invitado)
             return HttpResponseRedirect('/social/eventos/')
     else:
         form = EventoForm(instance=evento_db)
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids).filter(is_active=True)
         form.fields["invitados"].queryset = users
+        users_invitados = evento_db.invitados.all()
     template_vars = RequestContext(request, {"form": form, "user": request.user,
-        'form_search': searchbox, 'evento': evento_db})
+        'form_search': searchbox, 'evento': evento_db, 'users': users,
+        'users_invitados': users_invitados })
     return render_to_response('social/edit_evento.html', template_vars)
 
 
