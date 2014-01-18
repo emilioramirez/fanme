@@ -1,0 +1,300 @@
+{% extends "dash/dashboard.html" %}
+
+{% load avatar_tags %}
+
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/use for pines style icons/jquery.pnotify.default.icons.css" type="text/css" />
+    <link href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" media="all" rel="stylesheet" type="text/css" />
+{% endblock mystylesheet-dashboard %}
+
+{% block myjavascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}dist/js/bootstrap.js"></script>
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script>
+        var myCalendar;
+        function doOnLoad() {
+            myCalendar = new dhtmlXCalendarObject(["id_fecha_inicio"]);
+            myCalendar.setDateFormat("%d/%m/%Y");
+            myCalendar2 = new dhtmlXCalendarObject(["id_fecha_fin"]);
+            myCalendar2.setDateFormat("%d/%m/%Y");
+        }
+    </script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5oH8nVPAHgFub2orh1UBYNd7PCUa8vKw&sensor=false"></script>
+    <script>
+        var map;
+        var myCenter=new google.maps.LatLng(-31.416651238629328, -64.1835880279541);
+        var geocoder = new google.maps.Geocoder();
+        var marker;
+        var latitud, longitud;
+
+        function hayMarcador(){
+            var fecha_inicio = document.getElementById('id_fecha_inicio').value;
+            var fecha_fin = document.getElementById('id_fecha_fin').value;
+            var fecha_inicio_as_date = new Date(fecha_inicio);
+            var fecha_fin_as_date = new Date(fecha_fin);
+            var today = new Date();
+            var respuesta_correcta = true;
+            if(fecha_inicio_as_date > today)
+            {
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'La fecha de inicio del evento debe ser superior a la de hoy dia.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false;
+            }
+            if(fecha_fin_as_date < fecha_inicio_as_date)
+            {
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'La fecha fin debe ser superior a la de inicio.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false;
+            }
+            if(!marker){
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'Es necesario que marque un lugar en el mapa.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false;
+            }
+            document.getElementById('my-form').onsubmit = function() {
+                return respuesta_correcta;
+            }
+        }
+
+        function initialize()
+        {
+            var mapProp = {
+              center:myCenter,
+              zoom:14,
+              mapTypeId:google.maps.MapTypeId.HYBRID
+              };
+
+            map=new google.maps.Map(document.getElementById("googleMap")
+              ,mapProp);
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            //Agrego el listener para agregar un marcador en el mapa.
+            google.maps.event.addListener(map, 'click', function(event) {
+                placeMarker(event.latLng);
+              });
+        }
+
+        function placeMarker(location) {
+            if (!marker){
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                  });
+                /*var infowindow = new google.maps.InfoWindow({
+                    content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+                  });
+                infowindow.open(map,marker);*/
+                google.maps.event.addListener(marker, 'click', function() {
+                    geocodePosition(marker.getPosition());
+                    });
+                geocodePosition(marker.getPosition());
+                latitud = location.lat();
+                longitud = location.lng();
+                document.getElementById('longitud').value = longitud;
+                document.getElementById('latitud').value = latitud;
+                var my_elems = document.getElementsByClassName("ui-pnotify ");
+                for(k=my_elems.length-1;k>=0; --k)
+                {
+                    if(my_elems[k].innerHTML.indexOf("mapa") != -1) {
+                        my_elems[k].parentElement.removeChild(my_elems[k]);
+                    }
+                }
+            }
+            else{
+                marker.setPosition(location);
+                latitud = location.lat();
+                longitud = location.lng();
+                document.getElementById('longitud').value = longitud;
+                document.getElementById('latitud').value = latitud;
+                google.maps.event.addListener(marker, 'click', function() {
+                    geocodePosition(marker.getPosition());
+                    });
+            }
+        }
+
+        function geocodePosition(pos) {
+          geocoder.geocode({
+            latLng: pos
+          }, function(responses) {
+            if (responses && responses.length > 0) {
+              updateMarkerAddress(responses[0].formatted_address);
+            } else {
+              updateMarkerAddress('Cannot determine address at this location.');
+            }
+          });
+        }
+
+        function updateMarkerAddress(str) {
+          var infowindow = new google.maps.InfoWindow({
+                content: str
+              });
+            infowindow.open(map,marker);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <script>
+        $("#id_fecha_inicio").click(function (e) {
+            var my_elems = document.getElementsByClassName("ui-pnotify ");
+            for(k=my_elems.length-1;k>=0; --k)
+            {
+                if(my_elems[k].innerHTML.indexOf("La fecha de inicio") != -1) {
+                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                }
+            }
+        });
+        $("#id_fecha_fin").click(function (e) {
+            var my_elems = document.getElementsByClassName("ui-pnotify ");
+            for(k=my_elems.length-1;k>=0; --k)
+            {
+                if(my_elems[k].innerHTML.indexOf("fin") != -1) {
+                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                }
+            }
+        });
+
+        var usuariosSeleccionados = new Array();
+
+        function elegirUsuario(checkbox, id){
+            if(checkbox.checked) {
+                usuariosSeleccionados.push(id);
+             }
+             else{
+                var index = usuariosSeleccionados.indexOf(id);
+                if (index > -1) {
+                    usuariosSeleccionados.splice(index, 1);
+                }
+
+             }
+             document.getElementById('usuarios').value = usuariosSeleccionados;
+        }
+    </script>
+{% endblock myjavascript %}
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+{% block dashboard %}
+    <div class="title-messages">Nuevo evento</div>
+    <div class="notifications-content">
+        <div class="form-nuevo-evento">
+            <form action="/social/nuevo/" method="post" enctype="multipart/form-data" id="my-form">{% csrf_token %}
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.nombre.errors }}
+                    <label for="id_user_to_id" class="evento-name-label">Nombre:</label>
+                    {{ form.nombre }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.tipo.errors }}
+                    <label for="id_user_to_id" class="evento-tipo-label">Tipo:</label>
+                    {{ form.tipo }}
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.fecha_inicio.errors }}
+                    <label for="id_user_to_id" class="evento-date-desde-label">Fecha Inicio:</label>
+                    {{ form.fecha_inicio }}
+                    <label style="margin-left: 115px; font-size: 12px;">Formato: dd/mm/aaaa hh:mm<label>
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.fecha_fin.errors }}
+                    <label for="id_user_to_id" class="evento-date-fin-label">Fecha Fin:</label>
+                    {{ form.fecha_fin }}
+                    <label style="margin-left: 115px; font-size: 12px;">Formato: dd/mm/aaaa hh:mm<label>
+                </div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.descripcion.errors }}
+                    <label for="id_user_to_id" class="evento-description-label">Descripcion:</label>
+                    {{ form.descripcion }}
+                </div>
+                <div class="new-notification-clear"></div>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 32px;">
+                      Seleccionar invitados
+                    </button>
+                <div class="new-notification-clear"></div>
+                <div id="googleMap" style="width:500px;height:400px; margin-left:30px;"></div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-notification">
+                    {{ form.imagen.errors }}
+                    <label for="fecha_expiracion" class="notification-imagen-label">Imagen:</label>
+                    <p style="margin-left:50px;">{{ form.imagen }}</p>
+                </div>
+                <input type="hidden" name="latitud" id="latitud" value="" />
+                <input type="hidden" name="longitud" id="longitud" value="" />
+                <input type="hidden" name="usuarios" id="usuarios" value="" />
+                <div style="float:right;">
+                    <input type="submit" value="Crear" onclick=hayMarcador() class="submit" style="margin-right: 30px;"/>
+                    <input type="button" value="Cancelar" class="item-cancelar-registracion" style="margin-right: 25px; margin-left: -20px;" onclick="location.href='../../../social/eventos';">
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Invitados</h4>
+          </div>
+          <div class="modal-body">
+              {% for user in users %}
+                <div style="width: 175px; display: inline-table; margin-bottom: 25px;">
+                    {% if user.persona.avatar %}
+                        <img src="{% avatar_url user 50 %}" style="border: 1px solid #9F9F9F; height: 50px; width: 50px;" alt="">
+                    {% else %}
+                        {% if user.persona.sexo == "M" %}
+                            <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
+                        {% else %}
+                            <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
+                        {% endif%}
+                    {% endif%}
+                    <span style="margin-left: 5px;">
+                        <input type="checkbox" name="" value="{{ user.id }}" onclick="elegirUsuario(this, {{ user.id }});">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </span>
+                  </div>
+              {% endfor %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Agregar invitados</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock dashboard %}
+
+{% block crear %}
+{% endblock %}

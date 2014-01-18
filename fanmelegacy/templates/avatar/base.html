@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block searchBox %}
+    <div class="header-search-box">
+        <form action="/dash/results/" method="post">{% csrf_token %}
+            {{ form_search.as_p}}
+            <!--<input type="submit" value="Registrate" class="submit"/>-->
+        </form>
+    </div>
+{% endblock searchBox %}
+
+{% block menuOptions %}
+    <div class="header-menu-options">
+        {% block menuOptionsSelected %}
+        {% endblock menuOptionsSelected %}
+    </div>
+{% endblock menuOptions %}
+
+{% block content %}
+{% endblock content %}
