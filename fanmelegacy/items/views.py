@@ -13,7 +13,6 @@ from django.core.urlresolvers import reverse
 
 from datetime import datetime, date
 
-from dash.forms import SearchBox
 from items.models import Item, Comentario, Recomendacion, ItemDenuncias
 from items.models import ItemImagen
 from items.forms import ItemRegisterForm, CommentForm
@@ -25,7 +24,6 @@ from django.contrib import messages
 
 @login_required(login_url='/accounts/user/')
 def item(request, item_id):
-    searchbox = SearchBox()
     comment_form = CommentForm()
     mostrar_boton_enlace = True
     try:
@@ -46,8 +44,8 @@ def item(request, item_id):
         mostrar_denuncia = verificar_si_existe_denuncia(request, item)
     except Item.DoesNotExist:
         raise Http404
-    return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'is_fan': is_fan, 'comment_form': comment_form,
+    return render_to_response('items/item.html',
+        {'item': item, 'is_fan': is_fan, 'comment_form': comment_form,
         'comments': comments, 'empresas': empresas,
         'mostrar_boton_enlace': mostrar_boton_enlace,
         'mostrar_denuncia': mostrar_denuncia},
@@ -69,7 +67,6 @@ def puede_registrar_enlace(request, item):
 
 @login_required(login_url='/accounts/user/')
 def empresa(request, empresa_id):
-    searchbox = SearchBox()
     try:
         empresa = Empresa.objects.get(pk=empresa_id)
         empresa_planes = User.objects.get(email=empresa.user.email)
@@ -83,14 +80,13 @@ def empresa(request, empresa_id):
                 print items_plan.count()
     except Empresa.DoesNotExist:
         raise Http404
-    return render_to_response('dash/empresa.html', {'form_search': searchbox,
-        'empresa': empresa, 'items_plan': items_plan}
+    return render_to_response('dash/empresa.html',
+        {'empresa': empresa, 'items_plan': items_plan}
         , context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def register_item(request):
-    searchbox = SearchBox()
     if request.method == 'POST':
         form_register = ItemRegisterForm(request.POST, request.FILES)
         if form_register.is_valid():
@@ -122,14 +118,12 @@ def register_item(request):
     else:
         form_register = ItemRegisterForm()
     return render_to_response('items/register_item.html',
-        {'form_search': searchbox,
-        'form_register': form_register},
+        {'form_register': form_register},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def fan(request, item_id):
-    searchbox = SearchBox()
     comment_form = CommentForm()
     try:
         item = Item.objects.get(pk=item_id)
@@ -156,15 +150,14 @@ def fan(request, item_id):
         raise Http404
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'is_fan': is_fan,
+    return render_to_response('items/item.html',
+        {'item': item, 'is_fan': is_fan,
         'comment_form': comment_form, 'comments': comments},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def unfan(request, item_id):
-    searchbox = SearchBox()
     comment_form = CommentForm()
     try:
         item = Item.objects.get(pk=item_id)
@@ -178,8 +171,8 @@ def unfan(request, item_id):
         raise Http404
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'comment_form': comment_form},
+    return render_to_response('items/item.html',
+        {'item': item, 'comment_form': comment_form},
         context_instance=RequestContext(request))
 
 
@@ -223,7 +216,6 @@ def unfan(request, item_id):
 
 @login_required(login_url='/accounts/user/')
 def recomendation(request, item_id):
-    searchbox = SearchBox()
     usuarios_ya_recomendados = request.user.recomendaciones_enviadas.filter(
         item=item_id).values_list('user_destino', flat=True)
     seguidores = request.user.followers.exclude(user__in=usuarios_ya_recomendados)
@@ -263,7 +255,7 @@ def recomendation(request, item_id):
                 actividad.save()
                 messages.add_message(request, messages.SUCCESS, u"Se han enviado las recomendaciones correctamente.")
     return render_to_response('items/recomendacion.html',
-        {'form_search': searchbox, 'usuarios': seguidores, 'item': item},
+        {'usuarios': seguidores, 'item': item},
         context_instance=RequestContext(request))
 
 
@@ -310,7 +302,6 @@ def delete_own_comment(request, comment_id, next=None):
 
 @login_required(login_url='/accounts/user')
 def denunciar_item(request, item_id):
-    searchbox = SearchBox()
     comment_form = CommentForm()
     item = Item.objects.get(pk=item_id)
     denuncia = ItemDenuncias()
@@ -318,8 +309,9 @@ def denunciar_item(request, item_id):
     denuncia.user = request.user
     denuncia.save()
     mostrar_denuncia = verificar_si_existe_denuncia(request, item)
-    return render_to_response('items/item.html', {'form_search': searchbox,
-        'item': item, 'comment_form': comment_form, 'comments': comments, 'mostrar_denuncia': mostrar_denuncia},
+    return render_to_response('items/item.html',
+        {'item': item, 'comment_form': comment_form, 'comments': comments,
+        'mostrar_denuncia': mostrar_denuncia},
         context_instance=RequestContext(request))
 
 
