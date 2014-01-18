@@ -1,23 +1,16 @@
 # -*- coding: utf-8 *-*
 #from myproject.myapp.models import Foo
+from django.db.models import Q
+from dash.forms import SearchBox
 
 
-def indicadores(request):
-    indicadores = {}
+def sidebar_indicators(request):
+    context = {"form_search": SearchBox()}
     try:
-        rec = request.user.recomendaciones_recibidas.filter(
-            estado='noleido').count()
-        eventos = request.user.eventos_invitado.filter(estado="noleido").count()
-        mensajes = request.user.mensajes_recibidos.filter(estado="noleido").count()
-        notificaciones = request.user.notificaciones_recibidas.filter(
-            estado="noleido").count()
-        consultas = request.user.consultas_recibidas.filter(
-            estado="noleido").count()
-        indicadores['recomendaciones_noleidas'] = rec
-        indicadores['eventos_nolidas'] = eventos
-        indicadores['mensajes_nolidas'] = mensajes
-        indicadores['notificaciones_nolidas'] = notificaciones
-        indicadores['consultas_noleidas'] = consultas
-    except:
+        context['notificaciones_noleidas'] = request.user.notificaciones_recibidas.filter(~Q(estado='leido')).count()
+        context['recomendaciones_noleidas'] = request.user.recomendaciones_recibidas.filter(estado='noleido').count()
+        context['mensajes_nolidas'] = request.user.mensajes_recibidos.filter(estado='noleido').count()
+        context['eventos_noleidos'] = request.user.invitacion_eventos.filter(estado='noleido').count()
+    except AttributeError:
         pass
-    return indicadores
+    return context

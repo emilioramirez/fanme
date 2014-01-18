@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from dash.forms import SearchBox
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
@@ -11,7 +10,6 @@ import calendar
 
 @login_required(login_url='/accounts/user/')
 def dash_planes(request):
-    searchbox = SearchBox()
     message = ''
     planes = request.user.plan_empresa.all().order_by('-fecha_fin_vigencia')
     consultas_noleidas = request.user.consultas_recibidas.filter(
@@ -23,7 +21,7 @@ def dash_planes(request):
     else:
         plan = planes[0]
         posee_plan = True
-    return render_to_response('bussiness/dash_planes.html', {'form_search': searchbox,
+    return render_to_response('bussiness/dash_planes.html', {
         'message': message, 'plan': plan, 'posee_plan': posee_plan,
         'consultas_noleidas': consultas_noleidas},
         context_instance=RequestContext(request))
@@ -31,7 +29,6 @@ def dash_planes(request):
 
 @login_required(login_url='/accounts/user/')
 def elegir_plan(request):
-    searchbox = SearchBox()
     if request.method == 'POST':
         plan_id = request.POST.get("planIdSeleccionado", "")
         plan_elegido = Plan.objects.get(pk=plan_id)
@@ -45,8 +42,7 @@ def elegir_plan(request):
     else:
         planes = Plan.objects.all()
     return render_to_response('bussiness/elegir_plan.html',
-        {'form_search': searchbox,
-        'planes': planes},
+        {'planes': planes},
         context_instance=RequestContext(request))
 
 
@@ -56,11 +52,10 @@ def new_notificacion(request):
 
 @login_required(login_url='/accounts/user/')
 def dash_empresa(request):
-    searchbox = SearchBox()
     consultas_noleidas = request.user.consultas_recibidas.filter(
             estado="noleido").count()
-    return render_to_response('bussiness/dash_empresa.html', {'form_search': searchbox,
-     'consultas_noleidas': consultas_noleidas},
+    return render_to_response('bussiness/dash_empresa.html',
+        {'consultas_noleidas': consultas_noleidas},
         context_instance=RequestContext(request))
 
 
