@@ -25,7 +25,6 @@ from accounts.forms import UserLogin
 
 @login_required(login_url='/accounts/user/')
 def eventos(request):
-    searchbox = SearchBox()
     no_hay_eventos = True
     try:
         eventos_creados = request.user.eventos_creados.all().order_by(
@@ -40,24 +39,17 @@ def eventos(request):
         for evento in eventos_noleidos:
             evento.estado = "leido"
             evento.save()
-        notificaciones_noleidas = get_cant_notificaciones(request)
-        recomendaciones_noleidas = get_cant_recomendaciones(request)
-        eventos_noleidos = get_cant_eventos(request)
     except Evento.DoesNotExist:
         eventos_invitado = []
     if eventos_creados or eventos_invitado:
         no_hay_eventos = False
     temp = RequestContext(request, {'eventos_creados': eventos_creados,
-        'eventos_invitado': eventos_invitado, 'no_hay_eventos': no_hay_eventos,
-        'form_search': searchbox, 'notificaciones_noleidas': notificaciones_noleidas,
-        'recomendaciones_noleidas': recomendaciones_noleidas,
-        'eventos_noleidos': eventos_noleidos})
+        'eventos_invitado': eventos_invitado, 'no_hay_eventos': no_hay_eventos})
     return render_to_response('social/eventos.html', temp)
 
 
 @login_required(login_url='/accounts/user/')
 def new_evento(request):
-    searchbox = SearchBox()
     if request.method == "POST":
         form = EventoForm(request.POST, request.FILES)
         list_ids = request.user.followers.values_list('user', flat=True)
@@ -87,22 +79,18 @@ def new_evento(request):
                 evento_x_invitado.save()
             return HttpResponseRedirect('/social/eventos/')
         else:
-            recomendaciones_noleidas = get_cant_recomendaciones(request)
             print form.errors
     else:
         form = EventoForm()
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids).filter(is_active=True)
         form.fields["invitados"].queryset = users
-        recomendaciones_noleidas = get_cant_recomendaciones(request)
-    template_vars = RequestContext(request, {"form": form,
-        'form_search': searchbox, 'recomendaciones_noleidas':recomendaciones_noleidas})
+    template_vars = RequestContext(request, {"form": form})
     return render_to_response('social/new_evento.html', template_vars)
 
 
 @login_required(login_url='/accounts/user/')
 def evento(request, evento_id):
-    searchbox = SearchBox()
     creador = False
     try:
         evento = Evento.objects.get(id=evento_id)
@@ -111,14 +99,13 @@ def evento(request, evento_id):
             creador = True
     except Evento.DoesNotExist:
         evento = []
-    temp = RequestContext(request, {'form_search': searchbox, 'evento': evento,
+    temp = RequestContext(request, {'evento': evento,
         'creador': creador, 'lista_invitados': lista_invitados})
     return render_to_response('social/evento.html', temp)
 
 
 @login_required(login_url='/accounts/user/')
 def edit_evento(request, evento_id):
-    searchbox = SearchBox()
     try:
         evento_db = Evento.objects.get(id=evento_id)
         if not (evento_db.creador == request.user):
@@ -145,13 +132,12 @@ def edit_evento(request, evento_id):
         users = User.objects.filter(id__in=list_ids).filter(is_active=True)
         form.fields["invitados"].queryset = users
     template_vars = RequestContext(request, {"form": form, "user": request.user,
-        'form_search': searchbox, 'evento': evento_db})
+        'evento': evento_db})
     return render_to_response('social/edit_evento.html', template_vars)
 
 
 @login_required(login_url='/accounts/user/')
 def delete_evento(request, evento_id):
-    searchbox = SearchBox()
     try:
         evento_db = Evento.objects.get(id=evento_id)
         if (evento_db.creador == request.user):
@@ -161,14 +147,12 @@ def delete_evento(request, evento_id):
         return HttpResponseRedirect('/social/eventos/')
     except Evento.DoesNotExist:
         return HttpResponseRedirect('/social/eventos/')
-    template_vars = RequestContext(request, {
-        'form_search': searchbox, 'evento': evento_db})
+    template_vars = RequestContext(request, {'evento': evento_db})
     return render_to_response('social/edit_evento.html', template_vars)
 
 
 @login_required(login_url='/accounts/user/')
 def cancelar_evento(request, evento_id):
-    searchbox = SearchBox()
     try:
         evento_db = Evento.objects.get(id=evento_id)
         if (evento_db.creador == request.user):
@@ -177,14 +161,12 @@ def cancelar_evento(request, evento_id):
         return HttpResponseRedirect('/social/eventos/')
     except Evento.DoesNotExist:
         return HttpResponseRedirect('/social/eventos/')
-    template_vars = RequestContext(request, {
-        'form_search': searchbox, 'evento': evento_db})
+    template_vars = RequestContext(request, {'evento': evento_db})
     return render_to_response('social/edit_evento.html', template_vars)
 
 
 @login_required(login_url='/accounts/user/')
 def mensajes(request):
-    searchbox = SearchBox()
     try:
         mensajes_recibidos = request.user.mensajes_recibidos.all().values(
             'user_from').distinct().filter(user_from__is_active=True)
@@ -195,15 +177,9 @@ def mensajes(request):
         for msj in msj_noleidos:
             msj.estado = "leido"
             msj.save()
-        notificaciones_noleidas = get_cant_notificaciones(request)
-        recomendaciones_noleidas = get_cant_recomendaciones(request)
-        eventos_noleidos = get_cant_eventos(request)
     except Persona.DoesNotExist:  # Esto para que esta?
         return HttpResponseRedirect('/dash/empresa/')  # Esto para que esta?
-    return render_to_response('social/messages.html', {'form_search': searchbox,
-        'usuarios': usuarios, 'notificaciones_noleidas': notificaciones_noleidas,
-        'recomendaciones_noleidas':recomendaciones_noleidas,
-        'eventos_noleidos': eventos_noleidos},
+    return render_to_response('social/messages.html', {'usuarios': usuarios},
         context_instance=RequestContext(request))
 
 
@@ -214,10 +190,8 @@ def get_cant_notificaciones(request):
 
 @login_required(login_url='/accounts/user/')
 def new_message(request):
-    searchbox = SearchBox()
     list_ids = request.user.followers.values_list('user', flat=True)
     users = User.objects.filter(id__in=list_ids).filter(is_active=True)
-    recomendaciones_noleidas = get_cant_recomendaciones(request)
     if request.method == 'POST':
         form_new_message = MessageForm(request.POST)
         form_new_message.fields["user_to_id"].queryset = users
@@ -240,14 +214,12 @@ def new_message(request):
 #        users = User.objects.filter(id__in=list_ids)
         form_new_message.fields["user_to_id"].queryset = users
     return render_to_response('social/new_message.html',
-        {'form_new_message': form_new_message,
-        'form_search': searchbox, 'recomendaciones_noleidas': recomendaciones_noleidas},
+        {'form_new_message': form_new_message},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def messages_user(request, user_id):
-    searchbox = SearchBox()
     try:  # porque esto?
         if request.method == 'POST':
             form_response_message = MessageResponseForm(request.POST)
@@ -269,7 +241,6 @@ def messages_user(request, user_id):
     except Persona.DoesNotExist:  # porque esto?
         return HttpResponseRedirect('/dash/empresa/')  # porque esto?
     return render_to_response('social/messages_user.html', {
-        'form_search': searchbox,
         'form_response_message': form_response_message,
         'mensajes': mensajes,
         'user_id': user_id},
@@ -288,7 +259,6 @@ def getMensajes(request, user_id):
 
 @login_required(login_url='/accounts/user/')
 def company_query(request, company_id):
-    searchbox = SearchBox()
     messages = []
     no_posee_items = False
     if request.method == 'POST':
@@ -320,7 +290,6 @@ def company_query(request, company_id):
             no_posee_items = True
         form_query_message.fields["item"].queryset = items_plan
     return render_to_response('social/consulta_a_empresa.html', {
-        'form_search': searchbox,
         'company_id': company_id,
         'form_query_message': form_query_message,
         'no_posee_items': no_posee_items},
@@ -340,7 +309,6 @@ def items_en_plan_vigente(company_id):
 
 @login_required(login_url='/accounts/user/')
 def ver_consultas(request):
-    searchbox = SearchBox()
     consultas_recibidas = request.user.consultas_recibidas.all().values(
             'item').distinct()
     items = []
@@ -349,14 +317,12 @@ def ver_consultas(request):
     for dict in consultas_recibidas.all():
         items.append(Item.objects.get(id=dict['item']))
     return render_to_response('social/ver_consultas.html', {
-        'form_search': searchbox,
         'consultas_recibidas': items, 'consultas_noleidas': consultas_noleidas},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def ver_consultas_item(request, item_id):
-    searchbox = SearchBox()
     item = Item.objects.get(id=item_id)
     items_consultas = item.mis_consultas.values(
         'user_from').distinct()
@@ -376,7 +342,6 @@ def ver_consultas_item(request, item_id):
 #        else:
 #            print "choto"
     return render_to_response('social/ver_consultas_item.html', {
-        'form_search': searchbox,
         'usuario_consulta_item': users,
         'item_id': item_id, 'consultas_noleidas': consultas_noleidas},
         context_instance=RequestContext(request))
@@ -384,7 +349,6 @@ def ver_consultas_item(request, item_id):
 
 @login_required(login_url='/accounts/user/')
 def ver_consultas_item_usuario(request, item_id, user_id):
-    searchbox = SearchBox()
     user = User.objects.get(id=user_id)
     item_consultado = Item.objects.get(id=item_id)
     consulta_item = Consulta.objects.filter(
@@ -395,7 +359,6 @@ def ver_consultas_item_usuario(request, item_id, user_id):
     consultas_noleidas = request.user.consultas_recibidas.filter(
         estado="noleido").count()
     return render_to_response('social/ver_consulta_item_usuario.html', {
-        'form_search': searchbox,
         'usuario': user, 'consultas_noleidas': consultas_noleidas,
         'consulta_item': consulta_item},
         context_instance=RequestContext(request))
@@ -422,23 +385,20 @@ def enviar_notificaciones(usuarios, descripcion, url, tipo, resumen):
 
 @login_required(login_url='/accounts/user/')
 def notificaciones(request):
-    searchbox = SearchBox()
     try:
         notificaciones_enviadas = request.user.notificaciones_enviadas.all()
         consultas_noleidas = request.user.consultas_recibidas.filter(
             estado="noleido").count()
-        recomendaciones_noleidas = get_cant_recomendaciones(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/notificaciones.html', {
-        'form_search': searchbox, 'consultas_noleidas': consultas_noleidas,
+        'consultas_noleidas': consultas_noleidas,
         'notificaciones_enviadas': notificaciones_enviadas},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def notificacion(request, notificacion_id):
-    searchbox = SearchBox()
     empresa = False
     try:
         notificacion = Notificacion.objects.get(id=notificacion_id)
@@ -446,15 +406,13 @@ def notificacion(request, notificacion_id):
             empresa = True
     except Evento.DoesNotExist:
         notificacion = []
-    temp = RequestContext(request, {'form_search': searchbox,
-        'notificacion': notificacion,
+    temp = RequestContext(request, {'notificacion': notificacion,
         'empresa': empresa})
     return render_to_response('social/notificaciones.html', temp)
 
 
 @login_required(login_url='/accounts/user/')
 def edit_notificacion(request, notificacion_id):
-    searchbox = SearchBox()
     try:
         notificacion_db = Notificacion.objects.get(id__exact=notificacion_id)
         if not (notificacion_db.empresa == request.user):
@@ -482,13 +440,12 @@ def edit_notificacion(request, notificacion_id):
         users = User.objects.filter(id__in=list_ids)
         form.fields["usuarios_to"].queryset = users
     template_vars = RequestContext(request, {"form": form, "user": request.user,
-        'form_search': searchbox, 'notificacion': notificacion_db})
+        'notificacion': notificacion_db})
     return render_to_response('social/edit_notificacion.html', template_vars)
 
 
 @login_required(login_url='/accounts/user/')
 def delete_notificacion(request, notificacion_id):
-    searchbox = SearchBox()
     try:
         notificacion_db = Notificacion.objects.get(id=notificacion_id)
         if (notificacion_db.empresa == request.user):
@@ -498,13 +455,12 @@ def delete_notificacion(request, notificacion_id):
     except Notificacion.DoesNotExist:
         return HttpResponseRedirect('/social/notificaciones/')
     template_vars = RequestContext(request, {
-        'form_search': searchbox, 'notificacion': notificacion_db})
+        'notificacion': notificacion_db})
     return HttpResponseRedirect('/social/edit_notificacion/', template_vars)
 
 
 @login_required(login_url='/accounts/user/')
 def company_messages(request):
-    searchbox = SearchBox()
     try:
         mensajes_recibidos = request.user.mensajes_recibidos.all().values(
             'user_from').distinct()
@@ -516,14 +472,13 @@ def company_messages(request):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/company_messages.html', {
-        'form_search': searchbox, 'consultas_noleidas': consultas_noleidas,
+        'consultas_noleidas': consultas_noleidas,
         'mensajes_recibidos': usuarios},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def company_response_message(request, user_id):
-    searchbox = SearchBox()
     try:
         if request.method == 'POST':
             form_response_message = MessageResponseForm(request.POST)
@@ -545,7 +500,6 @@ def company_response_message(request, user_id):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/company_response_message.html', {
-        'form_search': searchbox,
         'form_response_message': form_response_message,
         'mensajes': mensajes},
         context_instance=RequestContext(request))
@@ -553,7 +507,6 @@ def company_response_message(request, user_id):
 
 @login_required(login_url='/accounts/user/')
 def new_notification(request):
-    searchbox = SearchBox()
     if request.method == "POST":
         form = NotificationForm(request.POST)
         list_ids = request.user.followers.values_list('user', flat=True)
@@ -575,61 +528,48 @@ def new_notification(request):
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
         form.fields["usuarios_to"].queryset = users
-    template_vars = RequestContext(request, {"form": form,
-        'form_search': searchbox})
+    template_vars = RequestContext(request, {"form": form})
     return render_to_response('social/new_notification.html', template_vars)
 
 
 @login_required(login_url='/accounts/user/')
 def user_main_view_notifications(request):
-    searchbox = SearchBox()
     try:
         notificaciones_recibidas = request.user.notificaciones_recibidas.all(
             ).values('empresa').distinct()
         usuarios = []
         for dict in notificaciones_recibidas.all():
             usuarios.append(User.objects.get(id=dict['empresa']))
-        notificaciones_noleidas = get_cant_notificaciones(request)
-        recomendaciones_noleidas = get_cant_recomendaciones(request)
-        eventos_noleidos = get_cant_eventos(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/user_main_notification.html', {
-        'form_search': searchbox,
-        'notificaciones_recibidas': usuarios, 'eventos_noleidos': eventos_noleidos,
-        'notificaciones_noleidas': notificaciones_noleidas,
-        'recomendaciones_noleidas': recomendaciones_noleidas},
+        'notificaciones_recibidas': usuarios},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def notification_by_company(request, company_id):
-    searchbox = SearchBox()
     try:
         notificaciones_recibidas = request.user.notificaciones_recibidas.filter(
             empresa=company_id)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/notifications_by_company.html', {
-        'form_search': searchbox,
         'notificaciones_recibidas': notificaciones_recibidas},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def ver_notificacion(request, notificacion_id):
-    searchbox = SearchBox()
     try:
         notificaciones = Notificacion.objects.get(id=notificacion_id)
         notificaciones.estado = "leido"
         notificaciones.save()
-        notificaciones_noleidas = get_cant_notificaciones(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/ver_notificaciones.html', {
-        'form_search': searchbox,
-        'notificacion': notificaciones,
-        'notificaciones_noleidas': notificaciones_noleidas,},
+        'notificacion': notificaciones
+        },
         context_instance=RequestContext(request))
 
 

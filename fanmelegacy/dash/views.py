@@ -1,5 +1,9 @@
 # -*- encoding: utf-8 -*-
 import operator
+import datetime
+from operator import attrgetter
+from itertools import chain
+
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
@@ -10,21 +14,17 @@ from django.db.models import Q
 from django.contrib import messages
 
 from dash.forms import SearchBox, UserUpdateForm, PassUpdateForm
-from items.models import Item
+from accounts.forms import UserLogin
+
+from items.models import Item, Comentario
 from accounts.models import Persona, Empresa
 from segmentation.models import Topico
-from items.models import Comentario
-from fanmelegacy import recommendations
-from accounts.forms import UserLogin
-from itertools import chain
-from operator import attrgetter
 from social.models import Actividad
-import datetime
 
+from fanmelegacy import recommendations
 
 @login_required(login_url='/accounts/user/')
 def dashboard(request):
-    searchbox = SearchBox()
     try:
         my_profile = request.user.persona
         #block recommendation
@@ -44,18 +44,10 @@ def dashboard(request):
                 lista = Item.objects.filter(nombre=itemname).filter(
                     topico__in=my_profile.topicos.all())
                 items_by_topics.append(lista)
-        notificaciones_noleidas = get_cant_notificaciones(request)
-        recomendaciones_noleidas = get_cant_recomendaciones(request)
-        mensajes_nolidas = get_cant_mensajes(request)
-        eventos_noleidos = get_cant_eventos(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/dashboard.html', {'form_search': searchbox,
-        'topicos': items_by_topics,
-        'notificaciones_noleidas': notificaciones_noleidas,
-        'recomendaciones_noleidas': recomendaciones_noleidas,
-        'mensajes_nolidas':mensajes_nolidas,
-        'r_topics': root_topics, 'eventos_noleidos': eventos_noleidos},
+    return render_to_response('dash/dashboard.html', {'topicos': items_by_topics,
+        'r_topics': root_topics},
         context_instance=RequestContext(request))
 
 
@@ -89,7 +81,6 @@ def dashboard_topic_add(request, topic_id):
 
 @login_required(login_url='/accounts/user/')
 def dashboard_all(request):
-    searchbox = SearchBox()
     root_topics = Topico.objects.filter(padre=None)
     profile = request.user.persona
     items_by_topics = []
@@ -108,21 +99,15 @@ def dashboard_all(request):
             pass
         except Persona.DoesNotExist:
             pass
-    notificaciones_noleidas = get_cant_notificaciones(request)
-    recomendaciones_noleidas = get_cant_recomendaciones(request)
-    mensajes_nolidas = get_cant_mensajes(request)
-    return render_to_response('dash/dashboard.html', {'form_search': searchbox,
-        'all_topics': all_topics, 'r_topics': root_topics,
+    return render_to_response('dash/dashboard.html', {'all_topics': all_topics,
+        'r_topics': root_topics,
         'topicos': items_by_topics,
-        'notificaciones_noleidas': notificaciones_noleidas,
-        'recomendaciones_noleidas': recomendaciones_noleidas,
-        'mensajes_nolidas': mensajes_nolidas},
+        },
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def logbook(request):
-    searchbox = SearchBox()
     try:
         followings = request.user.persona.following.all()
         active_followings = followings.filter(is_active=True)
@@ -132,31 +117,16 @@ def logbook(request):
                 chain(
                     user.act_origen.all(), actividades),
                 key=attrgetter('fecha'), reverse=True)
-        notificaciones_noleidas = get_cant_notificaciones(request)
-        recomendaciones_noleidas = get_cant_recomendaciones(request)
-        mensajes_nolidas = get_cant_mensajes(request)
         cant_following = active_followings.count()
         cant_followers = get_active_followers(request)
-        eventos_noleidos = get_cant_eventos(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/logbook.html', {'form_search': searchbox,
-        'notificaciones_noleidas': notificaciones_noleidas,
-        'recomendaciones_noleidas': recomendaciones_noleidas,
-        'mensajes_nolidas':mensajes_nolidas, 'cant_following': cant_following,
+    return render_to_response('dash/logbook.html', {
+        'cant_following': cant_following,
         'actividades': actividades, 'cant_followers': cant_followers,
-        'eventos_noleidos': eventos_noleidos},
+        },
         context_instance=RequestContext(request))
 
-
-def get_cant_notificaciones(request):
-    return request.user.notificaciones_recibidas.filter(~Q(estado='leido')).count()
-            #estado='noleido').count()
-
-
-def get_cant_recomendaciones(request):
-    return request.user.recomendaciones_recibidas.filter(
-            estado='noleido').count()
 
 
 def get_cant_eventos(request):
@@ -166,8 +136,7 @@ def get_cant_eventos(request):
 
 @login_required(login_url='/accounts/user/')
 def topicos(request):
-    searchbox = SearchBox()
-    return render_to_response('dash/topicos.html', {'form_search': searchbox},
+    return render_to_response('dash/topicos.html', {},
         context_instance=RequestContext(request))
 
 
@@ -220,15 +189,13 @@ def results(request):
 
 @login_required(login_url='/accounts/user/')
 def empresa(request):
-    searchbox = SearchBox()
     messages.add_message(request, message.INFO, 'Estos usuarios se han hecho fan')
-    return render_to_response('bussiness/dash_empresa.html', {'form_search': searchbox},
+    return render_to_response('bussiness/dash_empresa.html', {},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def follow_user(request, user_id):
-    searchbox = SearchBox()
     try:
         user_to_follow = User.objects.get(id=user_id)
         my_profile = request.user.persona
@@ -237,8 +204,7 @@ def follow_user(request, user_id):
             return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/follow.html', {'form_search': searchbox,
-        'user_logbook': user_to_follow},
+    return render_to_response('dash/follow.html', {'user_logbook': user_to_follow},
         context_instance=RequestContext(request))
 
 
@@ -263,7 +229,6 @@ def follow_request(request, user_id):
 
 @login_required(login_url='/accounts/user/')
 def logbook_user(request, user_id):
-    searchbox = SearchBox()
     try:
         user_logbook = User.objects.get(id=user_id)
         my_profile = request.user.persona
@@ -278,14 +243,13 @@ def logbook_user(request, user_id):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/logbook_user.html',
-        {'form_search': searchbox, 'user_logbook': user_logbook,
+        {'user_logbook': user_logbook,
         'actividades': actividades},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def my_fans_items(request):
-    searchbox = SearchBox()
     lista = []
     try:
         items = request.user.persona.items.all()
@@ -294,18 +258,15 @@ def my_fans_items(request):
                 (item, 0)
             )
         messages.add_message(request, messages.INFO, "Sos fan de")
-        eventos_noleidos = get_cant_eventos(request)
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/mi_fanes.html',
-        {'form_search': searchbox, 'items': lista, 'is_fan': True,
-        'eventos_noleidos': eventos_noleidos},
+        {'items': lista, 'is_fan': True},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def my_comments_items(request):
-    searchbox = SearchBox()
     lista = []
     try:
         request.user.persona
@@ -316,40 +277,34 @@ def my_comments_items(request):
                 request.user.comentarios_realizados.filter(item=item).count()
                 )
             )
-        eventos_noleidos = get_cant_eventos(request)
         messages.add_message(request, messages.INFO, "Has comentado los siguientes items")
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/mis_comentarios.html',
-        {'form_search': searchbox, 'items': lista, 'is_fan': False,
-        'eventos_noleidos': eventos_noleidos},
+        {'items': lista, 'is_fan': False},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def recomendaciones_enviadas(request):
-    searchbox = SearchBox()
     try:
         request.user.persona
         items_ids = request.user.recomendaciones_enviadas.all().values_list(
             'item', flat=True).distinct()
         items = Item.objects.filter(id__in=items_ids)
         messages.add_message(request, messages.INFO, "Has recomendado los siguientes items")
-        eventos_noleidos = get_cant_eventos(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     recomendaciones = request.user.recomendaciones_enviadas.all().order_by(
         'fecha')
     return render_to_response('dash/mis_recomendaciones_enviadas.html',
-        {'form_search': searchbox,
-        'recomendaciones': items, 'eventos_noleidos': eventos_noleidos,
-            'is_fan': False},
+        {
+        'recomendaciones': items,' is_fan': False},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def recomendaciones_recibidas(request):
-    searchbox = SearchBox()
     try:
         request.user.persona
         items_ids = request.user.recomendaciones_recibidas.all().values_list(
@@ -360,28 +315,22 @@ def recomendaciones_recibidas(request):
             r.estado = "leido"
             r.save()
             messages.add_message(request, messages.INFO, "Te han recomendado los siguientes items")
-        notificaciones_noleidas = get_cant_notificaciones(request)
-        eventos_noleidos = get_cant_eventos(request)
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/mis_recomendaciones_recibidas.html',
-        {'form_search': searchbox,
-        'recomendaciones': items, 'eventos_noleidos': eventos_noleidos,
-        'notificaciones_noleidas': notificaciones_noleidas, 'is_fan': False},
+        {'recomendaciones': items},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def following(request):
-    searchbox = SearchBox()
     messages.add_message(request, messages.INFO, 'Estas siguiendo a estos usuarios')
     followings = request.user.persona.following.all()
     active_followings = followings.filter(is_active=True)
     cant_following = active_followings.count()
     cant_followers = get_active_followers(request)
     return render_to_response('dash/following.html',
-        {'form_search': searchbox,
-         'active_followings': active_followings,
+        {'active_followings': active_followings,
          'cant_following': cant_following,
          'cant_followers': cant_followers},
         context_instance=RequestContext(request))
@@ -389,13 +338,11 @@ def following(request):
 
 @login_required(login_url='/accounts/user/')
 def followers(request):
-    searchbox = SearchBox()
     messages.add_message(request, messages.INFO, 'Estos usuarios te estan siguiendo')
     cant_followers = get_active_followers(request)
     cant_following = get_active_followings(request)
     return render_to_response('dash/followers.html',
-        {'form_search': searchbox,
-        'cant_followers': cant_followers,
+        {'cant_followers': cant_followers,
         'cant_following': cant_following},
         context_instance=RequestContext(request))
 
@@ -413,7 +360,6 @@ def get_active_followers(request):
 
 @login_required(login_url='/accounts/user/')
 def edit_account(request):
-    searchbox = SearchBox()
     is_active = True
     try:
         data = {'first_name': request.user.first_name,
@@ -451,13 +397,12 @@ def edit_account(request):
             messages.add_message(request, messages.SUCCESS, "Se actualizo correctamente el perfil")
     return render_to_response('dash/edit_account.html',
         {'form_update': form_update,
-        'form_search': searchbox, 'is_active': is_active},
+        'is_active': is_active},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def edit_pass(request):
-    searchbox = SearchBox()
     if request.method == 'POST':
         form_update = PassUpdateForm(user=request.user, data=request.POST or None)
         if form_update.is_valid():
@@ -469,26 +414,21 @@ def edit_pass(request):
     else:
         form_update = PassUpdateForm(user=request.user)
     return render_to_response('dash/edit_pass.html',
-        {'form_update': form_update,
-        'form_search': searchbox},
+        {'form_update': form_update},
         context_instance=RequestContext(request))
 
 
 def preguntas_mas_frecuentes(request):
-    searchbox = SearchBox()
     form_login = UserLogin()
     return render_to_response('dash/preguntas_mas_frecuentes.html',
-        {'form_search': searchbox,
-        'form_login': form_login},
+        {'form_login': form_login},
         context_instance=RequestContext(request))
 
 
 def temas_de_ayuda(request):
-    searchbox = SearchBox()
     form_login = UserLogin()
     return render_to_response('dash/temas_de_ayuda.html',
-        {'form_search': searchbox,
-        'form_login': form_login},
+        {'form_login': form_login},
         context_instance=RequestContext(request))
 
 
@@ -499,7 +439,6 @@ def get_cant_mensajes(request):
 
 @login_required(login_url='/accounts/user/')
 def dar_baja_cuenta(request):
-    searchbox = SearchBox()
     account = request.user
     account.is_active = False
     account.save()
@@ -516,14 +455,12 @@ def dar_baja_cuenta(request):
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/edit_account.html',
         {'form_update': form_update,
-        'form_search': searchbox,
         'is_active': False},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def activar_cuenta(request):
-    searchbox = SearchBox()
     account = request.user
     account.is_active = True
     account.save()
@@ -540,7 +477,6 @@ def activar_cuenta(request):
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/edit_account.html',
         {'form_update': form_update,
-        'form_search': searchbox,
         'is_active': True},
         context_instance=RequestContext(request))
 
@@ -555,10 +491,6 @@ def dejar_de_seguir_usuario(request, user_id):
 
 @login_required(login_url='/accounts/user/')
 def dejar_de_seguir_usuarios(request):
-    searchbox = SearchBox()
-    notificaciones_noleidas = get_cant_notificaciones(request)
-    recomendaciones_noleidas = get_cant_recomendaciones(request)
-    mensajes_nolidas = get_cant_mensajes(request)
     followings = request.user.persona.following.all()
     active_followings = followings.filter(is_active=True)
     cant_following = active_followings.count()
@@ -571,11 +503,7 @@ def dejar_de_seguir_usuarios(request):
         return HttpResponseRedirect('/dash/logbook')
     else:
         return render_to_response('dash/dejar_de_seguir.html',
-            {'form_search': searchbox,
-            'notificaciones_noleidas': notificaciones_noleidas,
-            'recomendaciones_noleidas': recomendaciones_noleidas,
-            'mensajes_nolidas': mensajes_nolidas,
-            'active_followings': active_followings,
+            {'active_followings': active_followings,
             'cant_following': cant_following},
             context_instance=RequestContext(request))
 
