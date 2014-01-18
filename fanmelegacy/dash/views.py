@@ -128,12 +128,6 @@ def logbook(request):
         context_instance=RequestContext(request))
 
 
-
-def get_cant_eventos(request):
-    return request.user.invitacion_eventos.filter(
-            estado='noleido').count()
-
-
 @login_required(login_url='/accounts/user/')
 def topicos(request):
     return render_to_response('dash/topicos.html', {},
