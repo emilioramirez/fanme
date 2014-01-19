@@ -788,3 +788,4 @@ body{}
 .clear-navbar{
     margin: 80px 0px 5px;
 }
+.table-striped > tbody > tr{ font-size: 12px;} 

@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^avatar/', include('avatar.urls')),
     (r'^rathings/', include('rathings.urls')),
+    (r'^moderacion/', include('segmentation.urls')),
 )
 
 

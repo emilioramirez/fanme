@@ -2,7 +2,7 @@
 
 <div class="sidebar-content">
     <div class="sidebar-user">
-        <span class="user-name">{{ user.first_name }} {{ user.last_name }}</span>
+        <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
         <div class="user-stars">
             <ul>
                 {% for estrella in user.persona.cantidad_estrellas %}
@@ -15,6 +15,11 @@
                 {% endwith %}
             </ul>
         </div>
+        {% if perms.segmentation.change_analisisdenuncia  %}
+        <div class="user-name"><small>Usuario moderador</small></div>
+        {% else %}
+        <div class="user-name"><small>Usuario comun</small></div>
+        {% endif %}
     </div>
     <div class="sidebar-stadistic">
         <a href="/dash/fans/">
@@ -60,12 +65,13 @@
                 {% if recomendaciones_noleidas > 0 %}({{ recomendaciones_noleidas }}){% endif %}
             </div>
         </a>
-        <a href="#">
-            <div class="menu-indicators" title="ASHDJKASHDJK"><div class="mini-img-recom"></div>Ejemplo
-                {{ pepe }}
-                {{ juan }}
+        {% if perms.segmentation.change_analisisdenuncia  %}
+        <a href="{% url 'analisisdenuncias' %}">
+            <div class="menu-indicators" title="Revisá las ultimas denuncias que se te han asignado"><div class="mini-img-denuncia"></div>Denuncias
+                {% if denuncias_creadas > 0 %}({{ denuncias_creadas }}){% endif %}
             </div>
         </a>
+        {% endif %}
     </div>
     <div class="sidebar-new-item">
         {% block crear %}

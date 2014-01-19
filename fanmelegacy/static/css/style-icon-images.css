@@ -131,3 +131,11 @@
     margin-right: 5px;
     width: 17px;
 }
+.mini-img-denuncia{
+    background: url("../images/mini-img.png") no-repeat scroll -132px -1px transparent;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    width: 17px;
+}
+
