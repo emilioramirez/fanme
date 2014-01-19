@@ -1,5 +1,7 @@
 {% extends "dash/dashboard.html" %}
 
+{% load avatar_tags %}
+
 {% block menuOptionsSelected %}
     <ul class="nav nav-pills header-tab">
       <li><a href="/dash/dashboard/">Dashboard</a></li>
@@ -21,10 +23,22 @@
     <script>
         var myCalendar;
         function doOnLoad() {
+            var usuariosSeleccionados = new Array();
+
             myCalendar = new dhtmlXCalendarObject(["id_fecha_inicio"]);
             myCalendar.setDateFormat("%d/%m/%Y");
             myCalendar2 = new dhtmlXCalendarObject(["id_fecha_fin"]);
             myCalendar2.setDateFormat("%d/%m/%Y");
+
+            {% for usuario in users_invitados %}
+                var check = document.getElementById("checkbox_" + {{usuario.id}});
+                if(check != null){
+                    check.checked = true
+                    usuariosSeleccionados.push({{usuario.id}});
+                }
+            {% endfor %}
+
+            document.getElementById('usuarios').value = usuariosSeleccionados;
         }
     </script>
     <script>
@@ -33,6 +47,47 @@
         var latitud = {{ evento.latitud }};
         var myCenter = new google.maps.LatLng(latitud,longitud);
         var marker;
+
+        function hayMarcador(){
+            var fecha_inicio = document.getElementById('id_fecha_inicio').value;
+            var fecha_fin = document.getElementById('id_fecha_fin').value;
+            var fecha_inicio_as_date = new Date(fecha_inicio);
+            var fecha_fin_as_date = new Date(fecha_fin);
+            var today = new Date();
+            var respuesta_correcta = true;
+            if(fecha_inicio_as_date > today)
+            {
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'La fecha de inicio del evento debe ser superior a la de hoy dia.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false;
+            }
+            if(fecha_fin_as_date < fecha_inicio_as_date)
+            {
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'La fecha fin debe ser superior a la de inicio.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false;
+            }
+            if(!marker){
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'Es necesario que marque un lugar en el mapa.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false;
+            }
+            document.getElementById('my-form').onsubmit = function() {
+                return respuesta_correcta;
+            }
+        }
 
         function initialize()
         {
@@ -54,6 +109,45 @@
         google.maps.event.addDomListener(window, 'load', initialize);
       });
 </script>
+<script>
+        $("#id_fecha_inicio").click(function (e) {
+            var my_elems = document.getElementsByClassName("ui-pnotify ");
+            for(k=my_elems.length-1;k>=0; --k)
+            {
+                if(my_elems[k].innerHTML.indexOf("La fecha de inicio") != -1) {
+                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                }
+            }
+        });
+        $("#id_fecha_fin").click(function (e) {
+            var my_elems = document.getElementsByClassName("ui-pnotify ");
+            for(k=my_elems.length-1;k>=0; --k)
+            {
+                if(my_elems[k].innerHTML.indexOf("fin") != -1) {
+                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                }
+            }
+        });
+
+        function elegirUsuario(checkbox, id){
+            var usuariosSeleccionados = JSON.parse("[" + document.getElementById('usuarios').value + "]");
+            if(checkbox.checked) {
+                usuariosSeleccionados.push(id);
+             }
+             else{
+                var index = usuariosSeleccionados.indexOf(id);
+                if (index > -1) {
+                    usuariosSeleccionados.splice(index, 1);
+                }
+
+             }
+             document.getElementById('usuarios').value = usuariosSeleccionados;
+        }
+
+        function usuarios(){
+            alert(document.getElementById('usuarios').value);
+        }
+    </script>
 {% endblock myjavascript %}
 
 {% block bodystuff %}
@@ -97,11 +191,9 @@
                     {{ form.descripcion }}
                 </div>
                 <div class="new-notification-clear"></div>
-                <div class="content-form-evento">
-                    {{ form.invitados.errors }}
-                    <label for="id_user_to_id" class="evento-users-label">Invitados:</label>
-                    {{ form.invitados }}
-                </div>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 32px;">
+                  Seleccionar invitados
+                </button>
                 <div class="new-notification-clear"></div>
                 <div id="googleMap" style="width:500px;height:400px; margin-left:30px;"></div>
                 <div class="new-notification-clear"></div>
@@ -112,11 +204,48 @@
                 </div>
                 <input type="hidden" name="latitud" id="latitud" value="" />
                 <input type="hidden" name="longitud" id="longitud" value="" />
-                <input type="submit" value="Crear" class="submit" style="margin-right:31px;"/>
+                <input type="hidden" name="usuarios" id="usuarios" value="" />
+                <div style="float:right;">
+                    <input type="submit" value="Guardar" onclick=hayMarcador() class="submit" style="margin-right: 30px;"/>
+                    <input type="button" value="Cancelar" class="item-cancelar-registracion" style="margin-right: 25px; margin-left: -20px;" onclick="location.href='../../../social/eventos';">
+                </div>
             </form>
         </div>
-        <div class="evento-editar" style="padding: 8px 6px;"><a href="/social/evento/cancelar/{{ evento.id }}">Cancelar</a></div>
     </div>
+    <button onclick="usuarios()" ></button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Invitados</h4>
+          </div>
+          <div class="modal-body">
+              {% for user in users %}
+                <div style="width: 175px; display: inline-table; margin-bottom: 25px;">
+                    {% if user.persona.avatar %}
+                        <img src="{% avatar_url user 50 %}" style="border: 1px solid #9F9F9F; height: 50px; width: 50px;" alt="">
+                    {% else %}
+                        {% if user.persona.sexo == "M" %}
+                            <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
+                        {% else %}
+                            <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
+                        {% endif%}
+                    {% endif%}
+                    <span style="margin-left: 5px;">
+                        <input  id="checkbox_{{ user.id }}" type="checkbox" name="" value="{{ user.id }}" onclick="elegirUsuario(this, {{ user.id }});">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </span>
+                  </div>
+              {% endfor %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Agregar invitados</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 {% endblock dashboard %}
 
 {% block crear %}

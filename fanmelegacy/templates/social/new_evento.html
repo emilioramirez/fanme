@@ -1,5 +1,7 @@
 {% extends "dash/dashboard.html" %}
 
+{% load avatar_tags %}
+
 {% block menuOptionsSelected %}
     <ul class="nav nav-pills header-tab">
       <li><a href="/dash/dashboard/">Dashboard</a></li>
@@ -177,6 +179,22 @@
                 }
             }
         });
+
+        var usuariosSeleccionados = new Array();
+
+        function elegirUsuario(checkbox, id){
+            if(checkbox.checked) {
+                usuariosSeleccionados.push(id);
+             }
+             else{
+                var index = usuariosSeleccionados.indexOf(id);
+                if (index > -1) {
+                    usuariosSeleccionados.splice(index, 1);
+                }
+
+             }
+             document.getElementById('usuarios').value = usuariosSeleccionados;
+        }
     </script>
 {% endblock myjavascript %}
 
@@ -222,11 +240,9 @@
                     {{ form.descripcion }}
                 </div>
                 <div class="new-notification-clear"></div>
-                <div class="content-form-evento">
-                    {{ form.invitados.errors }}
-                    <label for="id_user_to_id" class="evento-users-label">Invitados:</label>
-                    {{ form.invitados }}
-                </div>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 32px;">
+                      Seleccionar invitados
+                    </button>
                 <div class="new-notification-clear"></div>
                 <div id="googleMap" style="width:500px;height:400px; margin-left:30px;"></div>
                 <div class="new-notification-clear"></div>
@@ -235,10 +251,9 @@
                     <label for="fecha_expiracion" class="notification-imagen-label">Imagen:</label>
                     <p style="margin-left:50px;">{{ form.imagen }}</p>
                 </div>
-                <div class="logbook-user-image" style="margin-left: 50px!important;">
-                </div>
                 <input type="hidden" name="latitud" id="latitud" value="" />
                 <input type="hidden" name="longitud" id="longitud" value="" />
+                <input type="hidden" name="usuarios" id="usuarios" value="" />
                 <div style="float:right;">
                     <input type="submit" value="Crear" onclick=hayMarcador() class="submit" style="margin-right: 30px;"/>
                     <input type="button" value="Cancelar" class="item-cancelar-registracion" style="margin-right: 25px; margin-left: -20px;" onclick="location.href='../../../social/eventos';">
@@ -246,6 +261,39 @@
             </form>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Invitados</h4>
+          </div>
+          <div class="modal-body">
+              {% for user in users %}
+                <div style="width: 175px; display: inline-table; margin-bottom: 25px;">
+                    {% if user.persona.avatar %}
+                        <img src="{% avatar_url user 50 %}" style="border: 1px solid #9F9F9F; height: 50px; width: 50px;" alt="">
+                    {% else %}
+                        {% if user.persona.sexo == "M" %}
+                            <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
+                        {% else %}
+                            <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
+                        {% endif%}
+                    {% endif%}
+                    <span style="margin-left: 5px;">
+                        <input type="checkbox" name="" value="{{ user.id }}" onclick="elegirUsuario(this, {{ user.id }});">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </span>
+                  </div>
+              {% endfor %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Agregar invitados</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 {% endblock dashboard %}
 
 {% block crear %}
