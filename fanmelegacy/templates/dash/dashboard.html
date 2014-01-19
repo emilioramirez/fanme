@@ -1,0 +1,90 @@
+{% extends "dash/base_dash.html" %}
+
+{% load dash_filters %}
+
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li class="active"><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div id="dash-content"></div>
+    <div id="filter-content" class="dashboard-list-topics">
+        <ul class="list-topics">
+            {% for topic in r_topics %}
+                <li>
+                    {% if topic in user.persona.topicos.all %}
+                        <a href="/dash/dashboard/{{ topic.id }}">
+                            <div class="list-item-topico list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                        </a>
+                    {% else %}
+                        <a href="/dash/dashboard/topic/add/{{ topic.id }}">
+                            <div class="list-item-topico un-list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            <li>
+                {% if all_topics %}
+                    <a href="/dash/dashboard/all">
+                        <div class="list-item-topico list-item-topico-all" title="Todos"></div>
+                    </a>
+                {% else %}
+                    <a href="/dash/dashboard/all">
+                        <div class="list-item-topico un-list-item-topico-all" title="Todos"></div>
+                    </a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+    <div class="dashboard-list-items">
+        {% for items in topicos %}
+            {% for item in items %}
+                <div id="recomendaciones-content" class="item-content">
+                    <div class="item-header">
+                        <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
+                        <div class="item-nombre"><a href="/items/item/{{ item.id }}">{{ item }}</a></div>
+                        <div class="item-score" title="Cantidad de fans">
+                            <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
+                            {{ item.cantidad_fans }}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="item-body">
+                        <div class="item-image" title="Imagen ilustrativa del item">
+                            {% if item.mis_imagenes.count %}
+                                <img src="{{ item.first_image }}" alt="Score">
+                            {% else %}
+                                <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                            {% endif %}
+                        </div>
+                        <div class="item-descripcion" title="Descripcion del item">{{ item.descripcion|truncatewords:70 }}</div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="item-footer">
+                        <div class="item-topico">{{ item.topico }}</div>
+                        <div id="item-botones" class="item-buttons">
+                            {% if user.is_active %}
+                                <a href="/items/fan/{{ item.id }}" title="Hazte Fan de este item"><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
+                                <a href="/items/recomendation/{{ item.id }}" title="Recomendá este item a tus seguidores"><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
+                            {% endif %}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock dashboard %}
+
+
+{% block sidebar %}
+    {% include "dash/sidebar.html" %}
+{% endblock sidebar %}
+
+{% block footer %}
+    {% include "dash/footer.html" %}
+{% endblock%}

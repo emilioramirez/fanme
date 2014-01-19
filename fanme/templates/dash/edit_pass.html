@@ -1,0 +1,69 @@
+{% extends "dash/base_dash.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="/mymedia/js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+{% endblock mystylesheet%}
+
+{% block myjavascript %}
+    <script src="/mymedia/js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="/mymedia/js/myutils.js"></script>
+    <script language="javascript">
+        function comparePass() {
+            var new_pass = document.getElementById('id_new_pass').value;
+            var confirm_pass = document.getElementById('id_confirm_pass').value;
+            if(new_pass != confirm_pass)
+            {
+                alert("La nueva contraseña no coincide");
+            }
+        }
+    </script>
+{% endblock myjavascript %}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
+        <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block content %}
+    <div class="item-messages">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
+    <div class="edit-text">
+        <p>Cambiar Contraseña</p>
+    </div>
+    <div class="edit-account">
+        <div class="edit-pass-content">
+            <div class="edit-pass-form">
+                <form action="/dash/edit_pass/" method="post">{% csrf_token %}
+                    <div class="edit-pass-content-label">
+                        {{ form_update.actual_pass.errors }}
+                        <label for="id_actual_pass" class="edit-pass-content-label1">Contraseña Actual:</label>
+                        {{ form_update.actual_pass }}
+                    </div>
+                    <div class="edit-pass-content-label">
+                        {{ form_update.new_pass.errors }}
+                        <label for="id_new_pass" class="edit-pass-content-label1">Contraseña Nueva:</label>
+                        {{ form_update.new_pass }}
+                    </div>
+                    <div class="edit-pass-content-label">
+                        <label class="edit-pass-content-label"">Confirmar contraseña:</label>
+                        <input class="edit-account-form-field" type="password" id="id_confirm_pass" />
+                    </div>
+                    <input onclick="comparePass()" type="submit" value="Guardar" class="edit-pass-save"/>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock sidebar %}
