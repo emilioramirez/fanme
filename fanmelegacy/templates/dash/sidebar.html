@@ -46,29 +46,29 @@
     <div class="sidebar-menu-indicators">
         <a href="{% url 'social-mensajes' %}">
             <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
-                {% if mensajes_nolidas > 0 %}({{ mensajes_nolidas }}){% endif %}
+                {% if mensajes_nolidas > 0 %}<span class="badge">{{ mensajes_nolidas }}</span>{% endif %} 
             </div>
         </a>
         <a href="/social/eventos/">
 
             <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
-                {% if eventos_noleidos > 0 %}({{ eventos_noleidos }}){% endif %}
+                {% if eventos_noleidos > 0 %}<span class="badge">{{ eventos_noleidos }}</span>{% endif %}
             </div>
         </a>
         <a href="/social/user_main_notification/">
             <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
-                {% if notificaciones_noleidas > 0 %}({{ notificaciones_noleidas }}){% endif %}
+                {% if notificaciones_noleidas > 0 %}<span class="badge">{{ notificaciones_noleidas }}</span>{% endif %}
             </div>
         </a>
         <a href="/dash/recomendation/">
             <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
-                {% if recomendaciones_noleidas > 0 %}({{ recomendaciones_noleidas }}){% endif %}
+                {% if recomendaciones_noleidas > 0 %}<span class="badge">{{ recomendaciones_noleidas }}</span>{% endif %}
             </div>
         </a>
         {% if perms.segmentation.change_analisisdenuncia  %}
         <a href="{% url 'analisisdenuncias' %}">
             <div class="menu-indicators" title="Revisá las ultimas denuncias que se te han asignado"><div class="mini-img-denuncia"></div>Denuncias
-                {% if denuncias_creadas > 0 %}({{ denuncias_creadas }}){% endif %}
+                {% if denuncias_creadas > 0 %}<span class="badge">{{ denuncias_creadas }}</span>{% endif %}
             </div>
         </a>
         {% endif %}
