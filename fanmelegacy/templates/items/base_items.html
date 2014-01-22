@@ -21,16 +21,18 @@
 {% endblock menuOptions %}
 
 {% block content %}
-    <div class="content-item">
+<div class="conteiner">
+    <div class="row">
         {% block item %}
         {% endblock item %}
     </div>
-    <div class="content-extra">
+    <div class="row">
         {% block extra %}
         {% endblock extra %}
     </div>
-    <div class="content-comments">
+    <div class="row">
         {% block comments %}
         {% endblock comments %}
     </div>
+</div>
 {% endblock%}

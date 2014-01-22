@@ -589,6 +589,7 @@ body{}
             .extra-links p {
                 margin: 5px 0 0 10px;
             }
+        /*
         .content-comments{}
                 .list-comment{}
                     .comment{
@@ -606,15 +607,11 @@ body{}
                             width: 50px;
                         }
                         .comment-user{
-/*
                             border: 1px solid;
-*/
                             float: left;
                             height: 112px;
                             margin: 23px 0 0 20px;
-/*
                             width: 570px;
-*/
                         }
                             .comment-username{ margin: 0; }
                             .coment-date{ font-size: 10px; font-style: italic;}
@@ -628,9 +625,11 @@ body{}
                                 width: 500px;
                             }
                         .comment-options{margin: 50px 0; color: grey;}
+                        .comment-options{}
                             .comment-options .num{}
                             .comment-options .link{}
                         .comment-options a{color: grey;}
+                        .comment-options a{}
                             .me-gusta-comentario{ overflow: hidden; margin-left: 6px;}
                             .me-gusta-comentario div{ float: left; font-size: 20px; margin-left: 2px;}
                             .me-gusta-img{
@@ -679,6 +678,8 @@ body{}
                             }
                             .denuncia-comentario-img:hover{background: url("../images/mini-imagenes3.png") no-repeat scroll -115px -271px transparent;}
                             .denunciar-comentario a{text-decoration: none;}
+                */
+/*
                 .list-comment-add{}
                     .comment-add{
                         background: none repeat scroll 0 0 #E3F1F1;
@@ -695,9 +696,7 @@ body{}
                             width: 50px;
                         }
                         .comment-user-add{
-/*
                             border: 1px solid;
-*/
                             float: left;
                             height: 140px;
                             margin: 23px 0 0 20px;
@@ -717,6 +716,7 @@ body{}
                                 width: 500px;
                             }
                         .comment-options-add{}
+                        */
         /* End Item */
         /* Begin My Fans Items */
         .my-fans-items{}
