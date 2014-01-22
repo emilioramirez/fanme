@@ -141,6 +141,12 @@ def progreso_filtrado(request):
         usuarios = get_usuarios(anio, 12)
     sexo_femenino = 0
     sexo_masculino = 0
+    current_year = date.today().year
+    primer_rango = 0
+    segundo_rango = 0
+    tercer_rango = 0
+    cuarto_rango = 0
+    quinto_rango = 0
     for usuario in usuarios:
         try:
             persona = Persona.objects.get(user_id=usuario.id)
@@ -148,12 +154,29 @@ def progreso_filtrado(request):
                 sexo_femenino = sexo_femenino + 1
             else:
                 sexo_masculino = sexo_masculino + 1
+            edad = current_year - persona.fecha_nacimiento.year
+            if edad >= 15 and edad < 20:
+                primer_rango = primer_rango + 1
+            if edad >= 20 and edad < 25:
+                segundo_rango = primer_rango + 1
+            if edad >= 25 and edad < 30:
+                tercer_rango = primer_rango + 1
+            if edad >= 30 and edad < 35:
+                cuarto_rango = primer_rango + 1
+            if edad >= 35 and edad < 40:
+                quinto_rango = primer_rango + 1
         except:
             pass
+    dict_cant = SortedDict()
+    dict_cant["15-20"] = primer_rango
+    dict_cant["20-25"] = segundo_rango
+    dict_cant["25-30"] = tercer_rango
+    dict_cant["30-35"] = cuarto_rango
+    dict_cant["35-40"] = quinto_rango
     return render_to_response('informes/progreso_filtro.html',
         {'anio': anio, 'mes': mes,
         'usuarios': usuarios, 'sexo_femenino': sexo_femenino,
-        'sexo_masculino': sexo_masculino},
+        'sexo_masculino': sexo_masculino, 'dict_cant': dict_cant},
         context_instance=RequestContext(request))
 
 
