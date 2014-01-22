@@ -1,0 +1,195 @@
+{% extends "items/base_items.html" %}
+
+{% load dash_filters comments avatar_tags rathings_tags %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block myjavascript %}
+    <script language="javascript">
+    function setNewImage(url)
+    {
+        document.getElementById("imagen_grande").src=url;
+    }
+    </script>
+{% endblock myjavascript %}
+
+{% block menuOptionsSelected %}
+    {% if user.persona %}
+        <ul class="nav nav-pills header-tab">
+          <li><a href="/dash/dashboard/">Dashboard</a></li>
+          <li><a href="/dash/logbook/">Logbook</a></li>
+          <li><a href="/dash/topicos/">Topicos</a></li>
+        </ul>
+    {% else %}
+        <ul class="nav nav-pills header-tab">
+          <li><a href="/bussiness/dash_empresa/">Dashboard</a></li>
+          <li><a href="/bussiness/dash_planes/">Planes</a></li>
+        </ul>
+    {% endif %}
+{% endblock menuOptionsSelected %}
+
+{% block item %}
+    <div class="item-content">
+        <div class="item-header">
+            <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
+            <div class="item-nombre">{{ item }}</div>
+            <div class="item-score">
+                <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" style="margin-top:-1px;" alt="Score">
+                <span style="vertical-align:top;">{{ item.persona_set.count }}</span>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="item-body">
+            <div class="item-image-big">
+                {% if item.mis_imagenes.count %}
+                    <img id="imagen_grande" src="{{ item.first_image_big }}" alt="Score">
+                {% else %}
+                    <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                {% endif %}
+            </div>
+            <div class="item-descripcion-big">{{ item.descripcion }}</div>
+            <div class="item-images">
+                <ul class="image-list">
+                    {% for itemimage in item.mis_imagenes.all %}
+                        <li class="image-little">
+                            <a href="#" onClick="setNewImage('{{ itemimage.image_big }}')">
+                                <img src="{{ itemimage.imagen.url_50x50 }}" />
+                            </a>
+                            <input id="imagen + 'itemimage'" type="hidden" value="{{ itemimage.image_big }}" />
+                        </li>
+<!--
+                    <li class="image-little"><img src="{{ STATIC_URL }}images/206.png" alt="Score"></li>
+                    <li class="image-little"><img src="{{ STATIC_URL }}images/207.png" alt="Score"></li>
+-->
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="item-footer">
+            <div class="item-details">
+                <div class="stadistic-fan sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ item.persona_set.count }}</div>
+                    <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
+                </div>
+                <div class="stadistic-fan sidebar-stadistic-item">
+                    <div class="stadistic-num">{{ item.recomendacion_set.count }}</div>
+                    <div class="stadistic-nom">Recomendaciones</div>
+                </div>
+            </div>
+            <div class="item-buttons">
+            {% if user.is_active %}
+                {% if user.persona %}
+                    {% if not is_fan %}
+                        <a href="/items/fan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
+                    {% endif %}
+                    <a href="/items/recomendation/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
+                    {% if mostrar_denuncia %}
+                        <a href="/items/denunciar_item/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-denunciar.png" alt="Denunciar" /></a>
+                    {% endif %}
+                    {% if is_fan %}
+                        <a href="/items/unfan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-buttom-unFan.png" alt="Unfan" /></a>
+                    {% endif %}
+                {% else %}
+                    {% if mostrar_boton_enlace %}
+                        <a href="/bussiness/registrar_enlace/{{ item.id }}"><img src="{{ STATIC_URL }}images/item-button-registrar-enlace.png" alt="Registrar Enlace" /></a>
+                    {% endif %}
+                {% endif%}
+            {% endif %}
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock item %}
+
+{% block extra %}
+    <div class="extra-tags">
+        <h3>Etiquetas</h3>
+        <div>Tag1 Tag2 Tag3 Tag4 Tag5 Tag5 Tag6</div>
+    </div>
+    <div class="extra-links">
+        <p>Lo podés conseguir en:</p>
+        <div class="item-image-all">
+            <ul class="image-list">
+            {% for empresa in empresas %}
+                {% if empresa.avatar %}
+                    <!--<li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ user.empresa.avatar.url_50x50 }}" alt="Score" /></a></li>-->
+                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url user 50 %}" alt="" /></a></li>
+                {% else %}
+                    <!--<li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ STATIC_URL }}images/020.png" alt="Logo" /></a></li>-->
+                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url user 50 %}" alt="" /></a></li>
+                {% endif%}
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="clear"></div>
+{% endblock extra %}
+
+{% block comments %}
+    <div class="list-comment">
+        {% get_comment_list for item as comment_list %}
+        {% for comment in comment_list %}
+            <div class="comment">
+                <div class="comment-user-image">
+                    <img src="{% avatar_url comment.user 50 %}" alt="">
+                </div>
+                <div class="comment-user">
+                    <p class="comment-username">
+                        <strong>{{ comment.user.first_name }} {{ comment.user.last_name }}</strong> - <span class="coment-date">{{ comment.submit_date }}</span>
+                    </p>
+                    <p class="comment-text">{{ comment.comment }}</p>
+                </div>
+                <div class="comment-options">
+                    <div class="me-gusta-comentario">
+                        {% count_likes for comment as cant_likes %}
+                        <div class="num">{{ cant_likes }}</div>
+                        <div class="link">{% get_like_link for comment %}</div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="denunciar-comentario">
+                        {% count_dislikes for comment as cant_dislikes %}
+                        <div class="num">{{ cant_dislikes }}</div>
+                        <div class="link">{% get_dislike_link for comment %}</div>
+                        <div class="clear"></div>
+                    </div>
+                    {% if comment.user == user %}
+                    <div><a href="/items/comment/eliminar/{{ comment.id }}" onclick="return confirm('¿Seguro desea eliminar este comentario?')"><span class="glyphicon glyphicon-remove-circle" title="Borrar"></span></a></div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="comment-add">
+                <div class="comment-user-image-add">
+                    <img src="{% avatar_url user 50 %}" alt="">
+                </div>
+                <div class="comment-user-add">
+                    <p class="comment-username-add">{{ user.first_name }} {{ user.last_name }}</p>
+                     {% if user.is_authenticated %}
+                        {% get_comment_form for item as form %}
+                        <form action="{% comment_form_target %}" method="POST">
+                            {% csrf_token %}
+                            {{ form.honeypot }}
+                            {{ form.content_type }}
+                            {{ form.object_pk }}
+                            {{ form.timestamp }}
+                            {{ form.security_hash }}
+                            <input type="hidden" name="next" value="/items/item/{{ item.id }}" />
+                            <input type="hidden" name="mostrar_denuncia" value="{{ mostrar_denuncia }}" />
+                            <p>{{ form.comment }}</p>
+                            <p>
+                                <button class="btn btn-default" id="id_submit">
+                                    <span class="glyphicon glyphicon-pencil"></span> Comentar
+                                </button>
+                            </p>
+                        </form>
+                    {% else %}
+                        <p>Por favor <a href="{% url 'auth_login' %}">ingrese al sistema</a> para poder comentar.</p>
+                    {% endif %}
+                </div>
+                <div class="comment-options-add"></div>
+            </div>
+    </div>
+{% endblock comments %}

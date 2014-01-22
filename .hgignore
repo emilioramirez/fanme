@@ -1,0 +1,9 @@
+# use glob syntax.
+syntax: glob
+
+*.pyc
+*.nja
+*~
+*.db
+fanmelegacy/media/
+local_settings.py
