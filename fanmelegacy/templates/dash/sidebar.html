@@ -46,7 +46,7 @@
     <div class="sidebar-menu-indicators">
         <a href="{% url 'social-mensajes' %}">
             <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
-                {% if mensajes_nolidas > 0 %}<span class="badge">{{ mensajes_nolidas }}</span>{% endif %} 
+                {% if mensajes_nolidas > 0 %}<span class="badge">{{ mensajes_nolidas }}</span>{% endif %}
             </div>
         </a>
         <a href="/social/eventos/">
@@ -74,7 +74,7 @@
         {% endif %}
     </div>
     <div class="sidebar-new-item">
-        {% block crear %}
+        {% block boton %}
             <a href="/items/item/register/"><div class="new-item-buttom" title="Crea un item del topico que gustes">Crear Item</div></a>
         {% endblock %}
     </div>
