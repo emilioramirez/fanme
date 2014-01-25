@@ -8,7 +8,7 @@ from items.models import Item
 from collections import defaultdict
 from django.utils.datastructures import SortedDict
 from accounts.models import Persona
-
+import collections
 
 @staff_member_required
 def my_admin_view(request):
@@ -33,7 +33,7 @@ def fans_por_topicos(request):
             cant_fans = cant_fans + item.cantidad_fans
             item_dict[item] = item.cantidad_fans
         dict_topico[topico] = cant_fans
-        category_dict[topico] = item_dict
+        category_dict[topico] = collections.Counter(item_dict).most_common(10)
     length = len(dict_topico)
     return render_to_response('informes/fans_por_topico.html',
         {'fans_por_topicos': dict_topico, 'length': length,
