@@ -114,7 +114,6 @@ def progreso_anios(request, cant_anios):
 def progreso_filtrado(request):
     anio = int(request.GET.get('anio'))
     mes = request.GET.get('mes')
-    print mes
     if mes == "Ene":
         usuarios = get_usuarios(anio, 1)
     elif mes == "Feb":
@@ -147,9 +146,16 @@ def progreso_filtrado(request):
     tercer_rango = 0
     cuarto_rango = 0
     quinto_rango = 0
+    sexto_rango = 0
+    septimo_rango = 0
+    octavo_rango = 0
+    noveno_rango = 0
+    decimo_rango = 0
+    undecimo_rango = 0
     for usuario in usuarios:
         try:
             persona = Persona.objects.get(user_id=usuario.id)
+            print persona
             if persona.sexo == "F":
                 sexo_femenino = sexo_femenino + 1
             else:
@@ -158,13 +164,25 @@ def progreso_filtrado(request):
             if edad >= 15 and edad < 20:
                 primer_rango = primer_rango + 1
             if edad >= 20 and edad < 25:
-                segundo_rango = primer_rango + 1
+                segundo_rango = segundo_rango + 1
             if edad >= 25 and edad < 30:
-                tercer_rango = primer_rango + 1
+                tercer_rango = tercer_rango + 1
             if edad >= 30 and edad < 35:
-                cuarto_rango = primer_rango + 1
+                cuarto_rango = cuarto_rango + 1
             if edad >= 35 and edad < 40:
-                quinto_rango = primer_rango + 1
+                quinto_rango = quinto_rango + 1
+            if edad >= 40 and edad < 45:
+                sexto_rango = sexto_rango + 1
+            if edad >= 45 and edad < 50:
+                septimo_rango = septimo_rango + 1
+            if edad >= 50 and edad < 55:
+                octavo_rango = octavo_rango + 1
+            if edad >= 55 and edad < 60:
+                noveno_rango = noveno_rango + 1
+            if edad >= 60 and edad < 65:
+                decimo_rango = decimo_rango + 1
+            if edad >= 65 and edad < 70:
+                undecimo_rango = undecimo_rango + 1
         except:
             pass
     dict_cant = SortedDict()
@@ -173,6 +191,12 @@ def progreso_filtrado(request):
     dict_cant["25-30"] = tercer_rango
     dict_cant["30-35"] = cuarto_rango
     dict_cant["35-40"] = quinto_rango
+    dict_cant["40-45"] = sexto_rango
+    dict_cant["45-50"] = septimo_rango
+    dict_cant["50-55"] = octavo_rango
+    dict_cant["55-60"] = noveno_rango
+    dict_cant["60-65"] = decimo_rango
+    dict_cant["65-70"] = undecimo_rango
     return render_to_response('informes/progreso_filtro.html',
         {'anio': anio, 'mes': mes,
         'usuarios': usuarios, 'sexo_femenino': sexo_femenino,
