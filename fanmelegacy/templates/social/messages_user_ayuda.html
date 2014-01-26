@@ -18,9 +18,9 @@
 
 {% block menuOptionsSelected %}
     <ul class="nav nav-pills header-tab">
-      <li><a href="/dash/dashboard/">Dashboard</a></li>
-      <li><a href="/dash/logbook/">Logbook</a></li>
-      <li><a href="/dash/topicos/">Topicos</a></li>
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Logbook</a></li>
+      <li><a href="#">Topicos</a></li>
     </ul>
 {% endblock menuOptionsSelected %}
 
@@ -56,7 +56,7 @@
         <div class="message-line-response">
             <p class="message-answer">Responder:</p>
             <div class="new-message">
-            <form method="post" action="">{% csrf_token %}
+            <form method="post" action="#">{% csrf_token %}
                 <div class="message-content-response">
                     {{ form_response_message.mensaje }}
                 </div>
@@ -66,4 +66,70 @@
         </div>
     </div>
 {% endblock dashboard %}
+
+{% block sidebar %}
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">Gabriel Arcos</div>
+            <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar-stadistic">
+            <a href="#">
+                <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+                    <div class="stadistic-num">34</div>
+                    <div class="stadistic-nom">Fans</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
+                    <div class="stadistic-num">
+                        24
+                    </div>
+                    <div class="stadistic-nom">Mis recomendaciones</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
+                    <div class="stadistic-num">2</div>
+                    <div class="stadistic-nom">Comentarios</div>
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-menu-indicators">
+            <a href="#">
+                <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                    (3)
+                </div>
+            </a>
+            <a href="#">
+
+                <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                    (6)
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                    (2)
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                    (8)
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-new-item">
+            {% block crear %}
+                <a href="#"><div class="new-item-buttom" title="Crea un item del topico que gustes">Crear Item</div></a>
+            {% endblock %}
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}
 
