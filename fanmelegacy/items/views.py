@@ -181,8 +181,6 @@ def recomendation(request, item_id):
     usuarios_ya_recomendados = request.user.recomendaciones_enviadas.filter(
         item=item_id).values_list('user_destino', flat=True)
     seguidores = request.user.followers.exclude(user__in=usuarios_ya_recomendados)
-    print seguidores
-    print request.user.followers.all()
     #seguidores_activos = seguidores.filter(is_active=True)
     usuarios = []
     try:
@@ -216,6 +214,8 @@ def recomendation(request, item_id):
                 actividad.recomendacion = recomendacion
                 actividad.save()
                 messages.add_message(request, messages.SUCCESS, u"Se han enviado las recomendaciones correctamente.")
+    if not seguidores:
+        messages.add_message(request, messages.ERROR, u"Para realizar una recomendacion al menos un usuario debe seguirlo.")
     return render_to_response('items/recomendacion.html',
         {'usuarios': seguidores, 'item': item},
         context_instance=RequestContext(request))

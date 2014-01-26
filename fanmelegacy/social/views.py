@@ -60,9 +60,9 @@ def new_evento(request):
     searchbox = SearchBox()
     if request.method == "POST":
         form = EventoForm(request.POST, request.FILES)
-#        list_ids = request.user.followers.values_list('user', flat=True)
-#        users = User.objects.filter(id__in=list_ids)
-#        form.fields["invitados"].queryset = users
+        list_ids = request.user.followers.values_list('user', flat=True)
+        users = User.objects.filter(id__in=list_ids)
+        form.fields["invitados"].queryset = users
         latitud = request.POST.get("latitud", "")
         longitud = request.POST.get("longitud", "")
         invitados = request.POST.get("usuarios", "")
@@ -156,6 +156,15 @@ def edit_evento(request, evento_id):
             form.save_m2m()
             for invitado in usuarios_invitados:
                 evento.invitados.add(invitado)
+                evento_x_invitado = EstadoxInvitado.objects.filter(evento=evento_db).filter(invitado=invitado)
+                evento_x_invitado.estado = 'noleido'
+                if not evento_x_invitado:
+                    evento_x_invitado = EstadoxInvitado()
+                    evento_x_invitado.evento =  evento
+                    evento_x_invitado.invitado = invitado
+                    evento_x_invitado.save()
+                else:
+                    evento_x_invitado.update()
             return HttpResponseRedirect('/social/eventos/')
     else:
         form = EventoForm(instance=evento_db)

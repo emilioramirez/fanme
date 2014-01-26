@@ -55,6 +55,7 @@ class EventoForm(forms.ModelForm):
             'descripcion',
             'invitados',
             'imagen',
+            'direccion',
             )
         widgets = {
             'fecha_inicio': forms.DateInput(attrs={

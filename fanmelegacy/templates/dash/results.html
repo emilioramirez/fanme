@@ -103,23 +103,6 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="result-content">
-            <div class="result-header">
-                <div class="result-name">Tópicos ({{ topics_result|length }})</div>
-            </div>
-            <div class="result-body">
-                {% for topic in topics_result %}
-                    <div class="result-hit">
-                        <a href="#">
-                            <div class="result-image"></div>
-                        </a>
-                        <a href="#">
-                            <div class="result-descripcion"><a href="#">{{ topic.nombre }}</a></div>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
     </div>
     {% endblock dashboard %}
 {% endblock %}
