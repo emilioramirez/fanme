@@ -33,4 +33,6 @@ urlpatterns = patterns('',
         views.ver_consultas_item_usuario),
     (r'^messages_ayuda/$', views.messages_ayuda),
     (r'^messages_user_ayuda/$', views.messages_user_ayuda),
+    (r'^eventos_ayuda/$', views.eventos_ayuda),
+    (r'^evento_ayuda/$', views.evento_ayuda),
 )
