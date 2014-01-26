@@ -1,0 +1,148 @@
+{% extends "dash/dashboard.html" %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
+    <link href="{{ STATIC_URL }}css/tour/prism.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/bootstrap-tour.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/index.css" rel="stylesheet">
+{% endblock mystylesheet-dashboard%}
+
+{% block myjavascript %}
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/eventos_tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+{% endblock myjavascript %}
+
+{% block menuOptionsSelected %}
+    <ul class="nav nav-pills header-tab">
+      <li><a href="/dash/dashboard/">Dashboard</a></li>
+      <li><a href="/dash/logbook/">Logbook</a></li>
+      <li><a href="/dash/topicos/">Topicos</a></li>
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="eventos-content" id="eventos-content">
+    {% if no_hay_eventos %}
+        <div class='eventos-titulo'>Eventos</div>
+        No has creado ningun evento. <a href="#" style="text-decoration: none;">¿Que esperas hacerlo?</a>
+        <div class="new-message"></div>
+    {% else %}
+        {% if eventos_creados %}
+            <div class='eventos-titulo'>Eventos creados</div>
+            <div class='eventos-list'>
+                {% for evento in eventos_creados %}
+                    <div class='i-content'>
+                        <div class="i-title">
+                                <a href='#'>{{ evento.nombre }}</a>   {{ evento.fecha_inicio }}
+                                {% if evento.estado != 'cancelado' %}
+                                    <div class="i-title-options" id="{{ evento.direccion }}">
+                                        <a href="#" title="Editar este evento"><div class="i-title-options-edit"></div></a>
+                                        <a href="#" class="cancelar" title="Cancelar este evento" onclick="ConfirmarCancelacion()"><div class="i-title-options-delete"></div></a>
+                                    </div>
+                                {% endif %}
+                        </div>
+                        <div class="i-body">
+                            {{ evento.descripcion }} creado por tí.
+                        </div>
+                    </div>
+                {% endfor%}
+            </div>
+        {% endif %}
+        {% if eventos_invitado %}
+            <div class='eventos-titulo'>Eventos como invitado</div>
+            <div class='eventos-list'>
+                {% for evento in eventos_invitado %}
+                    <div class='i-content'>
+                        <div class="i-title" id="evento-trigger">
+                        <a href='#'>{{ evento.nombre }}</a>   {{ evento.fecha_inicio }}
+                        {{ evento.fecha_fin }}
+                        {% if evento.estado != 'leido' and evento.estado != 'cancelado' %}
+                            {% if evento.estado == 'noleido' %}
+                                (no leido)
+                            {% else %}
+                                ({{ evento.estado }})
+                            {% endif %}
+                        {% endif %}
+                        {% if evento.estado == 'cancelado' %}
+                            <span style="color:red; margin-left:10px;">EVENTO CANCELADO</span>
+                        {% endif%}
+                        </div>
+                        <div class="i-body">
+                            {{ evento.descripcion }} creado por <a href="#">{{ evento.creador.first_name }} {{ evento.creador.last_name }}</a>.
+                        </div>
+                    </div>
+                {% endfor%}
+            </div>
+        {% endif %}
+    {% endif %}
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">Gabriel Arcos</div>
+            <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar-stadistic">
+            <a href="#">
+                <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+                    <div class="stadistic-num">34</div>
+                    <div class="stadistic-nom">Fans</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
+                    <div class="stadistic-num">
+                        24
+                    </div>
+                    <div class="stadistic-nom">Mis recomendaciones</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
+                    <div class="stadistic-num">2</div>
+                    <div class="stadistic-nom">Comentarios</div>
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-menu-indicators">
+            <a href="#">
+                <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                    <span class="badge">{{ mensajes_nolidas }}</span>
+                </div>
+            </a>
+            <a href="#">
+
+                <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                    <span class="badge">{{ eventos_noleidos }}</span>
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                    <span class="badge">{{ notificaciones_noleidas }}</span>
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                    <span class="badge">{{ recomendaciones_noleidas }}</span>
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-new-item">
+            {% block crear %}
+                <a href="#"><div id="crear-evento" class="new-item-buttom" title="Crea un item del topico que gustes">Crear Item</div></a>
+            {% endblock %}
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}
