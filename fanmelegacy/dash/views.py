@@ -473,6 +473,7 @@ def dejar_de_seguir_usuario(request, user_id):
     user_to_follow = User.objects.get(id=user_id)
     my_profile = request.user.persona
     my_profile.following.remove(user_to_follow)
+    messages.add_message(request, messages.SUCCESS, u"Has dejado de seguir al usuario {0} {1}".format(user_to_follow.first_name, user_to_follow.last_name))
     return HttpResponseRedirect('/dash/follow/{0}'.format(user_id))
 
 

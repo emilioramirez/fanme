@@ -213,8 +213,10 @@ def recomendation(request, item_id):
                 actividad.usuario_origen = request.user
                 actividad.recomendacion = recomendacion
                 actividad.save()
-                messages.add_message(request, messages.SUCCESS, u"Se han enviado las recomendaciones correctamente.")
-    if not seguidores:
+        messages.add_message(request, messages.SUCCESS, u"Se han enviado las recomendaciones correctamente.")
+    if usuarios_ya_recomendados:
+        messages.add_message(request, messages.ERROR, u"Ya has recomendado este item a todos tus seguidores.")
+    if not seguidores and not usuarios_ya_recomendados:
         messages.add_message(request, messages.ERROR, u"Para realizar una recomendacion al menos un usuario debe seguirlo.")
     return render_to_response('items/recomendacion.html',
         {'usuarios': seguidores, 'item': item},
