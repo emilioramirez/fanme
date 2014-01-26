@@ -68,6 +68,15 @@
                 });
                 respuesta_correcta = false;
             }
+            if(usuariosSeleccionados.length == 0){
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'Es necesario seleccionar un invitado.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false
+            }
             if(!marker){
                 $.pnotify({
                     title: 'Error!',
@@ -145,6 +154,7 @@
           }, function(responses) {
             if (responses && responses.length > 0) {
               updateMarkerAddress(responses[0].formatted_address);
+              document.getElementById('id_direccion').value = responses[0].formatted_address;
             } else {
               updateMarkerAddress('Cannot determine address at this location.');
             }
@@ -180,6 +190,16 @@
             }
         });
 
+        $("#seleccionar_invitados").click(function (e) {
+            var my_elems = document.getElementsByClassName("ui-pnotify ");
+            for(k=my_elems.length-1;k>=0; --k)
+            {
+                if(my_elems[k].innerHTML.indexOf("invitado") != -1) {
+                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                }
+            }
+        });
+
         var usuariosSeleccionados = new Array();
 
         function elegirUsuario(checkbox, id){
@@ -194,6 +214,17 @@
 
              }
              document.getElementById('usuarios').value = usuariosSeleccionados;
+        }
+
+        function checkTodos(){
+            usuariosSeleccionados.length = 0;
+            var checkBoxes = document.getElementsByTagName("input");
+            for (var i =0; i < checkBoxes.length; i++){
+                if (checkBoxes[i].type == 'checkbox'){
+                    usuariosSeleccionados.push(checkBoxes[i].value);
+                    checkBoxes[i].checked = true;
+                }
+            }
         }
     </script>
 {% endblock myjavascript %}
@@ -240,12 +271,17 @@
                     {{ form.descripcion }}
                 </div>
                 <div class="new-notification-clear"></div>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 32px;">
+                    <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 32px;">
                       Seleccionar invitados
                     </button>
                 <div class="new-notification-clear"></div>
                 <div id="googleMap" style="width:500px;height:400px; margin-left:30px;"></div>
                 <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.direccion.errors }}
+                    <label for="id_user_to_id" class="evento-date-fin-label">Direccion:</label>
+                    {{ form.direccion }}
+                </div>
                 <div class="content-form-notification">
                     {{ form.imagen.errors }}
                     <label for="fecha_expiracion" class="notification-imagen-label">Imagen:</label>
@@ -271,7 +307,7 @@
           </div>
           <div class="modal-body">
               {% for user in users %}
-                <div style="width: 175px; display: inline-table; margin-bottom: 25px;">
+                <div id="check_div" style="width: 175px; display: inline-table; margin-bottom: 25px;">
                     {% if user.persona.avatar %}
                         <img src="{% avatar_url user 50 %}" style="border: 1px solid #9F9F9F; height: 50px; width: 50px;" alt="">
                     {% else %}
@@ -289,6 +325,7 @@
               {% endfor %}
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="checkTodos();">Seleccionar todos</button>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Agregar invitados</button>
           </div>
         </div><!-- /.modal-content -->

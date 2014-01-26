@@ -25,6 +25,7 @@ class Evento(models.Model):
         upload_to="eventos")
     latitud = models.CharField(default="0.0", max_length=30)
     longitud = models.CharField(default="0.0", max_length=30)
+    direccion = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.descripcion

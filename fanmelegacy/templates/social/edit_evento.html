@@ -22,8 +22,9 @@
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
     <script>
         var myCalendar;
+        var usuariosSeleccionados = new Array();
+
         function doOnLoad() {
-            var usuariosSeleccionados = new Array();
 
             myCalendar = new dhtmlXCalendarObject(["id_fecha_inicio"]);
             myCalendar.setDateFormat("%d/%m/%Y");
@@ -37,6 +38,19 @@
                     usuariosSeleccionados.push({{usuario.id}});
                 }
             {% endfor %}
+
+            document.getElementById('usuarios').value = usuariosSeleccionados;
+        }
+
+        function checkTodos(){
+            usuariosSeleccionados.length = 0;
+            var checkBoxes = document.getElementsByTagName("input");
+            for (var i =0; i < checkBoxes.length; i++){
+                if (checkBoxes[i].type == 'checkbox'){
+                    usuariosSeleccionados.push(checkBoxes[i].value);
+                    checkBoxes[i].checked = true;
+                }
+            }
 
             document.getElementById('usuarios').value = usuariosSeleccionados;
         }
@@ -74,6 +88,15 @@
                     hide: false
                 });
                 respuesta_correcta = false;
+            }
+            if(usuariosSeleccionados.length == 0){
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'Es necesario seleccionar un invitado.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false
             }
             if(!marker){
                 $.pnotify({
@@ -124,6 +147,16 @@
             for(k=my_elems.length-1;k>=0; --k)
             {
                 if(my_elems[k].innerHTML.indexOf("fin") != -1) {
+                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                }
+            }
+        });
+
+        $("#seleccionar_invitados").click(function (e) {
+            var my_elems = document.getElementsByClassName("ui-pnotify ");
+            for(k=my_elems.length-1;k>=0; --k)
+            {
+                if(my_elems[k].innerHTML.indexOf("invitado") != -1) {
                     my_elems[k].parentElement.removeChild(my_elems[k]);
                 }
             }
@@ -191,11 +224,18 @@
                     {{ form.descripcion }}
                 </div>
                 <div class="new-notification-clear"></div>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 32px;">
-                  Seleccionar invitados
+                <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 32px;">
+                    Seleccionar invitados
                 </button>
                 <div class="new-notification-clear"></div>
                 <div id="googleMap" style="width:500px;height:400px; margin-left:30px;"></div>
+                <div class="new-notification-clear"></div>
+                <div class="new-notification-clear"></div>
+                <div class="content-form-evento">
+                    {{ form.direccion.errors }}
+                    <label for="id_user_to_id" class="evento-date-fin-label">Direccion:</label>
+                    {{ form.direccion }}
+                </div>
                 <div class="new-notification-clear"></div>
                 <div class="content-form-notification">
                     {{ form.imagen.errors }}
@@ -212,7 +252,6 @@
             </form>
         </div>
     </div>
-    <button onclick="usuarios()" ></button>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -241,6 +280,7 @@
               {% endfor %}
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="checkTodos();">Seleccionar todos</button>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Agregar invitados</button>
           </div>
         </div><!-- /.modal-content -->

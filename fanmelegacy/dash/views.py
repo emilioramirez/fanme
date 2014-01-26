@@ -162,12 +162,6 @@ def results(request):
                       (Q(razon_social__icontains=x) for x in list_of_words)
                 )
             )[:8]
-        #Get the 8 first topics that match with the search
-        first_topics = Topico.objects.filter(
-                reduce(operator.or_,
-                      (Q(nombre__icontains=x) for x in list_of_words)
-                )
-            )[:8]
     else:
         return render_to_response('dash/results.html',
             {'form_search': searchbox},
@@ -176,8 +170,7 @@ def results(request):
         {'form_search': searchbox,
             'items_result': first_items,
             'users_result': active_users,
-            'organizations_result': first_organizations,
-            'topics_result': first_topics},
+            'organizations_result': first_organizations},
             context_instance=RequestContext(request))
 
 

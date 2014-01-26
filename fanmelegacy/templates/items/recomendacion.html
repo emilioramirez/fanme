@@ -47,7 +47,9 @@
                     <div class="clear"></div>
                 {% endfor %}
             </div>
-            <input type="submit" value="Recomendar" class="submit" />
+            {% if usuarios%}
+                <input type="submit" value="Recomendar" class="submit" />
+            {% endif %}
         </form>
     </div>
 {% endblock dashboard %}

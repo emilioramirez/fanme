@@ -361,6 +361,9 @@ body{}
             .form-nuevo-evento textarea{
                 width: 391px;
             }
+            .form-nuevo-evento input[id="id_direccion"]{
+                width: 420px;
+            }
             .form-nuevo-evento .submit{
                 background: url("../images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
                 border: medium none;
@@ -788,4 +791,4 @@ body{}
 .clear-navbar{
     margin: 80px 0px 5px;
 }
-.table-striped > tbody > tr{ font-size: 12px;} 
+.table-striped > tbody > tr{ font-size: 12px;}
