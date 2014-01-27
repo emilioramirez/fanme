@@ -279,7 +279,7 @@ def recomendaciones_enviadas(request):
         items_ids = request.user.recomendaciones_enviadas.all().values_list(
             'item', flat=True).distinct()
         items = Item.objects.filter(id__in=items_ids)
-        messages.add_message(request, messages.INFO, "Has recomendado los siguientes items")
+        messages.add_message(request, messages.INFO, "Has recomendado los siguientes items a tus seguidores")
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     recomendaciones = request.user.recomendaciones_enviadas.all().order_by(

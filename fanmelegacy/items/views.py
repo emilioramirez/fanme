@@ -32,7 +32,7 @@ def item(request, item_id):
         is_fan = False
         item_plan = PlanXEmpresa.objects.filter(item=item)
         try:
-            request.user.persona
+            request.user
         except:
             mostrar_boton_enlace = puede_registrar_enlace(request, item)
         empresas = []
@@ -214,6 +214,7 @@ def recomendation(request, item_id):
                 actividad.recomendacion = recomendacion
                 actividad.save()
         messages.add_message(request, messages.SUCCESS, u"Se han enviado las recomendaciones correctamente.")
+    messages.add_message(request, messages.SUCCESS, u"Recomienda {0} a tus seguidores.".format(item.nombre))
     if usuarios_ya_recomendados:
         messages.add_message(request, messages.ERROR, u"Ya has recomendado este item a todos tus seguidores.")
     if not seguidores and not usuarios_ya_recomendados:
