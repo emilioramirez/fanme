@@ -671,6 +671,15 @@ sidebar-follow-user{}
                     margin-left: 56px;
                     margin-bottom: 0px;
                 }
+        .algo {
+            background: url("../images/register-form-submit-bg.png") no-repeat scroll 0 0 transparent;
+            border: medium none;
+            color: White;
+            font-size: 14px;
+            font-weight: bold;
+            height: 33px;
+            width: 72px;
+        }
     /*End of the new notifications page*/
     /*Begining of the new evento page*/
         .content-form-evento{}

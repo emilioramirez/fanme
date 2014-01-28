@@ -588,6 +588,12 @@ def new_notification(request):
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
         form.fields["usuarios_to"].queryset = users
+        invitados = request.POST.get("usuarios", "")
+        a_split = invitados.split(',')
+        usuarios_invitados = []
+        for invitado in a_split:
+            usuario = User.objects.get(id=invitado)
+            usuarios_invitados.append(usuario)
         if form.is_valid():
             notification = form.save(commit=False)
             notification.fecha_creacion = datetime.now()
@@ -598,14 +604,16 @@ def new_notification(request):
                 pass
             notification.save()
             form.save_m2m()
+            for invitado in usuarios_invitados:
+                notification.usuarios_to.add(invitado)
             return HttpResponseRedirect('/social/notificaciones/')
     else:
         form = NotificationForm()
         list_ids = request.user.followers.values_list('user', flat=True)
-        users = User.objects.filter(id__in=list_ids)
+        users = User.objects.filter(id__in=list_ids).filter(is_active=True)
         form.fields["usuarios_to"].queryset = users
     template_vars = RequestContext(request, {"form": form,
-        'form_search': searchbox})
+        'form_search': searchbox, 'users': users})
     return render_to_response('social/new_notification.html', template_vars)
 
 

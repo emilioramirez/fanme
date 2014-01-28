@@ -31,11 +31,11 @@ def item(request, item_id):
         #is_fan = request.user.persona.items.filter(nombre=item.nombre)
         is_fan = False
         item_plan = PlanXEmpresa.objects.filter(item=item)
-        try:
-            request.user
-        except:
+        user = request.user
+        if user is not Persona:
             mostrar_boton_enlace = puede_registrar_enlace(request, item)
         empresas = []
+        #if item_plan is None:
         for enlace_externo in item_plan:
             if enlace_externo.fecha_fin_vigencia > date.today():
                 empresa = Empresa.objects.get(user_id=enlace_externo.empresa.id)
@@ -58,9 +58,12 @@ def puede_registrar_enlace(request, item):
     if not planes:
         ret = True
     else:
-        plan = planes[0]
-        esta_item_en_el_plan = plan.item.get(pk=item.id)
-        if plan.fecha_fin_vigencia > date.today() and esta_item_en_el_plan == None:
+        try:
+            plan = planes[0]
+            esta_item_en_el_plan = plan.item.get(pk=item.id)
+            if plan.fecha_fin_vigencia > date.today() and esta_item_en_el_plan == None:
+                ret = True
+        except:
             ret = True
     return ret
 

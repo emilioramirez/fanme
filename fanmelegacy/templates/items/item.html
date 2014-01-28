@@ -112,21 +112,17 @@
 
 {% block extra %}
 <div class="row">
-    <div class="col-md-4">
-        <h2>Etiquetas</h2>
-        <div class="well">Tag1 Tag2 Tag3 Tag4 Tag5 Tag5 Tag6</div>
-    </div>
-    <div class="col-md-8">
+    <div class="col-md-12">
         <h5>Lo podés conseguir en:</h5>
         <div class="item-image-all">
             <ul class="image-list">
             {% for empresa in empresas %}
                 {% if empresa.avatar %}
                     <!--<li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ user.empresa.avatar.url_50x50 }}" alt="Score" /></a></li>-->
-                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url user 50 %}" alt="" /></a></li>
+                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url user 50 %}" alt="" /></a>{{ empresa.razon_social }}</li>
                 {% else %}
                     <!--<li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ STATIC_URL }}images/020.png" alt="Logo" /></a></li>-->
-                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url user 50 %}" alt="" /></a></li>
+                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url user 50 %}" alt="" /></a>{{ empresa.razon_social }}</li>
                 {% endif%}
             {% endfor %}
             </ul>
