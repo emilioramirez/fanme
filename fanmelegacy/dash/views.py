@@ -162,12 +162,6 @@ def results(request):
                       (Q(razon_social__icontains=x) for x in list_of_words)
                 )
             )[:8]
-        #Get the 8 first topics that match with the search
-        first_topics = Topico.objects.filter(
-                reduce(operator.or_,
-                      (Q(nombre__icontains=x) for x in list_of_words)
-                )
-            )[:8]
     else:
         return render_to_response('dash/results.html',
             {'form_search': searchbox},
@@ -176,8 +170,7 @@ def results(request):
         {'form_search': searchbox,
             'items_result': first_items,
             'users_result': active_users,
-            'organizations_result': first_organizations,
-            'topics_result': first_topics},
+            'organizations_result': first_organizations},
             context_instance=RequestContext(request))
 
 
@@ -286,7 +279,7 @@ def recomendaciones_enviadas(request):
         items_ids = request.user.recomendaciones_enviadas.all().values_list(
             'item', flat=True).distinct()
         items = Item.objects.filter(id__in=items_ids)
-        messages.add_message(request, messages.INFO, "Has recomendado los siguientes items")
+        messages.add_message(request, messages.INFO, "Has recomendado los siguientes items a tus seguidores")
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     recomendaciones = request.user.recomendaciones_enviadas.all().order_by(
@@ -308,7 +301,7 @@ def recomendaciones_recibidas(request):
         for r in rec:
             r.estado = "leido"
             r.save()
-            messages.add_message(request, messages.INFO, "Te han recomendado los siguientes items")
+        messages.add_message(request, messages.INFO, "Te han recomendado los siguientes items")
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/mis_recomendaciones_recibidas.html',
@@ -480,6 +473,7 @@ def dejar_de_seguir_usuario(request, user_id):
     user_to_follow = User.objects.get(id=user_id)
     my_profile = request.user.persona
     my_profile.following.remove(user_to_follow)
+    messages.add_message(request, messages.SUCCESS, u"Has dejado de seguir al usuario {0} {1}".format(user_to_follow.first_name, user_to_follow.last_name))
     return HttpResponseRedirect('/dash/follow/{0}'.format(user_id))
 
 
@@ -570,3 +564,7 @@ def logbook_ayuda(request):
         'actividades': actividades},
         context_instance=RequestContext(request))
 
+
+def get_cant_notificaciones(request):
+    return request.user.notificaciones_recibidas.filter(
+            estado='noleido').count()

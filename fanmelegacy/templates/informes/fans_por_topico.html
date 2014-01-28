@@ -34,7 +34,7 @@ alert("I am an alert box!");
                                     '{{topico}}': {
                                             name: '{{topico}}',
                                             data: [
-                                            {% for item, cant_fans in items.iteritems %}
+                                            {% for item, cant_fans in items %}
                                                 ['{{item}}', {{cant_fans}}],
                                             {% endfor %}
                                             ]

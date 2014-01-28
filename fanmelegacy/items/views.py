@@ -31,11 +31,11 @@ def item(request, item_id):
         #is_fan = request.user.persona.items.filter(nombre=item.nombre)
         is_fan = False
         item_plan = PlanXEmpresa.objects.filter(item=item)
-        try:
-            request.user.persona
-        except:
+        user = request.user
+        if user is not Persona:
             mostrar_boton_enlace = puede_registrar_enlace(request, item)
         empresas = []
+        #if item_plan is None:
         for enlace_externo in item_plan:
             if enlace_externo.fecha_fin_vigencia > date.today():
                 empresa = Empresa.objects.get(user_id=enlace_externo.empresa.id)
@@ -58,9 +58,12 @@ def puede_registrar_enlace(request, item):
     if not planes:
         ret = True
     else:
-        plan = planes[0]
-        esta_item_en_el_plan = plan.item.get(pk=item.id)
-        if plan.fecha_fin_vigencia > date.today() and esta_item_en_el_plan == None:
+        try:
+            plan = planes[0]
+            esta_item_en_el_plan = plan.item.get(pk=item.id)
+            if plan.fecha_fin_vigencia > date.today() and esta_item_en_el_plan == None:
+                ret = True
+        except:
             ret = True
     return ret
 
@@ -181,8 +184,6 @@ def recomendation(request, item_id):
     usuarios_ya_recomendados = request.user.recomendaciones_enviadas.filter(
         item=item_id).values_list('user_destino', flat=True)
     seguidores = request.user.followers.exclude(user__in=usuarios_ya_recomendados)
-    print seguidores
-    print request.user.followers.all()
     #seguidores_activos = seguidores.filter(is_active=True)
     usuarios = []
     try:
@@ -215,7 +216,12 @@ def recomendation(request, item_id):
                 actividad.usuario_origen = request.user
                 actividad.recomendacion = recomendacion
                 actividad.save()
-                messages.add_message(request, messages.SUCCESS, u"Se han enviado las recomendaciones correctamente.")
+        messages.add_message(request, messages.SUCCESS, u"Se han enviado las recomendaciones correctamente.")
+    messages.add_message(request, messages.SUCCESS, u"Recomienda {0} a tus seguidores.".format(item.nombre))
+    if usuarios_ya_recomendados:
+        messages.add_message(request, messages.ERROR, u"Ya has recomendado este item a todos tus seguidores.")
+    if not seguidores and not usuarios_ya_recomendados:
+        messages.add_message(request, messages.ERROR, u"Para realizar una recomendacion al menos un usuario debe seguirlo.")
     return render_to_response('items/recomendacion.html',
         {'usuarios': seguidores, 'item': item},
         context_instance=RequestContext(request))

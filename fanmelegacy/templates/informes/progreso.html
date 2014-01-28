@@ -46,6 +46,19 @@ $(function () {
                 verticalAlign: 'middle',
                 borderWidth: 0
             },
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function() {
+                                location.href='../../progreso_filtrado?anio=' + this.series.name +'&mes='+ this.category;
+                                //alert ('Category: '+ this.category +', value: '+ this.series.name);
+                            }
+                        }
+                    }
+                }
+            },
             series: [
                 {% for year, meses_cant in dict.items %}
                     {
@@ -82,18 +95,18 @@ function myFunction()
 <div>
     Desde:
     <select id="fecha_desde">
-      <option >2013</option>
-      <option >2012</option>
-      <option>2011</option>
-      <option selected>2010</option>>
+      <option>2014</option>
+      <option>2013</option>
+      <option>2012</option>
+      <option selected>2011</option>>
     </select>
     <br/>
     Hasta:
     <select id="fecha_hasta" style="margin-left: 3px;">
+      <option>2014</option>
       <option>2013</option>
       <option>2012</option>
       <option>2011</option>
-      <option>2010</option>
     </select>
     <br/>
     <button style="margin-left:45px;" onclick="myFunction()">Aceptar</button>
