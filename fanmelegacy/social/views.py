@@ -60,9 +60,9 @@ def new_evento(request):
     searchbox = SearchBox()
     if request.method == "POST":
         form = EventoForm(request.POST, request.FILES)
-#        list_ids = request.user.followers.values_list('user', flat=True)
-#        users = User.objects.filter(id__in=list_ids)
-#        form.fields["invitados"].queryset = users
+        list_ids = request.user.followers.values_list('user', flat=True)
+        users = User.objects.filter(id__in=list_ids)
+        form.fields["invitados"].queryset = users
         latitud = request.POST.get("latitud", "")
         longitud = request.POST.get("longitud", "")
         invitados = request.POST.get("usuarios", "")
@@ -156,6 +156,15 @@ def edit_evento(request, evento_id):
             form.save_m2m()
             for invitado in usuarios_invitados:
                 evento.invitados.add(invitado)
+                evento_x_invitado = EstadoxInvitado.objects.filter(evento=evento_db).filter(invitado=invitado)
+                evento_x_invitado.estado = 'noleido'
+                if not evento_x_invitado:
+                    evento_x_invitado = EstadoxInvitado()
+                    evento_x_invitado.evento =  evento
+                    evento_x_invitado.invitado = invitado
+                    evento_x_invitado.save()
+                else:
+                    evento_x_invitado.update()
             return HttpResponseRedirect('/social/eventos/')
     else:
         form = EventoForm(instance=evento_db)
@@ -579,6 +588,12 @@ def new_notification(request):
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
         form.fields["usuarios_to"].queryset = users
+        invitados = request.POST.get("usuarios", "")
+        a_split = invitados.split(',')
+        usuarios_invitados = []
+        for invitado in a_split:
+            usuario = User.objects.get(id=invitado)
+            usuarios_invitados.append(usuario)
         if form.is_valid():
             notification = form.save(commit=False)
             notification.fecha_creacion = datetime.now()
@@ -589,14 +604,16 @@ def new_notification(request):
                 pass
             notification.save()
             form.save_m2m()
+            for invitado in usuarios_invitados:
+                notification.usuarios_to.add(invitado)
             return HttpResponseRedirect('/social/notificaciones/')
     else:
         form = NotificationForm()
         list_ids = request.user.followers.values_list('user', flat=True)
-        users = User.objects.filter(id__in=list_ids)
+        users = User.objects.filter(id__in=list_ids).filter(is_active=True)
         form.fields["usuarios_to"].queryset = users
     template_vars = RequestContext(request, {"form": form,
-        'form_search': searchbox})
+        'form_search': searchbox, 'users': users})
     return render_to_response('social/new_notification.html', template_vars)
 
 
@@ -732,3 +749,81 @@ def messages_user_ayuda(request):
 def get_cant_eventos(request):
     return request.user.invitacion_eventos.filter(
             estado='noleido').count()
+
+
+def eventos_ayuda(request):
+    user = request.user
+    searchbox = None
+    if user.is_authenticated():
+        searchbox = SearchBox()
+    no_hay_eventos = False
+    eventos_creados = []
+    primer_evento = Evento()
+    primer_evento.descripcion = "Festejo mi cumple!!!"
+    primer_evento.estado = "noleido"
+    primer_evento.nombre = "Cumple Feliz!"
+    primer_evento.direccion = "my-id-tour"
+    primer_evento.fecha_creacion = datetime.strptime('Jun 2 2014  5:30PM', '%b %d %Y %I:%M%p')
+    primer_evento.fecha_inicio = datetime.strptime('Jun 5 2014  5:30PM', '%b %d %Y %I:%M%p')
+    primer_evento.fecha_fin = datetime.strptime('Jun 5 2014  10:30PM', '%b %d %Y %I:%M%p')
+    eventos_creados.append(primer_evento)
+    segundo_evento = Evento()
+    segundo_evento.descripcion = "Chicos nos juntamos para terminar la tesis!"
+    segundo_evento.nombre = "Juntada de Tesis"
+    segundo_evento.estado = "noleido"
+    segundo_evento.fecha_creacion = datetime.strptime('Jun 2 2014  5:30PM', '%b %d %Y %I:%M%p')
+    segundo_evento.fecha_inicio = datetime.strptime('Jun 5 2014  5:30PM', '%b %d %Y %I:%M%p')
+    segundo_evento.fecha_fin = datetime.strptime('Jun 5 2014  10:30PM', '%b %d %Y %I:%M%p')
+    eventos_creados.append(segundo_evento)
+    user_invitador = User()
+    user_invitador.first_name = 'Carolina'
+    user_invitador.last_name = 'Muñoz'
+    eventos_invitado = []
+    evnto_invitado = Evento()
+    evnto_invitado.creador = user_invitador
+    evnto_invitado.descripcion = "Nos juntamos a tomar mates!"
+    evnto_invitado.estado = "noleido"
+    evnto_invitado.nombre = "Mateada"
+    evnto_invitado.fecha_inicio = datetime.strptime('Feb 5 2014  5:30PM', '%b %d %Y %I:%M%p')
+    evnto_invitado.fecha_fin = datetime.strptime('Feb 5 2014  10:30PM', '%b %d %Y %I:%M%p')
+    eventos_invitado.append(evnto_invitado)
+    notificaciones_noleidas = 4
+    recomendaciones_noleidas = 2
+    eventos_noleidos = 1
+    temp = RequestContext(request, {'eventos_creados': eventos_creados,
+        'eventos_invitado': eventos_invitado, 'no_hay_eventos': no_hay_eventos,
+        'form_search': searchbox, 'notificaciones_noleidas': notificaciones_noleidas,
+        'recomendaciones_noleidas': recomendaciones_noleidas,
+        'eventos_noleidos': eventos_noleidos})
+    return render_to_response('social/eventos_ayuda.html', temp)
+
+
+def evento_ayuda(request):
+    user = request.user
+    searchbox = None
+    if user.is_authenticated():
+        searchbox = SearchBox()
+    creador = False
+    evento = Evento()
+    evento.nombre = "Mateada"
+    evento.descripcion = "Nos juntamos a tomar mates!"
+    evento.fecha_inicio = datetime.strptime('Feb 5 2014  5:30PM', '%b %d %Y %I:%M%p')
+    evento.fecha_fin = datetime.strptime('Feb 5 2014  10:30PM', '%b %d %Y %I:%M%p')
+    evento.latitud = "-31.40859362873378"
+    evento.longitud = "-64.18049812316895"
+    evento.direccion = "San Martín 699 Departamento B"
+    evento.imagen = "eventos/206_3_2.png"
+    lista_invitados = []
+    invitado = User()
+    invitado.first_name = 'Monica'
+    invitado.last_name = 'Quero'
+    invitado.email = "moniquero@hotmail.com"
+    lista_invitados.append(invitado)
+    invitado = User()
+    invitado.first_name = 'Vale'
+    invitado.last_name = 'Gerez'
+    invitado.email = "valegerez@hotmail.com"
+    lista_invitados.append(invitado)
+    temp = RequestContext(request, {'form_search': searchbox, 'evento': evento,
+        'creador': creador, 'lista_invitados': lista_invitados})
+    return render_to_response('social/evento_ayuda.html', temp)

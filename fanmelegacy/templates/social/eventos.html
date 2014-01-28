@@ -41,9 +41,6 @@
                     <div class='i-content'>
                         <div class="i-title">
                                 <a href='/social/evento/{{ evento.id }}'>{{ evento.nombre }}</a>   {{ evento.fecha_inicio }}
-                                {% if evento.estado != 'leido' %}
-                                    ({{ evento.estado }})
-                                {% endif %}
                                 {% if evento.estado != 'cancelado' %}
                                     <div class="i-title-options">
                                         <a href="/social/evento/edit/{{ evento.id }}" title="Editar este evento"><div class="i-title-options-edit"></div></a>
@@ -66,6 +63,13 @@
                         <div class="i-title">
                         <a href='/social/evento/{{ evento.id }}'>{{ evento.nombre }}</a>   {{ evento.fecha_inicio }}
                         {{ evento.fecha_inicio }}
+                        {% if evento.estado != 'leido' and evento.estado != 'cancelado' %}
+                            {% if evento.estado == 'noleido' %}
+                                (no leido)
+                            {% else %}
+                                ({{ evento.estado }})
+                            {% endif %}
+                        {% endif %}
                         {% if evento.estado == 'cancelado' %}
                             <span style="color:red; margin-left:10px;">EVENTO CANCELADO</span>
                         {% endif%}
@@ -81,6 +85,6 @@
     </div>
 {% endblock dashboard %}
 
-{% block crear %}
-    <a href="/social/nuevo/"><div class="new-item-buttom">Crear Evento</div></a>
-{% endblock %}
+{% block sidebar %}
+    {% include "dash/sidebar_evento.html" %}
+{% endblock sidebar %}

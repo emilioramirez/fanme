@@ -48,6 +48,14 @@
             }
         }
     }
+
+    $( "#topicos-seleccionados" ).droppable({
+      drop: function( event, ui ) {
+        $(this)
+          $("#siguiente").css('background', 'url("/static/images/register-form-submit-bg-grande.png") no-repeat scroll 0 0 transparent');
+          $("#siguiente").removeAttr("disabled");
+      }
+    });
     </script>
 {% endblock %}
 
@@ -82,7 +90,7 @@
     </div><!-- End demo -->
     <div class="topic-choisses-form">
         <form id="Form" action="/accounts/topics/" method="post">{% csrf_token %}
-            <input  onclick="topicos()" type="submit" value="Siguiente" class="submit" />
+            <input id="siguiente" disabled="true" style="background-color: gray;"  onclick="topicos()" type="submit" value="Siguiente" class="submit" />
         </form>
     </div>
 {% endblock content %}

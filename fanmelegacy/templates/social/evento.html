@@ -8,6 +8,10 @@
     </ul>
 {% endblock menuOptionsSelected %}
 
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard %}
+
 {% block myjavascript %}
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5oH8nVPAHgFub2orh1UBYNd7PCUa8vKw&sensor=false"></script>
     <script>
@@ -93,8 +97,8 @@
     <div class="eventos-content">
         <div class='eventos-titulo'>Evento</div>
         {% if evento %}
-            <div class=''>
-                    <div class=''><img src="{{ evento.imagen.url }}" alt="Imagen de Evento" /></div>
+            <div class="thumbnail">
+                <img src="{{ evento.imagen.url }}" alt="Imagen de Evento">
             </div>
             <div class='evento'>
                 <div class='evento-fields'>
@@ -124,6 +128,11 @@
                     <div class="clear"></div>
                 </div>
                 <div class='evento-fields'>
+                    <div class='evento-label'>Direccion</div>
+                    <div class='evento-field'>{{ evento.direccion }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
                     <div class='evento-label'>Invitados</div>
                     <div class='evento-field'>
                         <ul>
@@ -140,8 +149,11 @@
                     <div class="clear"></div>
                 </div>
                 {% if creador %}
-                    <div class='evento-editar-btn'>
-                        <a href="/social/evento/edit/{{ evento.id }}"><div class="evento-editar">editar</div></a>
+                    <div style="float:right; text-align: center;">
+                        <div class='evento-editar-btn' style="float:left;">
+                            <a href="/social/evento/edit/{{ evento.id }}"><div class="evento-editar">Editar</div></a>
+                        </div>
+                        <input type="button" value="Cancelar" class="item-cancelar-registracion" style="margin-left: 10px; float: right;" onclick="location.href='../../../social/eventos';">
                     </div>
                 {% endif %}
             </div>
@@ -153,6 +165,6 @@
     </div>
 {% endblock dashboard %}
 
-{% block crear %}
-    <a href="/social/nuevo/"><div class="new-item-buttom">Crear Evento</div></a>
-{% endblock %}
+{% block sidebar %}
+    {% include "dash/sidebar_evento.html" %}
+{% endblock sidebar %}

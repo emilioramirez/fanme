@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     (r'^fans_por_topicos/', views.fans_por_topicos),
     (r'^item_fans/', views.item_fans),
     (r'^item_fanes/(?P<cant_items>\d+)/$', views.cant_items_fans),
+    (r'^progreso_filtrado/$', views.progreso_filtrado),
 )
