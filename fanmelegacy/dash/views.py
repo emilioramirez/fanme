@@ -301,7 +301,7 @@ def recomendaciones_recibidas(request):
         for r in rec:
             r.estado = "leido"
             r.save()
-            messages.add_message(request, messages.INFO, "Te han recomendado los siguientes items")
+        messages.add_message(request, messages.INFO, "Te han recomendado los siguientes items")
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/mis_recomendaciones_recibidas.html',
@@ -564,3 +564,7 @@ def logbook_ayuda(request):
         'actividades': actividades},
         context_instance=RequestContext(request))
 
+
+def get_cant_notificaciones(request):
+    return request.user.notificaciones_recibidas.filter(
+            estado='noleido').count()
