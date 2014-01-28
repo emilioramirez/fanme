@@ -1,0 +1,141 @@
+/**
+ * CSS - Stylistic CSS Styles
+ */
+
+/* Icons for dashboard topics */
+.item-topico{
+    float: left;
+    height: 34px;
+    margin: 2px 19px;
+    width: 34px;
+}
+.item-topico-tecnologia{
+    background: url("../images/iconos-topicos.png") repeat scroll 117px 0 transparent;
+}
+.item-topico-juegos{
+    background: url("../images/iconos-topicos.png") repeat scroll 117px -35px transparent;
+}
+.item-topico-peliculas{
+    background: url("../images/iconos-topicos.png") repeat scroll 117px -70px transparent;
+}
+.item-topico-libros{
+    background: url("../images/iconos-topicos.png") repeat scroll 117px -175px transparent;
+}
+.item-topico-ropa{
+    background: url("../images/iconos-topicos.png") repeat scroll 117px -105px transparent;
+}
+.item-topico-hogar{
+    background: url("../images/iconos-topicos.png") repeat scroll 117px -140px transparent;
+}
+.item-topico-musica{
+    background: url("../images/iconos-topicos.png") repeat scroll 117px -210px transparent;
+}
+.item-topico-restaurantes{
+    background: url("../images/iconos-topicos.png") repeat scroll 117px 208px transparent;
+}
+
+
+/* Icons for topic list */
+/* Icons for dashboard topics selected*/
+.list-item-topico{
+    float: left;
+    height: 34px;
+    width: 34px;
+}
+.list-item-topico-tecnologia{
+    background: url("../images/iconos-topicos.png") repeat scroll 37px 0 transparent;
+
+}
+.list-item-topico-juegos{
+    background: url("../images/iconos-topicos.png") repeat scroll 37px -35px transparent;
+}
+.list-item-topico-peliculas{
+    background: url("../images/iconos-topicos.png") repeat scroll 37px -70px transparent;
+}
+.list-item-topico-libros{
+    background: url("../images/iconos-topicos.png") repeat scroll 37px -175px transparent;
+}
+.list-item-topico-ropa{
+    background: url("../images/iconos-topicos.png") repeat scroll 37px -105px transparent;
+}
+.list-item-topico-hogar{
+    background: url("../images/iconos-topicos.png") repeat scroll 37px -140px transparent;
+}
+.list-item-topico-musica{
+    background: url("../images/iconos-topicos.png") repeat scroll 37px -210px transparent;
+}
+.list-item-topico-restaurantes{
+    background: url("../images/iconos-topicos.png") repeat scroll 37px 208px transparent;
+}
+.list-item-topico-all{
+    background: url("../images/iconos-topicos.png") repeat scroll 37px 68px transparent;
+}
+
+/* Icons for dashboard topics Unselected*/
+.un-list-item-topico-tecnologia{
+    background: url("../images/iconos-topicos.png") repeat scroll 77px 0 transparent;
+
+}
+.un-list-item-topico-juegos{
+    background: url("../images/iconos-topicos.png") repeat scroll 77px -35px transparent;
+}
+.un-list-item-topico-peliculas{
+    background: url("../images/iconos-topicos.png") repeat scroll 77px -70px transparent;
+}
+.un-list-item-topico-libros{
+    background: url("../images/iconos-topicos.png") repeat scroll 77px -175px transparent;
+}
+.un-list-item-topico-ropa{
+    background: url("../images/iconos-topicos.png") repeat scroll 77px -105px transparent;
+}
+.un-list-item-topico-hogar{
+    background: url("../images/iconos-topicos.png") repeat scroll 77px -140px transparent;
+}
+.un-list-item-topico-musica{
+    background: url("../images/iconos-topicos.png") repeat scroll 77px -210px transparent;
+}
+.un-list-item-topico-restaurantes{
+    background: url("../images/iconos-topicos.png") repeat scroll 77px 208px transparent;
+}
+.un-list-item-topico-all{
+    background: url("../images/iconos-topicos.png") repeat scroll 77px 68px transparent;
+}
+
+
+/* Mini imgages */
+.mini-img-event{
+    background: url("../images/mini-img.png") no-repeat scroll -52px -18px transparent;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    width: 16px;
+}
+.mini-img-msg{
+    background: url("../images/mini-img.png") no-repeat scroll -103px -18px transparent;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    width: 16px;
+}
+.mini-img-notify{
+    background: url("../images/mini-img.png") no-repeat scroll -81px -1px transparent;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    width: 16px;
+}
+.mini-img-recom{
+    background: url("../images/icons-hunch.png") no-repeat scroll -19px -18px transparent;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    width: 17px;
+}
+.mini-img-denuncia{
+    background: url("../images/mini-img.png") no-repeat scroll -132px -1px transparent;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    width: 17px;
+}
+

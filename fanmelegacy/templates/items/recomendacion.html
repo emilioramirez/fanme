@@ -1,0 +1,39 @@
+{% extends "dash/dashboard.html" %}
+
+{% load avatar_tags %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>Recomendar</h1>
+            <h2>{{ item.nombre }}</h2>
+        </div>
+        <form action="/items/recomendation/{{ item.id }}/" class="form-horizontal" role="form" method="post">
+            {% csrf_token %}
+            {% for persona in usuarios %}
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            <img src="{% avatar_url persona.user 50 %}" alt="" />
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="recomendados" value="{{ persona.user.id }}">
+                            </span>
+                            <input type="text" class="form-control form-control-static" value="{{ persona.user.first_name }} {{ persona.user.last_name }} - {{ persona.user.email }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" value="Recomendar" class="submit" />
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock dashboard %}

@@ -1,0 +1,151 @@
+{% load avatar_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+    <head>
+        {% load staticfiles %}
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <title>{% block title %}FanME{% endblock %}</title>
+        <link href="{{ STATIC_URL }}dist/css/bootstrap.css" rel="stylesheet">
+        <link href="{{ STATIC_URL }}css/tour/bootstrap-fanme.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
+        {% block mystylesheet %}{% endblock %}
+        <script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
+        <script src="{{ STATIC_URL }}dist/js/bootstrap.js"></script>
+    </head>
+    <body {% block bodystuff %}{% endblock%}>
+        <!-- Begin Conteiner -->
+        <div class='conteiner'>
+            <!-- Begin Header -->
+            <div class='header'>
+            {% if user.is_authenticated %}
+                <div class="header-logo">
+                    <a href="/dash/dashboard/"><img src="{{ STATIC_URL }}images/logo.png" alt="Logo" /></a>
+                </div>
+            {% else %}
+                <div class="header-logo">
+                    <a href="/"><img src="{{ STATIC_URL }}images/logo.png" alt="Logo" /></a>
+                </div>
+            {% endif %}
+            {% block header %}
+            {% block menuArea %}
+                <div class="navbar navbar-fixed-top">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <div class="nav-collapse">
+                                {% block searchBox %}{% endblock searchBox %}
+                                {% if user.is_authenticated %}
+                                {% block menuOptions %}
+                                    <div class="header-menu-options">
+                                        {% if user.persona %}
+                                                <ul class="nav nav-pills header-tab">
+                                                  <li><a href="/dash/dashboard/">Dashboard</a></li>
+                                                  <li><a href="/dash/logbook/">Logbook</a></li>
+                                                  <li><a href="/dash/topicos/">Topicos</a></li>
+                                                </ul>
+                                        {% else %}
+                                                <ul class="nav nav-pills header-tab">
+                                                  <li><a href="/bussiness/dash_empresa/">Dashboard</a></li>
+                                                  <li><a href="/bussiness/dash_planes/">Planes</a></li>
+                                                </ul>
+                                        {% endif %}
+                                    <!--END class header-menu-options-->
+                                    </div>
+                                    {% endblock menuOptions %}
+                                    <ul class="nav pull-right">
+                                        <div class="logged-user">
+                                            <div class="logged-user-name">
+                                            {% if user.persona %}
+                                                <li class="dropdown">
+                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user.first_name }}<b class="caret"></b></a>
+                                                    <ul class="dropdown-menu" role="menu" >
+                                                        <li><a href="/dash/edit_account/"><i class="icon-edit"></i> Editar Perfil</a></li>
+                                                        <li><a href="/accounts/logout/"><i class="icon-edit"></i>Salir</a></li>
+                                                    </ul>
+                                                </li>
+                                            {% else %}
+                                                <li class="dropdown">
+                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user.empresa.razon_social }}<b class="caret"></b></a>
+                                                    <ul class="dropdown-menu" role="menu" >
+                                                        <li><a href="/accounts/logout/"><i class="icon-edit"></i>Salir</a></li>
+                                                    </ul>
+                                                </li>
+                                            {% endif %}
+                                            <!--END class logged-user-name-->
+                                            </div>
+                                            <div class="logged-user-photo">
+                                                <img src="{% avatar_url user 50 %}" alt="" />
+                                            </div>
+                                        <!--END class logged-user-->
+                                        </div>
+                                    </ul>
+                                <!--END class nav-collapse-->
+                                </div>
+                                {% else %}
+                                {% block header_login %}
+                                    <div class="header-login-form nav navbar-nav navbar-right">
+                                        <form action="/accounts/login/" method="post">{% csrf_token %}
+                                            <ul>
+                                                {{ form_login.as_ul }}
+                                            </ul>
+                                            <input type="submit" value="Ingresar" class="submit"/>
+                                        </form>
+                                    </div>
+                                {% endblock header_login %}
+                                {% endif %}
+                            <!--END class container-->
+                            </div>
+                        <!--END class navbar-inner-->
+                        </div>
+                    <!--END class navbar navbar-fixed-top-->
+                    </div>
+                </div>
+            {% endblock menuArea %}
+            <!-- End Header -->
+            </div>
+            {% endblock header%}
+            <div class="clear"></div>
+            <ol class="breadcrumb">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Library</a></li>
+              <li class="active">Data</li>
+            </ol>
+
+            {% block messages %}
+            <div id="messages-conteiner">
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endblock messages %}
+            <!-- Begin Content -->
+            <div class='content'>
+                {% block content %}{% endblock%}
+                <div class="clear"></div>
+            <!-- End Content -->
+            </div>
+            <!-- Begin Footer -->
+            <div class='footer'>
+                {% block footer %}
+                    <div class="footer-line-divisor">
+                        <img src="{{ STATIC_URL }}images/footer-line-divisor.png" alt="Footer Line Divisor" />
+                    </div>
+                    <!-- Eso deberia ser dinamico -->
+                    <div class="footer-links">
+                        <a href="/dash/preguntas_mas_frecuentes/">Ayuda</a> |
+                        <a href="#">Sobre Nosotros</a> |
+                        <a href="#">Condiciones</a> |
+                        <a href="#">Copyright</a>
+                    </div>
+                {% endblock%}
+                <div class="clear"></div>
+            <!-- End Footer -->
+            </div>
+        <div class="clear"></div>
+        {% block myjavascript %}{% endblock %}
+    </body>
+</html>
