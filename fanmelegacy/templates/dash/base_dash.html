@@ -32,12 +32,18 @@
 {% endblock menuOptions %}
 
 {% block content %}
-    <div class="content-dashboard">
-        {% block dashboard %}
-        {% endblock dashboard %}
+<div class="conteiner">
+    <div class="row">
+        <div class="col-md-8">
+            {% block dashboard %}
+            {% endblock dashboard %}
+        </div>
+        <div class="col-md-4">
+            <div class="content-sidebar">
+            {% block sidebar %}
+            {% endblock sidebar %}
+            </div>
+        </div>
     </div>
-    <div class="content-sidebar">
-        {% block sidebar %}
-        {% endblock sidebar %}
-    </div>
+</div>
 {% endblock%}
