@@ -23,4 +23,6 @@ def logo_url(request):
     context = {}
     if request.user.is_authenticated():
         context['logo_url'] = reverse('dashboard')
+    else:
+        context['logo_url'] = '/'
     return context

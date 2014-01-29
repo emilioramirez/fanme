@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
 {% endblock mystylesheet%}
 
-{% block item %}
+{% block content %}
+<div class="row">
     <div class="item-content">
         <div class="item-header">
             <div class="item-nombre">{{ empresa.razon_social }}</div>
@@ -54,17 +55,13 @@
             <div class="clear"></div>
         </div>
     </div>
-{% endblock item %}
-
-{% block extra %}
+</div>
+<div class="row">
     <div class="items-empresa">
         <div class="items-content">
             <div class="items-header-text">Podes conseguir estos productos:</div>
             <div class="items-list"></div>
         </div>
     </div>
-    <div class="clear"></div>
-{% endblock extra %}
-
-{% block comments %}
-{% endblock comments %}
+</div>
+{% endblock content %}
