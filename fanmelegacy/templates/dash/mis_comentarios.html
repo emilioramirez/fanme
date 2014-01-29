@@ -2,15 +2,6 @@
 
 {% load dash_filters %}
 
-{% block menuOptionsSelected %}
-    <ul class="nav nav-pills header-tab">
-      <li><a href="/dash/dashboard/">Dashboard</a></li>
-      <li><a href="/dash/logbook/">Logbook</a></li>
-      <li><a href="/dash/topicos/">Topicos</a></li>
-    </ul>
-{% endblock menuOptionsSelected %}
-
-
 {% block dashboard %}
     <div class="dashboard-list-items">
         {% for item, cantidad_comentarios in items %}

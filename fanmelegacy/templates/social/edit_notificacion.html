@@ -1,12 +1,5 @@
 {% extends "dash/empresa.html" %}
 
-{% block menuOptionsSelected %}
-    <ul class="nav nav-pills header-tab">
-      <li><a href="/bussiness/dash_empresa/">Dashboard</a></li>
-      <li><a href="/bussiness/dash_planes/">Planes</a></li>
-    </ul>
-{% endblock menuOptionsSelected %}
-
 {% block mystylesheet-dashboard %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>

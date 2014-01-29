@@ -1,15 +1,6 @@
 {% extends "dash/logbook.html" %}
 
 
-{% block menuOptionsSelected %}
-    <ul class="nav nav-pills header-tab">
-      <li><a href="/dash/dashboard/">Dashboard</a></li>
-      <li><a href="/dash/logbook/">Logbook</a></li>
-      <li><a href="/dash/topicos/">Topicos</a></li>
-    </ul>
-{% endblock menuOptionsSelected %}
-
-
 {% block dashboard %}
     <div class="form-recomend-user">
         <form action="/dash/dejar_de_seguir_usuarios/" method="post">{% csrf_token %}

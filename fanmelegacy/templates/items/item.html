@@ -15,21 +15,6 @@
     </script>
 {% endblock myjavascript %}
 
-{% block menuOptionsSelected %}
-    {% if user.persona %}
-        <ul class="nav nav-pills header-tab">
-          <li><a href="/dash/dashboard/">Dashboard</a></li>
-          <li><a href="/dash/logbook/">Logbook</a></li>
-          <li><a href="/dash/topicos/">Topicos</a></li>
-        </ul>
-    {% else %}
-        <ul class="nav nav-pills header-tab">
-          <li><a href="/bussiness/dash_empresa/">Dashboard</a></li>
-          <li><a href="/bussiness/dash_planes/">Planes</a></li>
-        </ul>
-    {% endif %}
-{% endblock menuOptionsSelected %}
-
 {% block item %}
     <div class="panel panel-default">
         <div class="panel-heading">
