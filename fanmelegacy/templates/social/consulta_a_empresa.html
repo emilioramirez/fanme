@@ -2,25 +2,9 @@
 
 {% load dash_filters %}
 
-{% block myjavascript %}
-    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
-{% endblock myjavascript %}
-
 {% block mystylesheet-dashboard %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
 {% endblock mystylesheet-dashboard%}
-
-{% block menuOptions %}
-    <div class="header-menu-options">
-        {% block menuOptionsSelected %}
-            <ul class="menu-options">
-                <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
-                <li class="menu-item"><a href="/dash/logbook/">Logbook</a></li>
-                <li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>
-            </ul>
-        {% endblock menuOptionsSelected %}
-    </div>
-{% endblock menuOptions %}
 
 {% block dashboard %}
     <div class="title-messages">Consultas</div>

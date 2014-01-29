@@ -1,0 +1,5 @@
+<form class="navbar-form navbar-left" role="search" action="{% url 'results' %}" method="post">
+    {% csrf_token %}
+    {{ form_search.as_p}}
+    <!--<input type="submit" value="Registrate" class="submit"/>-->
+</form>

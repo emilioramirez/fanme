@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     (r'^user/', views.register_user),
     (r'^company/', views.register_company),
     url(r'^login/', views.login_user, name="auth_login"),
-    (r'^logout/$', views.logout_user),
+    url(r'^logout/$', views.logout_user, name="logout"),
     (r'^thanks/', views.thanks),
     (r'^topics/', views.my_topics),
     # Django-registration activations links

@@ -12,13 +12,12 @@ class UserLogin(forms.Form):
         label='',
         required=True,
         error_messages={'required': 'Es necesario su Email'},
-        widget=forms.TextInput(attrs={'class': 'accounts-register-form-field', 'placeholder': 'Email'}))
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
     login_password = forms.CharField(
         label='',
-        # initial='Password',
         required=True,
         widget=forms.PasswordInput(
-            attrs={'class': 'accounts-register-form-field', 'placeholder': 'Password'}),
+            attrs={'class': 'form-control', 'placeholder': 'Password'}),
             error_messages={'required': 'Es necesario una Password'})
 
     def clean(self):

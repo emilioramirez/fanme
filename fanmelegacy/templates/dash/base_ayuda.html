@@ -6,16 +6,6 @@
 {% endblock mystylesheet%}
 
 
-{% block menuOptionsSelected %}
-    {% if user.is_authenticated %}
-        <ul class="nav nav-pills header-tab">
-          <li><a href="/dash/dashboard/">Dashboard</a></li>
-          <li><a href="/dash/logbook/">Logbook</a></li>
-          <li><a href="/dash/topicos/">Topicos</a></li>
-        </ul>
-    {% endif %}
-{% endblock menuOptionsSelected %}
-
 {% block dashboard %}
     <div class="title-messages-help">Ayuda</div>
     <div class="help-content">

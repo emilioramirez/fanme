@@ -3,12 +3,16 @@
 {% block mystylesheet %}
 {% endblock mystylesheet%}
 
-{% block menuOptionsSelected %}
-    <ul class="menu-options">
-        <li class="menu-item"><a href="/bussiness/dash_empresa/">Dashboard</a></li>
-        <li class="menu-item-selected"><a href="/bussiness/dash_planes/">Planes</a></li>
-    </ul>
-{% endblock menuOptionsSelected %}
+{% block menuOptions %}
+{% if user.persona %}
+<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li><a href="{% url 'logbook' %}">Logbook</a></li>
+<li><a href="{% url 'topicos' %}">Topicos</a></li>
+{% else %}
+<li class="active"><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+<li><a href="{% url 'dash_planes' %}">Planes</a></li>
+{% endif %}
+{% endblock menuOptions %}
 
 
 {% block dashboard %}
