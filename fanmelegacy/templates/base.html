@@ -70,33 +70,35 @@
             </div>
             {% endblock menuArea %}
             {% endblock header%}
-            <ol class="breadcrumb">
-                {% block breadcrumb %}
-                <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Atrás</a></li>
-                {% block breadcrumb-active %}
-                <li class="active">Example</li>
-                {% endblock breadcrumb-active %}
-                {% endblock breadcrumb %}
-            </ol>
+            <div class="container">
+                <div class="row">
+                    <ol class="breadcrumb">
+                        {% block breadcrumb %}
+                        <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Atrás</a></li>
+                        {% block breadcrumb-active %}
+                        <li class="active">Example</li>
+                        {% endblock breadcrumb-active %}
+                        {% endblock breadcrumb %}
+                    </ol>
+                </div>
+            </div>
 
             <div class="container">
             {% block messages %}
                 {% if messages %}
                     {% for message in messages %}
                     <div class="row">
-                        <div class="col-md-12">
                         <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
-                        </div>
                     </div>
                     {% endfor %}
                 {% endif %}
             {% endblock messages %}
             </div>
             <!-- Begin Content -->
-            <div class="conteiner">
-                <div class="row">
-                    {% block content %}{% endblock%}
-                </div>
+            <div class="container">
+                {% block content %}{% endblock%}
+            </div>
+            <div class="container">
                 <div class="row">
                     {% block footer %}
                     <div class="footer-line-divisor">

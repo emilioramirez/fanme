@@ -15,7 +15,8 @@
     </script>
 {% endblock myjavascript %}
 
-{% block item %}
+{% block content %}
+<div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
@@ -93,9 +94,7 @@
             </div>
         </div>
     </div>
-{% endblock item %}
-
-{% block extra %}
+</div>
 <div class="row">
     <div class="col-md-12">
         <h5>Lo podés conseguir en:</h5>
@@ -114,9 +113,7 @@
         </div>
     </div>
 </div>
-{% endblock extra %}
-
-{% block comments %}
+<div class="row">
     <div class="list-comment">
         {% get_comment_list for item as comment_list %}
         {% for comment in comment_list %}
@@ -192,4 +189,5 @@
             </div>
         </div>
     </div>
-{% endblock comments %}
+</div>
+{% endblock content %}
