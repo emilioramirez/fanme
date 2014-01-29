@@ -38,6 +38,7 @@
                         {% endblock menuOptions %}
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+                        <li><span class="thumbnail"><img src="{% avatar_url user 25 %}" alt="Foto perfil"></span></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if user.persona %}{{ user.first_name }}{% else %}{{ user.empresa.razon_social }}{% endif %} <span class="glyphicon glyphicon-cog"></span></a>
                             <ul class="dropdown-menu">
@@ -70,31 +71,34 @@
             {% endblock menuArea %}
             {% endblock header%}
             <ol class="breadcrumb">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Library</a></li>
-              <li class="active">Data</li>
+                {% block breadcrumb %}
+                <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Atrás</a></li>
+                {% block breadcrumb-active %}
+                <li class="active">Example</li>
+                {% endblock breadcrumb-active %}
+                {% endblock breadcrumb %}
             </ol>
 
+            <div class="container">
             {% block messages %}
-            <div id="messages-conteiner">
                 {% if messages %}
-                <ul class="messages">
                     {% for message in messages %}
-                    <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                        </div>
+                    </div>
                     {% endfor %}
-                </ul>
                 {% endif %}
-            </div>
             {% endblock messages %}
-            <!-- Begin Content -->
-            <div class='content'>
-                {% block content %}{% endblock%}
-                <div class="clear"></div>
-            <!-- End Content -->
             </div>
-            <!-- Begin Footer -->
-            <div class='footer'>
-                {% block footer %}
+            <!-- Begin Content -->
+            <div class="conteiner">
+                <div class="row">
+                    {% block content %}{% endblock%}
+                </div>
+                <div class="row">
+                    {% block footer %}
                     <div class="footer-line-divisor">
                         <img src="{{ STATIC_URL }}images/footer-line-divisor.png" alt="Footer Line Divisor" />
                     </div>
@@ -105,11 +109,9 @@
                         <a href="#">Condiciones</a> |
                         <a href="#">Copyright</a>
                     </div>
-                {% endblock%}
-                <div class="clear"></div>
-            <!-- End Footer -->
+                {% endblock%}    
+                </div>
             </div>
-        <div class="clear"></div>
-        {% block myjavascript %}{% endblock %}
+    {% block myjavascript %}{% endblock %}
     </body>
 </html>

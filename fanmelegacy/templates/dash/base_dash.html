@@ -16,18 +16,15 @@
 {% endblock myjavascript %}
 
 {% block content %}
-<div class="conteiner">
-    <div class="row">
-        <div class="col-md-8">
-            {% block dashboard %}
-            {% endblock dashboard %}
-        </div>
-        <div class="col-md-4">
-            <div class="content-sidebar">
-            {% block sidebar %}
-            {% endblock sidebar %}
-            </div>
-        </div>
+<div class="col-md-offset-1 col-md-7">
+    {% block dashboard %}
+    {% endblock dashboard %}
+</div>
+<div class="col-md-3">
+    <div class="content-sidebar">
+    {% block sidebar %}
+    {% endblock sidebar %}
     </div>
 </div>
+<div class="col-md-offset-1"></div>
 {% endblock%}
