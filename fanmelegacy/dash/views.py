@@ -237,38 +237,24 @@ def logbook_user(request, user_id):
 
 @login_required(login_url='/accounts/user/')
 def my_fans_items(request):
-    lista = []
     try:
         items = request.user.persona.items.all()
-        for item in items:
-            lista.append(
-                (item, 0)
-            )
-        messages.add_message(request, messages.INFO, "Sos fan de")
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/mi_fanes.html',
-        {'items': lista, 'is_fan': True},
+    return render_to_response('dash/items_stats.html',
+        {'items': items, 'is_fan': True, 'title_page': "Sos fan de"},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def my_comments_items(request):
-    lista = []
     try:
         request.user.persona
         items = request.user.items_comentados.all().distinct()
-        for item in items:
-            lista.append(
-                (item,
-                request.user.comentarios_realizados.filter(item=item).count()
-                )
-            )
-        messages.add_message(request, messages.INFO, "Has comentado los siguientes items")
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/mis_comentarios.html',
-        {'items': lista, 'is_fan': False},
+    return render_to_response('dash/items_stats.html',
+        {'items': items, 'is_fan': False, 'title_page': "Comentaste"},
         context_instance=RequestContext(request))
 
 
@@ -279,14 +265,11 @@ def recomendaciones_enviadas(request):
         items_ids = request.user.recomendaciones_enviadas.all().values_list(
             'item', flat=True).distinct()
         items = Item.objects.filter(id__in=items_ids)
-        messages.add_message(request, messages.INFO, "Has recomendado los siguientes items a tus seguidores")
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    recomendaciones = request.user.recomendaciones_enviadas.all().order_by(
-        'fecha')
-    return render_to_response('dash/mis_recomendaciones_enviadas.html',
+    return render_to_response('dash/items_stats.html',
         {
-        'recomendaciones': items,' is_fan': False},
+        'items': items,'is_fan': False, 'title_page': "Recomendaste"},
         context_instance=RequestContext(request))
 
 
