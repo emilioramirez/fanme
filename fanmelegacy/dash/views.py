@@ -284,11 +284,10 @@ def recomendaciones_recibidas(request):
         for r in rec:
             r.estado = "leido"
             r.save()
-        messages.add_message(request, messages.INFO, "Te han recomendado los siguientes items")
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/mis_recomendaciones_recibidas.html',
-        {'recomendaciones': items},
+    return render_to_response('dash/items_stats.html',
+        {'items': items, 'title_page': "Recomendaciones recibidas", 'seccion': "Social"},
         context_instance=RequestContext(request))
 
 

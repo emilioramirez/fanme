@@ -60,7 +60,7 @@
                 {% if notificaciones_noleidas > 0 %}<span class="badge">{{ notificaciones_noleidas }}</span>{% endif %}
             </div>
         </a>
-        <a href="/dash/recomendation/">
+        <a href="{% url 'recomendaciones_recibidas' %}">
             <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
                 {% if recomendaciones_noleidas > 0 %}<span class="badge">{{ recomendaciones_noleidas }}</span>{% endif %}
             </div>

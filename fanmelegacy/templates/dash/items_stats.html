@@ -3,7 +3,7 @@
 {% load dash_filters %}
 
 {% block breadcrumb-active %}
-<li class="active">Estadisticas</li>
+<li class="active">{{seccion|default:"Estadisticas"}}</li>
 <li>{{ title_page|default:"TITULO DE PAGINA"}}</li>
 {% endblock breadcrumb-active %}
 
