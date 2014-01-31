@@ -10,7 +10,7 @@
 
 
 {% block dashboard %}
-    <h1 style="margin-left: 120px; margin-top: 35px;">Actividad del usuario</h1>
+    <h1>Actividad del usuario</h1>
     <div class="logbook-content-list">
         {% if actividades %}
             {% for actividad in actividades %}
@@ -82,7 +82,7 @@
                 </div>
                 <div class="logbook-user-image">
                     {% if user_logbook.persona.avatar %}
-                        <img src="{{ user_logbook.persona.avatar.url_100x100 }}" alt="Logo" />
+                        <img src="{% avatar_url user_logbook 100 %}" alt="Logo" />
                     {% else %}
                         {% if user_logbook.persona %}
                             {% if user_logbook.persona.sexo == "M" %}
