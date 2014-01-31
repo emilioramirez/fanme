@@ -76,7 +76,7 @@
                         {% block breadcrumb %}
                         <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Atrás</a></li>
                         {% block breadcrumb-active %}
-                        <li class="active">Example</li>
+                        <li class="active">{{ title_page|default:"TITULO DE PAGINA"}}</li>
                         {% endblock breadcrumb-active %}
                         {% endblock breadcrumb %}
                     </ol>

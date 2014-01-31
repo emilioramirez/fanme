@@ -174,8 +174,8 @@ body { padding-top: 70px; }
             .dashboard-list-topics{
                 border: 1px solid #BBBBBB;
                 border-radius: 7px 7px 7px 7px;
-                height: 48px;
-                margin: 80px 0px 5px;
+                /*height: 48px;*/
+                margin: 0px 0px 12px 0px;
                 overflow: hidden;
                 box-shadow: 1px 1px 7px #BBBBBB;
             }
