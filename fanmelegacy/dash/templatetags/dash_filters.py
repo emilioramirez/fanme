@@ -9,7 +9,10 @@ def split(str, splitter):
 
 @register.filter
 def unicode(obj):
-    return obj.__unicode__()
+    try:
+        return obj.__unicode__()
+    except AttributeError:
+        return obj
 
 
 @register.filter

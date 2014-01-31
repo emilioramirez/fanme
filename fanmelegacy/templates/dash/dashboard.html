@@ -56,7 +56,7 @@
                         <div class="col-md-8"><a href="{% url 'item-detail' item.pk %}">{{ item }}</a></div>
                         <div class="col-md-2">
                             <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" alt="Score" title="Cantidad de fans">
-                            <span style="vertical-align:top;">{{ item.persona_set.count }}</span>
+                            <span>{{ item.persona_set.count }}</span>
                         </div>
                     </div>
                 </div>

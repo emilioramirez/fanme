@@ -1,0 +1,18 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block breadcrumb-active %}
+<li class="active">Estadisticas</li>
+<li>{{ title_page|default:"TITULO DE PAGINA"}}</li>
+{% endblock breadcrumb-active %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="dashboard-list-items">
+        {% for item in items %}
+            {% include "dash/item_detail.html" %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock dashboard %}
