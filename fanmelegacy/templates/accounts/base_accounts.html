@@ -30,11 +30,15 @@
 
 
 {% block content %}
-    <div class="accounts-register-welcome-image">
-        <img src="{{ STATIC_URL }}images/register-welcome-image.png" alt="Register Welcome Image" />
+<div class="row">
+    <div class="col-md-10 col-md-offset-2">
+        <div class="accounts-register-welcome-image">
+            <img src="{{ STATIC_URL }}images/register-welcome-image.png" alt="Register Welcome Image" />
+        </div>
+        <div class="accounts-register-form">
+            {% block register_form %}{% endblock register_form %}
+        </div>
     </div>
-    <div class="accounts-register-form">
-        {% block register_form %}{% endblock register_form %}
-    </div>
+</div>
 {% endblock content%}
 
