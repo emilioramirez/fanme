@@ -615,7 +615,7 @@ def user_main_view_notifications(request):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('social/user_main_notification.html', {
-        'form_search': searchbox},
+        'form_search': searchbox, 'breadcrumb': ["Social", "Notificaciones"]},
         context_instance=RequestContext(request))
 
 

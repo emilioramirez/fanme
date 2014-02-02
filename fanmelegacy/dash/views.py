@@ -109,8 +109,7 @@ def dashboard_all(request):
 @login_required(login_url='/accounts/user/')
 def logbook(request):
     try:
-        followings = request.user.persona.following.all()
-        active_followings = followings.filter(is_active=True)
+        active_followings = request.user.persona.following.filter(is_active=True)
         actividades = []
         for user in active_followings:
             actividades = sorted(
@@ -124,7 +123,7 @@ def logbook(request):
     return render_to_response('dash/logbook.html', {
         'cant_following': cant_following,
         'actividades': actividades, 'cant_followers': cant_followers,
-        },
+        "breadcrumb": ["Logbook"]},
         context_instance=RequestContext(request))
 
 
@@ -176,7 +175,7 @@ def results(request):
 
 @login_required(login_url='/accounts/user/')
 def empresa(request):
-    messages.add_message(request, message.INFO, 'Estos usuarios se han hecho fan')
+    messages.add_message(request, messages.INFO, 'Estos usuarios se han hecho fan')
     return render_to_response('bussiness/dash_empresa.html', {},
         context_instance=RequestContext(request))
 
@@ -242,7 +241,8 @@ def my_fans_items(request):
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/items_stats.html',
-        {'items': items, 'is_fan': True, 'title_page': "Sos fan de"},
+        {'items': items, 'is_fan': True, 'breadcrumb': ["Estadisticas",
+        "Sos fan de"]},
         context_instance=RequestContext(request))
 
 
@@ -254,7 +254,8 @@ def my_comments_items(request):
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/items_stats.html',
-        {'items': items, 'is_fan': False, 'title_page': "Comentaste"},
+        {'items': items, 'is_fan': False, 'breadcrumb': ["Estadisticas",
+        "Comentaste"]},
         context_instance=RequestContext(request))
 
 
@@ -268,8 +269,7 @@ def recomendaciones_enviadas(request):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/items_stats.html',
-        {
-        'items': items,'is_fan': False, 'title_page': "Recomendaste"},
+        {'items': items,'is_fan': False, "breadcrumb": ["Estadisticas", "Recomendaciones", "Enviadas"]},
         context_instance=RequestContext(request))
 
 
@@ -287,7 +287,7 @@ def recomendaciones_recibidas(request):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/items_stats.html',
-        {'items': items, 'title_page': "Recomendaciones recibidas", 'seccion': "Social"},
+        {'items': items, 'breadcrumb': ["Social", "Recomendaciones", "Recibidas"]},
         context_instance=RequestContext(request))
 
 

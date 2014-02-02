@@ -121,7 +121,7 @@ def register_item(request):
     else:
         form_register = ItemRegisterForm()
     return render_to_response('items/register_item.html',
-        {'form_register': form_register},
+        {'form_register': form_register, "breadcrumb": ["Item", "Registrar nuevo"]},
         context_instance=RequestContext(request))
 
 
@@ -217,13 +217,10 @@ def recomendation(request, item_id):
                 actividad.recomendacion = recomendacion
                 actividad.save()
         messages.add_message(request, messages.SUCCESS, u"Se han enviado las recomendaciones correctamente.")
-    messages.add_message(request, messages.SUCCESS, u"Recomienda {0} a tus seguidores.".format(item.nombre))
-    if usuarios_ya_recomendados:
-        messages.add_message(request, messages.ERROR, u"Ya has recomendado este item a todos tus seguidores.")
     if not seguidores and not usuarios_ya_recomendados:
         messages.add_message(request, messages.ERROR, u"Para realizar una recomendacion al menos un usuario debe seguirlo.")
     return render_to_response('items/recomendacion.html',
-        {'usuarios': seguidores, 'item': item},
+        {'usuarios': seguidores, 'item': item, "breadcrumb": ["Item", "Recomendar"]},
         context_instance=RequestContext(request))
 
 
