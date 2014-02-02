@@ -1,9 +1,5 @@
 {% extends "dash/dashboard.html" %}
 
-{% block mystylesheet-dashboard %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
-{% endblock mystylesheet-dashboard%}
-
 {% block myjavascript %}
 <script>
     $(".cancelar").click(function(e){
@@ -20,9 +16,11 @@
 {% endblock myjavascript %}
 
 {% block dashboard %}
-    <div class="eventos-content">
+<div class="row">
+    <div class="page-header">
+      <h1>Eventos</h1>
+    </div>
     {% if no_hay_eventos %}
-        <div class='eventos-titulo'>Eventos</div>
         No has creado ningun evento. <a href="/social/nuevo/" style="text-decoration: none;">¿Que esperas hacerlo?</a>
         <div class="new-message"></div>
     {% else %}
@@ -74,7 +72,7 @@
             </div>
         {% endif %}
     {% endif %}
-    </div>
+</div>
 {% endblock dashboard %}
 
 {% block sidebar %}

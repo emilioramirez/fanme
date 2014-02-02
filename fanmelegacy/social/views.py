@@ -46,7 +46,8 @@ def eventos(request):
         no_hay_eventos = False
     temp = RequestContext(request, {'eventos_creados': eventos_creados,
         'eventos_invitado': eventos_invitado, 'no_hay_eventos': no_hay_eventos,
-        'form_search': searchbox})
+        'form_search': searchbox,
+        'breadcrumb': ["Social", "Eventos"]})
     return render_to_response('social/eventos.html', temp)
 
 
@@ -97,7 +98,8 @@ def new_evento(request):
         users = User.objects.filter(id__in=list_ids).filter(is_active=True)
         form.fields["invitados"].queryset = users
     template_vars = RequestContext(request, {"form": form,
-        'form_search': searchbox, 'users': users})
+        'form_search': searchbox, 'users': users,
+        'breadcrumb': ["Social", "Eventos", "Crear"]})
     return render_to_response('social/new_evento.html', template_vars)
 
 
@@ -113,7 +115,8 @@ def evento(request, evento_id):
     except Evento.DoesNotExist:
         evento = []
     temp = RequestContext(request, {'form_search': searchbox, 'evento': evento,
-        'creador': creador, 'lista_invitados': lista_invitados})
+        'creador': creador, 'lista_invitados': lista_invitados,
+        'breadcrumb': ["Social", "Eventos", "Detalle"]})
     return render_to_response('social/evento.html', temp)
 
 
@@ -166,7 +169,8 @@ def edit_evento(request, evento_id):
         users_invitados = evento_db.invitados.all()
     template_vars = RequestContext(request, {"form": form, "user": request.user,
         'form_search': searchbox, 'evento': evento_db, 'users': users,
-        'users_invitados': users_invitados })
+        'users_invitados': users_invitados,
+        "breadcrumb": ["Social", "Eventos", "Evento", "Editar"]})
     return render_to_response('social/edit_evento.html', template_vars)
 
 
