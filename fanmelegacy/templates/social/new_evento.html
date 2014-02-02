@@ -1,4 +1,4 @@
-{% extends "dash/dashboard.html" %}
+{% extends "social/base_social.html" %}
 
 {% load avatar_tags %}
 
@@ -226,7 +226,10 @@
 {% endblock %}
 
 {% block dashboard %}
-    <div class="title-messages">Nuevo evento</div>
+<div class="row">
+    <div class="page-header">
+        <h1>Nuevo evento</h1>
+    </div>
     <div class="notifications-content">
         <div class="form-nuevo-evento">
             <form action="/social/nuevo/" method="post" enctype="multipart/form-data" id="my-form">{% csrf_token %}
@@ -323,6 +326,7 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+</div>
 {% endblock dashboard %}
 
 {% block sidebar %}

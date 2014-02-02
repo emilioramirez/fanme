@@ -1,8 +1,4 @@
-{% extends "dash/dashboard.html" %}
-
-{% block mystylesheet-dashboard %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
-{% endblock mystylesheet-dashboard %}
+{% extends "social/base_social.html" %}
 
 {% block myjavascript %}
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5oH8nVPAHgFub2orh1UBYNd7PCUa8vKw&sensor=false"></script>
@@ -86,75 +82,77 @@
 {% endblock myjavascript %}
 
 {% block dashboard %}
-    <div class="eventos-content">
-        <div class='eventos-titulo'>Evento</div>
-        {% if evento %}
-            <div class="thumbnail">
-                <img src="{{ evento.imagen.url }}" alt="Imagen de Evento">
-            </div>
-            <div class='evento'>
-                <div class='evento-fields'>
-                    <div class='evento-label'>Nombre</div>
-                    <div class='evento-field'>{{ evento.nombre }}</div>
-                    <div class="clear"></div>
-                </div>
-                <div class='evento-fields'>
-                    <div class='evento-label'>¿De que se trata?</div>
-                    <div class='evento-field'>{{ evento.descripcion }}</div>
-                    <div class="clear"></div>
-                </div>
-                <div class='evento-fields'>
-                    <div class='evento-label'>¿Cuando es?</div>
-                    <div class='evento-field'>{{ evento.fecha_inicio }}</div>
-                    <div class="clear"></div>
-                </div>
-                <div class='evento-fields'>
-                    <div class='evento-label'>¿Cuando termina?</div>
-                    <div class='evento-field'>{{ evento.fecha_fin }}</div>
-                    <div class="clear"></div>
-                </div>
-                <div class='evento-fields'>
-                    <div class='evento-label'>¿Donde?</div>
-                    <div class="new-notification-clear"></div>
-                    <div id="googleMap" style="width:450px;height:400px; margin-left:73px; margin-top: -1px;"></div>
-                    <div class="clear"></div>
-                </div>
-                <div class='evento-fields'>
-                    <div class='evento-label'>Direccion</div>
-                    <div class='evento-field'>{{ evento.direccion }}</div>
-                    <div class="clear"></div>
-                </div>
-                <div class='evento-fields'>
-                    <div class='evento-label'>Invitados</div>
-                    <div class='evento-field'>
-                        <ul>
-                        {% for invitado in lista_invitados %}
-                            <li>
-                                <div class='invitados'>
-                                    {{ invitado }}
-                                </div>
-                            </li>
-                        {% endfor %}
-                        </ul>
-
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                {% if creador %}
-                    <div style="float:right; text-align: center;">
-                        <div class='evento-editar-btn' style="float:left;">
-                            <a href="/social/evento/edit/{{ evento.id }}"><div class="evento-editar">Editar</div></a>
-                        </div>
-                        <input type="button" value="Cancelar" class="item-cancelar-registracion" style="margin-left: 10px; float: right;" onclick="location.href='../../../social/eventos';">
-                    </div>
-                {% endif %}
-            </div>
-        {% else %}
-            <div>No existe este evento</div>
-        {% endif %}
-        <input type="hidden" name="latitud" id="latitud" value="" />
-        <input type="hidden" name="longitud" id="longitud" value="" />
+<div class="row">
+    <div class="page-header">
+      <h1>Evento</h1>
     </div>
+    {% if evento %}
+        <div class="thumbnail">
+            <img src="{{ evento.imagen.url }}" alt="Imagen de Evento">
+        </div>
+        <div class='evento'>
+            <div class='evento-fields'>
+                <div class='evento-label'>Nombre</div>
+                <div class='evento-field'>{{ evento.nombre }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>¿De que se trata?</div>
+                <div class='evento-field'>{{ evento.descripcion }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>¿Cuando es?</div>
+                <div class='evento-field'>{{ evento.fecha_inicio }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>¿Cuando termina?</div>
+                <div class='evento-field'>{{ evento.fecha_fin }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>¿Donde?</div>
+                <div class="new-notification-clear"></div>
+                <div id="googleMap" style="width:450px;height:400px; margin-left:73px; margin-top: -1px;"></div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Direccion</div>
+                <div class='evento-field'>{{ evento.direccion }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Invitados</div>
+                <div class='evento-field'>
+                    <ul>
+                    {% for invitado in lista_invitados %}
+                        <li>
+                            <div class='invitados'>
+                                {{ invitado }}
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+
+                </div>
+                <div class="clear"></div>
+            </div>
+            {% if creador %}
+                <div style="float:right; text-align: center;">
+                    <div class='evento-editar-btn' style="float:left;">
+                        <a href="/social/evento/edit/{{ evento.id }}"><div class="evento-editar">Editar</div></a>
+                    </div>
+                    <input type="button" value="Cancelar" class="item-cancelar-registracion" style="margin-left: 10px; float: right;" onclick="location.href='../../../social/eventos';">
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div>No existe este evento</div>
+    {% endif %}
+    <input type="hidden" name="latitud" id="latitud" value="" />
+    <input type="hidden" name="longitud" id="longitud" value="" />
+</div>
 {% endblock dashboard %}
 
 {% block sidebar %}
