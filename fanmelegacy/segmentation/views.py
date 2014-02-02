@@ -10,6 +10,11 @@ class AnalisisDenunciaList(ListView):
     model = AnalisisDenuncia
     context_object_name = 'mis_denuncias_asignadas'
 
+    def get_context_data(self, **kwargs):
+        context = super(AnalisisDenunciaList, self).get_context_data(**kwargs)
+        context['breadcrumb'] = ["Moderacion", "Analisis de denuncias"]
+        return context
+
     def get_queryset(self):
         return AnalisisDenuncia.objects.filter(moderador=self.request.user)
 
@@ -21,6 +26,7 @@ class AnalisisDenunciaUpdate(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(AnalisisDenunciaUpdate, self).get_context_data(**kwargs)
         context['object'] = self.object
+        context['breadcrumb'] = ["Moderacion", "Analisis de denuncias", "Resolver"]
         return context
 
     def form_valid(self, form):
