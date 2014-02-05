@@ -1,0 +1,46 @@
+{% extends "dash/sidebar.html" %}
+
+{% load dash_filters avatar_tags%}
+
+{% block user_range %}{% endblock %}
+
+{% block sidebar_user_info_avatar %}
+<div class="logbook-user-image">
+    <div class="thumbnail">
+        <img src="{% avatar_url user 100 %}" alt="Logo" />
+    </div>
+</div>
+{% endblock sidebar_user_info_avatar %}
+
+{% block sidebar_stats %}
+    <div class="sidebar-stadistic">
+        <a href="#">
+            <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+                <div class="stadistic-num">{{ user.persona.items.count }}</div>
+                <div class="stadistic-nom">Sus Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
+                <div class="stadistic-num">
+                    {{ user.recomendaciones_enviadas.count }}
+                </div>
+                <div class="stadistic-nom">Sus recomendaciones</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
+                <div class="stadistic-num">{{ user.comentarios_realizados.count }}</div>
+                <div class="stadistic-nom">Sus Comentario{% if user.comentarios_realizados.count > 1 %}s{% endif %}</div>
+            </div>
+        </a>
+    </div>
+{% endblock sidebar_stats %}
+
+{% block sidebar_indicators %}{% endblock sidebar_indicators %}
+
+{% block boton %}
+<div class="sidebar-follow-user">
+    <a href="/dash/unfollow/{{ user.id }}"><div class="new-item-buttom-mati" style="margin: 10px!important;">Dejar de seguir</div></a>
+</div>
+{% endblock boton %}

@@ -1,4 +1,4 @@
-{% extends "dash/base_dash.html" %}
+{% extends "dash/logbook.html" %}
 
 {% load avatar_tags %}
 
@@ -9,112 +9,6 @@
 {% endblock mystylesheet%}
 
 
-{% block dashboard %}
-    <h1>Actividad del usuario</h1>
-    <div class="logbook-content-list">
-        {% if actividades %}
-            {% for actividad in actividades %}
-                {% if actividad.tipo == "fan" %}
-                    <div class="actividad-fan-content">
-                        <div class="actividad-user-orig">
-                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
-                        </div>
-                        <div class="actividad-desc-content">
-                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
-                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
-                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
-
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% if actividad.tipo == "comentario" %}
-                    <div class="actividad-fan-content">
-                        <div class="actividad-user-orig">
-                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
-                        </div>
-                        <div class="actividad-desc-content">
-                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
-                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
-                            <div class="" >"{{ actividad.comentario.comentario }}"</div>
-                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
-
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% if actividad.tipo == "recomendacion" %}
-                    <div class="actividad-fan-content">
-                        <div class="actividad-user-orig">
-                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
-                        </div>
-                        <div class="actividad-desc-content">
-                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
-                            <div class="actividad-item" ><a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
-                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% else %}
-            Los usuarios que siguen no han realizado ninguna actividad en el sistema
-        {% endif %}
-    </div>
-{% endblock dashboard %}
-
 {% block sidebar %}
-    <div class="sidebar-content">
-            <div class="sidebar-user">
-                <span class="user-name">{{ user_logbook.first_name }} {{ user_logbook.last_name }}</span>
-                <div class="user-stars">
-                    <ul>
-                        {% if user_logbook.persona %}
-                            {% for estrella in user_logbook.persona.cantidad_estrellas %}
-                                <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
-                            {% endfor %}
-                            {% with cant_estrellas=5|subtract:user_logbook.persona.get_cant_estrellas %}
-                                {% for i in cant_estrellas|range %}
-                                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings-blanca.png" alt="Star" /></li>
-                                {% endfor %}
-                            {% endwith %}
-                        {% endif %}
-                    </ul>
-                </div>
-                <div class="logbook-user-image">
-                    {% if user_logbook.persona.avatar %}
-                        <img src="{% avatar_url user_logbook 100 %}" alt="Logo" />
-                    {% else %}
-                        {% if user_logbook.persona %}
-                            {% if user_logbook.persona.sexo == "M" %}
-                                <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
-                            {% else %}
-                                <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
-                            {% endif%}
-                        {% else %}
-                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
-                        {% endif%}
-                    {% endif%}
-                </div>
-            </div>
-            <div class="sidebar-stadistic">
-                <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
-                    <div class="stadistic-num">{{ user_logbook.persona.items.count }}</div>
-                    <div class="stadistic-nom">Sus Fan{% if user_logbook.persona.items.count > 1 %}s{% endif %}</div>
-                </div>
-                <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
-                    <div class="stadistic-num">
-                        {{ user_logbook.recomendaciones_enviadas.count }}
-                    </div>
-                    <div class="stadistic-nom">Sus recomendaciones</div>
-                </div>
-                <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
-                    <div class="stadistic-num">{{ user_logbook.comentarios_realizados.count }}</div>
-                    <div class="stadistic-nom">Sus Comentario{% if user_logbook.comentarios_realizados.count > 1 %}s{% endif %}</div>
-                </div>
-                <div class="sidebar-follow-user">
-                    <a href="/dash/unfollow/{{ user_logbook.id }}"><div class="new-item-buttom-mati" style="margin: 10px!important;">Dejar de seguir</div></a>
-                </div>
-            </div>
-        <div class="clear"></div>
-    </div>
+    {% include "dash/sidebar_logbook_user.html" %}
 {% endblock sidebar %}

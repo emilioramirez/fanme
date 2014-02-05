@@ -1,6 +1,7 @@
 {% load dash_filters %}
 
 <div class="sidebar-content">
+    {% block sidebar_user_info %}
     <div class="sidebar-user">
         <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
         <div class="user-stars">
@@ -15,10 +16,15 @@
                 {% endwith %}
             </ul>
         </div>
+        {% block sidebar_user_info_avatar %}{% endblock sidebar_user_info_avatar %}
+        {% block user_range %}
         {% if perms.segmentation.change_analisisdenuncia  %}
         <div class="user-name"><small>Usuario moderador</small></div>
         {% endif %}
+        {% endblock user_range %}
     </div>
+    {% endblock sidebar_user_info %}
+    
     {% block sidebar_stats %}
     <div class="sidebar-stadistic">
         <a href="{% url 'my_fans_items' %}">
@@ -43,6 +49,7 @@
         </a>
     </div>
     {% endblock sidebar_stats %}
+    {% block sidebar_indicators %}
     <div class="sidebar-menu-indicators">
         <a href="{% url 'social-mensajes' %}">
             <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
@@ -73,10 +80,11 @@
         </a>
         {% endif %}
     </div>
+    {% endblock sidebar_indicators %}
+    {% block boton %}
     <div class="sidebar-new-item">
-        {% block boton %}
             <a href="/items/item/register/"><div class="new-item-buttom" title="Crea un item del topico que gustes">Crear Item</div></a>
-        {% endblock %}
     </div>
+    {% endblock %}
     <div class="clear"></div>
 </div>

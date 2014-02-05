@@ -190,7 +190,8 @@ def follow_user(request, user_id):
             return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/follow.html', {'user_logbook': user_to_follow},
+    return render_to_response('dash/follow.html', {'user': user_to_follow,
+        'breadcrumb': ["Logbook", "{} {}".format(user_to_follow.first_name, user_to_follow.last_name)]},
         context_instance=RequestContext(request))
 
 
@@ -229,8 +230,9 @@ def logbook_user(request, user_id):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/logbook_user.html',
-        {'user_logbook': user_logbook,
-        'actividades': actividades},
+        {'user': user_logbook,
+        'actividades': actividades,
+        'breadcrumb': ["Logbook", "{} {}".format(user_logbook.first_name, user_logbook.last_name)]},
         context_instance=RequestContext(request))
 
 
@@ -293,7 +295,6 @@ def recomendaciones_recibidas(request):
 
 @login_required(login_url='/accounts/user/')
 def following(request):
-    messages.add_message(request, messages.INFO, 'Estas siguiendo a estos usuarios')
     followings = request.user.persona.following.all()
     active_followings = followings.filter(is_active=True)
     cant_following = active_followings.count()
@@ -301,18 +302,19 @@ def following(request):
     return render_to_response('dash/following.html',
         {'active_followings': active_followings,
          'cant_following': cant_following,
-         'cant_followers': cant_followers},
+         'cant_followers': cant_followers,
+         'breadcrumb': ["Social","Usuarios que sigues",]},
         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def followers(request):
-    messages.add_message(request, messages.INFO, 'Estos usuarios te estan siguiendo')
     cant_followers = get_active_followers(request)
     cant_following = get_active_followings(request)
     return render_to_response('dash/followers.html',
         {'cant_followers': cant_followers,
-        'cant_following': cant_following},
+        'cant_following': cant_following,
+        'breadcrumb': ["Social", "Usuarios que me siguen"]},
         context_instance=RequestContext(request))
 
 
@@ -461,9 +463,9 @@ def dejar_de_seguir_usuario(request, user_id):
 
 @login_required(login_url='/accounts/user/')
 def dejar_de_seguir_usuarios(request):
-    followings = request.user.persona.following.all()
-    active_followings = followings.filter(is_active=True)
+    active_followings = request.user.persona.following.filter(is_active=True)
     cant_following = active_followings.count()
+    cant_followers = get_active_followers(request)
     if request.method == 'POST':
         my_profile = request.user.persona
         lista_dejar_de_seguir = request.POST.getlist('eliminados')
@@ -474,7 +476,9 @@ def dejar_de_seguir_usuarios(request):
     else:
         return render_to_response('dash/dejar_de_seguir.html',
             {'active_followings': active_followings,
-            'cant_following': cant_following},
+            'cant_following': cant_following,
+            'cant_followers': cant_followers,
+            'breadcrumb': ['Social', "Usuarios que sigues", "Dejar de seguir"]},
             context_instance=RequestContext(request))
 
 

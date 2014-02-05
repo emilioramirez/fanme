@@ -1,4 +1,4 @@
-{% extends "dash/base_dash.html" %}
+{% extends "dash/dashboard.html" %}
 
 {% load avatar_tags %}
 
@@ -65,88 +65,12 @@
             </div>
         </div>
     {% empty %}
-        <p>Los usuarios que siguen no han realizado ninguna actividad en el sistema</p>
+        <p>Los usuarios que sigues no han realizado ninguna actividad en el sistema</p>
     {% endfor %}
     </div>
 </div>
 {% endblock dashboard %}
 
 {% block sidebar %}
-    <div class="sidebar-content">
-            <div class="sidebar-user">
-                <span class="user-name">{{ user.first_name }} {{ user.last_name }}</span>
-                <div class="user-stars">
-                    <ul>
-                        {% for estrella in user.persona.cantidad_estrellas %}
-                            <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
-                        {% endfor %}
-                        {% with cant_estrellas=5|subtract:user.persona.get_cant_estrellas %}
-                            {% for i in cant_estrellas|range %}
-                                <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings-blanca.png" alt="Star" /></li>
-                            {% endfor %}
-                    {% endwith %}
-                    </ul>
-                </div>
-            </div>
-            <div class="sidebar-stadistic">
-                <a href="/dash/fans/">
-                    <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
-                        <div class="stadistic-num">{{ user.persona.items.count }}</div>
-                        <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
-                    </div>
-                </a>
-                <a href="/dash/following/">
-                    <div class="stadistic-recomendations sidebar-stadistic-item">
-                        <div class="stadistic-num">{{ cant_following }}</div>
-                        <div class="stadistic-nom">
-                            {% if user.persona.following.count > 1 %}
-                                Usuarios que sigo
-                            {% else %}
-                                Usuario que sigo
-                            {% endif %}
-                        </div>
-                    </div>
-                </a>
-                <a href="/dash/followers/">
-                    <div class="stadistic-comments sidebar-stadistic-item">
-                        <div class="stadistic-num">{{ cant_followers }}</div>
-                        <div class="stadistic-nom">
-                            {% if user.followers.count > 1 %}
-                                Usuarios me siguen
-                            {% else %}
-                                Usuario me sigue
-                            {% endif %}
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="sidebar-menu-indicators">
-                <a href="{% url 'social-mensajes' %}">
-                    <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
-                        {% if mensajes_nolidas > 0 %}({{ mensajes_nolidas }}){% endif %}
-                    </div>
-                </a>
-                <a href="/social/eventos/">
-
-                    <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
-                        {% if eventos_noleidos > 0 %}({{ eventos_noleidos }}){% endif %}
-                    </div>
-                </a>
-                <a href="/social/user_main_notification/">
-                    <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
-                        {% if notificaciones_noleidas > 0 %}({{ notificaciones_noleidas }}){% endif %}
-                    </div>
-                </a>
-                <a href="/dash/recomendation/">
-                    <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
-                        {% if recomendaciones_noleidas > 0 %}({{ recomendaciones_noleidas }}){% endif %}
-                    </div>
-                </a>
-            </div>
-            </div>
-            <div class="sidebar-new-item">
-                <a href="/items/item/register/"><div class="new-item-buttom">Crear Item</div></a>
-            </div>
-            <div class="clear"></div>
-        </div>
+    {% include "dash/sidebar_logbook.html" %}
 {% endblock sidebar %}
