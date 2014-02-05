@@ -1,39 +1,31 @@
 {% extends "dash/logbook.html" %}
 
+{% load avatar_tags %}
 
 {% block dashboard %}
-    <div class="result-result">
-        <div class="result-content">
-            <div class="result-body">
-                {% for user_profile in user.followers.all %}
-                        <div class="result-hit">
-                            <a href="/dash/logbook/{{ user_profile.user.id }}">
-                                <div class="result-image">
-                                    {% if user_profile.user.avatar %}
-                                        <img src="{{ user_profile.avatar.url_50x50 }}" alt="Logo" />
-                                    {% else %}
-                                        {% if user_profile %}
-                                            {% if user_profile.sexo == "M" %}
-                                                <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
-                                            {% else %}
-                                                <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
-                                            {% endif%}
-                                        {% else %}
-                                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
-                                        {% endif%}
-                                    {% endif%}
-                                </div>
-                            </a>
-                            <a href="/dash/logbook/{{ user_profile.user.id }}">
-                                {% if user_profile.user.first_name == "" %}
-                                    <div class="result-descripcion">{{ user_profile.empresa.razon_social }}</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+        {% for persona in user.followers.all %}
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="{% avatar_url persona.user 100 %}" alt="{{ persona.user.first_name }} {{ persona.user.last_name }}">
+                    <div class="caption">
+                        <p>
+                            <a href="/dash/logbook/{{ persona.user.id }}">
+                                {% if persona.user.first_name == "" %}
+                                    {{ persona.user.empresa.razon_social }}
                                 {% else %}
-                                    <div class="result-descripcion">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</div>
+                                    {{ persona.user.first_name }} {{ persona.user.last_name }}
                                 {% endif %}
                             </a>
-                        </div>
-                {% endfor %}
+                        </p>
+                    </div>
+                </div>
             </div>
+        {% endfor %}
         </div>
     </div>
+    <div class="panel-footer"></div>
+</div>
 {% endblock dashboard %}
