@@ -7,87 +7,140 @@
 {% endblock %}
 
 {% block content %}
-    {% block dashboard %}
-    <div class="result-result">
-        <div class="result-text">
-            {% with userlen=users_result|length %}
-            {% with orglen=organizations_result|length  %}
-            {% with toplen=topics_result|length %}
-                <p>Resultados ({{ items_result|length|add:userlen|add:orglen|add:toplen }})</p>
-            {% endwith %}
-            {% endwith %}
-            {% endwith %}
-        </div>
-        <div class="result-content">
-            <div class="result-header">
-                <div class="result-name">Productos ({{ items_result|length }})</div>
-            </div>
-            <div class="result-body">
-                {% for item in items_result %}
-                    <div class="result-hit">
-                        <a href="/items/item/{{ item.id }}">
-                            <div class="result-image">
-                                {% if item.mis_imagenes.count %}
-<!--
-                                {% for itemimagen in item.mis_imagenes.all %}
-                                    <img src="{{ itemimagen.imagen.url_100x100 }}" alt="Score">
-                                {% endfor %}
--->
-                                    <img src="{{ item.first_image_little }}" alt="Score">
-                                {% else %}
-                                    <img src="{{ STATIC_URL }}images/298.png" alt="Score">
-                                {% endif %}
-                            </div>
-                        </a>
-                        <a href="/items/item/{{ item.id }}">
-                            <div class="result-descripcion">{{ item.nombre }}</div>
-                        </a>
+<div class="row">
+    <div class="col-md-12">
+        {% with userlen=users_result|length %}
+        {% with orglen=organizations_result|length  %}
+        {% with toplen=topics_result|length %}
+            <h1>Resultados ({{ items_result|length|add:userlen|add:orglen|add:toplen }})</h1>
+        {% endwith %}
+        {% endwith %}
+        {% endwith %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-12">
+                        Productos ({{ items_result|length }})
                     </div>
-                {% endfor %}
+                </div>
             </div>
-        </div>
-        <div class="result-content">
-            <div class="result-header">
-                <div class="result-name">Usuarios ({{ users_result|length }})</div>
-            </div>
-            <div class="result-body">
-                {% for user in users_result %}
-                        <div class="result-hit">
-                            <a href="/dash/logbook/{{ user.id }}">
-                                <div class="result-image">
-                                    <img src="{% avatar_url user 50 %}" alt="">
-                                </div>
-                            </a>
-                            <a href="/dash/logbook/{{ user.id }}">
-                                <div class="result-descripcion">{{ user.first_name }} {{ user.last_name }}</div>
-                            </a>
+            <div class="panel-body">
+                <div class="row">
+                    {% for item in items_result %}
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            {% if item.mis_imagenes.count %}
+                                <img src="{{ item.first_image_little }}" alt="Score">
+                            {% else %}
+                                <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                            {% endif %}
+                            <div class="caption">
+                                <small>{{ item.nombre }}</small>
+                                <p><a href="/items/item/{{ item.id }}" class="btn btn-primary" role="button">Detalle</a></p>
+                            </div>
                         </div>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="result-content">
-            <div class="result-header">
-                <div class="result-name">Empresas ({{ organizations_result|length }})</div>
-            </div>
-            <div class="result-body">
-                {% for organization in organizations_result %}
-                    <div class="result-hit">
-                        <a href="/items/empresa/{{ organization.id }}">
-                            <div class="result-image">
-                                {% if organization.avatar %}
-                                    <img src="{{ organization.avatar.url_50x50 }}" alt="Logo" />
-                                {% else %}
-                                        <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
-                                {% endif%}
-                            </div>
-                        </a>
-                        <a href="/items/empresa/{{ organization.id }}">
-                            <div class="result-descripcion" >{{ organization.razon_social }}</a></div>
-                        </a>
                     </div>
-                {% endfor %}
+                    {% empty %}
+                        <p>No se encontraron productos</p>
+                    {% endfor %}
+                </div>
             </div>
+            <!--
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        footer
+                    </div>
+                </div>
+            </div>
+            -->
         </div>
     </div>
-    {% endblock dashboard %}
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-12">
+                        Usuarios ({{ users_result|length }})
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    {% for user in users_result %}
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            <img src="{% avatar_url user 50 %}" alt="Avatar">
+                            <div class="caption">
+                                <small>{{ user.first_name }} {{ user.last_name }}</small>
+                                <p><a href="/dash/logbook/{{ user.id }}" class="btn btn-success" role="button">Logbook</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                        <p>No se encontraron usuarios</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <!--
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        footer
+                    </div>
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-12">
+                        Empresas ({{ organizations_result|length }})
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    {% for organization in organizations_result %}
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            {% if organization.avatar %}
+                                <img src="{{ organization.avatar.url_50x50 }}" alt="Logo" />
+                            {% else %}
+                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
+                            {% endif%}
+                            <div class="caption">
+                                <small>{{ organization.razon_social }}</small>
+                                <p><a href="/items/empresa/{{ organization.id }}" class="btn btn-warning" role="button">Conocer</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                        <p>No se encontraron Empresas.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <!--
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        footer
+                    </div>
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+</div>
 {% endblock %}

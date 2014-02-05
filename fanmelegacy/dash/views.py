@@ -169,7 +169,8 @@ def results(request):
         {'form_search': searchbox,
             'items_result': first_items,
             'users_result': active_users,
-            'organizations_result': first_organizations},
+            'organizations_result': first_organizations,
+            'breadcrumb': ["Resultado de busqueda", search]},
             context_instance=RequestContext(request))
 
 
