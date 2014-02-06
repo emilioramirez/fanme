@@ -73,14 +73,12 @@ def empresa(request, empresa_id):
     try:
         empresa = Empresa.objects.get(pk=empresa_id)
         empresa_planes = User.objects.get(email=empresa.user.email)
-        print empresa_planes
         planes = empresa_planes.plan_empresa.all().order_by('-fecha_fin_vigencia')
         items_plan = None
         if planes:
             plan = planes[0]
             if plan.fecha_fin_vigencia > date.today():
                 items_plan = plan.item
-                print items_plan.count()
     except Empresa.DoesNotExist:
         raise Http404
     return render_to_response('dash/empresa.html',

@@ -191,7 +191,7 @@ def follow_user(request, user_id):
             return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
-    return render_to_response('dash/follow.html', {'user': user_to_follow,
+    return render_to_response('dash/follow.html', {'user_to_follow': user_to_follow,
         'breadcrumb': ["Logbook", "{} {}".format(user_to_follow.first_name, user_to_follow.last_name)]},
         context_instance=RequestContext(request))
 
@@ -231,7 +231,7 @@ def logbook_user(request, user_id):
     except Persona.DoesNotExist:
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/logbook_user.html',
-        {'user': user_logbook,
+        {'user_logbook': user_logbook,
         'actividades': actividades,
         'breadcrumb': ["Logbook", "{} {}".format(user_logbook.first_name, user_logbook.last_name)]},
         context_instance=RequestContext(request))
@@ -369,7 +369,8 @@ def edit_account(request):
             messages.add_message(request, messages.SUCCESS, "Se actualizo correctamente el perfil")
     return render_to_response('dash/edit_account.html',
         {'form_update': form_update,
-        'is_active': is_active},
+        'is_active': is_active,
+        'breadcrumb': ["Datos de la cuenta"]},
         context_instance=RequestContext(request))
 
 
