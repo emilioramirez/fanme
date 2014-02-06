@@ -1,4 +1,4 @@
-{% extends "dash/logbook_user.html" %}
+{% extends "dash/base_dash.html" %}
 
 {% load dash_filters %}
 
@@ -14,5 +14,7 @@
 {% endblock dashboard %}
 
 {% block sidebar %}
-    {% include "dash/sidebar_follow.html" %}
+    {% with user_to_follow as user %}
+        {% include "dash/sidebar_follow.html" %}
+    {% endwith %}
 {% endblock sidebar %}

@@ -10,5 +10,7 @@
 
 
 {% block sidebar %}
-    {% include "dash/sidebar_logbook_user.html" %}
+    {% with user_logbook as user %}
+        {% include "dash/sidebar_logbook_user.html" %}
+    {% endwith %}
 {% endblock sidebar %}
