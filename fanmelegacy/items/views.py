@@ -212,6 +212,7 @@ def recomendation(request, item_id):
                 actividad.fecha = datetime.now()
                 actividad.item = item
                 actividad.usuario_origen = request.user
+                actividad.usuario_destino = usuario
                 actividad.recomendacion = recomendacion
                 actividad.save()
         messages.add_message(request, messages.SUCCESS, u"Se han enviado las recomendaciones correctamente.")

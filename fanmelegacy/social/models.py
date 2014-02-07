@@ -1,5 +1,9 @@
+from datetime import datetime
 from django.db import models
+from django.dispatch import receiver
 from django.contrib.auth.models import User
+from django.contrib.comments.signals import comment_was_posted
+from django.contrib.comments.models import Comment
 from items.models import Item, Comentario, Recomendacion
 
 
@@ -84,6 +88,8 @@ class Actividad(models.Model):
         default="", blank=True, null=True)
     comentario = models.ForeignKey(Comentario, related_name="act_coment",
         default="", blank=True, null=True)
+    comentario_new = models.ForeignKey(Comment, related_name="act_coment",
+        default="", blank=True, null=True)
     usuario_origen = models.ForeignKey(User, related_name="act_origen",
         default="", blank=True, null=True)
     usuario_destino = models.ForeignKey(User, related_name="act_destino",
@@ -91,3 +97,20 @@ class Actividad(models.Model):
     fecha = models.DateTimeField()
     descripcion = models.CharField(default="", max_length=60)
     tipo = models.CharField(default="", max_length=30)
+
+    def __unicode__(self):
+        return "{} - {} - {} - {}".format(self.usuario_origen, self.usuario_destino, self.tipo, self.fecha)
+
+
+@receiver(comment_was_posted)
+def create_activity_when_comment_done(sender, comment, request, **kwargs):
+    """
+    """
+    actividad = Actividad()
+    actividad.item = comment.content_object
+    actividad.descripcion = "Comento el siguiente item"
+    actividad.tipo = "comentario"
+    actividad.fecha = datetime.now()
+    actividad.usuario_origen = request.user
+    actividad.comentario_new = comment
+    actividad.save()

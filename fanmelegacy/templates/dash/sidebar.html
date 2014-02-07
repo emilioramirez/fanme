@@ -43,8 +43,8 @@
         </a>
         <a href="{% url 'my_comments_items' %}">
             <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
-                <div class="stadistic-num">{{ user.comentarios_realizados.count }}</div>
-                <div class="stadistic-nom">Comentario{% if user.comentarios_realizados.count > 1 %}s{% endif %}</div>
+                <div class="stadistic-num">{{ user.comment_comments.count }}</div>
+                <div class="stadistic-nom">Comentario{% if user.comment_comments.count > 1 %}s{% endif %}</div>
             </div>
         </a>
     </div>

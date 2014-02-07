@@ -109,13 +109,27 @@ def dashboard_all(request):
 @login_required(login_url='/accounts/user/')
 def logbook(request):
     try:
+        # mis seguidores activos
         active_followings = request.user.persona.following.filter(is_active=True)
         actividades = []
+        # Por cada usuario activo
         for user in active_followings:
-            actividades = sorted(
-                chain(
-                    user.act_origen.all(), actividades),
-                key=attrgetter('fecha'), reverse=True)
+            actividades_user = []
+            actividad_recomendacion = {}
+            # Agrupo las actividades de recomendacion para un item determinado
+            for actividad in user.act_origen.filter(tipo='recomendacion'):
+                try:
+                    actividad_recomendacion[actividad.item].append(actividad)
+                except KeyError:
+                    actividad_recomendacion[actividad.item] = [actividad]
+            # Por item agrego la actividad mas nueva
+            for item, acts in actividad_recomendacion.items():
+                actividades_user.append(sorted(acts, key=attrgetter('fecha')).pop())
+            
+            # Actividades totales, mas actividades de recomendacion, mas otras
+            actividades = chain(actividades_user, user.act_origen.exclude(tipo='recomendacion'), actividades)
+        # Ordeno todo por fecha
+        actividades = sorted(actividades, key=attrgetter('fecha'), reverse=True)
         cant_following = active_followings.count()
         cant_followers = get_active_followers(request)
     except Persona.DoesNotExist:
