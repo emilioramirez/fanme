@@ -12,6 +12,11 @@
         {% block mystylesheet %}{% endblock %}
         <script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
         <script src="{{ STATIC_URL }}dist/js/bootstrap.js"></script>
+        <script>
+            // Site constants
+            window.FANMEDATEFORMAT = "%d/%m/%Y";
+            window.FANMEDATETIMEFORMAT = "%d/%m/%Y %H:%i";
+        </script>
     </head>
     <body {% block bodystuff %}{% endblock%}>
             {% block header %}

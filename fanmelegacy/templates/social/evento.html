@@ -139,11 +139,9 @@
                 <div class="clear"></div>
             </div>
             {% if creador %}
-                <div style="float:right; text-align: center;">
-                    <div class='evento-editar-btn' style="float:left;">
-                        <a href="/social/evento/edit/{{ evento.id }}"><div class="evento-editar">Editar</div></a>
-                    </div>
-                    <input type="button" value="Cancelar" class="item-cancelar-registracion" style="margin-left: 10px; float: right;" onclick="location.href='../../../social/eventos';">
+                <div style="float:right;">
+                    <a class="btn btn-success" href="/social/evento/edit/{{ evento.id }}" style="margin: 30px 10px;">Editar</a>
+                    <input type="button" value="Cancelar" class="btn btn-danger" style="margin: 30px 10px;" onclick="location.href='../../../social/eventos';">
                 </div>
             {% endif %}
         </div>

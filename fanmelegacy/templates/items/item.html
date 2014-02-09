@@ -72,8 +72,8 @@
         <div class="panel-footer">
             <div class="row">
                 <div class="col-md-offset-9 col-md-3">
-                    {% if user.is_active %}
-                        {% if user.persona %}
+                    {% if user.persona %}
+                        {% if user.is_active %}
                             {% if not is_fan %}
                                 <a href="/items/fan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
                             {% endif %}
@@ -84,11 +84,11 @@
                             {% if is_fan %}
                                 <a href="/items/unfan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-buttom-unFan.png" alt="Unfan" /></a>
                             {% endif %}
-                        {% else %}
-                            {% if mostrar_boton_enlace %}
-                                <a href="/bussiness/registrar_enlace/{{ item.id }}"><img src="{{ STATIC_URL }}images/item-button-registrar-enlace.png" alt="Registrar Enlace" /></a>
-                            {% endif %}
                         {% endif%}
+                    {% else %}
+                        {% if mostrar_boton_enlace %}
+                            <a href="/bussiness/registrar_enlace/{{ item.id }}"><img src="{{ STATIC_URL }}images/item-button-registrar-enlace.png" alt="Registrar Enlace" /></a>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
@@ -102,11 +102,9 @@
             <ul class="image-list">
             {% for empresa in empresas %}
                 {% if empresa.avatar %}
-                    <!--<li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ user.empresa.avatar.url_50x50 }}" alt="Score" /></a></li>-->
-                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url user 50 %}" alt="" /></a>{{ empresa.razon_social }}</li>
+                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url empresa.user 50 %}" alt="" /></a>{{ empresa.razon_social }}</li>
                 {% else %}
-                    <!--<li class="image-little-ref"><a href={{ empresa.site }}><img src="{{ STATIC_URL }}images/020.png" alt="Logo" /></a></li>-->
-                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url user 50 %}" alt="" /></a>{{ empresa.razon_social }}</li>
+                    <li class="image-little-ref"><a href={{ empresa.site }}><img src="{% avatar_url empresa.user 50 %}" alt="" /></a>{{ empresa.razon_social }}</li>
                 {% endif%}
             {% endfor %}
             </ul>

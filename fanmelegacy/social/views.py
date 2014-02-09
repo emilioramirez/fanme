@@ -1,26 +1,28 @@
 # -*- encoding: utf-8 -*-
+from itertools import chain
+from operator import attrgetter
+from datetime import datetime, date
+
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-from support.models import TipoNotificacion
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from social.forms import MessageForm, MessageResponseForm
 from social.forms import MessageQueryForm
-from dash.forms import SearchBox
-from accounts.models import Persona, Empresa
 from social.models import Mensaje
-from itertools import chain
-from operator import attrgetter
-from datetime import datetime, date
-
 from social.forms import EventoForm, NotificationForm
 from social.models import Evento, Consulta, Notificacion, EstadoxInvitado
-from items.models import Item
-from django.db.models import Q
+
+from accounts.models import Persona, Empresa
 from accounts.forms import UserLogin
+
+from items.models import Item
+from dash.forms import SearchBox
+from support.models import TipoNotificacion
 
 
 @login_required(login_url='/accounts/user/')
@@ -180,6 +182,12 @@ def delete_evento(request, evento_id):
     try:
         evento_db = Evento.objects.get(id=evento_id)
         if (evento_db.creador == request.user):
+            if not evento_db.fecha_inicio:
+                # Por alguan razon no tiene fecha inicios cuando es obligatorio que lo tenga
+                evento_db.fecha_inicio = datetime.now()
+            if not evento_db.fecha_fin:
+                # Por alguan razon no tiene fecha fin cuando es obligatorio que lo tenga
+                evento_db.fecha_fin = datetime.now()
             evento_db.estado = 'cancelado'
             evento_db.save()
         messages.add_message(request, messages.SUCCESS, "El evento ha sido cancelado exitosamente.")
