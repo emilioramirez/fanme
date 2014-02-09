@@ -5,7 +5,8 @@
     <div class="accounts-register-form-title">
         <div class="form-title">Crear una cuenta de Usuario</div>
     </div>
-    <form action="/accounts/user/" method="post">{% csrf_token %}
+    <form action="/accounts/user/" method="post">
+        {% csrf_token %}
         {{ form_register.as_p }}
         <p>
             <input id="password-clear" type="text" value="Password" autocomplete="off" class="accounts-register-form-field"/>

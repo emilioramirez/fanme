@@ -14,11 +14,11 @@
     <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
     <script src="{{ STATIC_URL }}js/tour/prism.js"></script>
     <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
     <script>
-        var myCalendar;
         function doOnLoad() {
-            myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
-            myCalendar.setDateFormat("%d/%m/%Y");
+            var myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
+            myCalendar.setDateFormat(FANMEDATEFORMAT);
         }
     </script>
 {% endblock myjavascript %}

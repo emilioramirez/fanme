@@ -34,14 +34,15 @@
         </ul>
     </div>
     <div class="message-line-response">
-        <p class="message-answer">Responder:</p>
         <div class="new-message">
-        <form method="post" action="/social/messages_user/{{ user_id }}">{% csrf_token %}
+        <p><strong>Responder:</strong></p>
+        <form method="post" action="/social/messages_user/{{ user_id }}">
+            {% csrf_token %}
             <div class="message-content-response">
-                    {{ form_response_message.mensaje.errors }}
-                    {{ form_response_message.mensaje }}
+                {{ form_response_message.mensaje.errors }}
+                {{ form_response_message.mensaje }}
             </div>
-            <input type="submit" value="Responder" class="message-response-button"/>
+            <input type="submit" value="Enviar" class="btn btn-success"/>
         </form>
     </div>
     </div>

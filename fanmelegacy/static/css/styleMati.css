@@ -569,6 +569,7 @@ sidebar-follow-user{}
     border-top: 1px solid grey;
     margin-top: 20px;
 }
+/*
 .new-message input{
     background: url("../images/consulta-empresa.png") no-repeat scroll 0 0 transparent;
     border: medium none;
@@ -580,6 +581,7 @@ sidebar-follow-user{}
     margin-top: 5px;
     width: 135px;
 }
+*/
 .message-content-fields{ margin: 15px; }
     .message-content-fields .errors{}
     .message-content-fields .errors .errorlist{margin: 0px; padding: 0px;}

@@ -13,16 +13,14 @@
 
 {% block myjavascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
-    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}dist/js/bootstrap.js"></script>
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
     <script>
-        var myCalendar;
         function doOnLoad() {
-            myCalendar = new dhtmlXCalendarObject(["id_fecha_inicio"]);
-            myCalendar.setDateFormat("%d/%m/%Y");
-            myCalendar2 = new dhtmlXCalendarObject(["id_fecha_fin"]);
-            myCalendar2.setDateFormat("%d/%m/%Y");
+            var myCalendar;
+            myCalendar = new dhtmlXCalendarObject(["id_fecha_inicio", "id_fecha_fin"]);
+            myCalendar.setDateFormat(FANMEDATETIMEFORMAT);
         }
     </script>
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5oH8nVPAHgFub2orh1UBYNd7PCUa8vKw&sensor=false"></script>
@@ -286,8 +284,8 @@
                 <input type="hidden" name="longitud" id="longitud" value="" />
                 <input type="hidden" name="usuarios" id="usuarios" value="" />
                 <div style="float:right;">
-                    <input type="submit" value="Crear" onclick=hayMarcador() class="submit" style="margin-right: 30px;"/>
-                    <input type="button" value="Cancelar" class="item-cancelar-registracion" style="margin-right: 25px; margin-left: -20px;" onclick="location.href='../../../social/eventos';">
+                    <input type="submit" value="Crear" class="btn btn-success" style="margin: 30px 10px;" onclick=hayMarcador()/>
+                    <input type="button" value="Cancelar" class="btn btn-warning" style="margin: 30px 10px;" onclick="location.href='../../../social/eventos';">
                 </div>
             </form>
         </div>
