@@ -1,26 +1,27 @@
 # -*- coding: utf-8 *-*
-from django.http import Http404
-from django.template import RequestContext
-from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.contrib import comments
-from django.contrib.comments.views.moderation import perform_delete
-from django.contrib.comments.views.utils import next_redirect
-from django.contrib.comments import Comment
-from django.core.urlresolvers import reverse
-
 from datetime import datetime, date
 
-from items.models import Item, Comentario, Recomendacion, ItemDenuncias
-from items.models import ItemImagen
-from items.forms import ItemRegisterForm, CommentForm
+from django.contrib import comments
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.comments.views.moderation import perform_delete
+from django.contrib.comments.views.utils import next_redirect
+from django.contrib.contenttypes.models import ContentType
+from django.http import Http404
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext
+
+
 from accounts.models import Empresa, Persona
+from bussiness.models import PlanXEmpresa
+from items.forms import ItemRegisterForm, CommentForm
+from items.models import Item, Recomendacion, ItemDenuncias
+from items.models import ItemImagen
+from rathings.models import Dislike
 from segmentation.models import Topico
 from social.models import Actividad
-from bussiness.models import PlanXEmpresa
-from django.contrib import messages
 
 @login_required(login_url='/accounts/user/')
 def item(request, item_id):
@@ -40,13 +41,13 @@ def item(request, item_id):
             if enlace_externo.fecha_fin_vigencia > date.today():
                 empresa = Empresa.objects.get(user_id=enlace_externo.empresa.id)
                 empresas.append(empresa)
-        comments = item.comentarios_recibidos.all().order_by('fecha')
+        # comments = item.comentarios_recibidos.all().order_by('fecha')
         mostrar_denuncia = verificar_si_existe_denuncia(request, item)
     except Item.DoesNotExist:
         raise Http404
     return render_to_response('items/item.html',
         {'item': item, 'is_fan': is_fan, 'comment_form': comment_form,
-        'comments': comments, 'empresas': empresas,
+        'empresas': empresas,
         'mostrar_boton_enlace': mostrar_boton_enlace,
         'mostrar_denuncia': mostrar_denuncia},
         context_instance=RequestContext(request))
@@ -94,7 +95,6 @@ def register_item(request):
             nombre = form_register.cleaned_data['nombre']
             descripcion = form_register.cleaned_data['descripcion']
             topico = form_register.cleaned_data['topico']
-#            marca = form_register.cleaned_data['marca']
             item = Item()
             item.nombre = nombre
             item.descripcion = descripcion
@@ -104,7 +104,6 @@ def register_item(request):
                 profile.avatar = request.FILES['avatar']
             except KeyError:
                 print 'Excepcion en social/view.edit_account'
-#            item.marca = Marca.objects.get(nombre=marca)
             item.save()
             try:
                 imagen = request.FILES['imagen']
@@ -129,7 +128,6 @@ def fan(request, item_id):
     try:
         item = Item.objects.get(pk=item_id)
         is_fan = request.user.persona.items.filter(nombre=item.nombre)
-        comments = item.comentarios_recibidos.all().order_by('fecha')
         if is_fan:
             messages.add_message(request, messages.INFO, u"Ya sos fan de {0}".format(item.nombre))
         else:
@@ -153,7 +151,7 @@ def fan(request, item_id):
         return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('items/item.html',
         {'item': item, 'is_fan': is_fan,
-        'comment_form': comment_form, 'comments': comments},
+        'comment_form': comment_form, },
         context_instance=RequestContext(request))
 
 
@@ -249,9 +247,9 @@ def denunciar_item(request, item_id):
 
 
 def verificar_si_existe_denuncia(request, item):
-    denuncia = ItemDenuncias.objects.filter(item=item).filter(
-        user=request.user)
-    existe_denuncia = True
-    if denuncia.count() > 0:
-        existe_denuncia = False
-    return existe_denuncia
+    disklike = Dislike.objects.filter(
+        object_id=item.pk,
+        content_type=ContentType.objects.get_for_model(Item))
+    if disklike:
+        return False
+    return True

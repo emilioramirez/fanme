@@ -5,8 +5,10 @@
 {% block dashboard %}
 <div class="row">
     <div class="dashboard-list-items">
-        {% for item in items %}
-            {% include "dash/item_detail.html" %}
+        {% for comment in items %}
+            {% with comment.content_object as item %}
+                {% include "dash/item_detail.html" %}
+            {% endwith %}
         {% endfor %}
     </div>
 </div>

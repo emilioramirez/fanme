@@ -267,7 +267,7 @@ def my_fans_items(request):
 def my_comments_items(request):
     try:
         request.user.persona
-        items = request.user.items_comentados.all().distinct()
+        items = request.user.comment_comments.exclude(is_removed=True)
     except Persona.DoesNotExist:
             return HttpResponseRedirect('/dash/empresa/')
     return render_to_response('dash/items_stats.html',

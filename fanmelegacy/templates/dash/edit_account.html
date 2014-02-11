@@ -9,13 +9,13 @@
 {% endblock mystylesheet-dashboard%}
 
 {% block myjavascript %}
-    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
     <script>
-        var myCalendar;
         function doOnLoad() {
-            myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
-            myCalendar.setDateFormat("%d/%m/%Y");
+            var myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
+            myCalendar.setDateFormat(FANMEDATEFORMAT);
+            console.log("asdf");
         }
 
         function ConfirmarBaja(){
@@ -94,12 +94,6 @@
                 <p><a class="btn btn-success" id="activar_cuenta" href="/dash/activar_cuenta/" onclick="return ConfirmarActivacion()" >Activar cuenta</a></p>
                 {% endif %}
             </div>
-        </div>
-
-
-        <img  alt="">
-        <div>
-            
         </div>
     </div>
 </div>
