@@ -262,6 +262,17 @@ sidebar-follow-user{}
         width: 184px;
         height: 40px;
     }
+    .new-no-item-buttom-mati{
+        background: url("../images/sidebar-no-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
+        color: white;
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        margin: 10px 0 15px 25px;
+        padding: 9px 0 0 60px;
+        width: 184px;
+        height: 40px;
+    }
     .new-link-buttom-mati{
         background: url("../images/sidebar-crear-nuevo-producto.png") no-repeat scroll 0 0 transparent;
         color: white;
