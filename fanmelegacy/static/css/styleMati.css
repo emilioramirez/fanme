@@ -178,6 +178,7 @@ sidebar-follow-user{}
         padding: 8px 7px;
         width: 125px;
         text-align: center;
+        margin-left: 25px;
     }
     .items-empresa{}
         .items-content{
@@ -801,3 +802,10 @@ sidebar-follow-user{}
             text-align: right;
     }
 /*End of the help*/
+/*Begin of the item description*/
+    .image-conseguir{
+        display:inline-block;
+        margin: 15px 10px 0px 0px;
+        text-align: center;
+    }
+/*End of the item description*/

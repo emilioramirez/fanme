@@ -56,15 +56,22 @@ def puede_registrar_enlace(request, item):
     ret = False
     planes = request.user.plan_empresa.all().order_by('-fecha_fin_vigencia')
     if not planes:
-        ret = True
+        messages.add_message(request, messages.INFO, 'No posee ningún plan.')
     else:
-        try:
-            plan = planes[0]
-            esta_item_en_el_plan = plan.item.get(pk=item.id)
-            if plan.fecha_fin_vigencia > date.today() and esta_item_en_el_plan == None:
-                ret = True
-        except:
-            ret = True
+        plan = planes[0]
+        cant_items = plan.plan.cant_items
+        count = plan.item.count()
+        if plan.fecha_fin_vigencia < date.today():
+            messages.add_message(request, messages.INFO, 'El plan seleccionado ha expirado. Seleccione un nuevo plan.')
+        else:
+            try:
+                plan.item.get(pk=item.id)
+            except:
+                if count <= cant_items:
+                    messages.add_message(request, messages.INFO, 'La cantidad de items del plan seleccionado ha llegado a su límite. No podrá registrar el enclace externo en el ítem.')
+                    ret = False
+                else:
+                    ret = True
     return ret
 
 
@@ -78,7 +85,7 @@ def empresa(request, empresa_id):
         if planes:
             plan = planes[0]
             if plan.fecha_fin_vigencia > date.today():
-                items_plan = plan.item
+                items_plan = plan.item.all()
     except Empresa.DoesNotExist:
         raise Http404
     return render_to_response('dash/empresa.html',

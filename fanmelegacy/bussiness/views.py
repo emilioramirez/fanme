@@ -6,6 +6,7 @@ from models import PlanXEmpresa, Plan
 from items.models import Item
 import datetime
 import calendar
+from django.contrib import messages
 
 
 @login_required(login_url='/accounts/user/')
@@ -68,7 +69,9 @@ def registrar_enlace(request, item_id):
     plan_vigente = planes[0]
     plan_vigente.item.add(item)
     plan_vigente.save()
-    return HttpResponseRedirect('/bussiness/dash_planes/')
+    redirect_uri = '/items/item/' + item_id
+    messages.add_message(request, messages.SUCCESS, 'Se ha registrado el enlace correctamente.')
+    return HttpResponseRedirect(redirect_uri)
 
 
 def add_months(sourcedate, months):
