@@ -1,0 +1,38 @@
+{% extends "social/base_social.html" %}
+
+{% load dash_filters avatar_tags %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header">
+      <h1>Consultas a empresas</h1>
+    </div>
+    <div class="list-content-user-messages">
+        {% if items %}
+            <ul>
+                {% for item in items %}
+                    <li class="content-user-messages">
+                        <div class="user-message-image">
+                            {% if item.mis_imagenes.count %}
+                                <img src="{{ item.first_image_little }}" alt="Score">
+                            {% else %}
+                                <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                            {% endif %}
+                        </div>
+                        <div class="user-message-name"><a href="/social/consulta_empresa/{{ user_id }}/{{ item.id }}">{{ item.nombre }}</a></div>
+                        <div class="user-message-last"></div>
+                        <div class="clear"></div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            No has realizado ninguna consulta.
+        {% endif %}
+    </div>
+    <div class="new-message">
+        <form action="/social/new_message/">
+            <input type="submit" value="Nueva consulta" class="submit"/>
+        </form>
+    </div>
+</div>
+{% endblock dashboard %}

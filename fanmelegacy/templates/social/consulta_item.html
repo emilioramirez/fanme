@@ -1,0 +1,56 @@
+{% extends "social/base_social.html" %}
+
+{% load dash_filters avatar_tags %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header">
+      <h1>Consulta</h1>
+    </div>
+    <div class="list-content-user-messages">
+        <ul>
+            {% for consulta in consulta_item %}
+                <li class="content-user-messages">
+                    <div class="user-message-image">
+                        {% if consulta.user_from.persona %}
+                            {% if consulta.user_from.persona.avatar %}
+                                <img src="{{ consulta.user_from.persona.avatar.url_50x50 }}" alt="Logo" />
+                            {% else %}
+                                {% if consulta.user_from.persona.sexo == "M" %}
+                                        <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
+                                {% else %}
+                                    <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
+                                {% endif %}
+                            {% endif%}
+                        {% else %}
+                            {% if consulta.user_from.empresa.avatar %}
+                                <img src="{{ consulta.user_from.empresa.avatar.url_50x50 }}" alt="Logo" />
+                            {%else %}
+                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="user-message-name">
+                        {{ consulta.mensaje }}
+                    </div>
+                    <div class="user-message-last"></div>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="message-line-response">
+        <div class="new-message">
+            <p><strong>Responder:</strong></p>
+            <form method="post" action="/social/responder_consulta_item/{{ item_id }}/{{ user_id }}">
+                {% csrf_token %}
+                <div class="message-content-response">
+                    {{ consulta_form.respuesta.errors }}
+                    {{ consulta_form.respuesta }}
+                </div>
+                <input type="submit" value="Enviar" class="btn btn-success"/>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock dashboard %}
