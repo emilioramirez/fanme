@@ -1,6 +1,6 @@
 {% extends "dash/base_dash.html" %}
 
-{% load bussiness_filter %}
+{% load bussiness_filter avatar_tags %}
 
 {% block mystylesheet %}
         <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
@@ -12,8 +12,8 @@
 <li><a href="{% url 'logbook' %}">Logbook</a></li>
 <li><a href="{% url 'topicos' %}">Topicos</a></li>
 {% else %}
-<li class="active"><a href="/bussiness/dash_empresa/">Dashboard</a></li>
-<li><a href="{% url 'dash_planes' %}">Planes</a></li>
+<li class="active"><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+<li><a href="/bussiness/dash_planes/">Planes</a></li>
 {% endif %}
 {% endblock menuOptions %}
 
@@ -21,29 +21,17 @@
     <div class="result-result">
         <div class="result-content">
             <div class="result-body">
-                {% for user_profile in user.followers.all %}
-                        <div class="result-hit">
-                            <a href="/dash/logbook/{{ user_profile.user.id }}">
-                                <div class="result-image">
-                                    {% if user_profile.avatar %}
-                                        <img src="{{ user_profile.avatar.url_50x50 }}" alt="Logo" />
-                                    {% else %}
-                                        {% if user_profile %}
-                                            {% if user_profile.sexo == "M" %}
-                                                <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
-                                            {% else %}
-                                                <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
-                                            {% endif%}
-                                        {% else %}
-                                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
-                                        {% endif%}
-                                    {% endif%}
-                                </div>
-                            </a>
-                            <a href="/dash/logbook/{{ user_profile.user.id }}">
-                                <div class="result-descripcion">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</div>
-                            </a>
+                {% for user_profile in followers %}
+                <div class="result-hit">
+                    <a href="/dash/logbook/{{ user_profile.user.id }}">
+                        <div class="result-image">
+                            <img src="{% avatar_url user_profile.user 50 %}" alt="Logo" />
                         </div>
+                    </a>
+                    <a href="/dash/logbook/{{ user_profile.user.id }}">
+                        <div class="result-descripcion">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</div>
+                    </a>
+                </div>
                 {% endfor %}
             </div>
         </div>
@@ -51,38 +39,5 @@
 {% endblock dashboard %}
 
 {% block sidebar %}
-<div class="sidebar-content">
-        <div class="sidebar-user">
-            <div class="user-name">{{ user.empresa.razon_social }}</div>
-            <div class="user-stars">
-                <ul>
-                    {% for estrella in user.empresa.cantidad_estrellas %}
-                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <div class="clear"></div>
-        <a href="/social/company_messages/">
-            <div class="menu-indicators-mati">Mensajes
-                {% if user.mensajes_recibidos.count > 0 %}
-                    ({{ user.mensajes_recibidos.count }})
-                {% endif %}
-            </div>
-        </a>
-        <a href="/social/ver_consultas/">
-            <div class="menu-indicators-mati">Consultas
-                {% if consultas_noleidas > 0 %}
-                    ({{ consultas_noleidas }})
-                {% endif %}
-            </div>
-        </a>
-        <a href="/social/notificaciones/">
-            <div class="menu-indicators-mati">Notificaciones</div>
-        </a>
-        <div class="sidebar-new-item-mati">
-            <a href="/bussiness/elegir_plan/"><div class="new-item-buttom-mati">Elegir Plan</div></a>
-        </div>
-        <div class="clear"></div>
-    </div>
+        {% include "bussiness/sidebar_empresa.html" %}
 {% endblock sidebar %}

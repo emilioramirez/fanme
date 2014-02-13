@@ -29,6 +29,9 @@ class AbstractProfile(models.Model):
         return u'{0} {1} <{2}>'.format(self.user.first_name,
             self.user.last_name, self.user.username)
 
+    def active_comments_count(self):
+        return self.user.comment_comments.exclude(is_removed=True).count()
+
 
 
 class Persona(AbstractProfile):
@@ -98,6 +101,7 @@ class Persona(AbstractProfile):
 
 class Empresa(AbstractProfile):
     razon_social = models.CharField(max_length=40)
+    direccion = models.CharField(max_length=40, default="Sin direccion")
     rubros = models.ManyToManyField(Rubro)
     site = models.URLField()
 

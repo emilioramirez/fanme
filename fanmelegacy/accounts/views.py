@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.contrib.sites.models import RequestSite
+from django.core.urlresolvers import reverse
 
 from registration.models import RegistrationProfile
 
@@ -58,6 +59,7 @@ def register_company(request):
         if form_register.is_valid():
             username = form_register.cleaned_data['email']
             razon_social = form_register.cleaned_data['razon_social']
+            direccion = form_register.cleaned_data['direccion']
             rubro = form_register.cleaned_data['rubro']
             url = form_register.cleaned_data['url']
             email = form_register.cleaned_data['email']
@@ -72,6 +74,7 @@ def register_company(request):
             profile = Empresa()
             profile.user = user
             profile.razon_social = razon_social
+            profile.direccion = direccion
             profile.site = url
             profile.is_first_time = True
             user.save()
@@ -137,6 +140,6 @@ def my_topics(request):
             profile.save()
             return HttpResponseRedirect('/dash/dashboard/')
         except Persona.DoesNotExist:
-                return HttpResponseRedirect('/dash/empresa/')
+                return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('accounts/my_topics.html',
         context_instance=RequestContext(request))

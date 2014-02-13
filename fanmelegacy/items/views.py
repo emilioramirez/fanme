@@ -3,20 +3,14 @@ from django.http import Http404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.contrib import comments
-from django.contrib.comments.views.moderation import perform_delete
-from django.contrib.comments.views.utils import next_redirect
-from django.contrib.comments import Comment
+from django.template import RequestContext
 from django.core.urlresolvers import reverse
 
 from datetime import datetime, date
 
 from items.models import Item, Comentario, Recomendacion, ItemDenuncias
 from items.models import ItemImagen
-from items.forms import ItemRegisterForm, CommentForm
-from accounts.models import Empresa, Persona
+from rathings.models import Dislike
 from segmentation.models import Topico
 from social.models import Actividad
 from bussiness.models import PlanXEmpresa
@@ -40,13 +34,13 @@ def item(request, item_id):
             if enlace_externo.fecha_fin_vigencia > date.today():
                 empresa = Empresa.objects.get(user_id=enlace_externo.empresa.id)
                 empresas.append(empresa)
-        comments = item.comentarios_recibidos.all().order_by('fecha')
+        # comments = item.comentarios_recibidos.all().order_by('fecha')
         mostrar_denuncia = verificar_si_existe_denuncia(request, item)
     except Item.DoesNotExist:
         raise Http404
     return render_to_response('items/item.html',
         {'item': item, 'is_fan': is_fan, 'comment_form': comment_form,
-        'comments': comments, 'empresas': empresas,
+        'empresas': empresas,
         'mostrar_boton_enlace': mostrar_boton_enlace,
         'mostrar_denuncia': mostrar_denuncia},
         context_instance=RequestContext(request))
@@ -78,18 +72,18 @@ def puede_registrar_enlace(request, item):
 @login_required(login_url='/accounts/user/')
 def empresa(request, empresa_id):
     try:
-        empresa = Empresa.objects.get(pk=empresa_id)
-        empresa_planes = User.objects.get(email=empresa.user.email)
-        planes = empresa_planes.plan_empresa.all().order_by('-fecha_fin_vigencia')
-        items_plan = None
-        if planes:
-            plan = planes[0]
-            if plan.fecha_fin_vigencia > date.today():
-                items_plan = plan.item.all()
-    except Empresa.DoesNotExist:
-        raise Http404
+        user_empresa = User.objects.get(pk=empresa_id)
+        planes = user_empresa.plan_empresa.filter(fecha_fin_vigencia__gt=date.today()).order_by('-fecha_fin_vigencia')
+    except User.DoesNotExist:
+        messages.add_message(request, messages.WARNING, "El usuario que intentas acceder no existe")
+        return HttpResponseRedirect(reverse("dashboard"))
+    
+    try:
+        i_follow = request.user.persona.following.get(id=empresa_id)
+    except User.DoesNotExist:
+        i_follow = False
     return render_to_response('dash/empresa.html',
-        {'empresa': empresa, 'items_plan': items_plan}
+        {'user_empresa': user_empresa, 'planes': planes, 'i_follow': i_follow}
         , context_instance=RequestContext(request))
 
 
@@ -101,7 +95,6 @@ def register_item(request):
             nombre = form_register.cleaned_data['nombre']
             descripcion = form_register.cleaned_data['descripcion']
             topico = form_register.cleaned_data['topico']
-#            marca = form_register.cleaned_data['marca']
             item = Item()
             item.nombre = nombre
             item.descripcion = descripcion
@@ -111,7 +104,6 @@ def register_item(request):
                 profile.avatar = request.FILES['avatar']
             except KeyError:
                 print 'Excepcion en social/view.edit_account'
-#            item.marca = Marca.objects.get(nombre=marca)
             item.save()
             try:
                 imagen = request.FILES['imagen']
@@ -136,7 +128,6 @@ def fan(request, item_id):
     try:
         item = Item.objects.get(pk=item_id)
         is_fan = request.user.persona.items.filter(nombre=item.nombre)
-        comments = item.comentarios_recibidos.all().order_by('fecha')
         if is_fan:
             messages.add_message(request, messages.INFO, u"Ya sos fan de {0}".format(item.nombre))
         else:
@@ -157,10 +148,10 @@ def fan(request, item_id):
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('items/item.html',
         {'item': item, 'is_fan': is_fan,
-        'comment_form': comment_form, 'comments': comments},
+        'comment_form': comment_form, },
         context_instance=RequestContext(request))
 
 
@@ -178,7 +169,7 @@ def unfan(request, item_id):
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('items/item.html',
         {'item': item, 'comment_form': comment_form},
         context_instance=RequestContext(request))
@@ -256,9 +247,9 @@ def denunciar_item(request, item_id):
 
 
 def verificar_si_existe_denuncia(request, item):
-    denuncia = ItemDenuncias.objects.filter(item=item).filter(
-        user=request.user)
-    existe_denuncia = True
-    if denuncia.count() > 0:
-        existe_denuncia = False
-    return existe_denuncia
+    disklike = Dislike.objects.filter(
+        object_id=item.pk,
+        content_type=ContentType.objects.get_for_model(Item))
+    if disklike:
+        return False
+    return True

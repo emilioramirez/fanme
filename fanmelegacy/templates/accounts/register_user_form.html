@@ -7,11 +7,16 @@
     </div>
     <form action="/accounts/user/" method="post">
         {% csrf_token %}
-        {{ form_register.as_p }}
-        <p>
-            <input id="password-clear" type="text" value="Password" autocomplete="off" class="accounts-register-form-field"/>
-        </p>
-        <a href="/accounts/company/" class="form-register-eres-empresa">¿Eres una empresa?</a>
-        <input type="submit" value="Registrate" class="submit"/>
+        {% for field in form_register %}
+            <div class="form-group {% if field.errors %}has-error{% endif %}">
+                {{ field }}
+                <span class="help-block">{{ field.errors }}</span>
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            <input id="password-clear" type="text" value="Password" autocomplete="off" class="form-control"/>
+        </div>
+            <a href="/accounts/company/" class="form-register-eres-empresa">¿Eres una empresa?</a>
+            <input type="submit" value="Registrate" class="btn btn-success"/>
     </form>
 {% endblock %}

@@ -28,6 +28,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="well" title="Descripcion del item">{{ item.descripcion|truncatewords:70 }}</div>
+                        {% if comment %}
+                        <div class="well"><blockquote>{{ comment.comment }}</blockquote></div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

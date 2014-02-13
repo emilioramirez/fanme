@@ -19,108 +19,105 @@
         </script>
     </head>
     <body {% block bodystuff %}{% endblock%}>
-            {% block header %}
-            {% block menuArea %}
-            <div class="navbar navbar-default navbar-fixed-top">
-                <div class="navbar-header">
-                    <a href={{ logo_url }} class="navbar-brand">FanME</a>
-                </div>
-                {% if user.is_authenticated %}
-                <div class="collapse navbar-collapse">
-                    {% block searchBox %}
+        {% block header %}
+        {% block menuArea %}
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="navbar-header">
+                <a href={{ logo_url }} class="navbar-brand">FanME</a>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="collapse navbar-collapse">
+                {% block searchBox %}
                     {% include "dash/search_form.html" %}
-                    {% endblock searchBox %}
-                    <ul class="nav navbar-nav">
-                        {% block menuOptions %}
-                        {% if user.persona %}
-                        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                        <li><a href="{% url 'logbook' %}">Logbook</a></li>
-                        <li><a href="{% url 'topicos' %}">Topicos</a></li>
-                        {% else %}
-                        <li><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
-                        <li><a href="{% url 'dash_planes' %}">Planes</a></li>
-                        {% endif %}
-                        {% endblock menuOptions %}
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><span class="thumbnail"><img src="{% avatar_url user 25 %}" alt="Foto perfil"></span></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if user.persona %}{{ user.first_name }}{% else %}{{ user.empresa.razon_social }}{% endif %} <span class="glyphicon glyphicon-cog"></span></a>
-                            <ul class="dropdown-menu">
-                                {% if user.persona %}
-                                <li><a href="{% url 'edit_account' %}"><span class="glyphicon glyphicon-edit"></span> Editar Perfil</a></li>
-                                {% endif %}
-                                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                {% else %}
-                    {% block header_login %}
-                    <form role="form" class="navbar-form navbar-right form-inline" action="{% url 'auth_login' %}" method="post">
-                        {% csrf_token %}
-                        {% for field in form_login %}
-                            <div class="form-group {% if field.errors %}has-error{% endif %}">
-                                {{ field }}
-                                {% for error in field.errors  %}
-                                <small class="text-danger">{{ error }}</small>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                        <div class="form-group"><button type="submit" class="btn btn-default">Ingresar</button></div>
-                    </form>
-                    {% endblock header_login %}
-                {% endif %}
-                    </ul>
-                </div>
-            </div>
-            {% endblock menuArea %}
-            {% endblock header%}
-            <div class="container">
-                <div class="row">
-                    <ol class="breadcrumb">
-                        {% block breadcrumb %}
-                        <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Atrás</a></li>
-                        {% block breadcrumb-active %}
-                        {% for bread in breadcrumb %}
-                        <li {% if not forloop.last %}class="active"{% endif %}>{{ bread }}</li>
-                        {% endfor %}
-                        {% endblock breadcrumb-active %}
-                        {% endblock breadcrumb %}
-                    </ol>
-                </div>
-            </div>
-
-            <div class="container">
-            {% block messages %}
-                {% if messages %}
-                    {% for message in messages %}
-                    <div class="row">
-                        <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
-                    </div>
+                {% endblock searchBox %}
+                <ul class="nav navbar-nav">
+                    {% block menuOptions %}
+                    {% if user.persona %}
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'logbook' %}">Logbook</a></li>
+                    <li><a href="{% url 'topicos' %}">Topicos</a></li>
+                    {% else %}
+                    <li><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+                    <li><a href="{% url 'dash_planes' %}">Planes</a></li>
+                    {% endif %}
+                    {% endblock menuOptions %}
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><span class="thumbnail"><img src="{% avatar_url user 25 %}" alt="Foto perfil"></span></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if user.persona %}{{ user.first_name }}{% else %}{{ user.empresa.razon_social }}{% endif %} <span class="glyphicon glyphicon-cog"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'edit_account' %}"><span class="glyphicon glyphicon-edit"></span> Editar Perfil</a></li>
+                            <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            {% else %}
+                {% block header_login %}
+                <form role="form" class="navbar-form navbar-right form-inline" action="{% url 'auth_login' %}" method="post">
+                    {% csrf_token %}
+                    {% for field in form_login %}
+                        <div class="form-group {% if field.errors %}has-error{% endif %}">
+                            {{ field }}
+                            {% for error in field.errors  %}
+                            <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
                     {% endfor %}
-                {% endif %}
-            {% endblock messages %}
+                    <div class="form-group"><button type="submit" class="btn btn-default">Ingresar</button></div>
+                </form>
+                {% endblock header_login %}
+            {% endif %}
             </div>
-            <!-- Begin Content -->
-            <div class="container">
-                {% block content %}{% endblock%}
+        </div>
+        {% endblock menuArea %}
+        {% endblock header%}
+        <div class="container">
+            <div class="row">
+                <ol class="breadcrumb">
+                    {% block breadcrumb %}
+                    <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Atrás</a></li>
+                    {% block breadcrumb-active %}
+                    {% for bread in breadcrumb %}
+                    <li {% if not forloop.last %}class="active"{% endif %}>{{ bread }}</li>
+                    {% endfor %}
+                    {% endblock breadcrumb-active %}
+                    {% endblock breadcrumb %}
+                </ol>
             </div>
-            <div class="container">
+        </div>
+
+        <div class="container">
+        {% block messages %}
+            {% if messages %}
+                {% for message in messages %}
                 <div class="row">
-                    {% block footer %}
-                    <div class="footer-line-divisor">
-                        <img src="{{ STATIC_URL }}images/footer-line-divisor.png" alt="Footer Line Divisor" />
-                    </div>
-                    <!-- Eso deberia ser dinamico -->
-                    <div class="footer-links">
-                        <a href="/dash/preguntas_mas_frecuentes/">Ayuda</a> |
-                        <a href="#">Sobre Nosotros</a> |
-                        <a href="#">Condiciones</a> |
-                        <a href="#">Copyright</a>
-                    </div>
-                {% endblock%}    
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
                 </div>
+                {% endfor %}
+            {% endif %}
+        {% endblock messages %}
+        </div>
+        <!-- Begin Content -->
+        <div class="container">
+            {% block content %}{% endblock%}
+        </div>
+        <div class="container">
+            <div class="row">
+                {% block footer %}
+                <div class="footer-line-divisor">
+                    <img src="{{ STATIC_URL }}images/footer-line-divisor.png" alt="Footer Line Divisor" />
+                </div>
+                <!-- Eso deberia ser dinamico -->
+                <div class="footer-links">
+                    <a href="/dash/preguntas_mas_frecuentes/">Ayuda</a> |
+                    <a href="#">Sobre Nosotros</a> |
+                    <a href="#">Condiciones</a> |
+                    <a href="#">Copyright</a>
+                </div>
+            {% endblock%}    
             </div>
-    {% block myjavascript %}{% endblock %}
+        </div>
+        {% block myjavascript %}{% endblock %}
     </body>
 </html>

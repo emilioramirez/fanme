@@ -5,11 +5,11 @@
 
 {% block sidebar_user_info %}
 <div class="sidebar-user">
-    <div class="user-name">{{ empresa.user.first_name }} {{ empresa.user.last_name }}</div>
+    <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
     {% block sidebar_user_info_avatar %}
     <div class="logbook-user-image">
         <div class="thumbnail">
-            <img src="{% avatar_url empresa.user 100 %}" alt="Logo" />
+            <img src="{% avatar_url user 100 %}" alt="Logo" />
         </div>
     </div>
     {% endblock sidebar_user_info_avatar %}
@@ -22,16 +22,8 @@
     <div class="sidebar-stadistic">
         <a href="#">
             <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
-                <div class="stadistic-num">{{ empresa.user.followers.count }}</div>
-                <div class="stadistic-nom">Sus Fan{% if empresa.user.followers.count > 1 %}s{% endif %}</div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
-                <div class="stadistic-num">
-                    #
-                </div>
-                <div class="stadistic-nom">Sus recomendaciones</div>
+                <div class="stadistic-num">{{ user.followers.count }}</div>
+                <div class="stadistic-nom">Sus Fan{% if user.followers.count > 1 %}s{% endif %}</div>
             </div>
         </a>
     </div>
@@ -41,10 +33,12 @@
 
 {% block boton %}
 <div class="sidebar-follow-user">
-    <div style="margin-left:35px;">
-        <a href="/dash/follow/request/{{ empresa.user_id }}"><div class="empresa-consulta" style="margin-bottom:8px;">Fan</div></a>
-        <a href="#" ><div class="empresa-consulta" style="margin-bottom:8px;">Recomendar</div></a>
-        <a href="/social/consulta_a_empresa/{{ empresa.user_id }}"><div class="empresa-consulta" style="margin-bottom:8px;">Enviar consulta</div></a>
-    </div>
+    {% if i_follow %}
+        <a href="/dash/unfollow/{{ user.pk }}"><div class="new-no-item-buttom-mati">Dejar de seguir</div></a>
+    {% else %}
+        <a href="/dash/follow/request/{{ user.pk }}"><div class="new-item-buttom-mati">Seguir Empresa</div></a>
+    {% endif %}
+    <a href="#" ><div class="empresa-consulta" style="margin-bottom:8px;">Recomendar</div></a>
+    <a href="/social/consulta_a_empresa/{{ user.pk }}"><div class="empresa-consulta" style="margin-bottom:8px;">Enviar consulta</div></a>
 </div>
 {% endblock boton %}

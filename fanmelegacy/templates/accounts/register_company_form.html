@@ -4,11 +4,17 @@
     <div class="accounts-register-form-title">
         <div class="form-title">Crear una cuenta de Empresa</div>
     </div>
-    <form action="/accounts/company/" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <p>
-            <input id="password-clear" type="text" value="Password" autocomplete="off" class="accounts-register-form-field"/>
-        </p>
-        <input type="submit" value="Registrate" class="submit"/>
+    <form action="/accounts/company/" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group {% if field.errors %}has-error{% endif %}">
+                {{ field }}
+                <span class="help-block">{{ field.errors }}</span>
+            </div>
+        {% endfor %}
+            <div class="form-group">
+                <input id="password-clear" type="text" value="Password" autocomplete="off" class="form-control"/>
+            </div>
+            <input type="submit" value="Registrate" class="btn btn-success"/>
     </form>
 {% endblock %}
