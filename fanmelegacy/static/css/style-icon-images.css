@@ -138,4 +138,10 @@
     margin-right: 5px;
     width: 17px;
 }
-
+.mini-img-consulta{
+    background: url("../images/mini-imagenes3.png") no-repeat scroll -34px -33px transparent;
+    float: left;
+    height: 16px;
+    margin-right: 5px;
+    width: 17px;
+}

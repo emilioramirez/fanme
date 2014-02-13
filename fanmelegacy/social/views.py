@@ -381,6 +381,54 @@ def items_en_plan_vigente(company_id):
 
 
 @login_required(login_url='/accounts/user/')
+def consultas_usuario(request):
+    searchbox = SearchBox()
+    consultas_enviadas = request.user.consultas_enviadas.all().values(
+        'user_to').distinct().exclude(user_to=request.user)
+    usuarios = []
+    for dict in consultas_enviadas.all():
+        usuarios.append(User.objects.get(id=dict['user_to']))
+    return render_to_response('social/consultas.html', {'form_search': searchbox,
+        'usuarios': usuarios, 'breadcrumb': ["Social", "Mensajes"]},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def consultas_usuario_empresas(request, user_id):
+    searchbox = SearchBox()
+    user = User.objects.filter(pk=user_id)
+    consultas_enviadas = request.user.consultas_enviadas.filter(user_to=user).values(
+        'item').distinct()
+    items = []
+    for dict in consultas_enviadas.all():
+        items.append(Item.objects.get(id=dict['item']))
+    return render_to_response('social/consulta_empresa.html', {'form_search': searchbox,
+        'items': items, 'user_id': user_id, 'breadcrumb': ["Social", "Mensajes"]},
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/accounts/user/')
+def consultas_empresa_item(request, user_id, item_id):
+    searchbox = SearchBox()
+    if request.POST:
+        consulta_form = ConsultaResponseForm(request.POST)
+    else:
+        consulta_form = ConsultaResponseForm()
+    user = User.objects.filter(pk=user_id)
+    item = Item.objects.get(id=item_id)
+    consulta_item = consulta_item = Consulta.objects.filter(
+        Q(item=item), Q(user_from=user) | Q(user_to=user))
+    items = []
+    for consulta in consulta_item.all():
+        consulta.estado = "leido"
+        consulta.save()
+    return render_to_response('social/consulta_item.html', {'form_search': searchbox,
+        'items': items, 'consulta_form': consulta_form,
+        'consulta_item': consulta_item,
+        'breadcrumb': ["Social", "Mensajes"]},
+        context_instance=RequestContext(request))
+
+@login_required(login_url='/accounts/user/')
 def ver_consultas(request):
     searchbox = SearchBox()
     consultas_recibidas = request.user.consultas_recibidas.all().values(

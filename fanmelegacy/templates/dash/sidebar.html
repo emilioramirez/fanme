@@ -72,6 +72,11 @@
                 {% if recomendaciones_noleidas > 0 %}<span class="badge">{{ recomendaciones_noleidas }}</span>{% endif %}
             </div>
         </a>
+        <a href="{% url 'recomendaciones_recibidas' %}">
+            <div class="menu-indicators" title="Revisá las consultas realizadas a las empresas"><div class="mini-img-consulta"></div>Consultas
+                {% if recomendaciones_noleidas > 0 %}<span class="badge">{{ recomendaciones_noleidas }}</span>{% endif %}
+            </div>
+        </a>
         {% if perms.segmentation.change_analisisdenuncia  %}
         <a href="{% url 'analisisdenuncias' %}">
             <div class="menu-indicators" title="Revisá las ultimas denuncias que se te han asignado"><div class="mini-img-denuncia"></div>Denuncias
