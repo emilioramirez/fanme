@@ -416,14 +416,13 @@ def consultas_empresa_item(request, user_id, item_id):
         consulta_form = ConsultaResponseForm()
     user = User.objects.filter(pk=user_id)
     item = Item.objects.get(id=item_id)
-    consulta_item = consulta_item = Consulta.objects.filter(
+    consulta_item = Consulta.objects.filter(
         Q(item=item), Q(user_from=user) | Q(user_to=user))
-    items = []
     for consulta in consulta_item.all():
         consulta.estado = "leido"
         consulta.save()
     return render_to_response('social/consulta_item.html', {'form_search': searchbox,
-        'items': items, 'consulta_form': consulta_form,
+        'consulta_form': consulta_form,
         'user_id': user_id, 'item_id': item_id,
         'consulta_item': consulta_item,
         'breadcrumb': ["Social", "Mensajes"]},
