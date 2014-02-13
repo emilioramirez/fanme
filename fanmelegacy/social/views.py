@@ -15,7 +15,7 @@ from django.core.urlresolvers import reverse
 from social.forms import MessageForm, MessageResponseForm
 from social.forms import MessageQueryForm
 from social.models import Mensaje
-from social.forms import EventoForm, NotificationForm
+from social.forms import EventoForm, NotificationForm, ConsultaResponseForm
 from social.models import Evento, Consulta, Notificacion, EstadoxInvitado
 
 from accounts.models import Persona, Empresa
@@ -236,7 +236,6 @@ def mensajes(request):
         context_instance=RequestContext(request))
 
 
-
 @login_required(login_url='/accounts/user/')
 def new_message(request):
     searchbox = SearchBox()
@@ -314,7 +313,6 @@ def getMensajes(request, user_id):
 @login_required(login_url='/accounts/user/')
 def company_query(request, company_id):
     searchbox = SearchBox()
-    messages = []
     no_posee_items = False
     if request.method == 'POST':
         form_query_message = MessageQueryForm(request.POST)
@@ -329,7 +327,7 @@ def company_query(request, company_id):
             consulta.fecha = datetime.now()
             consulta.estado = "noleido"
             consulta.save()
-            messages.add_message(request, messages.SUCCESS, "Tu consulta ha sido enviada exitosamente")
+            messages.add_message(request, messages.SUCCESS, "Tu consulta ha sido enviada exitosamente.")
             form_query_message = MessageQueryForm()
         else:
             items_plan = items_en_plan_vigente(company_id)
@@ -351,6 +349,25 @@ def company_query(request, company_id):
         'no_posee_items': no_posee_items},
         context_instance=RequestContext(request))
 
+
+@login_required(login_url='/accounts/user/')
+def responder_consulta(request, item_id, user_id):
+    searchbox = SearchBox()
+    item = Item.objects.get(pk=item_id)
+    consulta_form = ConsultaResponseForm(request.POST)
+    if consulta_form.is_valid():
+        respuesta = consulta_form.cleaned_data['respuesta']
+        consulta = Consulta()
+        consulta.item = item
+        consulta.user_from = request.user
+        consulta.user_to = User.objects.get(id__exact=user_id)
+        consulta.mensaje = respuesta
+        consulta.fecha = datetime.now()
+        consulta.estado = "noleido"
+        consulta.save()
+        messages.add_message(request, messages.SUCCESS, "Tu respuesta ha sido enviada exitosamente.")
+    url = "../../ver_consulta_item_usuario/" + item_id + "/" + user_id
+    return HttpResponseRedirect(url)
 
 def items_en_plan_vigente(company_id):
     empresa = User.objects.get(pk=company_id)
@@ -384,7 +401,7 @@ def ver_consultas_item(request, item_id):
     searchbox = SearchBox()
     item = Item.objects.get(id=item_id)
     items_consultas = item.mis_consultas.values(
-        'user_from').distinct()
+        'user_from').distinct().exclude(user_from=request.user)
     users = []
     for dict in items_consultas.all():
         users.append(User.objects.get(id=dict['user_from']))
@@ -413,16 +430,21 @@ def ver_consultas_item_usuario(request, item_id, user_id):
     user = User.objects.get(id=user_id)
     item_consultado = Item.objects.get(id=item_id)
     consulta_item = Consulta.objects.filter(
-        Q(item=item_consultado), Q(user_from=user))
+        Q(item=item_consultado), Q(user_from=user) | Q(user_to=user))
     for consulta in consulta_item.all():
         consulta.estado = "leido"
         consulta.save()
+    if request.POST:
+        consulta_form = ConsultaResponseForm(request.POST)
+    else:
+        consulta_form = ConsultaResponseForm()
     consultas_noleidas = request.user.consultas_recibidas.filter(
         estado="noleido").count()
     return render_to_response('social/ver_consulta_item_usuario.html', {
         'form_search': searchbox,
         'usuario': user, 'consultas_noleidas': consultas_noleidas,
-        'consulta_item': consulta_item},
+        'consulta_item': consulta_item, 'consulta_form': consulta_form,
+        'item_id': item_id, 'user_id': user_id},
         context_instance=RequestContext(request))
 
 
@@ -577,10 +599,11 @@ def new_notification(request):
         form = NotificationForm(request.POST)
         list_ids = request.user.followers.values_list('user', flat=True)        # esto
         users = User.objects.filter(id__in=list_ids)                            # y esto lo podes reemplazar por 
-        form.fields["usuarios_to"].queryset = users                             # users = request.user.followers.filter(user__is_active=True)
+        # users = request.user.followers.filter(user__is_active=True)
         invitados = request.POST.get("usuarios", "")                            # y ya que lo usas 2 veces lo podes hacer una vez al comenzar
         a_split = invitados.split(',')                                          # la funcion
         usuarios_invitados = []
+        print invitados
         for invitado in a_split:
             usuario = User.objects.get(id=invitado)
             usuarios_invitados.append(usuario)
@@ -601,7 +624,6 @@ def new_notification(request):
         form = NotificationForm()
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids).filter(is_active=True)
-        form.fields["usuarios_to"].queryset = users
     template_vars = RequestContext(request, {"form": form,
         'users': users})
     return render_to_response('social/new_notification.html', template_vars)

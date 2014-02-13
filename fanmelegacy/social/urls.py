@@ -30,4 +30,5 @@ urlpatterns = patterns('',
     (r'^ver_consultas/$', views.ver_consultas),
     (r'^ver_consultas_item/(?P<item_id>\d+)$', views.ver_consultas_item),
     (r'^ver_notificaciones/(?P<notificacion_id>\d+)$', views.ver_notificacion),
+    (r'^responder_consulta_item/(?P<item_id>\d+)/(?P<user_id>\d+)$', views.responder_consulta),
 )
