@@ -424,6 +424,7 @@ def consultas_empresa_item(request, user_id, item_id):
         consulta.save()
     return render_to_response('social/consulta_item.html', {'form_search': searchbox,
         'items': items, 'consulta_form': consulta_form,
+        'user_id': user_id, 'item_id': item_id,
         'consulta_item': consulta_item,
         'breadcrumb': ["Social", "Mensajes"]},
         context_instance=RequestContext(request))
