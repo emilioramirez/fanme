@@ -6,6 +6,17 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
 {% endblock mystylesheet-dashboard%}
 
+{% block menuOptions %}
+{% if user.persona %}
+<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li><a href="{% url 'logbook' %}">Logbook</a></li>
+<li><a href="{% url 'topicos' %}">Topicos</a></li>
+{% else %}
+<li><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+<li><a href="{% url 'dash_planes' %}">Planes</a></li>
+{% endif %}
+{% endblock menuOptions %}
+
 {% block dashboard %}
     <div class="title-messages">Consultas</div>
     <div class="message-body">

@@ -2,13 +2,15 @@
 from django import forms
 from django.contrib.auth.models import User
 
+from support.models import Rubro
+
 TYPES_OF_SEX = (('', 'Sexo'), ('M', 'Masculino'), ('F', 'Femenino'))
 
 
 class SearchBox(forms.Form):
     string = forms.CharField(label='',
         required=False,
-        widget=forms.TextInput(attrs={'class': 'header-seach-form-field', 'placeholder': "Buscar"}))
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Buscar"}))
 
     def clean_string(self):
         string = self.cleaned_data['string']
@@ -70,6 +72,57 @@ class UserUpdateForm(forms.Form):
         data = self.cleaned_data['last_name']
         if data == 'Apellido':
             raise forms.ValidationError("Es necesario un Apellido")
+        return data
+
+
+class EmpresaUpdateForm(forms.Form):
+    razon_social = forms.CharField(
+        label='Razon Social',
+        required=True,
+        error_messages={'required': 'Es necesario una Razón Social'},
+        widget=forms.TextInput(attrs={'class': 'form-control'}))
+    direccion = forms.CharField(
+        label='Direccion',
+        required=False,
+        error_messages={'required': 'Es necesario una Dirección'},
+        widget=forms.TextInput(attrs={'class': 'form-control'}))
+    rubro = forms.ModelMultipleChoiceField(
+        label='Rubro',
+        # empty_label="Rubro",
+        queryset=Rubro.objects.all(),
+        error_messages={'required': 'Es necesario un Rubro',
+            'invalid_choice': 'Opcion no valida'},
+        widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+    url = forms.URLField(
+        label='Página Web',
+        error_messages={'required': 'Es necesario su Página web',
+        'invalid': 'Página web no válida'},
+        widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(
+        label='Email',
+        error_messages={'required': 'Es necesario su Email',
+            'invalid': 'Correo electronico no valido'},
+        widget=forms.TextInput(attrs={'class': 'form-control', 'readonly':'readonly'}))
+
+    def clean_username(self):
+        data = self.cleaned_data['email']
+        try:
+            User.objects.get(email=data)
+            raise forms.ValidationError("Este usuario ya existe")
+        except User.DoesNotExist:
+            pass
+        return data
+
+    def clean_razon_social(self):
+        data = self.cleaned_data['razon_social']
+        if data == 'Razon Social':
+            raise forms.ValidationError("Es necesario una Razón Social")
+        return data
+
+    def clean_direccion(self):
+        data = self.cleaned_data['direccion']
+        if data == 'Direccion':
+            raise forms.ValidationError("Es necesario una Dirección")
         return data
 
 
