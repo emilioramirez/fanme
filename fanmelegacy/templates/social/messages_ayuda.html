@@ -1,0 +1,124 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters avatar_tags %}
+
+{% block myjavascript %}
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/eventos_tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block dashboard %}
+    <div class="eventos-content">
+        <div class='eventos-titulo'>Mensajes por usuario</div>
+        <div id="content-messages" class="list-content-user-messages">
+            {% if usuarios %}
+                <ul>
+                    {% for usuario in usuarios %}
+                        <li class="content-user-messages">
+                            <div class="user-message-image">
+                                <img src="{% avatar_url usuario 50 %}" alt="">
+                            </div>
+                            <div class="user-message-name"><a href="#">{{ usuario.first_name }} {{ usuario.last_name }}</a></div>
+                            <div class="user-message-last"></div>
+                            <div class="clear"></div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                No tienes ningun mensaje recibido
+            {% endif %}
+        </div>
+        <div class="new-message">
+            <form action="#">
+                <input id="new-message" type="submit" value="Nuevo mensaje" class="submit"/>
+            </form>
+        </div>
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">Gabriel Arcos</div>
+            <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar-stadistic">
+            <a href="#">
+                <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+                    <div class="stadistic-num">34</div>
+                    <div class="stadistic-nom">Fans</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
+                    <div class="stadistic-num">
+                        24
+                    </div>
+                    <div class="stadistic-nom">Mis recomendaciones</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
+                    <div class="stadistic-num">2</div>
+                    <div class="stadistic-nom">Comentarios</div>
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-menu-indicators">
+            <a href="#">
+                <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                    (3)
+                </div>
+            </a>
+            <a href="#">
+
+                <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                    (6)
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                    (2)
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                    (8)
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-new-item">
+            {% block crear %}
+                <a href="#"><div class="new-item-buttom" title="Crea un item del topico que gustes">Crear Item</div></a>
+            {% endblock %}
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}
+
+{% block footer %}
+    <div class="footer-line-divisor">
+        <img src="{{ STATIC_URL }}images/footer-line-divisor.png" alt="Footer Line Divisor" />
+    </div>
+    <!-- Eso deberia ser dinamico -->
+    <div class="footer-links">
+        <a href="/dash/preguntas_mas_frecuentes/">Ayuda</a> |
+        <a href="#">Sobre Nosotros</a> |
+        <a href="#">Condiciones</a> |
+        <a href="#">Copyright</a>
+    </div>
+{% endblock%}
+
+

@@ -1,0 +1,90 @@
+{% load dash_filters %}
+
+<div class="sidebar-content">
+    {% block sidebar_user_info %}
+    <div class="sidebar-user">
+        <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+        <div class="user-stars">
+            <ul>
+                {% for estrella in user.persona.cantidad_estrellas %}
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                {% endfor %}
+                {% with cant_estrellas=5|subtract:user.persona.get_cant_estrellas %}
+                    {% for i in cant_estrellas|range %}
+                        <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings-blanca.png" alt="Star" /></li>
+                    {% endfor %}
+                {% endwith %}
+            </ul>
+        </div>
+        {% block sidebar_user_info_avatar %}{% endblock sidebar_user_info_avatar %}
+        {% block user_range %}
+        {% if perms.segmentation.change_analisisdenuncia  %}
+        <div class="user-name"><small>Usuario moderador</small></div>
+        {% endif %}
+        {% endblock user_range %}
+    </div>
+    {% endblock sidebar_user_info %}
+    
+    {% block sidebar_stats %}
+    <div class="sidebar-stadistic">
+        <a href="{% url 'my_fans_items' %}">
+            <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+                <div class="stadistic-num">{{ user.persona.items.count }}</div>
+                <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
+            </div>
+        </a>
+        <a href="{% url 'recomendaciones_enviadas' %}">
+            <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
+                <div class="stadistic-num">
+                    {{ user.recomendaciones_enviadas.count }}
+                </div>
+                <div class="stadistic-nom">Mis recomendaciones</div>
+            </div>
+        </a>
+        <a href="{% url 'my_comments_items' %}">
+            <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
+                <div class="stadistic-num">{{ user.comment_comments.count }}</div>
+                <div class="stadistic-nom">Comentario{% if user.comment_comments.count > 1 %}s{% endif %}</div>
+            </div>
+        </a>
+    </div>
+    {% endblock sidebar_stats %}
+    {% block sidebar_indicators %}
+    <div class="sidebar-menu-indicators">
+        <a href="{% url 'social-mensajes' %}">
+            <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                {% if mensajes_nolidas > 0 %}<span class="badge">{{ mensajes_nolidas }}</span>{% endif %}
+            </div>
+        </a>
+        <a href="/social/eventos/">
+
+            <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                {% if eventos_noleidos > 0 %}<span class="badge">{{ eventos_noleidos }}</span>{% endif %}
+            </div>
+        </a>
+        <a href="/social/user_main_notification/">
+            <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                {% if notificaciones_noleidas > 0 %}<span class="badge">{{ notificaciones_noleidas }}</span>{% endif %}
+            </div>
+        </a>
+        <a href="{% url 'recomendaciones_recibidas' %}">
+            <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                {% if recomendaciones_noleidas > 0 %}<span class="badge">{{ recomendaciones_noleidas }}</span>{% endif %}
+            </div>
+        </a>
+        {% if perms.segmentation.change_analisisdenuncia  %}
+        <a href="{% url 'analisisdenuncias' %}">
+            <div class="menu-indicators" title="Revisá las ultimas denuncias que se te han asignado"><div class="mini-img-denuncia"></div>Denuncias
+                {% if denuncias_creadas > 0 %}<span class="badge">{{ denuncias_creadas }}</span>{% endif %}
+            </div>
+        </a>
+        {% endif %}
+    </div>
+    {% endblock sidebar_indicators %}
+    {% block boton %}
+    <div class="sidebar-new-item">
+            <a href="/items/item/register/"><div class="new-item-buttom" title="Crea un item del topico que gustes">Crear Item</div></a>
+    </div>
+    {% endblock %}
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,37 @@
+{% extends "social/base_social.html" %}
+
+{% load dash_filters avatar_tags %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header">
+      <h1>Mensajes por usuario</h1>
+    </div>
+    <div class="list-content-user-messages">
+        {% if usuarios %}
+            <ul>
+                {% for usuario in usuarios %}
+                    <li class="content-user-messages">
+                        <div class="user-message-image">
+                            <img src="{% avatar_url usuario 50 %}" alt="">
+                        </div>
+                        <div class="user-message-name"><a href="/social/messages_user/{{ usuario.id }}">{{ usuario.first_name }} {{ usuario.last_name }}</a></div>
+                        <div class="user-message-last"></div>
+                        <div class="clear"></div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            No tienes ningun mensaje recibido
+        {% endif %}
+    </div>
+    <div class="new-message">
+        <form action="/social/new_message/">
+            <input type="submit" value="Nuevo mensaje" class="submit"/>
+        </form>
+    </div>
+</div>
+{% endblock dashboard %}
+
+
+
