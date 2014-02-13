@@ -80,7 +80,7 @@
                             {% endif %}
                             <a href="/items/recomendation/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
                             {% if mostrar_denuncia %}
-                                <a href="/items/denunciar_item/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-denunciar.png" alt="Denunciar" /></a>
+                                <a href="{% get_dislike_link for item %}" ><img src="{{ STATIC_URL }}images/item-button-denunciar.png" alt="Denunciar" /></a>
                             {% endif %}
                             {% if is_fan %}
                                 <a href="/items/unfan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-buttom-unFan.png" alt="Unfan" /></a>

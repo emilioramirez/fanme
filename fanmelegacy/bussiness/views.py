@@ -24,7 +24,8 @@ def dash_planes(request):
         posee_plan = True
     return render_to_response('bussiness/dash_planes.html', {
         'message': message, 'plan': plan, 'posee_plan': posee_plan,
-        'consultas_noleidas': consultas_noleidas},
+        'consultas_noleidas': consultas_noleidas,
+        'breadcrumb': ["Planes", "Vigentes"]},
         context_instance=RequestContext(request))
 
 
@@ -43,7 +44,7 @@ def elegir_plan(request):
     else:
         planes = Plan.objects.all()
     return render_to_response('bussiness/elegir_plan.html',
-        {'planes': planes},
+        {'planes': planes, 'breadcrumb': ["Planes", "Elegir plan"]},
         context_instance=RequestContext(request))
 
 
@@ -55,8 +56,11 @@ def new_notificacion(request):
 def dash_empresa(request):
     consultas_noleidas = request.user.consultas_recibidas.filter(
             estado="noleido").count()
+    followers = request.user.followers.filter(user__is_active=True)
     return render_to_response('bussiness/dash_empresa.html',
-        {'consultas_noleidas': consultas_noleidas},
+        {'consultas_noleidas': consultas_noleidas,
+        'followers': followers,
+        'breadcrumb': ["Dashboard"]},
         context_instance=RequestContext(request))
 
 
