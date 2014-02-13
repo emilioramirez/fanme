@@ -1,13 +1,12 @@
 # -*- coding: utf-8 *-*
 from django.http import Http404
-from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-
 from datetime import datetime, date
-
+from items.forms import ItemRegisterForm, CommentForm
+from accounts.models import Empresa, Persona
 from items.models import Item, Comentario, Recomendacion, ItemDenuncias
 from items.models import ItemImagen
 from rathings.models import Dislike
@@ -15,6 +14,12 @@ from segmentation.models import Topico
 from social.models import Actividad
 from bussiness.models import PlanXEmpresa
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib import comments
+from django.contrib.comments.views.moderation import perform_delete
+from django.contrib.comments.views.utils import next_redirect
+
 
 @login_required(login_url='/accounts/user/')
 def item(request, item_id):
@@ -74,16 +79,21 @@ def empresa(request, empresa_id):
     try:
         user_empresa = User.objects.get(pk=empresa_id)
         planes = user_empresa.plan_empresa.filter(fecha_fin_vigencia__gt=date.today()).order_by('-fecha_fin_vigencia')
+        items_plan = None
+        if planes:
+            plan = planes[0]
+            if plan.fecha_fin_vigencia > date.today():
+                items_plan = plan.item.all()
     except User.DoesNotExist:
         messages.add_message(request, messages.WARNING, "El usuario que intentas acceder no existe")
         return HttpResponseRedirect(reverse("dashboard"))
-    
     try:
         i_follow = request.user.persona.following.get(id=empresa_id)
     except User.DoesNotExist:
         i_follow = False
     return render_to_response('dash/empresa.html',
-        {'user_empresa': user_empresa, 'planes': planes, 'i_follow': i_follow}
+        {'user_empresa': user_empresa, 'planes': planes,
+         'items_plan': items_plan, 'i_follow': i_follow}
         , context_instance=RequestContext(request))
 
 
