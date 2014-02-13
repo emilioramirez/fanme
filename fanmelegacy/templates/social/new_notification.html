@@ -76,6 +76,7 @@
                 });
                 respuesta_correcta = false;
             }
+            var usuariosInvitados = document.getElementById('usuarios').value;
             if(usuariosSeleccionados.length == 0){
                 $.pnotify({
                     title: 'Error!',
@@ -122,7 +123,9 @@
                     </div>
                 {% endfor %}
                 <div class="form-group">
-                    <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 22px;">
+                    <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 22px;" onclick="document.getElementById('my-form').onsubmit = function() {
+                return false;
+            }">
                       Seleccionar invitados
                     </button>
                 </div>

@@ -76,7 +76,6 @@ class NotificationForm(forms.ModelForm):
             'fecha_desde',
             'fecha_expiracion',
             'descripcion',
-            'usuarios_to',
             'imagen',
             )
         widgets = {
@@ -87,8 +86,14 @@ class NotificationForm(forms.ModelForm):
             'fecha_expiracion': forms.DateTimeInput(attrs={
                 'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={
-                'class': 'form-control'}),
-            # 'usuarios_to': forms.MultipleHiddenInput(attrs={
-            'usuarios_to': forms.SelectMultiple(attrs={
                 'class': 'form-control'})
         }
+
+
+class ConsultaResponseForm(forms.Form):
+    respuesta = forms.CharField(
+        label='',
+        required=True,
+        error_messages={'required': 'Es necesario ingresar un mensaje'},
+        widget=forms.Textarea
+            (attrs={'class': 'response-message-field'}))

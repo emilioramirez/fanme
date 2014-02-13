@@ -83,8 +83,8 @@
                 });
                 respuesta_correcta = false;
             }
-            var a = document.getElementById('usuarios').value;
-            if(a.length == 0){
+            var usuariosInvitados = document.getElementById('usuarios').value;
+            if(usuariosInvitados.length == 0){
                 $.pnotify({
                     title: 'Error!',
                     text: 'Es necesario seleccionar un invitado.',
