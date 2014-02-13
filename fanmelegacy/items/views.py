@@ -19,6 +19,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import comments
 from django.contrib.comments.views.moderation import perform_delete
 from django.contrib.comments.views.utils import next_redirect
+from django.contrib.contenttypes.models import ContentType
 
 
 @login_required(login_url='/accounts/user/')
@@ -27,19 +28,19 @@ def item(request, item_id):
     mostrar_boton_enlace = True
     try:
         item = Item.objects.get(pk=item_id)
-        #is_fan = request.user.persona.items.filter(nombre=item.nombre)
         is_fan = False
         item_plan = PlanXEmpresa.objects.filter(item=item)
         user = request.user
-        if user is not Persona:
-            mostrar_boton_enlace = puede_registrar_enlace(request, item)
+        try:
+            if user.empresa:
+                mostrar_boton_enlace = puede_registrar_enlace(request, item)
+        except:
+            mostrar_boton_enlace = False
         empresas = []
-        #if item_plan is None:
         for enlace_externo in item_plan:
             if enlace_externo.fecha_fin_vigencia > date.today():
                 empresa = Empresa.objects.get(user_id=enlace_externo.empresa.id)
                 empresas.append(empresa)
-        # comments = item.comentarios_recibidos.all().order_by('fecha')
         mostrar_denuncia = verificar_si_existe_denuncia(request, item)
     except Item.DoesNotExist:
         raise Http404
@@ -65,6 +66,7 @@ def puede_registrar_enlace(request, item):
         else:
             try:
                 plan.item.get(pk=item.id)
+                messages.add_message(request, messages.INFO, 'Este ítem ya tiene registrado el enlace externo de la empresa.')
             except:
                 if count <= cant_items:
                     messages.add_message(request, messages.INFO, 'La cantidad de items del plan seleccionado ha llegado a su límite. No podrá registrar el enclace externo en el ítem.')
