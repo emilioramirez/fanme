@@ -8,7 +8,7 @@
 {% block dashboard %}
 <div class="row">
     <div class="page-header">
-        <h1>Items asociados a {{ empresa.razon_social }}</h1>
+        <h1>Items asociados a {{ user_empresa.empresa.razon_social }}</h1>
     </div>
     {% if planes %}
     <div class="panel panel-default">
@@ -51,11 +51,13 @@
         -->
     </div>
     {% else %}
-        <p>{{ empresa.razon_social }} no registró ningun producto</p>
+        <p>{{ user_empresa.empresa.razon_social }} no registró ningun producto</p>
     {% endif %}
 </div>
 {% endblock dashboard %}
 
 {% block sidebar %}
-    {% include "dash/sidebar_logbook_empresa.html" %}
+    {% with user_empresa as user %}
+        {% include "dash/sidebar_logbook_empresa.html" %}
+    {% endwith %}
 {% endblock sidebar %}

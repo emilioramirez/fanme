@@ -215,18 +215,23 @@ def follow_user(request, user_id):
 def follow_request(request, user_id):
     try:
         user_to_follow = User.objects.get(id=user_id)
-        my_profile = request.user.persona
-        i_follow = my_profile.following.filter(pk=user_id)
-        if not i_follow:
-            my_profile.following.add(user_to_follow)
-        aux = user_to_follow.persona
-        return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
     except User.DoesNotExist:
         raise Http404
+
+    try:
+        i_follow = request.user.persona.following.filter(pk=user_id)
+        if not i_follow:
+            request.user.persona.following.add(user_to_follow)
+        aux = user_to_follow.persona
+        messages.add_message(request, messages.SUCCESS, "Ahora sigues al usuario {}".format(
+            user_to_follow.first_name, user_to_follow.last_name))
+        return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/items/empresa/{}/'.format(user_to_follow.empresa.pk))
-    return render_to_response('dash/dashboad.html',
-                                        context_instance=RequestContext(request))
+        messages.add_message(request, messages.SUCCESS, "Ahora sigues a la empresa {}".format(
+            user_to_follow.empresa.razon_social))
+        return HttpResponseRedirect('/items/empresa/{}/'.format(user_to_follow.pk))
+    # return render_to_response('dash/dashboad.html',
+    #                                     context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
@@ -244,6 +249,9 @@ def logbook_user(request, user_id):
                 key=attrgetter('fecha'), reverse=True)
     except Persona.DoesNotExist:
         return HttpResponseRedirect(reverse("dash_empresa"))
+    except User.DoesNotExist:
+        messages.add_message(request, messages.WARNING, "El usuario que intentas acceder no existe")
+        return HttpResponseRedirect(reverse("dashboad"))
     return render_to_response('dash/logbook_user.html',
         {'user_logbook': user_logbook,
         'actividades': actividades,
@@ -490,11 +498,23 @@ def activar_cuenta(request):
 
 @login_required(login_url='/accounts/user/')
 def dejar_de_seguir_usuario(request, user_id):
-    user_to_follow = User.objects.get(id=user_id)
-    my_profile = request.user.persona
-    my_profile.following.remove(user_to_follow)
-    messages.add_message(request, messages.SUCCESS, u"Has dejado de seguir al usuario {0} {1}".format(user_to_follow.first_name, user_to_follow.last_name))
-    return HttpResponseRedirect('/dash/follow/{0}'.format(user_id))
+    try:
+        user_to_follow = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        messages.add_message(request, messages.WARNING, "El usuario que intentas acceder no existe")
+        return HttpResponseRedirect(reverse("dashboad"))        
+    
+    request.user.persona.following.remove(user_to_follow)   
+    
+    try:
+        user_to_follow.persona
+        messages.add_message(request, messages.SUCCESS, u"Has dejado de seguir al usuario {0} {1}".format(user_to_follow.first_name, user_to_follow.last_name))
+        return HttpResponseRedirect('/dash/follow/{0}'.format(user_to_follow.pk))
+    except Persona.DoesNotExist:
+        messages.add_message(request, messages.SUCCESS, u"Has dejado de seguir a la empresa {0}".format(user_to_follow.empresa.razon_social))
+        return HttpResponseRedirect('/items/empresa/{}/'.format(user_to_follow.pk))
+
+
 
 
 @login_required(login_url='/accounts/user/')

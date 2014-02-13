@@ -12,6 +12,7 @@ from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 
 
 from accounts.models import Empresa, Persona
@@ -72,12 +73,18 @@ def puede_registrar_enlace(request, item):
 @login_required(login_url='/accounts/user/')
 def empresa(request, empresa_id):
     try:
-        empresa = Empresa.objects.get(pk=empresa_id)
-        planes = empresa.user.plan_empresa.filter(fecha_fin_vigencia__gt=date.today()).order_by('-fecha_fin_vigencia')
-    except Empresa.DoesNotExist:
-        raise Http404
+        user_empresa = User.objects.get(pk=empresa_id)
+        planes = user_empresa.plan_empresa.filter(fecha_fin_vigencia__gt=date.today()).order_by('-fecha_fin_vigencia')
+    except User.DoesNotExist:
+        messages.add_message(request, messages.WARNING, "El usuario que intentas acceder no existe")
+        return HttpResponseRedirect(reverse("dashboard"))
+    
+    try:
+        i_follow = request.user.persona.following.get(id=empresa_id)
+    except User.DoesNotExist:
+        i_follow = False
     return render_to_response('dash/empresa.html',
-        {'empresa': empresa, 'planes': planes}
+        {'user_empresa': user_empresa, 'planes': planes, 'i_follow': i_follow}
         , context_instance=RequestContext(request))
 
 
