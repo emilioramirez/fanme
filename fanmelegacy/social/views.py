@@ -10,6 +10,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.urlresolvers import reverse
 
 from social.forms import MessageForm, MessageResponseForm
 from social.forms import MessageQueryForm
@@ -229,7 +230,7 @@ def mensajes(request):
             msj.estado = "leido"
             msj.save()
     except Persona.DoesNotExist:  # Esto para que esta?
-        return HttpResponseRedirect('/dash/empresa/')  # Esto para que esta?
+        return HttpResponseRedirect(reverse("dash_empresa"))  # Esto para que esta?
     return render_to_response('social/messages.html', {'form_search': searchbox,
         'usuarios': usuarios, 'breadcrumb': ["Social", "Mensajes"]},
         context_instance=RequestContext(request))
@@ -290,7 +291,7 @@ def messages_user(request, user_id):
             mensajes = getMensajes(request, user_id)
             form_response_message = MessageResponseForm()
     except Persona.DoesNotExist:  # porque esto?
-        return HttpResponseRedirect('/dash/empresa/')  # porque esto?
+        return HttpResponseRedirect(reverse("dash_empresa"))  # porque esto?
     return render_to_response('social/messages_user.html', {
         'form_search': searchbox,
         'form_response_message': form_response_message,
@@ -446,15 +447,11 @@ def enviar_notificaciones(usuarios, descripcion, url, tipo, resumen):
 
 @login_required(login_url='/accounts/user/')
 def notificaciones(request):
-    searchbox = SearchBox()
-    try:
-        notificaciones_enviadas = request.user.notificaciones_enviadas.all()
-        consultas_noleidas = request.user.consultas_recibidas.filter(
-            estado="noleido").count()
-    except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+    notificaciones_enviadas = request.user.notificaciones_enviadas.all()
+    consultas_noleidas = request.user.consultas_recibidas.filter(
+        estado="noleido").count()
     return render_to_response('social/notificaciones.html', {
-        'form_search': searchbox, 'consultas_noleidas': consultas_noleidas,
+        'consultas_noleidas': consultas_noleidas,
         'notificaciones_enviadas': notificaciones_enviadas},
         context_instance=RequestContext(request))
 
@@ -537,7 +534,7 @@ def company_messages(request):
         for dict in mensajes_recibidos.all():
             usuarios.append(User.objects.get(id=dict['user_from']))
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('social/company_messages.html', {
         'form_search': searchbox, 'consultas_noleidas': consultas_noleidas,
         'mensajes_recibidos': usuarios},
@@ -566,7 +563,7 @@ def company_response_message(request, user_id):
             mensajes = getMensajes(request, user_id)
             form_response_message = MessageResponseForm()
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('social/company_response_message.html', {
         'form_search': searchbox,
         'form_response_message': form_response_message,
@@ -576,14 +573,13 @@ def company_response_message(request, user_id):
 
 @login_required(login_url='/accounts/user/')
 def new_notification(request):
-    searchbox = SearchBox()
     if request.method == "POST":
         form = NotificationForm(request.POST)
-        list_ids = request.user.followers.values_list('user', flat=True)
-        users = User.objects.filter(id__in=list_ids)
-        form.fields["usuarios_to"].queryset = users
-        invitados = request.POST.get("usuarios", "")
-        a_split = invitados.split(',')
+        list_ids = request.user.followers.values_list('user', flat=True)        # esto
+        users = User.objects.filter(id__in=list_ids)                            # y esto lo podes reemplazar por 
+        form.fields["usuarios_to"].queryset = users                             # users = request.user.followers.filter(user__is_active=True)
+        invitados = request.POST.get("usuarios", "")                            # y ya que lo usas 2 veces lo podes hacer una vez al comenzar
+        a_split = invitados.split(',')                                          # la funcion
         usuarios_invitados = []
         for invitado in a_split:
             usuario = User.objects.get(id=invitado)
@@ -607,7 +603,7 @@ def new_notification(request):
         users = User.objects.filter(id__in=list_ids).filter(is_active=True)
         form.fields["usuarios_to"].queryset = users
     template_vars = RequestContext(request, {"form": form,
-        'form_search': searchbox, 'users': users})
+        'users': users})
     return render_to_response('social/new_notification.html', template_vars)
 
 
@@ -621,7 +617,7 @@ def user_main_view_notifications(request):
         for dict in notificaciones_recibidas.all():
             usuarios.append(User.objects.get(id=dict['empresa']))
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('social/user_main_notification.html', {
         'form_search': searchbox, 'breadcrumb': ["Social", "Notificaciones"]},
         context_instance=RequestContext(request))
@@ -634,7 +630,7 @@ def notification_by_company(request, company_id):
         notificaciones_recibidas = request.user.notificaciones_recibidas.filter(
             empresa=company_id)
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('social/notifications_by_company.html', {
         'form_search': searchbox,
         'notificaciones_recibidas': notificaciones_recibidas},
@@ -649,7 +645,7 @@ def ver_notificacion(request, notificacion_id):
         notificaciones.estado = "leido"
         notificaciones.save()
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('social/ver_notificaciones.html', {
         'form_search': searchbox,
         'notificacion': notificaciones},

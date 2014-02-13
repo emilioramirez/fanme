@@ -1,4 +1,4 @@
-{% extends "dash/empresa.html" %}
+{% extends "bussiness/dash_empresa.html" %}
 
 {% load avatar_tags %}
 
@@ -16,12 +16,9 @@
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
     <script>
-        var myCalendar;
         function doOnLoad() {
-            myCalendar = new dhtmlXCalendarObject(["id_fecha_expiracion"]);
-            myCalendar.setDateFormat("%d/%m/%Y");
-            myCalendar = new dhtmlXCalendarObject(["id_fecha_desde"]);
-            myCalendar.setDateFormat("%d/%m/%Y");
+            var myCalendar = new dhtmlXCalendarObject(["id_fecha_expiracion", "id_fecha_desde"]);
+            myCalendar.setDateFormat(FANMEDATEFORMAT);
         }
     </script>
     <script>
@@ -110,54 +107,30 @@
 {% endblock %}
 
 {% block dashboard %}
-    <div class="title-messages">Nueva notificacion</div>
-    <div class="notifications-content">
-        <div class="form-new-notification">
-            <form action="/social/new_notification/" method="post" enctype="multipart/form-data" id="my-form">{% csrf_token %}
-                <div class="new-notification-clear"></div>
-                <div class="content-form-notification">
-                    {{ form.nombre.errors }}
-                    <label for="id_user_to_id" class="notification-name-label">Nombre:</label>
-                    {{ form.nombre }}
-                </div>
-                <div class="new-notification-clear"></div>
-                <div class="content-form-notification">
-                    {{ form.fecha_desde.errors }}
-                    <label for="fecha_desde" class="notification-date-desde-label">Fecha inicio:</label>
-                    {{ form.fecha_desde}}
-                    <label style="margin-left: 115px; font-size: 12px;">Formato: dd/mm/aaaa hh:mm<label>
-                </div>
-                <div class="new-notification-clear"></div>
-                <div class="content-form-notification">
-                    {{ form.fecha_expiracion.errors }}
-                    <label for="fecha_expiracion" class="notification-date-label">Fecha fin:</label>
-                    {{ form.fecha_expiracion }}
-                    <label style="margin-left: 115px; font-size: 12px;">Formato: dd/mm/aaaa hh:mm<label>
-                </div>
-                <div class="new-notification-clear"></div>
-                <div class="content-form-notification">
-                    {{ form.descripcion.errors }}
-                    <label for="fecha_expiracion" class="notification-description-label">Descripcion:</label>
-                    {{ form.descripcion }}
-                </div>
-                <div class="new-notification-clear"></div>
-                <div class="new-notification-clear"></div>
+<div class="row">
+    <div class="page-header"><h1>Nueva notificacion</h1></div>
+    <div class="col-md-10">
+            <form action="/social/new_notification/" method="post" enctype="multipart/form-data" id="my-form">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group {% if field.errors %}has-error{% endif %}">
+                        {% if not field.is_hidden %}
+                        <label for="{{ field.id_for_field }}" class="control-label">{{ field.label_tag }}:</label>
+                        {% endif %}
+                        {{ field }}
+                        <span class="help-block">{{ field.errors }}</span>
+                    </div>
+                {% endfor %}
+                <div class="form-group">
                     <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 22px;">
                       Seleccionar invitados
                     </button>
-                <div class="new-notification-clear"></div>
-                <div class="new-notification-clear"></div>
-                <div class="content-form-notification">
-                    {{ form.imagen.errors }}
-                    <label for="fecha_expiracion" class="notification-imagen-label">Imagen:</label>
-                    <p style="margin-left:50px;">{{ form.imagen }}</p>
                 </div>
-                <div class="new-notification-clear"></div>
                 <input type="hidden" name="usuarios" id="usuarios" value="" />
-                <input type="submit" value="Enviar" class="new-notification" onclick="validacionSubmit()" />
+                <input type="submit" value="Enviar" class="btn btn-success" onclick="validacionSubmit()" />
             </form>
-        </div>
     </div>
+</div>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">

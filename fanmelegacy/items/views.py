@@ -73,17 +73,11 @@ def puede_registrar_enlace(request, item):
 def empresa(request, empresa_id):
     try:
         empresa = Empresa.objects.get(pk=empresa_id)
-        empresa_planes = User.objects.get(email=empresa.user.email)
-        planes = empresa_planes.plan_empresa.all().order_by('-fecha_fin_vigencia')
-        items_plan = None
-        if planes:
-            plan = planes[0]
-            if plan.fecha_fin_vigencia > date.today():
-                items_plan = plan.item
+        planes = empresa.user.plan_empresa.filter(fecha_fin_vigencia__gt=date.today()).order_by('-fecha_fin_vigencia')
     except Empresa.DoesNotExist:
         raise Http404
     return render_to_response('dash/empresa.html',
-        {'empresa': empresa, 'items_plan': items_plan}
+        {'empresa': empresa, 'planes': planes}
         , context_instance=RequestContext(request))
 
 
@@ -148,7 +142,7 @@ def fan(request, item_id):
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('items/item.html',
         {'item': item, 'is_fan': is_fan,
         'comment_form': comment_form, },
@@ -169,7 +163,7 @@ def unfan(request, item_id):
     except Item.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('items/item.html',
         {'item': item, 'comment_form': comment_form},
         context_instance=RequestContext(request))

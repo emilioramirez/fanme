@@ -81,11 +81,14 @@ class NotificationForm(forms.ModelForm):
             )
         widgets = {
             'nombre': forms.TextInput(attrs={
-                'class': 'notification-name-field'}),
+                'class': 'form-control'}),
             'fecha_desde': forms.DateTimeInput(attrs={
-                'class': 'notification-name-field'}),
+                'class': 'form-control'}),
             'fecha_expiracion': forms.DateTimeInput(attrs={
-                'class': 'notification-name-field'}),
+                'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={
-                'class': 'new-notification-textarea'}),
+                'class': 'form-control'}),
+            # 'usuarios_to': forms.MultipleHiddenInput(attrs={
+            'usuarios_to': forms.SelectMultiple(attrs={
+                'class': 'form-control'})
         }

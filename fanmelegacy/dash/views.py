@@ -1,27 +1,26 @@
 # -*- encoding: utf-8 -*-
-import operator
 import datetime
+import operator
 from operator import attrgetter
 from itertools import chain
 
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import Http404
 from django.http import HttpResponseRedirect
-from django.template import RequestContext
 from django.shortcuts import render_to_response
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.db.models import Q
-from django.contrib import messages
+from django.template import RequestContext
+from django.core.urlresolvers import reverse
 
-from dash.forms import SearchBox, UserUpdateForm, PassUpdateForm
 from accounts.forms import UserLogin
-
-from items.models import Item, Comentario
 from accounts.models import Persona, Empresa
+from dash.forms import SearchBox, UserUpdateForm, PassUpdateForm, EmpresaUpdateForm
+from fanmelegacy import recommendations
+from items.models import Item, Comentario
 from segmentation.models import Topico
 from social.models import Actividad
-
-from fanmelegacy import recommendations
 
 @login_required(login_url='/accounts/user/')
 def dashboard(request):
@@ -45,7 +44,7 @@ def dashboard(request):
                     topico__in=my_profile.topicos.all())
                 items_by_topics.append(lista)
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/dashboard.html', {'topicos': items_by_topics,
         'r_topics': root_topics},
         context_instance=RequestContext(request))
@@ -133,7 +132,7 @@ def logbook(request):
         cant_following = active_followings.count()
         cant_followers = get_active_followers(request)
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/logbook.html', {
         'cant_following': cant_following,
         'actividades': actividades, 'cant_followers': cant_followers,
@@ -188,11 +187,13 @@ def results(request):
             context_instance=RequestContext(request))
 
 
-@login_required(login_url='/accounts/user/')
-def empresa(request):
-    messages.add_message(request, messages.INFO, 'Estos usuarios se han hecho fan')
-    return render_to_response('bussiness/dash_empresa.html', {},
-        context_instance=RequestContext(request))
+# @login_required(login_url='/accounts/user/')
+# def empresa(request):
+#     followers = request.user.followers.filter(user__is_active=True)
+#     return render_to_response('bussiness/dash_empresa.html',
+#         {'followers': followers,
+#          'breadcrumb': ["Empresa","Usuarios que te siguen",]},
+#         context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
@@ -204,7 +205,7 @@ def follow_user(request, user_id):
         if i_follow:
             return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/follow.html', {'user_to_follow': user_to_follow,
         'breadcrumb': ["Logbook", "{} {}".format(user_to_follow.first_name, user_to_follow.last_name)]},
         context_instance=RequestContext(request))
@@ -215,18 +216,17 @@ def follow_request(request, user_id):
     try:
         user_to_follow = User.objects.get(id=user_id)
         my_profile = request.user.persona
-        i_follow = my_profile.following.filter(id=user_id)
-        if i_follow:
-            return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
-        else:
+        i_follow = my_profile.following.filter(pk=user_id)
+        if not i_follow:
             my_profile.following.add(user_to_follow)
-            return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
+        aux = user_to_follow.persona
+        return HttpResponseRedirect('/dash/logbook/{0}'.format(user_id))
     except User.DoesNotExist:
         raise Http404
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa.html/')
+        return HttpResponseRedirect('/items/empresa/{}/'.format(user_to_follow.empresa.pk))
     return render_to_response('dash/dashboad.html',
-        context_instance=RequestContext(request))
+                                        context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
@@ -243,7 +243,7 @@ def logbook_user(request, user_id):
                     user_logbook.act_origen.all(), actividades),
                 key=attrgetter('fecha'), reverse=True)
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/logbook_user.html',
         {'user_logbook': user_logbook,
         'actividades': actividades,
@@ -256,7 +256,7 @@ def my_fans_items(request):
     try:
         items = request.user.persona.items.all()
     except Persona.DoesNotExist:
-            return HttpResponseRedirect('/dash/empresa/')
+            return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/items_stats.html',
         {'items': items, 'is_fan': True, 'breadcrumb': ["Estadisticas",
         "Sos fan de"]},
@@ -269,7 +269,7 @@ def my_comments_items(request):
         request.user.persona
         items = request.user.comment_comments.exclude(is_removed=True)
     except Persona.DoesNotExist:
-            return HttpResponseRedirect('/dash/empresa/')
+            return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/items_stats.html',
         {'items': items, 'is_fan': False, 'breadcrumb': ["Estadisticas",
         "Comentaste"]},
@@ -284,7 +284,7 @@ def recomendaciones_enviadas(request):
             'item', flat=True).distinct()
         items = Item.objects.filter(id__in=items_ids)
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/items_stats.html',
         {'items': items,'is_fan': False, "breadcrumb": ["Estadisticas", "Recomendaciones", "Enviadas"]},
         context_instance=RequestContext(request))
@@ -302,7 +302,7 @@ def recomendaciones_recibidas(request):
             r.estado = "leido"
             r.save()
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/items_stats.html',
         {'items': items, 'breadcrumb': ["Social", "Recomendaciones", "Recibidas"]},
         context_instance=RequestContext(request))
@@ -346,41 +346,61 @@ def get_active_followers(request):
 
 @login_required(login_url='/accounts/user/')
 def edit_account(request):
-    is_active = True
+    form = None
+    empresa = False
     try:
-        data = {'first_name': request.user.first_name,
-                    'last_name': request.user.last_name,
-                    'sex': request.user.persona.sexo,
-                    'email': request.user.email,
-                    'birth_date': request.user.persona.fecha_nacimiento,
-                    'avatar': request.user.persona.avatar}
-        form_update = UserUpdateForm(data)
-        is_active = request.user.is_active
+        data = {
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'sex': request.user.persona.sexo,
+            'email': request.user.email,
+            'birth_date': request.user.persona.fecha_nacimiento,
+            'avatar': request.user.persona.avatar}
+        form_update = UserUpdateForm(initial=data)
+        form = UserUpdateForm
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        data = {
+            'razon_social': request.user.empresa.razon_social,
+            'direccion': request.user.empresa.direccion,
+            'rubro': [r.pk for r in request.user.empresa.rubros.all()],
+            'email': request.user.email,
+            'url': request.user.empresa.site}
+        form_update = EmpresaUpdateForm(initial=data)
+        form = EmpresaUpdateForm
+        empresa = True
     if request.method == 'POST':
-        form_update = UserUpdateForm(request.POST, request.FILES)
+        form_update = form(request.POST, request.FILES)
         if form_update.is_valid():
-            first_name = form_update.cleaned_data['first_name']
-            last_name = form_update.cleaned_data['last_name']
-            birth_date = form_update.cleaned_data['birth_date']
-            sex = form_update.cleaned_data['sex']
-            email = form_update.cleaned_data['email']
-            user = request.user
-            user.first_name = first_name
-            user.last_name = last_name
-            user.email = email
-            user.username = email
-            profile = request.user.persona
-            profile.fecha_nacimiento = birth_date
-            profile.sexo = sex
-            try:
-                profile.avatar = request.FILES['avatar']
-            except KeyError:
-                pass  # print 'Archivo dash/view.edit_account linea 308'
-            user.save()
-            profile.save()
+            if empresa:
+                razon_social = form_update.cleaned_data['razon_social']
+                rubros = form_update.cleaned_data['rubro']
+                email = form_update.cleaned_data['email']
+                url = form_update.cleaned_data['url']
+                request.user.empresa.razon_social = razon_social
+                request.user.empresa.rubros = rubros
+                request.user.empresa.site = url
+                request.user.email = email
+                request.user.save()
+                request.user.empresa.save()
+            else:
+                first_name = form_update.cleaned_data['first_name']
+                last_name = form_update.cleaned_data['last_name']
+                birth_date = form_update.cleaned_data['birth_date']
+                sex = form_update.cleaned_data['sex']
+                email = form_update.cleaned_data['email']
+                user = request.user
+                user.first_name = first_name
+                user.last_name = last_name
+                user.email = email
+                user.username = email
+                profile = request.user.persona
+                profile.fecha_nacimiento = birth_date
+                profile.sexo = sex
+                user.save()
+                profile.save()
             messages.add_message(request, messages.SUCCESS, "Se actualizo correctamente el perfil")
+            return HttpResponseRedirect("/dash/edit_account/")
+    is_active = request.user.is_active
     return render_to_response('dash/edit_account.html',
         {'form_update': form_update,
         'is_active': is_active,
@@ -439,7 +459,7 @@ def dar_baja_cuenta(request):
                     'avatar': request.user.persona.avatar}
         form_update = UserUpdateForm(data)
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/edit_account.html',
         {'form_update': form_update,
         'is_active': False},
@@ -461,7 +481,7 @@ def activar_cuenta(request):
                     'avatar': request.user.persona.avatar}
         form_update = UserUpdateForm(data)
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/edit_account.html',
         {'form_update': form_update,
         'is_active': True},
@@ -508,7 +528,7 @@ def dashboard_ayuda(request):
         item = Item.objects.get(pk=1)
         form_login = UserLogin()
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/dashboard_ayuda.html', {
         'item': item, 'r_topics': root_topics,
         'form_login': form_login,
@@ -558,7 +578,7 @@ def logbook_ayuda(request):
         item = Item.objects.get(pk=1)
         form_login = UserLogin()
     except Persona.DoesNotExist:
-        return HttpResponseRedirect('/dash/empresa/')
+        return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/logbook_ayuda.html', {
         'item': item,
         'form_login': form_login,
