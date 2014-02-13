@@ -46,11 +46,15 @@
         }
     </script>
     <script>
+      var myCenter;
+      var latitud;
+      var longitud;
+      var marker;
       $( document ).ready(function() {
-        var longitud = {{ evento.longitud }};
-        var latitud = {{ evento.latitud }};
-        var myCenter = new google.maps.LatLng(latitud,longitud);
-        var marker;
+        longitud = {{ evento.longitud }};
+        latitud = {{ evento.latitud }};
+        myCenter = new google.maps.LatLng(latitud,longitud);
+        });
 
         function hayMarcador(){
             var fecha_inicio = document.getElementById('id_fecha_inicio').value;
@@ -79,7 +83,8 @@
                 });
                 respuesta_correcta = false;
             }
-            if(usuariosSeleccionados.length == 0){
+            var a = document.getElementById('usuarios').value;
+            if(a.length == 0){
                 $.pnotify({
                     title: 'Error!',
                     text: 'Es necesario seleccionar un invitado.',
@@ -87,15 +92,6 @@
                     hide: false
                 });
                 respuesta_correcta = false
-            }
-            if(!marker){
-                $.pnotify({
-                    title: 'Error!',
-                    text: 'Es necesario que marque un lugar en el mapa.',
-                    type: 'error',
-                    hide: false
-                });
-                respuesta_correcta = false;
             }
             document.getElementById('my-form').onsubmit = function() {
                 return respuesta_correcta;
@@ -120,7 +116,6 @@
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
-      });
 </script>
 <script>
         $("#id_fecha_inicio").click(function (e) {
@@ -185,7 +180,7 @@
     </div>
     <div class="notifications-content">
         <div class="form-nuevo-evento">
-            <form action="/social/evento/edit/{{ evento.id }}" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <form action="/social/evento/edit/{{ evento.id }}" method="post" enctype="multipart/form-data" id="my-form">{% csrf_token %}
                 <div class="new-notification-clear"></div>
                 <div class="content-form-evento">
                     {{ form.nombre.errors }}
@@ -217,7 +212,7 @@
                     {{ form.descripcion }}
                 </div>
                 <div class="new-notification-clear"></div>
-                <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 32px;">
+                <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 32px;" onclick=" document.getElementById('my-form').onsubmit = function() { return false; }" >
                     Seleccionar invitados
                 </button>
                 <div class="new-notification-clear"></div>
@@ -239,8 +234,8 @@
                 <input type="hidden" name="longitud" id="longitud" value="" />
                 <input type="hidden" name="usuarios" id="usuarios" value="" />
                 <div style="float:right;">
-                    <input type="submit" value="Guardar"  class="btn btn-success" style="margin: 30px 10px;" onclick=hayMarcador()/>
-                    <input type="button" value="Cancelar" class="btn btn-warning" style="margin: 30px 10px;" onclick="location.href='../../../social/eventos';">
+                    <input type="submit" value="Guardar" onclick=hayMarcador() class="submit" style="margin-right: 30px;"/>
+                    <input type="button" value="Cancelar" class="item-cancelar-registracion" style="margin-right: 25px; margin-left: -20px;" onclick="location.href='../../../social/eventos';">
                 </div>
             </form>
         </div>
