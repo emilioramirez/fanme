@@ -229,9 +229,11 @@ def mensajes(request):
         for msj in msj_noleidos:
             msj.estado = "leido"
             msj.save()
-    except Persona.DoesNotExist:  # Esto para que esta?
-        return HttpResponseRedirect(reverse("dash_empresa"))  # Esto para que esta?
-    return render_to_response('social/messages.html', {'form_search': searchbox,
+        request.user.persona
+        template = 'social/messages.html'
+    except Persona.DoesNotExist:
+        template = 'bussiness/messages_empresa.html'
+    return render_to_response(template, {'form_search': searchbox,
         'usuarios': usuarios, 'breadcrumb': ["Social", "Mensajes"]},
         context_instance=RequestContext(request))
 
@@ -262,7 +264,12 @@ def new_message(request):
 #        list_ids = request.user.followers.values_list('user', flat=True)
 #        users = User.objects.filter(id__in=list_ids)
         form_new_message.fields["user_to_id"].queryset = users
-    return render_to_response('social/new_message.html',
+    try:
+        request.user.persona
+        template = 'social/new_message.html'
+    except Persona.DoesNotExist:
+        template = 'bussiness/new_message_empresa.html'
+    return render_to_response(template,
         {'form_new_message': form_new_message,
         'form_search': searchbox},
         context_instance=RequestContext(request))
