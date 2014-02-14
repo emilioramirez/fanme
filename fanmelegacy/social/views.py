@@ -373,10 +373,11 @@ def responder_consulta(request, item_id, user_id):
         consulta.estado = "noleido"
         consulta.save()
         messages.add_message(request, messages.SUCCESS, "Tu respuesta ha sido enviada exitosamente.")
-    if user is Persona:
-        url = "../../ver_consulta_item_usuario/" + item_id + "/" + user_id
-    else:
+    try:
+        request.user.persona
         url = "../../consulta_empresa/" + user_id + "/" + item_id
+    except:
+        url = "../../ver_consulta_item_usuario/" + item_id + "/" + user_id
     return HttpResponseRedirect(url)
 
 
@@ -423,8 +424,12 @@ def consultas_empresa_item(request, user_id, item_id):
     searchbox = SearchBox()
     user = User.objects.get(pk=user_id)
     item = Item.objects.get(id=item_id)
-    consulta_item = Consulta.objects.filter(
-        Q(item=item), Q(user_from=user) | Q(user_to=user))
+    consulta_item1 = Consulta.objects.filter(
+        Q(item=item), Q(user_from=user), Q(user_to=request.user))
+    consulta_item2 = Consulta.objects.filter(
+        Q(item=item), Q(user_from=request.user), Q(user_to=user))
+    consulta_item = consulta_item1 | consulta_item2
+    consulta_item = consulta_item.order_by('fecha')
     consulta_form = ConsultaResponseForm()
     for consulta in consulta_item.all():
         print user
@@ -655,7 +660,7 @@ def new_notification(request):
     if request.method == "POST":
         form = NotificationForm(request.POST)
         list_ids = request.user.followers.values_list('user', flat=True)        # esto
-        users = User.objects.filter(id__in=list_ids)                            # y esto lo podes reemplazar por 
+        users = User.objects.filter(id__in=list_ids)                            # y esto lo podes reemplazar por
         # users = request.user.followers.filter(user__is_active=True)
         invitados = request.POST.get("usuarios", "")                            # y ya que lo usas 2 veces lo podes hacer una vez al comenzar
         a_split = invitados.split(',')                                          # la funcion
