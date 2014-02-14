@@ -275,11 +275,11 @@ def my_fans_items(request):
 def my_comments_items(request):
     try:
         request.user.persona
-        items = request.user.comment_comments.exclude(is_removed=True)
+        comments = request.user.comment_comments.exclude(is_removed=True)
     except Persona.DoesNotExist:
             return HttpResponseRedirect(reverse("dash_empresa"))
-    return render_to_response('dash/items_stats.html',
-        {'items': items, 'is_fan': False, 'breadcrumb': ["Estadisticas",
+    return render_to_response('dash/items_stats_comments.html',
+        {'comments': comments, 'is_fan': False, 'breadcrumb': ["Estadisticas",
         "Comentaste"]},
         context_instance=RequestContext(request))
 
