@@ -18,6 +18,16 @@ class Topico(models.Model):
 
         return self.nombre
 
+    def get_all_children(self, include_self=True):
+        r = []
+        if include_self:
+            r.append(self)
+        for c in Topico.objects.filter(padre=self):
+            #r.append(c.get_all_children(include_self=False))
+            r.append(c)
+        return r
+
+
 # delete begins
 class Tag(models.Model):
     pass
@@ -37,6 +47,7 @@ class Denuncia(models.Model):
     descripcion = models.TextField(max_length=300)
 # delete end
 
+
 class AccionAnalisisDenuncia(models.Model):
     accion = models.CharField(max_length=50)
     descripcion = models.TextField(blank=True)
@@ -47,7 +58,7 @@ class AccionAnalisisDenuncia(models.Model):
 
     def __unicode__(self):
         return self.accion
-    
+
 
 class EstadoAnalisisDenuncia(models.Model):
     estado = models.CharField(max_length=50)

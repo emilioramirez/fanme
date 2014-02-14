@@ -37,7 +37,31 @@ def fans_por_topicos(request):
     length = len(dict_topico)
     return render_to_response('informes/fans_por_topico.html',
         {'fans_por_topicos': dict_topico, 'length': length,
-        'items_dict': category_dict },
+        'items_dict': category_dict},
+        context_instance=RequestContext(request))
+
+
+@staff_member_required
+def fans_por_sub_topicos(request):
+    nombre_padre_topico = request.GET.get('topico')
+    topico = Topico.objects.get(nombre=nombre_padre_topico)
+    topico_padre = topico.get_all_children()
+    print topico_padre
+    dict_topico = {}
+    category_dict = defaultdict()
+    for topico in topico_padre:
+        item_dict = {}
+        items_por_topico = Item.objects.filter(topico=topico)
+        cant_fans = 0
+        for item in items_por_topico:
+            cant_fans = cant_fans + item.cantidad_fans
+            item_dict[item] = item.cantidad_fans
+        dict_topico[topico] = cant_fans
+        category_dict[topico] = collections.Counter(item_dict).most_common(10)
+    length = len(dict_topico)
+    return render_to_response('informes/fans_por_subtopico.html',
+        {'fans_por_topicos': dict_topico, 'length': length,
+        'items_dict': category_dict},
         context_instance=RequestContext(request))
 
 

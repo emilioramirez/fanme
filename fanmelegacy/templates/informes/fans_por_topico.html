@@ -24,69 +24,53 @@ alert("I am an alert box!");
         // Create the chart
         $('#usuarios_activos').highcharts({
             chart: {
-                type: 'column',
-                events: {
-                    drilldown: function (e) {
-                        if (!e.seriesOptions) {
-                            var chart = this,
-                                drilldowns = {
-                                    {% for topico, items in items_dict.iteritems %}
-                                    '{{topico}}': {
-                                            name: '{{topico}}',
-                                            data: [
-                                            {% for item, cant_fans in items %}
-                                                ['{{item}}', {{cant_fans}}],
-                                            {% endfor %}
-                                            ]
-                                        },
-                                    {% endfor %}
-                                },
-                                series = drilldowns[e.point.name];
-
-                            // Show the loading label
-                            chart.showLoading('Procesando ...');
-
-                            setTimeout(function () {
-                                chart.hideLoading();
-                                chart.addSeriesAsDrilldown(e.point, series);
-                            }, 1000);
-                        }
-                    }
-                }
+                type: 'column'
             },
             title: {
                 text: 'Fans por tópicos'
             },
-            xAxis: {
+             xAxis: {
                 type: 'category'
             },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Cant. fans'
+                }
+            },
             legend: {
-                enabled: false
+                enabled: true
             },
              plotOptions: {
                 series: {
                     borderWidth: 0,
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
                     dataLabels: {
                         enabled: true,
+                    },
+                    point: {
+                        events: {
+                            click: function() {
+                                location.href='../fans_por_subtopico?topico=' + this.series.name;
+                            }
+                        }
                     }
                 }
             },
-            series: [{
-                name: 'Fans por Topico',
-                colorByPoint: true,
-                data: [
+            tooltip: {
+                headerFormat: '',
+            },
+            series: [
                     {% for topico, cant_fans in fans_por_topicos.items %}
                     {
                         name: '{{topico}}',
-                        y: {{cant_fans}},
-                        drilldown: true
+                        data: [{{cant_fans}}]
                     },
                     {% endfor %}
                 ]
-            }],
-            drilldown: {
-                series: []
-            }
         })
     });
 </script>
@@ -95,4 +79,3 @@ alert("I am an alert box!");
 {% block content %}
 <div id="usuarios_activos" style="width:100%; height:400px;"></div>
 {% endblock content %}
-
