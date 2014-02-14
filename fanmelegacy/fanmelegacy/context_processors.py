@@ -11,6 +11,7 @@ def sidebar_indicators(request):
     try:
         context['notificaciones_noleidas'] = request.user.notificaciones_recibidas.filter(~Q(estado='leido')).count()
         context['recomendaciones_noleidas'] = request.user.recomendaciones_recibidas.filter(estado='noleido').count()
+        context['consultas_noleidas'] = request.user.consultas_recibidas.filter(estado='noleido').count()
         context['mensajes_nolidas'] = request.user.mensajes_recibidos.filter(estado='noleido').count()
         context['eventos_noleidos'] = request.user.invitacion_eventos.filter(estado='noleido').count()
         estado, creado = EstadoAnalisisDenuncia.objects.get_or_create(estado="creado")
