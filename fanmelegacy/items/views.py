@@ -239,8 +239,8 @@ def delete_own_comment(request, comment_id, next=None):
     if comment.user.id != request.user.id:
         raise Http404
     perform_delete(request, comment)
-    return next_redirect(request, fallback=next or 'comments-approve-done',
-            c=comment.pk)
+    messages.add_message(request, messages.SUCCESS, u"Sé ha eliminado tu comentario con éxito.")
+    return HttpResponseRedirect(reverse("item-detail", args=[comment.object_pk]))
 
 
 @login_required(login_url='/accounts/user')
