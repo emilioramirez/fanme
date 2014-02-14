@@ -359,7 +359,6 @@ def company_query(request, company_id):
 
 @login_required(login_url='/accounts/user/')
 def responder_consulta(request, item_id, user_id):
-    searchbox = SearchBox()
     item = Item.objects.get(pk=item_id)
     consulta_form = ConsultaResponseForm(request.POST)
     if consulta_form.is_valid():
@@ -375,6 +374,7 @@ def responder_consulta(request, item_id, user_id):
         messages.add_message(request, messages.SUCCESS, "Tu respuesta ha sido enviada exitosamente.")
     url = "../../ver_consulta_item_usuario/" + item_id + "/" + user_id
     return HttpResponseRedirect(url)
+
 
 def items_en_plan_vigente(company_id):
     empresa = User.objects.get(pk=company_id)
@@ -417,17 +417,16 @@ def consultas_usuario_empresas(request, user_id):
 @login_required(login_url='/accounts/user/')
 def consultas_empresa_item(request, user_id, item_id):
     searchbox = SearchBox()
-    if request.POST:
-        consulta_form = ConsultaResponseForm(request.POST)
-    else:
-        consulta_form = ConsultaResponseForm()
-    user = User.objects.filter(pk=user_id)
+    user = User.objects.get(pk=user_id)
     item = Item.objects.get(id=item_id)
     consulta_item = Consulta.objects.filter(
         Q(item=item), Q(user_from=user) | Q(user_to=user))
+    consulta_form = ConsultaResponseForm()
     for consulta in consulta_item.all():
-        consulta.estado = "leido"
-        consulta.save()
+        print user
+        if consulta.user_from == user:
+            consulta.estado = "leido"
+            consulta.save()
     return render_to_response('social/consulta_item.html', {'form_search': searchbox,
         'consulta_form': consulta_form,
         'user_id': user_id, 'item_id': item_id,
@@ -487,10 +486,9 @@ def ver_consultas_item_usuario(request, item_id, user_id):
     consulta_item = Consulta.objects.filter(
         Q(item=item_consultado), Q(user_from=user) | Q(user_to=user))
     for consulta in consulta_item.all():
-        consulta.estado = "leido"
-        consulta.save()
-    if request.POST:
-        consulta_form = ConsultaResponseForm(request.POST)
+        if consulta.user_from == user:
+            consulta.estado = "leido"
+            consulta.save()
     else:
         consulta_form = ConsultaResponseForm()
     consultas_noleidas = request.user.consultas_recibidas.filter(
