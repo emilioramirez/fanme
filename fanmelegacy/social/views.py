@@ -360,19 +360,23 @@ def company_query(request, company_id):
 @login_required(login_url='/accounts/user/')
 def responder_consulta(request, item_id, user_id):
     item = Item.objects.get(pk=item_id)
+    user = User.objects.get(id__exact=user_id)
     consulta_form = ConsultaResponseForm(request.POST)
     if consulta_form.is_valid():
         respuesta = consulta_form.cleaned_data['respuesta']
         consulta = Consulta()
         consulta.item = item
         consulta.user_from = request.user
-        consulta.user_to = User.objects.get(id__exact=user_id)
+        consulta.user_to = user
         consulta.mensaje = respuesta
         consulta.fecha = datetime.now()
         consulta.estado = "noleido"
         consulta.save()
         messages.add_message(request, messages.SUCCESS, "Tu respuesta ha sido enviada exitosamente.")
-    url = "../../ver_consulta_item_usuario/" + item_id + "/" + user_id
+    if user is Persona:
+        url = "../../ver_consulta_item_usuario/" + item_id + "/" + user_id
+    else:
+        url = "../../consulta_empresa/" + user_id + "/" + item_id
     return HttpResponseRedirect(url)
 
 
