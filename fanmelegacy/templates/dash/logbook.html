@@ -1,0 +1,76 @@
+{% extends "dash/base_dash.html" %}
+
+{% load avatar_tags %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptions %}
+{% if user.persona %}
+<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li class="active"><a href="{% url 'logbook' %}">Logbook</a></li>
+<li><a href="{% url 'topicos' %}">Topicos</a></li>
+{% else %}
+<li><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+<li><a href="{% url 'dash_planes' %}">Planes</a></li>
+{% endif %}
+{% endblock menuOptions %}
+
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header">
+        <h1>Actividad de los usuarios que tu sigues</h1>
+    </div>
+    <div class="logbook-content-list">
+    {% for actividad in actividades %}
+        <div class="panel panel-{% if actividad.tipo == "fan" %}warning{% elif actividad.tipo == "comentario" %}success{% elif actividad.tipo == "recomendacion" %}info{% endif%}">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-12"><a href="/dash/logbook/{{ actividad.usuario_origen.id }}">{{ actividad.usuario_origen.first_name }} {{ actividad.usuario_origen.last_name }}</a>
+                        {% if actividad.tipo == "fan" %}
+                        se hizo Fan de 
+                        {% elif actividad.tipo == "comentario" %}
+                        ha comentado 
+                        {% elif actividad.tipo == "recomendacion" %}
+                        ha recomendado 
+                        {% endif%}
+                        un Item
+                </div></div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="/dash/logbook/{{ actividad.usuario_origen.id }}"><div class="thumbnail"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div></a>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="well">{{ actividad.descripcion }} <a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
+                        {% if actividad.tipo == "comentario" %}
+                        <div class="well">
+                            <p>Su comentario fue:</p>
+                            <blockquote>{{ actividad.comentario_new.comment }}</blockquote>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">{{ actividad.fecha }}</div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Los usuarios que sigues no han realizado ninguna actividad en el sistema</p>
+    {% endfor %}
+    </div>
+</div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    {% include "dash/sidebar_logbook.html" %}
+{% endblock sidebar %}

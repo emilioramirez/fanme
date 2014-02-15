@@ -1,0 +1,79 @@
+{% extends "bussiness/dash_empresa.html" %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block dashboard %}
+    <div class="row">
+        <div class="page-header"><h1>Notificaciones</h1></div>
+        <div class="eventos-content">
+            {% if notificacion %}
+            <div class='evento'>
+                <div class=''>
+                    <div class=''><img src="{{ notificacion.imagen.url }}" alt="Imagen de Notificacion" /></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Nombre</div>
+                    <div class='evento-field'>{{ notificacion.nombre }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Descripcion</div>
+                    <div class='evento-field'>{{ notificacion.descripcion }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Fecha desde</div>
+                    <div class='evento-field'>{{ notificacion.fecha_desde }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Fecha expiracion</div>
+                    <div class='evento-field'>{{ notificacion.fecha_expiracion }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Invitados</div>
+                    <div class='evento-field'>
+                        <ul>
+                        {% for invitado in notificacion.usuarios_to.all %}
+                            <li>
+                                <div class='invitados'>
+                                    {{ invitado }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            {% else %}
+            <div class='eventos-list'>
+                {% for notificaciones in notificaciones_enviadas %}
+                    <div class='i-content'>
+                        <div class="i-title">
+                            {{ notificaciones.nombre }}
+                            {% if notificaciones.estado != 'leido' %}
+                                ({{ notificaciones.estado }})
+                            {% endif %}
+                            <div class="i-title-options">
+                                <a href="/social/notificacion/edit/{{ notificaciones.id }}" title="Editar esta notificacion"><div class="i-title-options-edit"></div></a>
+                                <a href="/social/notificacion/delete/{{ notificaciones.id }}" title="Cancelar esta notificacion"><div class="i-title-options-delete"></div></a>
+                            </div>
+                        </div>
+                        <div class="i-body">
+                            <a href='/social/notificaciones/{{ notificaciones.id }}'>{{ notificaciones.descripcion }}</a> creado por tí.
+                        </div>
+                    </div>
+                {% endfor%}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <a href="/social/new_notification/" class="btn btn-success">Nueva notificacion</a>
+    </div>
+{% endblock dashboard %}

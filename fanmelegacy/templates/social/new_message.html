@@ -1,0 +1,38 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.minified.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/Autosuggest/jquery.autoSuggest.packed.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/Autosuggest/autoSuggest.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block dashboard %}
+    <div class="eventos-content">
+        <div class='eventos-titulo'>Nuevo Mensaje</div>
+        <div class="message-body">
+            <div class="message-content-mati">
+                <form action="/social/new_message/" method="post">{% csrf_token %}
+                    <div class="message-content-fields">
+                        <div class="errors">{{ form_new_message.user_to_id.errors }}</div>
+                        <div class="new-message-label"><label for="nombre" class="notification-name-field">Para:</label></div>
+                        <div class="user-to-field">{{ form_new_message.user_to_id }}</div>
+                    </div>
+                    <div class="message-content-fields">
+                        <div class="errors">{{ form_new_message.mensaje.errors }}</div>
+                        <div class="new-message-label"><label for="nombre" class="notification-name-field">Mensaje:</label></div>
+                        <div class="new-message-field">{{ form_new_message.mensaje }}</div>
+                    </div>
+                    <input type="submit" value="Enviar" class="enviar"/>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock dashboard %}

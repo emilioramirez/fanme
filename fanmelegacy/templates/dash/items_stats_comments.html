@@ -1,0 +1,15 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="dashboard-list-items">
+        {% for comment in comments %}
+            {% with comment.content_object as item %}
+                {% include "dash/item_detail.html" %}
+            {% endwith %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock dashboard %}

@@ -1,0 +1,116 @@
+{% extends "admin/base.html" %}
+{% load is_false_filter %}
+
+{% block title %}'FanMe' | {{ site_title }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">FanMe</a></h1>
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}
+
+{% block extrahead %}
+<script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
+<script src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script>
+function myFunction()
+{
+alert("I am an alert box!");
+}
+</script>
+<script>
+{% if mostrar_form|is_false %}
+$(function () {
+        $('#usuarios_creados').highcharts({
+            title: {
+                text: 'Cantidad de usuarios creados',
+            },
+            xAxis: {
+                categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                    'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Cant. usuarios'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function() {
+                                location.href='../../progreso_filtrado?anio=' + this.series.name +'&mes='+ this.category;
+                            }
+                        }
+                    }
+                }
+            },
+            series: [
+                {% for year, meses_cant in dict.items %}
+                    {
+                        name: '{{year}}',
+                        data: [
+                        {% for mes, cant in meses_cant.items %}
+                            {{cant}},
+                        {% endfor %}
+                        ]
+                    },
+                {% endfor %}
+            ]
+        });
+    });
+{% endif %}
+</script>
+<script>
+function myFunction()
+{
+    var e = document.getElementById("fecha_desde");
+    var fecha_desde = e.options[e.selectedIndex].text;
+    e = document.getElementById("fecha_hasta");
+    var fecha_hasta = e.options[e.selectedIndex].text;
+    var desde = parseInt(fecha_desde);
+    var hasta = parseInt(fecha_hasta);
+    var cant_anios = hasta - desde
+    window.location.assign("/admin/informes/progreso_anios/" + cant_anios);
+}
+</script>
+{% endblock extrahead %}
+
+{% block content %}
+{% if mostrar_form %}
+<div>
+    Desde:
+    <select id="fecha_desde">
+      <option>2014</option>
+      <option>2013</option>
+      <option>2012</option>
+      <option selected>2011</option>>
+    </select>
+    <br/>
+    Hasta:
+    <select id="fecha_hasta" style="margin-left: 3px;">
+      <option>2014</option>
+      <option>2013</option>
+      <option>2012</option>
+      <option>2011</option>
+    </select>
+    <br/>
+    <button style="margin-left:45px;" onclick="myFunction()">Aceptar</button>
+</div>
+{% endif %}
+<div id="usuarios_creados" style="width:100%; height:400px;"></div>
+{% endblock content %}
+

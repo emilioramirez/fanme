@@ -1,0 +1,156 @@
+{% extends "dash/base_dash.html" %}
+
+{% load avatar_tags %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
+    <link href="{{ STATIC_URL }}css/tour/prism.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/bootstrap-tour.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/index.css" rel="stylesheet">
+{% endblock mystylesheet%}
+
+{% block myjavascript %}
+    <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/logbook_tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+{% endblock myjavascript %}
+
+
+{% block menuOptions %}
+{% if user.persona %}
+<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li class="active"><a href="{% url 'logbook' %}">Logbook</a></li>
+<li><a href="{% url 'topicos' %}">Topicos</a></li>
+{% else %}
+<li><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+<li><a href="{% url 'dash_planes' %}">Planes</a></li>
+{% endif %}
+{% endblock menuOptions %}
+
+
+{% block dashboard %}
+    <h1>Actividad de los usuarios que tu sigues</h1>
+    <div id="logbook" class="logbook-content-list">
+        {% if actividades %}
+            {% for actividad in actividades %}
+                {% if actividad.tipo == "fan" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
+
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" >{{ actividad.item}}</div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if actividad.tipo == "comentario" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
+
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" >{{ actividad.item}}</div>
+                            <div class="" >"{{ actividad.comentario.comentario }}"</div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if actividad.tipo == "recomendacion" %}
+                    <div class="actividad-fan-content">
+                        <div class="actividad-user-orig">
+                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
+
+                        </div>
+                        <div class="actividad-desc-content">
+                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
+                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
+                            <div class="actividad-item" >{{ actividad.item}}</div>
+                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            Los usuarios que siguen no han realizado ninguna actividad en el sistema
+        {% endif %}
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    <div class="sidebar-content">
+            <div class="sidebar-user">
+                <div class="user-name">Pablo Carnicero</div>
+                <div class="user-stars">
+                    <ul>
+                        <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="stadisticas" class="sidebar-stadistic">
+                <a href="#">
+                    <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+                        <div class="stadistic-num">3</div>
+                        <div class="stadistic-nom">Fans</div>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="stadistic-recomendations sidebar-stadistic-item">
+                        <div class="stadistic-num">4</div>
+                        <div class="stadistic-nom">
+                            Usuarios sigo
+                        </div>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="stadistic-comments sidebar-stadistic-item">
+                        <div class="stadistic-num">8</div>
+                        <div class="stadistic-nom">
+                            Usuarios me siguen
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="sidebar-menu-indicators">
+                <a href="#">
+                    <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                        (3)
+                    </div>
+                </a>
+                <a href="#">
+
+                    <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                        (2)
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                        (6)
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                        (3)
+                    </div>
+                </a>
+            </div>
+            </div>
+            <div class="sidebar-new-item">
+                <a href="#"><div class="new-item-buttom">Crear Item</div></a>
+            </div>
+            <div class="clear"></div>
+        </div>
+{% endblock sidebar %}
