@@ -137,6 +137,9 @@ def edit_evento(request, evento_id):
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
         form.fields["invitados"].queryset = users
+        latitud = request.POST.get("latitud", "")
+        longitud = request.POST.get("longitud", "")
+        print latitud
         invitados = request.POST.get("usuarios", "")
         a_split = invitados.split(',')
         usuarios_invitados = []
@@ -150,6 +153,8 @@ def edit_evento(request, evento_id):
                 evento.imagen = request.FILES['imagen']
             except KeyError:
                 pass
+            evento.latitud = latitud
+            evento.longitud = longitud
             evento.save()
             form.save_m2m()
             for invitado in usuarios_invitados:
