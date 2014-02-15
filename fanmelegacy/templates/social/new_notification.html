@@ -123,14 +123,17 @@
                     </div>
                 {% endfor %}
                 <div class="form-group">
-                    <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 22px;" onclick="document.getElementById('my-form').onsubmit = function() {
+                    <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="document.getElementById('my-form').onsubmit = function() {
                 return false;
             }">
                       Seleccionar invitados
                     </button>
                 </div>
                 <input type="hidden" name="usuarios" id="usuarios" value="" />
-                <input type="submit" value="Enviar" class="btn btn-success" onclick="validacionSubmit()" />
+                <div style="float:right;">
+                    <input type="submit" value="Enviar" class="btn btn-success" onclick="validacionSubmit()" />
+                    <input type="button" value="Cancelar" class="btn btn-danger" onclick="location.href='../../../bussiness/dash_empresa';">
+                </div>
             </form>
     </div>
 </div>
