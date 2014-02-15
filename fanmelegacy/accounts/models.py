@@ -7,6 +7,7 @@ from segmentation.models import Topico, AnalisisDenuncia, EstadoAnalisisDenuncia
 from items.models import Item
 from fanmelegacy.thumbs import ImageWithThumbsField
 from rathings.models import dislike_created, Dislike, Like
+from django.contrib.auth.models import Group
 
 
 # Create your models here.
@@ -47,6 +48,13 @@ class Persona(AbstractProfile):
         verbose_name_plural = "Personas"
 
     def cantidad_estrellas(self):
+        puntaje = self.set_puntaje()
+        g = Group.objects.get(name="moderador")
+        if puntaje >= settings.ESTRELLAS["5"]:
+            self.user.groups.add(g)
+        else:
+            self.user.groups.remove(g)
+        
         cant_estrellas = self.get_cant_estrellas()
         return range(cant_estrellas)
 
@@ -64,11 +72,11 @@ class Persona(AbstractProfile):
         estrellas = 0
         if self.puntaje <= e["1"]:
             estrellas = 1
-        elif self.puntaje <= e["2"]:
+        elif self.puntaje > e["1"] and self.puntaje <= e["2"]:
             estrellas = 2
-        elif self.puntaje <= e["3"]:
+        elif self.puntaje > e["2"] and self.puntaje <= e["3"]:
             estrellas = 3
-        elif self.puntaje <= e["4"]:
+        elif self.puntaje > e["3"] and self.puntaje <= e["4"]:
             estrellas = 4
         else:
             estrellas = 5
@@ -87,10 +95,10 @@ class Persona(AbstractProfile):
         for comentario in mis_comentarios:
             cantidad_likes_comentarios += Like.objects.get_for_obj(comentario).count()
             cantidad_analisdenuncias_borrados += AnalisisDenuncia.objects.filter(
-            estado=estado, # es accion que se toma para esta denuncia
-            content_type=ContentType.objects.get_for_model(comentario),
-            object_id=comentario.pk,
-            ).count()
+                estado=estado, # es accion que se toma para esta denuncia
+                content_type=ContentType.objects.get_for_model(comentario),
+                object_id=comentario.pk,
+                ).count()
 
         item_fan, comment_like, comment_denuncias = settings.PUNTAJES["item_fan"], settings.PUNTAJES["comment_like"], settings.PUNTAJES["comment_denuncias"]
         self.puntaje = ((item_fan * cantidad_items_fan) + (comment_like * cantidad_likes_comentarios) - (cantidad_analisdenuncias_borrados * comment_denuncias))
