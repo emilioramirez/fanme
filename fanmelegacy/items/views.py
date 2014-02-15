@@ -68,7 +68,7 @@ def puede_registrar_enlace(request, item):
                 plan.item.get(pk=item.id)
                 messages.add_message(request, messages.INFO, 'Este ítem ya tiene registrado el enlace externo de la empresa.')
             except:
-                if count <= cant_items:
+                if count >= cant_items:
                     messages.add_message(request, messages.INFO, 'La cantidad de items del plan seleccionado ha llegado a su límite. No podrá registrar el enclace externo en el ítem.')
                     ret = False
                 else:
