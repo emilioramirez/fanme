@@ -7,7 +7,7 @@
         return $start.addClass("disabled", true);
       },
       onEnd: function() {
-        return $start.removeClass("disabled", true);
+        location.href='/dash/temas_de_ayuda';
       },
       debug: true
     });
