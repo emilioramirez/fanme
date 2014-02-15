@@ -29,6 +29,7 @@
         var geocoder = new google.maps.Geocoder();
         var marker;
         var latitud, longitud;
+        var infowindow = new google.maps.InfoWindow();
 
         function hayMarcador(){
             var fecha_inicio = document.getElementById('id_fecha_inicio').value;
@@ -105,10 +106,6 @@
                     position: location,
                     map: map,
                   });
-                /*var infowindow = new google.maps.InfoWindow({
-                    content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
-                  });
-                infowindow.open(map,marker);*/
                 google.maps.event.addListener(marker, 'click', function() {
                     geocodePosition(marker.getPosition());
                     });
@@ -134,6 +131,7 @@
                 google.maps.event.addListener(marker, 'click', function() {
                     geocodePosition(marker.getPosition());
                     });
+                geocodePosition(marker.getPosition());
             }
         }
 
@@ -151,9 +149,11 @@
         }
 
         function updateMarkerAddress(str) {
-          var infowindow = new google.maps.InfoWindow({
+            if(infowindow.getContent() != 'undefined')
+                infowindow.close();
+            infowindow = new google.maps.InfoWindow({
                 content: str
-              });
+            });
             infowindow.open(map,marker);
         }
 
