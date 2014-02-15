@@ -7,7 +7,7 @@
         return $start.addClass("disabled", true);
       },
       onEnd: function() {
-        return $start.removeClass("disabled", true);
+        location.href='/dash/temas_de_ayuda';
       },
       debug: true
     });
@@ -17,12 +17,6 @@
         placement: "right",
         title: "Mensajes",
         content: "Podras ver todos los mensajes que has enviado con otro usuario en forma de conversación.",
-        backdrop: true
-      }, {
-        element: "#responder",
-        placement: "right",
-        title: "Responder",
-        content: "Podrás usar este campo de texto para responder el mensaje.",
         backdrop: true
       }
     ]);
