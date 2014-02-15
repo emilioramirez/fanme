@@ -16,13 +16,7 @@
         element: "#primer-tour",
         placement: "right",
         title: "Detalles del evento",
-        content: "Visualiza diferente informacion acerca del evento: descripcion, fecha de inicio/fin y una rapida ubicacion del evento.",
-        backdrop: true
-      },{
-        element: "#tercer-tour",
-        placement: "left",
-        title:"Invitados",
-        content: "Un listado con los usuarios que han sido invitados al evento.",
+        content: "Visualiza diferente informacion acerca del evento: descripcion, fecha de inicio/fin, una rapida ubicacion del evento y los usuarios invitados al mismo.",
         backdrop: true
       }
     ]);
