@@ -32,7 +32,7 @@
         backdrop: true
       },{
         element: "#evento-trigger",
-        path: "http://127.0.0.1:8000/social/evento_ayuda/"
+        path: "/social/evento_ayuda/"
       }
     ]);
     tour.start();

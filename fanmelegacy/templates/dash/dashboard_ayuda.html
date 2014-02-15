@@ -28,60 +28,78 @@
 {% endblock menuOptions %}
 
 {% block dashboard %}
-    <div id="dash-content"></div>
-    <div id="filter-content" class="dashboard-list-topics">
-        <ul class="list-topics">
-            {% for topic in r_topics %}
+    <div class="row">
+        <div id="filter-content" class="dashboard-list-topics">
+            <ul class="list-topics">
+                {% for topic in r_topics %}
+                    <li>
+                        {% if topic in user.persona.topicos.all %}
+                            <a href="#">
+                                <div class="list-item-topico list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                            </a>
+                        {% else %}
+                            <a href="#">
+                                <div class="list-item-topico un-list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                            </a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
                 <li>
-                    {% if topic in user.persona.topicos.all %}
+                    {% if all_topics %}
                         <a href="#">
-                            <div class="list-item-topico list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                            <div class="list-item-topico list-item-topico-all" title="Todos"></div>
                         </a>
                     {% else %}
                         <a href="#">
-                            <div class="list-item-topico un-list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                            <div class="list-item-topico un-list-item-topico-all" title="Todos"></div>
                         </a>
                     {% endif %}
                 </li>
-            {% endfor %}
-            <li>
-                <a href="#">
-                    <div class="list-item-topico list-item-topico-all" title="Todos"></div>
-                </a>
-            </li>
-        </ul>
+            </ul>
+        </div>
     </div>
-    <div class="dashboard-list-items">
-        <div id="recomendaciones-content" class="item-content">
-            <div class="item-header">
-                <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
-                <div class="item-nombre"><a href="#">{{ item }}</a></div>
-                <div class="item-score" title="Cantidad de fans">
-                    <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
-                    {{ item.cantidad_fans }}
+    <div class="row">
+        <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
+                        </div>
+                        <div class="col-md-8"><a href="#">{{ item }}</a></div>
+                        <div class="col-md-2">
+                            <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" alt="Score" title="Cantidad de fans">
+                            <span>{{ item.persona_set.count }}</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="clear"></div>
-            </div>
-            <div class="item-body">
-                <div class="item-image" title="Imagen ilustrativa del item">
-                    {% if item.mis_imagenes.count %}
-                        <img src="{{ item.first_image }}" alt="Score">
-                    {% else %}
-                        <img src="{{ STATIC_URL }}images/298.png" alt="Score">
-                    {% endif %}
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="thumbnail" title="Imagen ilustrativa del item">
+                        {% if item.mis_imagenes.count %}
+                            <img id="imagen_grande" src="{{ item.first_image_big }}" alt="Score">
+                        {% else %}
+                            <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="well" title="Descripcion del item">{{ item.descripcion }}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="item-descripcion" title="Descripcion del item">{{ item.descripcion|truncatewords:70 }}</div>
-                <div class="clear"></div>
             </div>
-            <div class="item-footer">
-                <div class="item-topico">{{ item.topico }}</div>
-                <div id="item-botones" class="item-buttons">
-                    {% if user.is_active %}
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-2">{{ item.topico }}</div>
+                    <div class="col-md-offset-6 col-md-4" id="item-botones">
                         <a href="#" title="Hazte Fan de este item"><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
                         <a href="#" title="Recomendá este item a tus seguidores"><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
-                    {% endif %}
+                    </div>
                 </div>
-                <div class="clear"></div>
             </div>
         </div>
     </div>
@@ -97,6 +115,8 @@
                     <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
                     <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
                     <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings-blanca.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings-blanca.png" alt="Star" /></li>
                 </ul>
             </div>
         </div>
@@ -125,23 +145,28 @@
         <div class="sidebar-menu-indicators">
             <a href="#">
                 <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
-                    (3)
+                    <span class="badge">3</span>
                 </div>
             </a>
             <a href="#">
 
                 <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
-                    (6)
+                    <span class="badge">6</span>
                 </div>
             </a>
             <a href="#">
                 <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
-                    (2)
+                    <span class="badge">2</span>
                 </div>
             </a>
             <a href="#">
                 <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
-                    (8)
+                    <span class="badge">8</span>
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá las consultas realizadas a las empresas"><div class="mini-img-consulta"></div>Consultas
+                    <span class="badge">1</span>
                 </div>
             </a>
         </div>
