@@ -35,7 +35,6 @@
                     {% if user.persona %}
                     <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                     <li><a href="{% url 'logbook' %}">Logbook</a></li>
-                    <li><a href="{% url 'topicos' %}">Topicos</a></li>
                     {% else %}
                     <li><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
                     <li><a href="{% url 'dash_planes' %}">Planes</a></li>
@@ -72,20 +71,19 @@
         </div>
         {% endblock menuArea %}
         {% endblock header%}
+
+        {% block breadcrumb %}
         <div class="container">
             <div class="row">
                 <ol class="breadcrumb">
-                    {% block breadcrumb %}
                     <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Atrás</a></li>
-                    {% block breadcrumb-active %}
                     {% for bread in breadcrumb %}
                     <li {% if not forloop.last %}class="active"{% endif %}>{{ bread }}</li>
                     {% endfor %}
-                    {% endblock breadcrumb-active %}
-                    {% endblock breadcrumb %}
                 </ol>
             </div>
         </div>
+        {% endblock breadcrumb %}
 
         <div class="container">
         {% block messages %}

@@ -283,26 +283,23 @@ def new_message(request):
 @login_required(login_url='/accounts/user/')
 def messages_user(request, user_id):
     searchbox = SearchBox()
-    try:  # porque esto?
-        if request.method == 'POST':
-            form_response_message = MessageResponseForm(request.POST)
-            if form_response_message.is_valid():
-                mensaje = form_response_message.cleaned_data['mensaje']
-                message = Mensaje()
-                message.user_from_id = request.user.id
-                message.user_to_id = user_id
-                message.mensaje = mensaje
-                message.fecha = datetime.now()
-                message.save()
-                form_response_message = MessageResponseForm()
-                mensajes = getMensajes(request, user_id)
-            else:
-                mensajes = getMensajes(request, user_id)
+    if request.method == 'POST':
+        form_response_message = MessageResponseForm(request.POST)
+        if form_response_message.is_valid():
+            mensaje = form_response_message.cleaned_data['mensaje']
+            message = Mensaje()
+            message.user_from_id = request.user.id
+            message.user_to_id = user_id
+            message.mensaje = mensaje
+            message.fecha = datetime.now()
+            message.save()
+            form_response_message = MessageResponseForm()
+            mensajes = getMensajes(request, user_id)
         else:
             mensajes = getMensajes(request, user_id)
-            form_response_message = MessageResponseForm()
-    except Persona.DoesNotExist:  # porque esto?
-        return HttpResponseRedirect(reverse("dash_empresa"))  # porque esto?
+    else:
+        mensajes = getMensajes(request, user_id)
+        form_response_message = MessageResponseForm()
     return render_to_response('social/messages_user.html', {
         'form_search': searchbox,
         'form_response_message': form_response_message,

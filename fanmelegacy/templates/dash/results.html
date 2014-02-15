@@ -32,7 +32,7 @@
                 <div class="row">
                     {% for item in items_result %}
                     <div class="col-md-2">
-                        <div class="thumbnail">
+                        <div class="thumbnail text-center">
                             {% if item.mis_imagenes.count %}
                                 <img src="{{ item.first_image_little }}" alt="Score">
                             {% else %}
@@ -75,7 +75,7 @@
                 <div class="row">
                     {% for user in users_result %}
                     <div class="col-md-2">
-                        <div class="thumbnail">
+                        <div class="thumbnail text-center">
                             <img src="{% avatar_url user 50 %}" alt="Avatar">
                             <div class="caption">
                                 <small>{{ user.first_name }} {{ user.last_name }}</small>
@@ -114,12 +114,8 @@
                 <div class="row">
                     {% for organization in organizations_result %}
                     <div class="col-md-2">
-                        <div class="thumbnail">
-                            {% if organization.avatar %}
-                                <img src="{{ organization.avatar.url_50x50 }}" alt="Logo" />
-                            {% else %}
-                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
-                            {% endif%}
+                        <div class="thumbnail text-center">
+                            <img src="{% avatar_url organization.user 50 %}" alt="Logo" />
                             <div class="caption">
                                 <small>{{ organization.razon_social }}</small>
                                 <p><a href="/items/empresa/{{ organization.user.pk }}" class="btn btn-warning" role="button">Conocer</a></p>
