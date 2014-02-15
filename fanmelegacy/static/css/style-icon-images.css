@@ -21,8 +21,11 @@
 .item-topico-libros{
     background: url("../images/iconos-topicos.png") repeat scroll 117px -175px transparent;
 }
-.item-topico-ropa{
+.item-topico-mujer{
     background: url("../images/iconos-topicos.png") repeat scroll 117px -105px transparent;
+}
+.item-topico-hombre{
+    background: url("../images/iconos-topicos.png") repeat scroll 117px 173px transparent;
 }
 .item-topico-hogar{
     background: url("../images/iconos-topicos.png") repeat scroll 117px -140px transparent;
@@ -55,8 +58,11 @@
 .list-item-topico-libros{
     background: url("../images/iconos-topicos.png") repeat scroll 37px -175px transparent;
 }
-.list-item-topico-ropa{
+.list-item-topico-mujer{
     background: url("../images/iconos-topicos.png") repeat scroll 37px -105px transparent;
+}
+.list-item-topico-hombre{
+    background: url("../images/iconos-topicos.png") repeat scroll 37px 173px transparent;
 }
 .list-item-topico-hogar{
     background: url("../images/iconos-topicos.png") repeat scroll 37px -140px transparent;
@@ -85,8 +91,11 @@
 .un-list-item-topico-libros{
     background: url("../images/iconos-topicos.png") repeat scroll 77px -175px transparent;
 }
-.un-list-item-topico-ropa{
+.un-list-item-topico-mujer{
     background: url("../images/iconos-topicos.png") repeat scroll 77px -105px transparent;
+}
+.un-list-item-topico-hombre{
+    background: url("../images/iconos-topicos.png") repeat scroll 77px 173px transparent;
 }
 .un-list-item-topico-hogar{
     background: url("../images/iconos-topicos.png") repeat scroll 77px -140px transparent;
