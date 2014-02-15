@@ -6,11 +6,15 @@
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
     <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/use for pines style icons/jquery.pnotify.default.icons.css" type="text/css" />
+    <link href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" media="all" rel="stylesheet" type="text/css" />
 {% endblock mystylesheet-dashboard %}
 
 {% block myjavascript %}
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5oH8nVPAHgFub2orh1UBYNd7PCUa8vKw&sensor=false"></script>
     <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
     <script>
         var usuariosSeleccionados = new Array();
@@ -178,68 +182,61 @@
     <div class="page-header">
         <h1>Editar Evento</h1>
     </div>
-    <div class="notifications-content">
-        <div class="form-nuevo-evento">
+        <div class="col-md-9 col-md-offset-1">
             <form action="/social/evento/edit/{{ evento.id }}" method="post" enctype="multipart/form-data" id="my-form">{% csrf_token %}
                 <div class="new-notification-clear"></div>
-                <div class="content-form-evento">
-                    {{ form.nombre.errors }}
-                    <label for="id_user_to_id" class="evento-name-label">Nombre:</label>
+                <div class="form-group">
+                    <label for="id_user_to_id" class="control-label">Nombre:</label>
                     {{ form.nombre }}
+                    <span class="help-block">{{ form.nombre.errors }}</span>
                 </div>
-                <div class="new-notification-clear"></div>
-                <div class="content-form-evento">
-                    {{ form.tipo.errors }}
-                    <label for="id_user_to_id" class="evento-tipo-label">Tipo:</label>
+                <div class="form-group">
+                    <label for="id_user_to_id" class="control-label">Tipo:</label>
                     {{ form.tipo }}
+                    <span class="help-block">{{ form.tipo.errors }}</span>
                 </div>
-                <div class="new-notification-clear"></div>
-                <div class="content-form-evento">
-                    {{ form.fecha_inicio.errors }}
-                    <label for="id_user_to_id" class="evento-date-desde-label">Fecha Inicio:</label>
+                <div class="form-group">
+                    <label for="id_user_to_id" class="control-label">Fecha Inicio:</label>
                     {{ form.fecha_inicio }}
+                    <span class="help-block">{{ form.fecha_inicio.errors }}</span>
                 </div>
-                <div class="new-notification-clear"></div>
-                <div class="content-form-evento">
-                    {{ form.fecha_fin.errors }}
-                    <label for="id_user_to_id" class="evento-date-fin-label">Fecha Fin:</label>
+                <div class="form-group">
+                    <label for="id_user_to_id" class="control-label">Fecha Fin:</label>
                     {{ form.fecha_fin }}
+                    <span class="help-block">{{ form.fecha_fin.errors }}</span>
                 </div>
-                <div class="new-notification-clear"></div>
-                <div class="content-form-evento">
-                    {{ form.descripcion.errors }}
-                    <label for="id_user_to_id" class="evento-description-label">Descripcion:</label>
+                <div class="form-group">
+                    <label for="id_user_to_id" class="control-label">Descripcion:</label>
                     {{ form.descripcion }}
+                    <span class="help-block">{{ form.descripcion.errors }}</span>
                 </div>
+                <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="document.getElementById('my-form').onsubmit = function() {
+                return false;
+            }">
+                      Seleccionar invitados
+                    </button>
                 <div class="new-notification-clear"></div>
-                <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 32px;" onclick=" document.getElementById('my-form').onsubmit = function() { return false; }" >
-                    Seleccionar invitados
-                </button>
+                <div id="googleMap" style="width:480px;height:500px;"></div>
                 <div class="new-notification-clear"></div>
-                <div id="googleMap" style="width:500px;height:400px; margin-left:30px;"></div>
-                <div class="new-notification-clear"></div>
-                <div class="new-notification-clear"></div>
-                <div class="content-form-evento">
-                    {{ form.direccion.errors }}
-                    <label for="id_user_to_id" class="evento-date-fin-label">Direccion:</label>
+                <div class="form-group">
+                    <label for="id_user_to_id" class="control-label">Direccion:</label>
                     {{ form.direccion }}
+                    <span class="help-block">{{ form.direccion.errors }}</span>
                 </div>
-                <div class="new-notification-clear"></div>
-                <div class="content-form-notification">
+                <div class="content-form-notification" style="margin-left: -50px;">
                     {{ form.imagen.errors }}
                     <label for="fecha_expiracion" class="notification-imagen-label">Imagen:</label>
-                    {{ form.imagen }}
+                    <p style="margin-left:50px;">{{ form.imagen }}</p>
                 </div>
                 <input type="hidden" name="latitud" id="latitud" value="" />
                 <input type="hidden" name="longitud" id="longitud" value="" />
                 <input type="hidden" name="usuarios" id="usuarios" value="" />
-                <div style="float:right;">
-                    <input type="submit" value="Guardar" onclick=hayMarcador() class="submit" style="margin-right: 30px;"/>
-                    <input type="button" value="Cancelar" class="item-cancelar-registracion" style="margin-right: 25px; margin-left: -20px;" onclick="location.href='../../../social/eventos';">
+                <div style="float:right; margin: 10px -25px;">
+                    <input type="submit" value="Guardar" onclick=hayMarcador() class="btn btn-success" style="margin-right: 30px;"/>
+                    <input type="button" value="Cancelar" class="btn btn-danger" style="margin-right: 25px; margin-left: -20px;" onclick="location.href='../../../social/eventos';">
                 </div>
             </form>
         </div>
-    </div>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">

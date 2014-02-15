@@ -376,7 +376,6 @@ body { padding-top: 70px; }
             .field-evento-new{border: 1px solid grey; width: 70%;}}
 
             .evento{}
-            .evento a{ float: right;}
             .evento-fields{
                 border-bottom: 1px solid grey;
                 margin: 10px;
