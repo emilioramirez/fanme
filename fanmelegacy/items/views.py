@@ -24,28 +24,34 @@ from django.contrib.contenttypes.models import ContentType
 
 @login_required(login_url='/accounts/user/')
 def item(request, item_id):
-    comment_form = CommentForm()
+    # comment_form = CommentForm()
     mostrar_boton_enlace = True
+    is_fan = False
+    item = None
+
     try:
         item = Item.objects.get(pk=item_id)
-        is_fan = False
-        item_plan = PlanXEmpresa.objects.filter(item=item)
-        user = request.user
-        try:
-            if user.empresa:
-                mostrar_boton_enlace = puede_registrar_enlace(request, item)
-        except:
-            mostrar_boton_enlace = False
-        empresas = []
-        for enlace_externo in item_plan:
-            if enlace_externo.fecha_fin_vigencia > date.today():
-                empresa = Empresa.objects.get(user_id=enlace_externo.empresa.id)
-                empresas.append(empresa)
-        mostrar_denuncia = verificar_si_existe_denuncia(request, item)
     except Item.DoesNotExist:
         raise Http404
+
+    item_plan = PlanXEmpresa.objects.filter(item=item)
+    empresas = []
+    for enlace_externo in item_plan:
+        if enlace_externo.fecha_fin_vigencia > date.today():
+            empresa = Empresa.objects.get(user_id=enlace_externo.empresa.id)
+            empresas.append(empresa)
+    mostrar_denuncia = verificar_si_existe_denuncia(request, item)
+
+    try:
+        request.user.empresa
+        mostrar_boton_enlace = puede_registrar_enlace(request, item)
+    except Empresa.DoesNotExist:
+        is_fan = request.user.persona.items.filter(pk=item.pk).exists()
+        mostrar_boton_enlace = False
+    
     return render_to_response('items/item.html',
-        {'item': item, 'is_fan': is_fan, 'comment_form': comment_form,
+        {'item': item, 'is_fan': is_fan,
+        # 'comment_form': comment_form,
         'empresas': empresas,
         'mostrar_boton_enlace': mostrar_boton_enlace,
         'mostrar_denuncia': mostrar_denuncia},

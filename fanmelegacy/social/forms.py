@@ -58,9 +58,9 @@ class EventoForm(forms.ModelForm):
             'direccion',
             )
         widgets = {
-            'fecha_inicio': forms.DateInput(attrs={
+            'fecha_inicio': forms.DateTimeInput(attrs={
                 'class': 'evento-date-form-field field-evento-new'}),
-            'fecha_fin': forms.DateInput(attrs={
+            'fecha_fin': forms.DateTimeInput(attrs={
                 'class': 'evento-date-form-field field-evento-new'}),
             'descripcion': forms.Textarea(attrs={
                 'class': 'evento-date-form-field field-evento-new'}),

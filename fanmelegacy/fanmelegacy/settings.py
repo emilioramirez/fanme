@@ -225,16 +225,16 @@ CANTIDAD_DENUNCIAS = 2
 
 # Relaciones de puntajes y estrellas
 PUNTAJES = {
-    'item_fan': 2,
-    'comment_like': 2,
-    'comment_denuncias': 5,
-    'item_denuncias': 10
+    'item_fan': 1,
+    'comment_like': 1,
+    'comment_denuncias': 1,
+    'item_denuncias': 1
 
 }
 ESTRELLAS = {
-    "1": 20,
-    "2": 60,
-    "3": 200,
-    "4": 400,
-    "5": 600
+    "1": 3,
+    "2": 6,
+    "3": 9,
+    "4": 12,
+    "5": 15
 }

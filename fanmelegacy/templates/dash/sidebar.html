@@ -7,12 +7,12 @@
         <div class="user-stars">
             <ul>
                 {% for estrella in user.persona.cantidad_estrellas %}
-                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star" title="Puntaje: {{ user.persona.puntaje }}"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
                 {% endfor %}
                 {% if user.persona %}
                     {% with cant_estrellas=5|subtract:user.persona.get_cant_estrellas %}
                         {% for i in cant_estrellas|range %}
-                            <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings-blanca.png" alt="Star" /></li>
+                            <li class="user-star" title="Puntaje: {{ user.persona.puntaje }}"><img src="{{ STATIC_URL }}images/item-ratings-blanca.png" alt="Star" /></li>
                         {% endfor %}
                     {% endwith %}
                 {% endif %}
