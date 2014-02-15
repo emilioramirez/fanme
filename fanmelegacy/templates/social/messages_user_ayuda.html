@@ -44,15 +44,15 @@
             </ul>
         </div>
         <div class="message-line-response">
-            <p class="message-answer">Responder:</p>
             <div class="new-message">
-            <form method="post" action="#">{% csrf_token %}
-                <div class="message-content-response">
-                    {{ form_response_message.mensaje }}
-                </div>
-                <input id="responder" type="submit" value="Responder" class="message-response-button"/>
-            </form>
-        </div>
+                <p><strong>Responder:</strong></p>
+                <form method="post" action="#">{% csrf_token %}
+                    <div class="message-content-response">
+                        {{ form_response_message.mensaje }}
+                    </div>
+                    <input type="submit" value="Enviar" class="btn btn-success"/>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock dashboard %}

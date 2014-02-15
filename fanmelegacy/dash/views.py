@@ -207,7 +207,7 @@ def follow_user(request, user_id):
     except Persona.DoesNotExist:
         return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/follow.html', {'user_to_follow': user_to_follow,
-        'breadcrumb': ["Logbook", "{} {}".format(user_to_follow.first_name, user_to_follow.last_name)]},
+        'breadcrumb': ["Logbook", "{} {}".format(user_to_follow.first_name, (user_to_follow.last_name))]},
         context_instance=RequestContext(request))
 
 
@@ -236,6 +236,7 @@ def follow_request(request, user_id):
 
 @login_required(login_url='/accounts/user/')
 def logbook_user(request, user_id):
+    mostrar_boton_dejar_seguir = True
     try:
         user_logbook = User.objects.get(id=user_id)
         my_profile = request.user.persona
@@ -248,14 +249,20 @@ def logbook_user(request, user_id):
                     user_logbook.act_origen.all(), actividades),
                 key=attrgetter('fecha'), reverse=True)
     except Persona.DoesNotExist:
-        return HttpResponseRedirect(reverse("dash_empresa"))
+        mostrar_boton_dejar_seguir = False
+        actividades = []
+        actividades = sorted(
+            chain(
+                user_logbook.act_origen.all(), actividades),
+            key=attrgetter('fecha'), reverse=True)
     except User.DoesNotExist:
         messages.add_message(request, messages.WARNING, "El usuario que intentas acceder no existe")
         return HttpResponseRedirect(reverse("dashboad"))
     return render_to_response('dash/logbook_user.html',
         {'user_logbook': user_logbook,
-        'actividades': actividades,
-        'breadcrumb': ["Logbook", "{} {}".format(user_logbook.first_name, user_logbook.last_name)]},
+        'actividades': actividades, 'mostrar_boton_dejar_seguir': mostrar_boton_dejar_seguir,
+        'breadcrumb': ["Logbook", "{} {}".format(u''.join(user_logbook.first_name).encode('utf-8'),
+            u''.join(user_logbook.last_name).encode('utf-8'))]},
         context_instance=RequestContext(request))
 
 

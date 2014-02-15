@@ -29,57 +29,48 @@
 
 
 {% block dashboard %}
-    <h1>Actividad de los usuarios que tu sigues</h1>
+    <div class="page-header">
+        <h1>Actividad de los usuarios que tu sigues</h1>
+    </div>
     <div id="logbook" class="logbook-content-list">
         {% if actividades %}
             {% for actividad in actividades %}
-                {% if actividad.tipo == "fan" %}
-                    <div class="actividad-fan-content">
-                        <div class="actividad-user-orig">
-                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
-
-                        </div>
-                        <div class="actividad-desc-content">
-                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
-                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
-                            <div class="actividad-item" >{{ actividad.item}}</div>
-                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
-
+                <div class="panel panel-{% if actividad.tipo == "fan" %}warning{% elif actividad.tipo == "comentario" %}success{% elif actividad.tipo == "recomendacion" %}info{% endif%}">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-md-12"><a href="/dash/logbook/{{ actividad.usuario_origen.id }}">{{ actividad.usuario_origen.first_name }} {{ actividad.usuario_origen.last_name }}</a>
+                                {% if actividad.tipo == "fan" %}
+                                se hizo Fan de
+                                {% elif actividad.tipo == "comentario" %}
+                                ha comentado
+                                {% elif actividad.tipo == "recomendacion" %}
+                                ha recomendado
+                                {% endif%}
+                                un Item
+                        </div></div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a href="/dash/logbook/{{ actividad.usuario_origen.id }}"><div class="thumbnail"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div></a>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="well">{{ actividad.descripcion }} <a href="/items/item/{{ actividad.item.id }}">{{ actividad.item }}</a></div>
+                                {% if actividad.tipo == "comentario" %}
+                                <div class="well">
+                                    <p>Su comentario fue:</p>
+                                    <blockquote>{{ actividad.comentario.comentario }}</blockquote>
+                                </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                {% endif %}
-
-                {% if actividad.tipo == "comentario" %}
-                    <div class="actividad-fan-content">
-                        <div class="actividad-user-orig">
-                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
-
-                        </div>
-                        <div class="actividad-desc-content">
-                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
-                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
-                            <div class="actividad-item" >{{ actividad.item}}</div>
-                            <div class="" >"{{ actividad.comentario.comentario }}"</div>
-                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
-
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-12">{{ actividad.fecha }}</div>
                         </div>
                     </div>
-                {% endif %}
-
-                {% if actividad.tipo == "recomendacion" %}
-                    <div class="actividad-fan-content">
-                        <div class="actividad-user-orig">
-                            <div class="actividad-imagen"><img src="{% avatar_url actividad.usuario_origen 50 %}"/></div>
-
-                        </div>
-                        <div class="actividad-desc-content">
-                            <div class="actividad-imagen">{{ actividad.usuario_origen.first_name }}</div>
-                            <div class="actividad-desc">{{ actividad.descripcion }}</div>
-                            <div class="actividad-item" >{{ actividad.item}}</div>
-                            <div class="actividad-fecha">{{ actividad.fecha }}</div>
-                        </div>
-                    </div>
-                {% endif %}
+                </div>
             {% endfor %}
         {% else %}
             Los usuarios que siguen no han realizado ninguna actividad en el sistema
@@ -96,6 +87,8 @@
                         <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
                         <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
                         <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                        <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings-blanca.png" alt="Star" /></li>
+                        <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings-blanca.png" alt="Star" /></li>
                     </ul>
                 </div>
             </div>
@@ -126,23 +119,28 @@
             <div class="sidebar-menu-indicators">
                 <a href="#">
                     <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
-                        (3)
+                        <span class="badge">3</span>
                     </div>
                 </a>
                 <a href="#">
 
                     <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
-                        (2)
+                        <span class="badge">2</span>
                     </div>
                 </a>
                 <a href="#">
                     <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
-                        (6)
+                        <span class="badge">6</span>
                     </div>
                 </a>
                 <a href="#">
                     <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
-                        (3)
+                        <span class="badge">3</span>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="menu-indicators" title="Revisá las consultas realizadas a las empresas"><div class="mini-img-consulta"></div>Consultas
+                        <span class="badge">1</span>
                     </div>
                 </a>
             </div>

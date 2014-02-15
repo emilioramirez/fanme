@@ -12,16 +12,9 @@
             {% for mensage in mensajes %}
                 <li class="content-user-messages">
                     <div class="user-message-image">
-                        <img src="{% avatar_url mensage.user_from 50 %}" alt="Logo" />
+                        <img src="{% avatar_url mensage.user_from 50 %}" alt="">
                     </div>
-                    <div class="user-message-name">
-                        <a href="/dash/logbook/{{ mensage.user_from.id }}">
-                            {% if mensage.user_from.persona %}
-                            {{ mensage.user_from.first_name }} {{ mensage.user_from.last_name }}
-                            {% else %}
-                            {{ mensage.user_from.empresa.razon_social }}
-                            {% endif %}
-                        </a></div> {{ message.fecha }}
+                    <div class="user-message-name"><a href="/dash/logbook/{{ usuario.id }}">{{ mensage.user_from.first_name }} {{ mensage.user_from.last_name }}</a></div> {{ message.fecha }}
                     <div class="user-message-last">{{ mensage.mensaje|truncatewords:30 }}</div>
                     <div class="clear"></div>
                 </li>
