@@ -58,12 +58,18 @@ class EventoForm(forms.ModelForm):
             'direccion',
             )
         widgets = {
+            'nombre': forms.TextInput(attrs={
+                'class': 'form-control'}),
+            'tipo': forms.Select(attrs={
+                'class': 'form-control'}),
             'fecha_inicio': forms.DateInput(attrs={
-                'class': 'evento-date-form-field field-evento-new'}),
+                'class': 'form-control'}),
             'fecha_fin': forms.DateInput(attrs={
-                'class': 'evento-date-form-field field-evento-new'}),
+                'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={
-                'class': 'evento-date-form-field field-evento-new'}),
+                'class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={
+                'class': 'form-control'}),
         }
 
 
