@@ -7,6 +7,8 @@ from items.models import Item
 import datetime
 import calendar
 from django.contrib import messages
+import os
+import mercadopago
 
 
 @login_required(login_url='/accounts/user/')
@@ -40,7 +42,31 @@ def elegir_plan(request):
         plan.fecha_inicio_vigencia = datetime.datetime.now()
         plan.fecha_fin_vigencia = add_months(plan.fecha_inicio_vigencia, 1)
         plan.save()
-        return HttpResponseRedirect('/bussiness/dash_planes/')
+
+        CLIENT_ID = os.environ.setdefault("CLIENT_ID", "")
+        CLIENT_SECRET = os.environ.setdefault("CLIENT_SECRET", "")
+        preference = {
+          "items": [
+            {
+              "title": plan.plan.nombre,
+              "quantity": 1,
+              "currency_id": "ARS",
+              "unit_price": float(plan.plan.precio)
+            }
+          ]
+        }
+        # import ipdb; ipdb.set_trace()
+        mp = mercadopago.MP(CLIENT_ID, CLIENT_SECRET)
+
+        preferenceResult = mp.create_preference(preference)
+
+        url = preferenceResult["response"]["sandbox_init_point"]
+
+        return render_to_response('bussiness/pago_plan.html',
+                        {'url': url,
+                        'plan': plan.plan,
+                        'breadcrumb': ["Pago", "Plan"]},
+                        context_instance=RequestContext(request))
     else:
         planes = Plan.objects.all()
     return render_to_response('bussiness/elegir_plan.html',
@@ -84,3 +110,30 @@ def add_months(sourcedate, months):
     month = month % 12 + 1
     day = min(sourcedate.day, calendar.monthrange(year, month)[1])
     return datetime.date(year, month, day)
+
+
+@login_required
+def pago_plan(request):
+    import mercadopago
+    CLIENT_ID = os.environ.setdefault("CLIENT_ID", "")
+    CLIENT_SECRET = os.environ.setdefault("CLIENT_SECRET", "")
+    preference = {
+      "items": [
+        {
+          "title": "sdk-python",
+          "quantity": 1,
+          "currency_id": "ARS",
+          "unit_price": 10.5
+        }
+      ]
+    }
+    mp = mercadopago.MP(CLIENT_ID, CLIENT_SECRET)
+
+    preferenceResult = mp.create_preference(preference)
+
+    url = preferenceResult["response"]["sandbox_init_point"]
+
+    return render_to_response('bussiness/pago_plan.html',
+        {'url': url,
+        'breadcrumb': ["Pago", "Plan"]},
+        context_instance=RequestContext(request))
