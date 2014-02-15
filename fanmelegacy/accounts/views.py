@@ -97,17 +97,21 @@ def login_user(request):
             post_user = form_login.cleaned_data['login_username']
             post_pass = form_login.cleaned_data['login_password']
             user = authenticate(username=post_user, password=post_pass)
-            login(request, user)
-            try:
-                profile = request.user.persona
-                if profile.is_first_time:
-#                    profile.is_first_time = False
-#                    profile.save()
-                    return HttpResponseRedirect('/accounts/topics/')
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    try:
+                        profile = request.user.persona
+                        if profile.is_first_time:
+                            return HttpResponseRedirect('/accounts/topics/')
+                        else:
+                            return HttpResponseRedirect('/dash/dashboard/')
+                    except Persona.DoesNotExist:
+                        return HttpResponseRedirect('/bussiness/dash_empresa/')
                 else:
-                    return HttpResponseRedirect('/dash/dashboard/')
-            except Persona.DoesNotExist:
-                return HttpResponseRedirect('/bussiness/dash_empresa/')
+                    pass
+            else:
+                pass
     else:
         form_login = UserLogin()
     form_register = UserRegisterForm()
