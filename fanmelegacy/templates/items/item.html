@@ -139,7 +139,7 @@
                     {% count_likes for comment as cant_likes %}
                     <a href="{% get_like_link for comment %}" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-up" title="Me Gusta"></span> {{ cant_likes }}</a>
                     {% count_dislikes for comment as cant_dislikes %}
-                    <a href="{% get_dislike_link for comment %}" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-down" title="No me gusta"></span> {{ cant_dislikes }}</a>
+                    <a href="{% get_dislike_link for comment %}" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-down" title="Denunciar"></span> {{ cant_dislikes }}</a>
                     {% if comment.user == user %}
                     <a href="/items/comment/eliminar/{{ comment.id }}" class="btn btn-default" onclick="return confirm('¿Seguro desea eliminar este comentario?')"><span class="glyphicon glyphicon-remove-circle" title="Borrar"></span></a>
                     {% endif %}
