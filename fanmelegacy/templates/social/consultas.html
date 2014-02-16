@@ -1,0 +1,29 @@
+{% extends "social/base_social.html" %}
+
+{% load dash_filters avatar_tags %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header">
+      <h1>Consultas a empresas</h1>
+    </div>
+    <div class="list-content-user-messages">
+        {% if usuarios %}
+            <ul>
+                {% for usuario in usuarios %}
+                    <li class="content-user-messages">
+                        <div class="user-message-image">
+                            <img src="{% avatar_url usuario 50 %}" alt="">
+                        </div>
+                        <div class="user-message-name"><a href="/social/consulta_empresa/{{ usuario.id }}">{{ usuario.empresa.razon_social }}</a></div>
+                        <div class="user-message-last"></div>
+                        <div class="clear"></div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            No has realizado ninguna consulta.
+        {% endif %}
+    </div>
+</div>
+{% endblock dashboard %}

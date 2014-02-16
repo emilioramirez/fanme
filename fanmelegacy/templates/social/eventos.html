@@ -1,0 +1,80 @@
+{% extends "dash/dashboard.html" %}
+
+{% block myjavascript %}
+<script>
+    $(".cancelar").click(function(e){
+        e.preventDefault();
+        var href = $(this).attr("href");
+
+        var confirmacion = confirm("¿Esta seguro que desea cancelar el evento seleccionado?");
+        if(confirmacion)
+        {
+            window.location = href;
+        }
+    });
+</script>
+{% endblock myjavascript %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header">
+      <h1>Eventos</h1>
+    </div>
+    {% if no_hay_eventos %}
+        No has creado ningun evento. <a href="/social/nuevo/" style="text-decoration: none;">¿Que esperas hacerlo?</a>
+        <div class="new-message"></div>
+    {% else %}
+        {% if eventos_creados %}
+            <div class='eventos-titulo'>Eventos creados</div>
+            <div class='eventos-list'>
+                {% for evento in eventos_creados %}
+                    <div class='i-content'>
+                        <div class="i-title">
+                                <a href='/social/evento/{{ evento.id }}'>{{ evento.nombre }}</a>   {{ evento.fecha_inicio }}
+                                {% if evento.estado != 'cancelado' %}
+                                    <div class="i-title-options">
+                                        <a href="/social/evento/edit/{{ evento.id }}" title="Editar este evento"><div class="i-title-options-edit"></div></a>
+                                        <a href="/social/evento/delete/{{ evento.id }}" class="cancelar" title="Cancelar este evento" onclick="ConfirmarCancelacion()"><div class="i-title-options-delete"></div></a>
+                                    </div>
+                                {% endif %}
+                        </div>
+                        <div class="i-body">
+                            {{ evento.descripcion }} creado por tí.
+                        </div>
+                    </div>
+                {% endfor%}
+            </div>
+        {% endif %}
+        {% if eventos_invitado %}
+            <div class='eventos-titulo'>Eventos como invitado</div>
+            <div class='eventos-list'>
+                {% for evento in eventos_invitado %}
+                    <div class='i-content'>
+                        <div class="i-title">
+                        <a href='/social/evento/{{ evento.id }}'>{{ evento.nombre }}</a>   {{ evento.fecha_inicio }}
+                        {{ evento.fecha_inicio }}
+                        {% if evento.estado != 'leido' and evento.estado != 'cancelado' %}
+                            {% if evento.estado == 'noleido' %}
+                                (no leido)
+                            {% else %}
+                                ({{ evento.estado }})
+                            {% endif %}
+                        {% endif %}
+                        {% if evento.estado == 'cancelado' %}
+                            <span style="color:red; margin-left:10px;">EVENTO CANCELADO</span>
+                        {% endif%}
+                        </div>
+                        <div class="i-body">
+                            {{ evento.descripcion }} creado por <a href="/dash/logbook/{{ evento.creador.id }}">{{ evento.creador.first_name }} {{ evento.creador.last_name }}</a>.
+                        </div>
+                    </div>
+                {% endfor%}
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    {% include "dash/sidebar_evento.html" %}
+{% endblock sidebar %}

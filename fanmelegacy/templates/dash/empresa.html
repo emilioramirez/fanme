@@ -1,0 +1,54 @@
+{% extends "dash/base_dash.html" %}
+
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header">
+        <h1>Items asociados a {{ user_empresa.empresa.razon_social }}</h1>
+    </div>
+    {% if planes %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-12">
+                    Productos
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                {% for item in items_plan %}
+                <div class="col-md-2">
+                    <div class="thumbnail">
+                        {% if item.mis_imagenes.count %}
+                            <img src="{{ item.first_image_little }}" alt="Score">
+                        {% else %}
+                            <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                        {% endif %}
+                        <div class="caption">
+                            <small>{{ item.nombre }}</small>
+                            <p><a href="/items/item/{{ item.id }}" class="btn btn-primary" role="button">Detalle</a></p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                    <p>No se encontraron productos</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <p>{{ user_empresa.empresa.razon_social }} no registró ningun producto</p>
+    {% endif %}
+</div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    {% with user_empresa as user %}
+        {% include "dash/sidebar_logbook_empresa.html" %}
+    {% endwith %}
+{% endblock sidebar %}
