@@ -18,7 +18,7 @@
     <script>
         function doOnLoad() {
             var myCalendar = new dhtmlXCalendarObject(["id_fecha_expiracion", "id_fecha_desde"]);
-            myCalendar.setDateFormat(FANMEDATEFORMAT);
+            myCalendar.setDateFormat(FANMEDATETIMEFORMAT);
         }
     </script>
     <script>
@@ -47,6 +47,7 @@
                     checkBoxes[i].checked = true;
                 }
             }
+            document.getElementById('usuarios').value = usuariosSeleccionados;
         }
 
         function validacionSubmit(){

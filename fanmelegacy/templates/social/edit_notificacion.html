@@ -12,8 +12,8 @@
     <script>
         var myCalendar;
         function doOnLoad() {
-            myCalendar = new dhtmlXCalendarObject(["fecha_expiracion"]);
-            myCalendar.setDateFormat("%d/%m/%Y");
+            var myCalendar = new dhtmlXCalendarObject(["id_fecha_expiracion", "id_fecha_desde"]);
+            myCalendar.setDateFormat(FANMEDATETIMEFORMAT);
         }
     </script>
 {% endblock myjavascript %}
