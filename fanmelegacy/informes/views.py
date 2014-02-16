@@ -232,3 +232,7 @@ def get_usuarios(anio, mes):
     usuarios = User.objects.filter(date_joined__year=anio).filter(
             date_joined__month=mes)
     return usuarios
+
+
+def informe_item_filtrado(request, item_id):
+    pass
