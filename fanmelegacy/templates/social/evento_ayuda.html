@@ -1,0 +1,227 @@
+{% extends "dash/dashboard.html" %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard %}
+
+{% block myjavascript %}
+<script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+<script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+<script src="{{ STATIC_URL }}js/tour/evento_tour.js"></script>
+<script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5oH8nVPAHgFub2orh1UBYNd7PCUa8vKw&sensor=false"></script>
+    <script>
+        var map;
+        var longitud = document.getElementById('longitud').value;
+        var latitud = document.getElementById('latitud').value;
+        var myCenter = new google.maps.LatLng(longitud,latitud);
+        var geocoder = new google.maps.Geocoder();
+        var marker;
+
+        function initialize()
+        {
+            var mapProp = {
+              center:myCenter,
+              zoom:14,
+              mapTypeId:google.maps.MapTypeId.HYBRID
+              };
+
+            map=new google.maps.Map(document.getElementById("googleMap")
+              ,mapProp);
+
+          var marker = new google.maps.Marker({
+              position: myLatlng,
+              map: map
+          });
+
+          google.maps.event.addListener(marker, 'click', function() {
+                    geocodePosition(marker.getPosition());
+                    });
+        }
+
+        function geocodePosition(pos) {
+          geocoder.geocode({
+            latLng: pos
+          }, function(responses) {
+            if (responses && responses.length > 0) {
+              updateMarkerAddress(responses[0].formatted_address);
+            } else {
+              updateMarkerAddress('Cannot determine address at this location.');
+            }
+          });
+        }
+
+        function updateMarkerAddress(str) {
+          var infowindow = new google.maps.InfoWindow({
+                content: str
+              });
+            infowindow.open(map,marker);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <script>
+      $( document ).ready(function() {
+        var longitud = {{ evento.longitud }};
+        var latitud = {{ evento.latitud }};
+        var myCenter = new google.maps.LatLng(latitud,longitud);
+        var marker;
+
+        function initialize()
+        {
+            var mapProp = {
+              center:myCenter,
+              zoom:19,
+              mapTypeId:google.maps.MapTypeId.HYBRID
+              };
+
+            map=new google.maps.Map(document.getElementById("googleMap")
+              ,mapProp);
+
+          var marker = new google.maps.Marker({
+              position: myCenter,
+              map: map
+          });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+      });
+  </script>
+{% endblock myjavascript %}
+
+{% block dashboard %}
+    <div class="eventos-content">
+        <div class='eventos-titulo'>Evento</div>
+        {% if evento %}
+            <div id="primer-tour">
+                <div class="thumbnail">
+                    <img src="{{ evento.imagen.url }}" alt="Imagen de Evento">
+                </div>
+                <div class='evento'>
+                    <div class='evento-fields'>
+                        <div class='evento-label'>Nombre</div>
+                        <div class='evento-field'>{{ evento.nombre }}</div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class='evento-fields'>
+                        <div class='evento-label'>¿De que se trata?</div>
+                        <div class='evento-field'>{{ evento.descripcion }}</div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class='evento-fields'>
+                        <div class='evento-label'>¿Cuando es?</div>
+                        <div class='evento-field'>{{ evento.fecha_inicio }}</div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class='evento-fields'>
+                        <div class='evento-label'>¿Cuando termina?</div>
+                        <div class='evento-field'>{{ evento.fecha_fin }}</div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>¿Donde?</div>
+                    <div class="new-notification-clear"></div>
+                    <div id="googleMap" style="width:450px;height:400px; margin-left:73px; margin-top: -1px;"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Direccion</div>
+                    <div class='evento-field'>{{ evento.direccion }}</div>
+                    <div class="clear"></div>
+                </div>
+                <div class='evento-fields'>
+                    <div class='evento-label'>Invitados</div>
+                    <div class='evento-field'>
+                        <ul>
+                        {% for invitado in lista_invitados %}
+                            <li>
+                                <div class='invitados'>
+                                    {{ invitado.email }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        {% else %}
+            <div>No existe este evento</div>
+        {% endif %}
+        <input type="hidden" name="latitud" id="latitud" value="" />
+        <input type="hidden" name="longitud" id="longitud" value="" />
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">Gabriel Arcos</div>
+            <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar-stadistic">
+            <a href="#">
+                <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+                    <div class="stadistic-num">34</div>
+                    <div class="stadistic-nom">Fans</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
+                    <div class="stadistic-num">
+                        24
+                    </div>
+                    <div class="stadistic-nom">Mis recomendaciones</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
+                    <div class="stadistic-num">2</div>
+                    <div class="stadistic-nom">Comentarios</div>
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-menu-indicators">
+            <a href="#">
+                <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                    <span class="badge">{{ mensajes_nolidas }}</span>
+                </div>
+            </a>
+            <a href="#">
+
+                <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                    <span class="badge">{{ eventos_noleidos }}</span>
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                    <span class="badge">{{ notificaciones_noleidas }}</span>
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                    <span class="badge">{{ recomendaciones_noleidas }}</span>
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá las consultas realizadas a las empresas"><div class="mini-img-consulta"></div>Consultas
+                    <span class="badge">2</span>
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-new-item">
+            {% block crear %}
+                <a href="#"><div id="crear-evento" class="new-item-buttom" title="Crea un item del topico que gustes">Crear Evento</div></a>
+            {% endblock %}
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}

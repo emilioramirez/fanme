@@ -1,0 +1,43 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptions %}
+{% if user.persona %}
+<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li><a href="{% url 'logbook' %}">Logbook</a></li>
+{% else %}
+<li><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+<li><a href="{% url 'dash_planes' %}">Planes</a></li>
+{% endif %}
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div class="title-messages">Consultas</div>
+    <div class="message-body">
+        <div class="message-content-mati">
+            <form action="/social/consulta_a_empresa/{{ company_id }}" method="post">{% csrf_token %}
+                <div class="message-content-fields">
+                    <div class="errors">{{ form_query_message.item.errors }}</div>
+                        <label for="nombre" class="notification-name-field">Item:</label>
+                        {{ form_query_message.item }}
+                    </div>
+                    <div class="message-content-fields">
+                        <div class="errors">{{ form_query_message.consulta.errors }}</div>
+                        <div class="new-message-label"><label for="nombre" class="notification-name-field">Consulta:</label></div>
+                        <div class="new-message-field">{{ form_query_message.consulta }}</div>
+                    </div>
+                {% if no_posee_items %}
+                    <button type="button" disabled class="boton-enviar-query">Enviar</button>
+                {% else %}
+                    <input type="submit" value="Enviar" class="boton-enviar-query"/>
+                {% endif %}
+                <!--<input type="submit" value="Enviar" class="enviar-query"/>-->
+            </form>
+        </div>
+    </div>
+{% endblock dashboard %}

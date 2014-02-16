@@ -1,0 +1,167 @@
+{% extends "dash/base_dash.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
+    <link href="{{ STATIC_URL }}css/tour/prism.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/bootstrap-tour.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/index.css" rel="stylesheet">
+    {% block mystylesheet-dashboard %}{% endblock mystylesheet-dashboard%}
+{% endblock mystylesheet%}
+
+{% block myjavascript %}
+    <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/dashboard_tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+{% endblock myjavascript %}
+
+{% block menuOptions %}
+{% if user.persona %}
+<li class="active"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li><a href="{% url 'logbook' %}">Logbook</a></li>
+{% else %}
+<li><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+<li><a href="{% url 'dash_planes' %}">Planes</a></li>
+{% endif %}
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div id="dash-content"></div>
+    <div id="filter-content" class="dashboard-list-topics">
+        <ul class="list-topics">
+            {% for topic in r_topics %}
+                <li>
+                    {% if topic in user.persona.topicos.all %}
+                        <a href="#">
+                            <div class="list-item-topico list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                        </a>
+                    {% else %}
+                        <a href="#">
+                            <div class="list-item-topico un-list-item-topico-{{ topic|unicode|split:" "|first|lower }}" title="{{ topic|unicode|split:" "|first }}"></div>
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            <li>
+                <a href="#">
+                    <div class="list-item-topico list-item-topico-all" title="Todos"></div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="dashboard-list-items">
+        <div id="recomendaciones-content" class="item-content">
+            <div class="item-header">
+                <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
+                <div class="item-nombre"><a href="#">{{ item }}</a></div>
+                <div class="item-score" title="Cantidad de fans">
+                    <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" class="item-score-image" alt="Score">
+                    {{ item.cantidad_fans }}
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="item-body">
+                <div class="item-image" title="Imagen ilustrativa del item">
+                    {% if item.mis_imagenes.count %}
+                        <img src="{{ item.first_image }}" alt="Score">
+                    {% else %}
+                        <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                    {% endif %}
+                </div>
+                <div class="item-descripcion" title="Descripcion del item">{{ item.descripcion|truncatewords:70 }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class="item-footer">
+                <div class="item-topico">{{ item.topico }}</div>
+                <div id="item-botones" class="item-buttons">
+                    {% if user.is_active %}
+                        <a href="#" title="Hazte Fan de este item"><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
+                        <a href="#" title="Recomendá este item a tus seguidores"><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+{% endblock dashboard %}
+
+
+{% block sidebar %}
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">Gabriel Arcos</div>
+            <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar-stadistic">
+            <a href="#">
+                <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+                    <div class="stadistic-num">34</div>
+                    <div class="stadistic-nom">Fans</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
+                    <div class="stadistic-num">
+                        24
+                    </div>
+                    <div class="stadistic-nom">Mis recomendaciones</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
+                    <div class="stadistic-num">2</div>
+                    <div class="stadistic-nom">Comentarios</div>
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-menu-indicators">
+            <a href="#">
+                <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                    (3)
+                </div>
+            </a>
+            <a href="#">
+
+                <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                    (6)
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                    (2)
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                    (8)
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-new-item">
+            {% block crear %}
+                <a href="#"><div class="new-item-buttom" title="Crea un item del topico que gustes">Crear Item</div></a>
+            {% endblock %}
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}
+
+{% block footer %}
+    <div class="footer-line-divisor">
+        <img src="{{ STATIC_URL }}images/footer-line-divisor.png" alt="Footer Line Divisor" />
+    </div>
+    <!-- Eso deberia ser dinamico -->
+    <div class="footer-links">
+        <a href="/dash/preguntas_mas_frecuentes/">Ayuda</a> |
+        <a href="#">Sobre Nosotros</a> |
+        <a href="#">Condiciones</a> |
+        <a href="#">Copyright</a>
+    </div>
+{% endblock%}

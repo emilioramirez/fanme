@@ -1,0 +1,125 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/mensajes_ayuda_tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+
+{% block dashboard %}
+    <div class="eventos-content">
+        <div class='eventos-titulo'>Mensajes de un usuario</div>
+        <div id="messages" class="list-content-user-messages">
+            <ul>
+                {% for mensage in mensajes %}
+                    <li class="content-user-messages">
+                        <div class="user-message-image">
+                            {% if mensage.user_from.persona.avatar %}
+                                <img src="{{ mensage.user_from.persona.avatar.url_50x50 }}" alt="Logo" />
+                            {% else %}
+                                {% if mensage.user_from.persona %}
+                                    {% if mensage.user_from.persona.sexo == "M" %}
+                                        <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
+                                    {% else %}
+                                        <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
+                                    {% endif%}
+                                {% else %}
+                                        <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
+                                {% endif%}
+                            {% endif%}
+                        </div>
+                        <div class="user-message-name"><a href="#">{{ mensage.user_from.first_name }} {{ mensage.user_from.last_name }}</a></div> {{ message.fecha }}
+                        <div class="user-message-last">{{ mensage.mensaje|truncatewords:30 }}</div>
+                        <div class="clear"></div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="message-line-response">
+            <p class="message-answer">Responder:</p>
+            <div class="new-message">
+            <form method="post" action="#">{% csrf_token %}
+                <div class="message-content-response">
+                    {{ form_response_message.mensaje }}
+                </div>
+                <input id="responder" type="submit" value="Responder" class="message-response-button"/>
+            </form>
+        </div>
+        </div>
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="user-name">Gabriel Arcos</div>
+            <div class="user-stars">
+                <ul>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                    <li class="user-star"><img src="{{ STATIC_URL }}images/item-ratings.png" alt="Star" /></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar-stadistic">
+            <a href="#">
+                <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+                    <div class="stadistic-num">34</div>
+                    <div class="stadistic-nom">Fans</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-recomendations sidebar-stadistic-item" title="Podés consultar cuantas recomendaciones hiciste y a quien">
+                    <div class="stadistic-num">
+                        24
+                    </div>
+                    <div class="stadistic-nom">Mis recomendaciones</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="stadistic-comments sidebar-stadistic-item" title="Podés consultar los items que has comentado">
+                    <div class="stadistic-num">2</div>
+                    <div class="stadistic-nom">Comentarios</div>
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-menu-indicators">
+            <a href="#">
+                <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                    (3)
+                </div>
+            </a>
+            <a href="#">
+
+                <div class="menu-indicators" title="Revisá los eventos que creaste y a los cuales estas invitado"><div class="mini-img-event"></div>Eventos
+                    (6)
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá cuales son tus notificaciones de parte de tus productos favoritas"><div class="mini-img-notify"></div>Notificaciones
+                    (2)
+                </div>
+            </a>
+            <a href="#">
+                <div class="menu-indicators" title="Revisá las recomendaciones que te hicieron los usuarios que seguís"><div class="mini-img-recom"></div>Recomendaciones
+                    (8)
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-new-item">
+            {% block crear %}
+                <a href="#"><div class="new-item-buttom" title="Crea un item del topico que gustes">Crear Item</div></a>
+            {% endblock %}
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock sidebar %}
+
