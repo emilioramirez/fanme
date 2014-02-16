@@ -42,6 +42,9 @@ class Item(models.Model):
     def cantidad_recomendaciones(self):
         return self.recomendacion_set.count()
 
+    def cantidad_fans_from_qs(self):
+        return self.fans_por_item.all().count()
+
 
 class Marca(models.Model):
     pass

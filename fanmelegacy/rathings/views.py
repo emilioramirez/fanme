@@ -46,7 +46,7 @@ def dislike(request, object_id):
     if not created:
         messages.add_message(request, messages.INFO, _("Ya denunciaste este  {}".format(object_ctype.model)))
     else:
-        messages.add_message(request, messages.SUCCESS, _("Acabas de denunciar el {}".format(object_ctype.model)))
+        messages.add_message(request, messages.SUCCESS, _("Acabas de denunciar el {}".format(_(object_ctype.model))))
         dislike_created.send(sender=Dislike, instance=obj)
 
     if next is not None:
