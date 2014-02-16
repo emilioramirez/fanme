@@ -10,13 +10,15 @@ class MessageForm(forms.Form):
 #        required=True,
 #        error_messages={'required': 'Es necesario un Usuario'},
 #        widget=forms.TextInput(attrs={'class': 'message-content-mati-to'}))
-    user_to_id = forms.ModelChoiceField(queryset=None)
+    user_to_id = forms.ModelChoiceField(queryset=None,
+        widget=forms.Select(attrs={
+                'class': 'form-control'}))
     mensaje = forms.CharField(
         label='Mensaje',
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
         widget=forms.Textarea(attrs={
-                'class': 'item-registration-description-field'}))
+                'class': 'form-control'}))
 
 
 class MessageResponseForm(forms.Form):
