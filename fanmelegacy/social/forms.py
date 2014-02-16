@@ -64,9 +64,9 @@ class EventoForm(forms.ModelForm):
                 'class': 'form-control'}),
             'tipo': forms.Select(attrs={
                 'class': 'form-control'}),
-             'fecha_inicio': forms.DateInput(attrs={
+             'fecha_inicio': forms.DateTimeInput(attrs={
                 'class': 'form-control'}),
-             'fecha_fin': forms.DateInput(attrs={
+             'fecha_fin': forms.DateTimeInput(attrs={
                 'class': 'form-control'}),
              'descripcion': forms.Textarea(attrs={
                 'class': 'form-control'}),
