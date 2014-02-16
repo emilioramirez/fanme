@@ -139,7 +139,6 @@ def edit_evento(request, evento_id):
         form.fields["invitados"].queryset = users
         latitud = request.POST.get("latitud", "")
         longitud = request.POST.get("longitud", "")
-        print latitud
         invitados = request.POST.get("usuarios", "")
         a_split = invitados.split(',')
         usuarios_invitados = []
@@ -572,7 +571,14 @@ def edit_notificacion(request, notificacion_id):
         form = NotificationForm(request.POST, instance=notificacion_db)
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
-        form.fields["usuarios_to"].queryset = users
+        #form.fields["usuarios_to"].queryset = users
+        invitados = request.POST.get("usuarios", "")
+        a_split = invitados.split(',')
+        usuarios_invitados = []
+        for invitado in a_split:
+            usuario = User.objects.get(id=invitado)
+            usuarios_invitados.append(usuario)
+        users_invitados = usuarios_invitados
         if form.is_valid():
             notificacion = form.save(commit=False)
             try:
@@ -582,13 +588,18 @@ def edit_notificacion(request, notificacion_id):
             notificacion.estado = 'actualizado'
             notificacion.save()
             form.save_m2m()
+            for invitado in usuarios_invitados:
+                notificacion.usuarios_to.add(invitado)
+                #TODO: aca deberiamos actualizar el estado de cada uno de los usuarios con la notificacion actualizada
             return HttpResponseRedirect('/social/notificaciones/')
     else:
         form = NotificationForm(instance=notificacion_db)
         list_ids = request.user.followers.values_list('user', flat=True)
         users = User.objects.filter(id__in=list_ids)
-        form.fields["usuarios_to"].queryset = users
+        users_invitados = notificacion_db.usuarios_to.all()
+        #form.fields["invitados"].queryset = users
     template_vars = RequestContext(request, {"form": form, "user": request.user,
+        'users_invitados': users_invitados, 'users': users,
         'form_search': searchbox, 'notificacion': notificacion_db})
     return render_to_response('social/edit_notificacion.html', template_vars)
 
