@@ -1,0 +1,22 @@
+{% extends "accounts/base_accounts.html" %}
+
+
+{% block register_form %}
+    <div class="accounts-register-form-title">
+        <div class="form-title">Crear una cuenta de Usuario</div>
+    </div>
+    <form action="/accounts/user/" method="post">
+        {% csrf_token %}
+        {% for field in form_register %}
+            <div class="form-group {% if field.errors %}has-error{% endif %}">
+                {{ field }}
+                <span class="help-block">{{ field.errors }}</span>
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            <input id="password-clear" type="text" value="Password" autocomplete="off" class="form-control"/>
+        </div>
+            <a href="/accounts/company/" class="form-register-eres-empresa">¿Eres una empresa?</a>
+            <input type="submit" value="Registrate" class="btn btn-success"/>
+    </form>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "dash/logbook.html" %}
+
+{% load avatar_tags %}
+
+{% block dashboard %}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+        {% for persona in user.followers.all %}
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="{% avatar_url persona.user 100 %}" alt="{{ persona.user.first_name }} {{ persona.user.last_name }}">
+                    <div class="caption">
+                        <p>
+                            <a href="/dash/logbook/{{ persona.user.id }}">
+                                {% if persona.user.first_name == "" %}
+                                    {{ persona.user.empresa.razon_social }}
+                                {% else %}
+                                    {{ persona.user.first_name }} {{ persona.user.last_name }}
+                                {% endif %}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="panel-footer"></div>
+</div>
+{% endblock dashboard %}
