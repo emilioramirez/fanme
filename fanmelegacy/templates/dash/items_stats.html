@@ -1,0 +1,13 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="dashboard-list-items">
+        {% for item in items %}
+            {% include "dash/item_detail.html" %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock dashboard %}

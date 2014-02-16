@@ -1,0 +1,194 @@
+{% extends "items/base_items.html" %}
+
+{% load dash_filters comments avatar_tags rathings_tags %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block myjavascript %}
+    <script language="javascript">
+    function setNewImage(url)
+    {
+        document.getElementById("imagen_grande").src=url;
+    }
+    </script>
+{% endblock myjavascript %}
+
+{% block breadcrumb %}{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
+                </div>
+                <div class="col-md-10">{{ item }}</div>
+                <div class="col-md-1">
+                    <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" style="margin-top:-1px;" alt="Score">
+                    <span style="vertical-align:top;">{{ item.persona_set.count }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                    {% if item.mis_imagenes.count %}
+                        <img id="imagen_grande" src="{{ item.first_image_big }}" alt="Score">
+                    {% else %}
+                        <img src="{{ STATIC_URL }}images/298.png" alt="Score">
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="well">{{ item.descripcion }}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% for itemimage in item.mis_imagenes.all %}
+                        <div class="col-md-2">
+                            <a href="#" onClick="setNewImage('{{ itemimage.image_big }}')" class="thumbnail">
+                                <img src="{{ itemimage.imagen.url_50x50 }}" />
+                            </a>
+                        </div>
+                        <input id="imagen + 'itemimage'" type="hidden" value="{{ itemimage.image_big }}" />
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                   <ul class="list-group">
+                      <li class="list-group-item"><span class="badge">{{ item.persona_set.count }}</span>Fan{% if user.persona.items.count > 1 %}s{% endif %}</li>
+                      <li class="list-group-item"><span class="badge">{{ item.recomendacion_set.count }}</span>Recomendaciones</li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-offset-9 col-md-3">
+                    {% if user.persona %}
+                        {% if user.is_active %}
+                            {% if not is_fan %}
+                                <a href="/items/fan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-fan.png" alt="Fan" /></a>
+                            {% endif %}
+                            <a href="/items/recomendation/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-button-recomendar.png" alt="Recomendar" /></a>
+                            {% if mostrar_denuncia %}
+                                <a href="{% get_dislike_link for item %}" ><img src="{{ STATIC_URL }}images/item-button-denunciar.png" alt="Denunciar" /></a>
+                            {% endif %}
+                            {% if is_fan %}
+                                <a href="/items/unfan/{{ item.id }}" ><img src="{{ STATIC_URL }}images/item-buttom-unFan.png" alt="Unfan" /></a>
+                            {% endif %}
+                        {% endif%}
+                    {% else %}
+                        {% if mostrar_boton_enlace %}
+                            <a href="/bussiness/registrar_enlace/{{ item.id }}"><img src="{{ STATIC_URL }}images/item-button-registrar-enlace.png" alt="Registrar Enlace" /></a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h5>Lo podés conseguir en:</h5>
+        <div class="item-image-all">
+            <ul class="image-list">
+            {% for empresa in empresas %}
+                {% if empresa.avatar %}
+                    <li class="image-conseguir"><a href={{ empresa.site }}><img src="{% avatar_url empresa.user 50 %}" alt="" style="display:block; border: 2px solid #9B9B9B;"/>{{ empresa.razon_social }}</a></li>
+                {% else %}
+                    <li class="image-conseguir"><a href={{ empresa.site }}><img src="{% avatar_url empresa.user 50 %}" alt="" style="display:block; border: 2px solid #9B9B9B;"/>{{ empresa.razon_social }}</a></li>
+                {% endif%}
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="list-comment">
+        {% get_comment_list for item as comment_list %}
+        {% for comment in comment_list %}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title"><strong>{{ comment.user.first_name }} {{ comment.user.last_name }}</strong> - <small>{{ comment.submit_date }}</small></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            <img src="{% avatar_url comment.user 50 %}" alt="" >
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="well">{{ comment.comment }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="btn-group">
+                    {% count_likes for comment as cant_likes %}
+                    <a href="{% get_like_link for comment %}" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-up" title="Me Gusta"></span> {{ cant_likes }}</a>
+                    {% count_dislikes for comment as cant_dislikes %}
+                    <a href="{% get_dislike_link for comment %}" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-down" title="Denunciar"></span> {{ cant_dislikes }}</a>
+                    {% if comment.user == user %}
+                    <a href="/items/comment/eliminar/{{ comment.id }}" class="btn btn-default" onclick="return confirm('¿Seguro desea eliminar este comentario?')"><span class="glyphicon glyphicon-remove-circle" title="Borrar"></span></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Realiza un comentario</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            <img src="{% avatar_url user 50 %}" alt="" >
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        {% if user.is_authenticated %}
+                        {% get_comment_form for item as form %}
+                            <form action="{% comment_form_target %}" method="POST">
+                                {% csrf_token %}
+                                {{ form.honeypot }}
+                                {{ form.content_type }}
+                                {{ form.object_pk }}
+                                {{ form.timestamp }}
+                                {{ form.security_hash }}
+                                <input type="hidden" name="next" value="/items/item/{{ item.id }}" />
+                                <input type="hidden" name="mostrar_denuncia" value="{{ mostrar_denuncia }}" />
+                                <p>{{ form.comment }}</p>
+                                <p>
+                                    <button class="btn btn-default" id="id_submit">
+                                        <span class="glyphicon glyphicon-pencil"></span> Comentar
+                                    </button>
+                                </p>
+                            </form>
+                        {% else %}
+                            <p>Por favor <a href="{% url 'auth_login' %}">ingrese al sistema</a> para poder comentar.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="btn-group">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

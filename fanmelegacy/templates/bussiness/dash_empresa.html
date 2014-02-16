@@ -1,0 +1,42 @@
+{% extends "dash/base_dash.html" %}
+
+{% load bussiness_filter avatar_tags %}
+
+{% block mystylesheet %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block menuOptions %}
+{% if user.persona %}
+<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li><a href="{% url 'logbook' %}">Logbook</a></li>
+{% else %}
+<li class="active"><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+<li><a href="/bussiness/dash_planes/">Planes</a></li>
+{% endif %}
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div class="result-result">
+        <div class="result-content">
+            <div class="result-body">
+                {% for user_profile in followers %}
+                <div class="result-hit">
+                    <a href="/dash/logbook/{{ user_profile.user.id }}">
+                        <div class="result-image">
+                            <img src="{% avatar_url user_profile.user 50 %}" alt="Logo" />
+                        </div>
+                    </a>
+                    <a href="/dash/logbook/{{ user_profile.user.id }}">
+                        <div class="result-descripcion">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+        {% include "bussiness/sidebar_empresa.html" %}
+{% endblock sidebar %}
