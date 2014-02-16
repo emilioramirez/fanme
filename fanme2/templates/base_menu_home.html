@@ -1,0 +1,30 @@
+{% extends "base_menu.html" %}
+{% load i18n %}
+
+{%block title%}
+<title>{% trans "Bienvenido a FanME" %}</title>
+{%endblock title%}
+
+{%block description%}
+<meta name="description" content="">
+{%endblock description%}
+
+{%block content%}
+<div class="container">
+    <!-- Main hero unit for a primary marketing message or call to action -->
+    <div class="custom-hero-unit">
+        <h1>{% trans "Bienvenido a FanME" %}</h1>
+        <p class="lead">{% trans "FanME es un sistema de recomendacion online, para poder usarlo necesita registrarse."%}</p>
+        <p><a class="btn btn-info btn-large" href="#">{% trans "Leer más"%} &raquo;</a></p>
+    </div>
+    <div class="row show-grid">
+        <div class="span8">
+            <img src="{{STATIC_URL}}img/register-welcome-image.png" alt="Register Welcome Image" width="400" class="img-rounded">
+        </div>
+        <div class="span4">
+            <p class="lead" style="text-align:justify; line-height: 130%">{% trans "Para empezar a recibir recomendaciones por parte de FanME relacionados a tu gusto haz click en el siguiente boton" %}</p>
+            <a href="/accounts/register/" role="button" class="btn btn-primary btn-large" data-toggle="modal">Crear cuenta</a>
+        </div>
+    </div>
+</div> <!-- /container -->
+{%endblock content%}

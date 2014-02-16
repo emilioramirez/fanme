@@ -1,0 +1,40 @@
+{% extends "dash/sidebar.html" %}
+
+{% load avatar_tags %}
+
+{% block sidebar_user_info %}
+<div class="sidebar-user">
+    <div class="user-name">{{ user.empresa.razon_social }}</div>
+    {% block sidebar_user_info_avatar %}{% endblock sidebar_user_info_avatar %}
+    {% block user_range %}{% endblock user_range %}
+</div>
+{% endblock sidebar_user_info %}
+
+{% block sidebar_stats %}{% endblock sidebar_stats %}
+
+{% block sidebar_indicators %}
+<div class="sidebar-menu-indicators">
+    <a href="{% url 'social-mensajes' %}">
+            <div class="menu-indicators" title="Revisá tus mensajes recibidos y enviados"><div class="mini-img-msg"></div>Mensajes
+                {% if mensajes_nolidas > 0 %}<span class="badge">{{ mensajes_nolidas }}</span>{% endif %}
+            </div>
+        </a>
+    <a href="/social/ver_consultas/">
+        <div class="menu-indicators">
+            <div class="menu-indicators" title="#"><div class="mini-img-consulta"></div>Consultas
+                {% if consultas_noleidas > 0 %}<span class="badge">{{ consultas_noleidas }}</span>{% endif %}
+            </div>
+        </div>
+    </a>
+    <a href="/social/notificaciones/">
+        <div class="menu-indicators" title="#"><div class="mini-img-notify"></div>Notificaciones
+        </div>
+    </a>
+</div>
+{% endblock sidebar_indicators %}
+
+{% block boton %}
+ <div class="sidebar-new-item">
+    <a href="/bussiness/elegir_plan/"><div class="new-item-buttom">Elegir Plan</div></a>
+</div>
+{% endblock %}
