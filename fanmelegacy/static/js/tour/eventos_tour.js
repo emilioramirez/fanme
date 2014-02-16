@@ -7,7 +7,7 @@
         return $start.addClass("disabled", true);
       },
       onEnd: function() {
-        return $start.removeClass("disabled", true);
+        location.href='/dash/temas_de_ayuda';
       },
       debug: true
     });
@@ -32,7 +32,7 @@
         backdrop: true
       },{
         element: "#evento-trigger",
-        path: "http://127.0.0.1:8000/social/evento_ayuda/"
+        path: "/social/evento_ayuda/"
       }
     ]);
     tour.start();

@@ -15,24 +15,27 @@
 {% endblock mystylesheet-dashboard%}
 
 {% block dashboard %}
-    <div class="eventos-content">
-        <div class='eventos-titulo'>Nuevo Mensaje</div>
-        <div class="message-body">
-            <div class="message-content-mati">
-                <form action="/social/new_message/" method="post">{% csrf_token %}
-                    <div class="message-content-fields">
-                        <div class="errors">{{ form_new_message.user_to_id.errors }}</div>
-                        <div class="new-message-label"><label for="nombre" class="notification-name-field">Para:</label></div>
-                        <div class="user-to-field">{{ form_new_message.user_to_id }}</div>
-                    </div>
-                    <div class="message-content-fields">
-                        <div class="errors">{{ form_new_message.mensaje.errors }}</div>
-                        <div class="new-message-label"><label for="nombre" class="notification-name-field">Mensaje:</label></div>
-                        <div class="new-message-field">{{ form_new_message.mensaje }}</div>
-                    </div>
-                    <input type="submit" value="Enviar" class="enviar"/>
-                </form>
-            </div>
+    <div class="row">
+        <div class="page-header">
+            <h1>Nuevo Mensaje</h1>
+        </div>
+        <div class="col-md-9 col-md-offset-1">
+            <form action="/social/new_message/" method="post">{% csrf_token %}
+                <div class="form-group">
+                    <label for="id_user_to_id" class="control-label">Para:</label>
+                    {{ form_new_message.user_to_id }}
+                    <span class="help-block">{{ form_new_message.user_to_id.errors }}</span>
+                </div>
+                <div class="form-group">
+                    <label for="id_user_to_id" class="control-label">Mensaje:</label>
+                    {{ form_new_message.mensaje }}
+                    <span class="help-block">{{ form_new_message.mensaje.errors }}</span>
+                </div>
+                <div style="float:right; margin: 10px -25px;">
+                    <input type="submit" value="Enviar" onclick=hayMarcador() class="btn btn-success" style="margin-right: 30px;"/>
+                    <input type="button" value="Cancelar" class="btn btn-danger" style="margin-right: 25px; margin-left: -20px;" onclick="location.href='../../../social/mensajes';">
+                </div>
+            </form>
         </div>
     </div>
 {% endblock dashboard %}
