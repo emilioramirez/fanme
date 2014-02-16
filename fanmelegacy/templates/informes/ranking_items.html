@@ -1,0 +1,109 @@
+{% extends "admin/base_site.html" %}
+{% load is_false_filter %}
+
+{% block title %}'FanMe' | {{ site_title }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">FanMe</a></h1>
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/use for pines style icons/jquery.pnotify.default.icons.css" type="text/css" />
+    <link href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}dist/css/bootstrap.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/bootstrap-fanme.css" rel="stylesheet">
+    <script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}dist/js/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}js/highcharts.js"></script>
+    <script src="{{ STATIC_URL }}js/drilldown.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
+
+    <script>
+    {% if mostrar_form|is_false %}
+    $(function () {
+        // Create the chart
+        $('#items').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Fans por Item'
+            },
+            xAxis: {
+                type: 'category'
+            },
+            legend: {
+                enabled: false
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Cant. fans'
+                }
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                    }
+                },
+                point: {
+                    events: {
+                        click: function() {
+                            //location.href='../item_fanes?topico=' + this.series.name;
+                            alert('Hola');
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Fans por Item',
+                colorByPoint: true,
+                data: [
+                    {% for item, cant_fans in fans_por_item.items %}
+                    {
+                        name: '{{item}}',
+                        y: {{cant_fans}},
+                    },
+                    {% endfor %}
+                ]
+            }],
+        })
+    });
+    {% endif %}
+    </script>
+    <script>
+    function myFunction()
+    {
+        var cant = document.getElementsByName('cant')[0].value
+        if (cant == 0 || cant == null)
+        {
+            $.pnotify({
+                    title: 'Error',
+                    text: 'Debe ingresar una cantidad de ítems.',
+                    type: 'Error',
+                    hide: true
+                    });
+        }
+        else{
+            window.location.assign("/admin/informes/item_fanes/" + cant);
+        }
+    }
+    </script>
+{% endblock extrahead %}
+
+{% block content %}
+{% if mostrar_form %}
+<div>
+    Cant. Items: <input type="text" name="cant" />
+    <button onclick="myFunction()">Aceptar</button>
+</div>
+{% endif %}
+<div id="items" style="width:100%; height:400px;"></div>
+{% endblock content %}
+

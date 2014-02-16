@@ -1,0 +1,177 @@
+{% extends "bussiness/dash_empresa.html" %}
+
+{% load avatar_tags %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/use for pines style icons/jquery.pnotify.default.icons.css" type="text/css" />
+    <link href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" media="all" rel="stylesheet" type="text/css" />
+{% endblock mystylesheet %}
+
+{% block myjavascript %}
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
+    <script>
+        function doOnLoad() {
+            var myCalendar = new dhtmlXCalendarObject(["id_fecha_expiracion", "id_fecha_desde"]);
+            myCalendar.setDateFormat(FANMEDATEFORMAT);
+        }
+    </script>
+    <script>
+        var usuariosSeleccionados = new Array();
+
+        function elegirUsuario(checkbox, id){
+            if(checkbox.checked) {
+                usuariosSeleccionados.push(id);
+             }
+             else{
+                var index = usuariosSeleccionados.indexOf(id);
+                if (index > -1) {
+                    usuariosSeleccionados.splice(index, 1);
+                }
+
+             }
+             document.getElementById('usuarios').value = usuariosSeleccionados;
+        }
+
+        function checkTodos(){
+            usuariosSeleccionados.length = 0;
+            var checkBoxes = document.getElementsByTagName("input");
+            for (var i =0; i < checkBoxes.length; i++){
+                if (checkBoxes[i].type == 'checkbox'){
+                    usuariosSeleccionados.push(checkBoxes[i].value);
+                    checkBoxes[i].checked = true;
+                }
+            }
+        }
+
+        function validacionSubmit(){
+            var respuesta_correcta = true;
+            var fecha_inicio = document.getElementById('id_fecha_desde').value;
+            var fecha_fin = document.getElementById('id_fecha_expiracion').value;
+            var fecha_inicio_as_date = new Date(fecha_inicio);
+            var fecha_fin_as_date = new Date(fecha_fin);
+            var today = new Date();
+            if(fecha_inicio_as_date > today)
+            {
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'La fecha de inicio del evento debe ser superior a la de hoy dia.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false;
+            }
+            if(fecha_fin_as_date < fecha_inicio_as_date)
+            {
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'La fecha fin debe ser superior a la de inicio.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false;
+            }
+            var usuariosInvitados = document.getElementById('usuarios').value;
+            if(usuariosSeleccionados.length == 0){
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'Es necesario seleccionar un invitado.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false
+            }
+            document.getElementById('my-form').onsubmit = function() {
+                return respuesta_correcta;
+            }
+        }
+
+        $("#seleccionar_invitados").click(function (e) {
+            var my_elems = document.getElementsByClassName("ui-pnotify ");
+            for(k=my_elems.length-1;k>=0; --k)
+            {
+                if(my_elems[k].innerHTML.indexOf("invitado") != -1) {
+                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                }
+            }
+        });
+    </script>
+{% endblock myjavascript %}
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header"><h1>Nueva notificacion</h1></div>
+    <div class="col-md-10">
+            <form action="/social/new_notification/" method="post" enctype="multipart/form-data" id="my-form">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group {% if field.errors %}has-error{% endif %}">
+                        {% if not field.is_hidden %}
+                        <label for="{{ field.id_for_field }}" class="control-label">{{ field.label_tag }}:</label>
+                        {% endif %}
+                        {{ field }}
+                        <span class="help-block">{{ field.errors }}</span>
+                    </div>
+                {% endfor %}
+                <div class="form-group">
+                    <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="document.getElementById('my-form').onsubmit = function() {
+                return false;
+            }">
+                      Seleccionar invitados
+                    </button>
+                </div>
+                <input type="hidden" name="usuarios" id="usuarios" value="" />
+                <div style="float:right;">
+                    <input type="submit" value="Enviar" class="btn btn-success" onclick="validacionSubmit()" />
+                    <input type="button" value="Cancelar" class="btn btn-danger" onclick="location.href='../../../bussiness/dash_empresa';">
+                </div>
+            </form>
+    </div>
+</div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Invitados</h4>
+          </div>
+          <div class="modal-body">
+              {% for user in users %}
+                <div id="check_div" style="width: 175px; display: inline-table; margin-bottom: 25px;">
+                    {% if user.persona.avatar %}
+                        <img src="{% avatar_url user 50 %}" style="border: 1px solid #9F9F9F; height: 50px; width: 50px;" alt="">
+                    {% else %}
+                        {% if user.persona.sexo == "M" %}
+                            <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
+                        {% else %}
+                            <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
+                        {% endif%}
+                    {% endif%}
+                    <span style="margin-left: 5px;">
+                        <input type="checkbox" name="" value="{{ user.id }}" onclick="elegirUsuario(this, {{ user.id }});">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </span>
+                  </div>
+              {% endfor %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="checkTodos();">Seleccionar todos</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Agregar invitados</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock dashboard %}
+
+{% block crear %}
+{% endblock %}

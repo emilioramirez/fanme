@@ -1,0 +1,39 @@
+{% extends "social/base_social.html" %}
+
+{% load dash_filters avatar_tags %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header">
+      <h1>Mensajes por usuario</h1>
+    </div>
+    <div class="list-content-user-messages">
+        <ul>
+            {% for mensage in mensajes %}
+                <li class="content-user-messages">
+                    <div class="user-message-image">
+                        <img src="{% avatar_url mensage.user_from 50 %}" alt="">
+                    </div>
+                    <div class="user-message-name"><a href="/dash/logbook/{{ usuario.id }}">{{ mensage.user_from.first_name }} {{ mensage.user_from.last_name }}</a></div> {{ message.fecha }}
+                    <div class="user-message-last">{{ mensage.mensaje|truncatewords:30 }}</div>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="message-line-response">
+        <div class="new-message">
+        <p><strong>Responder:</strong></p>
+        <form method="post" action="/social/messages_user/{{ user_id }}">
+            {% csrf_token %}
+            <div class="message-content-response">
+                {{ form_response_message.mensaje.errors }}
+                {{ form_response_message.mensaje }}
+            </div>
+            <input type="submit" value="Enviar" class="btn btn-success"/>
+        </form>
+    </div>
+    </div>
+</div>
+{% endblock dashboard %}
+
