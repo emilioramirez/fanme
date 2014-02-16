@@ -227,7 +227,7 @@ CANTIDAD_DENUNCIAS = 2
 PUNTAJES = {
     'item_fan': 1,
     'comment_like': 1,
-    'comment_denuncias': 1,
+    'comment_denuncias': 3,
     'item_denuncias': 1
 
 }
