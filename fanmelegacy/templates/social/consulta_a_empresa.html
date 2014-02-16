@@ -17,7 +17,9 @@
 {% endblock menuOptions %}
 
 {% block dashboard %}
-    <div class="title-messages">Consultas</div>
+<div class="row">
+    
+    <div class="page-header"><h1>Consultas</h1></div>
     <div class="message-body">
         <div class="message-content-mati">
             {% if not no_posee_items %}
@@ -42,4 +44,5 @@
             {% endif %}
         </div>
     </div>
+</div>
 {% endblock dashboard %}

@@ -104,6 +104,7 @@ def borrar_objeto_denunciado(sender, instance, created, raw, using, **kwargs):
     if instance.estado == estado:
         comment_type = ContentType.objects.get(name="comment")
         if instance.content_type == comment_type:
-            # el comentario se deshabilita
-            instance.is_removed = True
-            instance.save()
+            if not instance.content_object.is_removed:
+                # el comentario se deshabilita
+                instance.content_object.is_removed = True
+                instance.content_object.save()
