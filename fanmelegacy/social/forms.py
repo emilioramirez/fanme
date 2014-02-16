@@ -10,13 +10,15 @@ class MessageForm(forms.Form):
 #        required=True,
 #        error_messages={'required': 'Es necesario un Usuario'},
 #        widget=forms.TextInput(attrs={'class': 'message-content-mati-to'}))
-    user_to_id = forms.ModelChoiceField(queryset=None)
+    user_to_id = forms.ModelChoiceField(queryset=None,
+        widget=forms.Select(attrs={
+                'class': 'form-control'}))
     mensaje = forms.CharField(
         label='Mensaje',
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
         widget=forms.Textarea(attrs={
-                'class': 'item-registration-description-field'}))
+                'class': 'form-control'}))
 
 
 class MessageResponseForm(forms.Form):
@@ -35,12 +37,12 @@ class MessageQueryForm(forms.Form):
         queryset=Item.objects.all(),
         error_messages={'required': 'Es necesario un Item',
             'invalid_choice': 'Opcion no valida'},
-        widget=forms.Select(attrs={'class': 'combo-item'}))
+        widget=forms.Select(attrs={'class': 'form-control'}))
     consulta = forms.CharField(
         label='Consulta',
         required=True,
         error_messages={'required': 'Es necesario ingresar un mensaje'},
-        widget=forms.Textarea(attrs={'class': 'new-message-field'}))
+        widget=forms.Textarea(attrs={'class': 'form-control'}))
 
 
 class EventoForm(forms.ModelForm):

@@ -350,7 +350,8 @@ def company_query(request, company_id):
         if items_plan == None or items_plan.count() == 0:
             messages.add_message(request, messages.ERROR, "La empresa no posee items registrados. No se le podrá enviar ninguna consulta.")
             no_posee_items = True
-        form_query_message.fields["item"].queryset = items_plan
+        else:
+            form_query_message.fields["item"].queryset = items_plan
     return render_to_response('social/consulta_a_empresa.html', {
         'form_search': searchbox,
         'company_id': company_id,

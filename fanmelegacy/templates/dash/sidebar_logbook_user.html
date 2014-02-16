@@ -41,6 +41,8 @@
 
 {% block boton %}
 <div class="sidebar-follow-user">
-    <a href="/dash/unfollow/{{ user.id }}"><div class="new-no-item-buttom-mati" style="margin: 10px!important;">Dejar de seguir</div></a>
+    {% if mostrar_boton_dejar_seguir %}
+        <a href="/dash/unfollow/{{ user.id }}"><div class="new-no-item-buttom-mati" style="margin: 10px!important;">Dejar de seguir</div></a>
+    {% endif %}
 </div>
 {% endblock boton %}
