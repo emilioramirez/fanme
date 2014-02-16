@@ -18,7 +18,7 @@
     <script>
         function doOnLoad() {
             var myCalendar = new dhtmlXCalendarObject(["id_fecha_expiracion", "id_fecha_desde"]);
-            myCalendar.setDateFormat(FANMEDATEFORMAT);
+            myCalendar.setDateFormat(FANMEDATETIMEFORMAT);
         }
     </script>
     <script>
@@ -47,6 +47,7 @@
                     checkBoxes[i].checked = true;
                 }
             }
+            document.getElementById('usuarios').value = usuariosSeleccionados;
         }
 
         function validacionSubmit(){
@@ -124,15 +125,14 @@
                 {% endfor %}
                 <div class="form-group">
                     <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="document.getElementById('my-form').onsubmit = function() {
-                return false;
-            }">
+                        return false;}">
                       Seleccionar invitados
                     </button>
                 </div>
                 <input type="hidden" name="usuarios" id="usuarios" value="" />
                 <div style="float:right;">
                     <input type="submit" value="Enviar" class="btn btn-success" onclick="validacionSubmit()" />
-                    <input type="button" value="Cancelar" class="btn btn-danger" onclick="location.href='../../../bussiness/dash_empresa';">
+                    <input type="button" value="Cancelar" class="btn btn-danger" onclick="location.href='../../../social/notificaciones';">
                 </div>
             </form>
     </div>
