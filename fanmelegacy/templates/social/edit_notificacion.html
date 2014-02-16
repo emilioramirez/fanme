@@ -2,17 +2,17 @@
 
 {% load avatar_tags %}
 
-{% block mystylesheet-dashboard %}
+{% block mystylesheet %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
     <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
-{% endblock mystylesheet-dashboard %}
+{% endblock mystylesheet %}
 
 {% block myjavascript %}
     <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
     <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
     <script>
-        var myCalendar;
         var usuariosSeleccionados = new Array();
 
         function doOnLoad() {

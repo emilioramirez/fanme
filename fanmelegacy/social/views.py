@@ -588,8 +588,12 @@ def edit_notificacion(request, notificacion_id):
             notificacion.estado = 'actualizado'
             notificacion.save()
             form.save_m2m()
-            for invitado in usuarios_invitados:
+            invitados = list(set(usuarios_invitados).intersection(notificacion.usuarios_to.all()))
+            desinvitados = list(set(notificacion.usuarios_to.all()).difference(usuarios_invitados))
+            for invitado in invitados:
                 notificacion.usuarios_to.add(invitado)
+            for desinvitado in desinvitados:
+                notificacion.usuarios_to.remove(desinvitado)
                 #TODO: aca deberiamos actualizar el estado de cada uno de los usuarios con la notificacion actualizada
             return HttpResponseRedirect('/social/notificaciones/')
     else:
