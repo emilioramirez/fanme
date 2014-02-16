@@ -39,11 +39,25 @@
             legend: {
                 enabled: false
             },
-             plotOptions: {
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Cant. fans'
+                }
+            },
+            plotOptions: {
                 series: {
                     borderWidth: 0,
                     dataLabels: {
                         enabled: true,
+                    }
+                },
+                point: {
+                    events: {
+                        click: function() {
+                            //location.href='../item_fanes?topico=' + this.series.name;
+                            alert('Hola');
+                        }
                     }
                 }
             },
@@ -55,7 +69,6 @@
                     {
                         name: '{{item}}',
                         y: {{cant_fans}},
-                        drilldown: true
                     },
                     {% endfor %}
                 ]

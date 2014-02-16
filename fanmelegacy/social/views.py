@@ -696,30 +696,27 @@ def new_notification(request):
 
 @login_required(login_url='/accounts/user/')
 def user_main_view_notifications(request):
-    searchbox = SearchBox()
-    try:
-        notificaciones_recibidas = request.user.notificaciones_recibidas.all(
-            ).values('empresa').distinct()
-        usuarios = []
-        for dict in notificaciones_recibidas.all():
-            usuarios.append(User.objects.get(id=dict['empresa']))
-    except Persona.DoesNotExist:
-        return HttpResponseRedirect(reverse("dash_empresa"))
+    notificaciones_recibidas = request.user.notificaciones_recibidas.all()
+    dict = {}
+    for notificacion in notificaciones_recibidas:
+        try:
+            dict[notificacion.empresa.empresa].append(notificacion)
+        except KeyError:
+            dict[notificacion.empresa.empresa] = [notificacion]
     return render_to_response('social/user_main_notification.html', {
-        'form_search': searchbox, 'breadcrumb': ["Social", "Notificaciones"]},
-        context_instance=RequestContext(request))
+        'notificaciones_recibidas': dict,
+        'breadcrumb': ["Social", "Notificaciones"]},
+                              context_instance=RequestContext(request))
 
 
 @login_required(login_url='/accounts/user/')
 def notification_by_company(request, company_id):
-    searchbox = SearchBox()
     try:
         notificaciones_recibidas = request.user.notificaciones_recibidas.filter(
             empresa=company_id)
     except Persona.DoesNotExist:
         return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('social/notifications_by_company.html', {
-        'form_search': searchbox,
         'notificaciones_recibidas': notificaciones_recibidas},
         context_instance=RequestContext(request))
 
