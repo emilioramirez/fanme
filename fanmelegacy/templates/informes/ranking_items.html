@@ -34,7 +34,11 @@
                 text: 'Fans por Item'
             },
             xAxis: {
-                type: 'category'
+                categories: [
+                {% for item, cant_fans in fans_por_item.items %}
+                    '{{item.id}}',
+                {% endfor %}
+                ]
             },
             legend: {
                 enabled: false
@@ -50,13 +54,12 @@
                     borderWidth: 0,
                     dataLabels: {
                         enabled: true,
-                    }
-                },
-                point: {
-                    events: {
-                        click: function() {
-                            //location.href='../item_fanes?topico=' + this.series.name;
-                            alert('Hola');
+                    },
+                    point: {
+                        events: {
+                            click: function() {
+                                location.href='../detalle?item_id=' + this.category;
+                            }
                         }
                     }
                 }
@@ -80,7 +83,7 @@
     <script>
     function myFunction()
     {
-        var cant = document.getElementsByName('cant')[0].value
+        var cant = parseInt(document.getElementsByName('cant')[0].value);
         if (cant == 0 || cant == null)
         {
             $.pnotify({

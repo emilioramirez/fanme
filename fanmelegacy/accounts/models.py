@@ -39,7 +39,8 @@ class AbstractProfile(models.Model):
 class Persona(AbstractProfile):
     fecha_nacimiento = models.DateField()
     sexo = models.CharField(max_length=20)
-    items = models.ManyToManyField(Item, null=True, blank=True)
+    items = models.ManyToManyField(Item, null=True, blank=True,
+        related_name='fans_por_item')
     following = models.ManyToManyField(User, null=True, blank=True,
         related_name='followers')
     puntaje = models.IntegerField(default=0)

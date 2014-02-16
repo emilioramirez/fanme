@@ -162,8 +162,50 @@ def progreso_filtrado(request):
         usuarios = get_usuarios(anio, 11)
     elif mes == "Dec":
         usuarios = get_usuarios(anio, 12)
+    sexo_femenino, sexo_masculino = get_sexo_count(usuarios)
+    dict_cant = get_usuarios_por_rango_edad(usuarios)
+    return render_to_response('informes/progreso_filtro.html',
+        {'anio': anio, 'mes': mes,
+        'usuarios': usuarios, 'sexo_femenino': sexo_femenino,
+        'sexo_masculino': sexo_masculino, 'dict_cant': dict_cant},
+        context_instance=RequestContext(request))
+
+
+def get_usuarios(anio, mes):
+    usuarios = Persona.objects.filter(user__date_joined__year=anio).filter(
+            user__date_joined__month=mes)
+    return usuarios
+
+
+def informe_item_filtrado(request):
+    item_id = int(request.GET.get('item_id'))
+    item_seleccionado = Item.objects.get(pk=item_id)
+    usuarios = item_seleccionado.fans_por_item.all()
+    sexo_femenino, sexo_masculino = get_sexo_count(usuarios)
+    dict_cant = get_usuarios_por_rango_edad(usuarios)
+    return render_to_response('informes/ranking_items_detalle.html',
+        {'usuarios': usuarios, 'sexo_femenino': sexo_femenino,
+        'sexo_masculino': sexo_masculino, 'dict_cant': dict_cant},
+        context_instance=RequestContext(request))
+
+
+
+def get_sexo_count(usuarios):
     sexo_femenino = 0
     sexo_masculino = 0
+    for persona in usuarios:
+        try:
+            persona = Persona.objects.get(pk=persona.id)
+        except:
+            print 'edad no es una persona'
+        if persona.sexo == "F":
+            sexo_femenino = sexo_femenino + 1
+        else:
+            sexo_masculino = sexo_masculino + 1
+    return sexo_femenino, sexo_masculino
+
+
+def get_usuarios_por_rango_edad(usuarios):
     current_year = date.today().year
     primer_rango = 0
     segundo_rango = 0
@@ -178,12 +220,7 @@ def progreso_filtrado(request):
     undecimo_rango = 0
     for usuario in usuarios:
         try:
-            persona = Persona.objects.get(user_id=usuario.id)
-            print persona
-            if persona.sexo == "F":
-                sexo_femenino = sexo_femenino + 1
-            else:
-                sexo_masculino = sexo_masculino + 1
+            persona = Persona.objects.get(pk=usuario.id)
             edad = current_year - persona.fecha_nacimiento.year
             if edad >= 15 and edad < 20:
                 primer_rango = primer_rango + 1
@@ -207,8 +244,10 @@ def progreso_filtrado(request):
                 decimo_rango = decimo_rango + 1
             if edad >= 65 and edad < 70:
                 undecimo_rango = undecimo_rango + 1
+            if edad < 15 or edad > 69:
+                print 'no entro'
         except:
-            pass
+            print 'es empresa'
     dict_cant = SortedDict()
     dict_cant["15-20"] = primer_rango
     dict_cant["20-25"] = segundo_rango
@@ -221,18 +260,4 @@ def progreso_filtrado(request):
     dict_cant["55-60"] = noveno_rango
     dict_cant["60-65"] = decimo_rango
     dict_cant["65-70"] = undecimo_rango
-    return render_to_response('informes/progreso_filtro.html',
-        {'anio': anio, 'mes': mes,
-        'usuarios': usuarios, 'sexo_femenino': sexo_femenino,
-        'sexo_masculino': sexo_masculino, 'dict_cant': dict_cant},
-        context_instance=RequestContext(request))
-
-
-def get_usuarios(anio, mes):
-    usuarios = User.objects.filter(date_joined__year=anio).filter(
-            date_joined__month=mes)
-    return usuarios
-
-
-def informe_item_filtrado(request, item_id):
-    pass
+    return dict_cant
