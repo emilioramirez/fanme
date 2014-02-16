@@ -132,13 +132,15 @@ def analisis_denuncias(sender, **kwargs):
         content_type - el contenttype que represena al objeto referenciado
         object_id - el id del objeto
     """
-    g = Group.objects.get(name="moderador")
-    user_moderador = random.choice(g.user_set.all())
     ctype = kwargs['instance'].content_type
     object_id = kwargs['instance'].object_id
     qs = Dislike.objects.filter(content_type=ctype, object_id=object_id)
     cant_denuncias = qs.count()
     if cant_denuncias >= settings.CANTIDAD_DENUNCIAS:
+        # Traemos uno de los administradores de forma aleatoria
+        group_object = Group.objects.get(name="moderador")
+        user_moderador = random.choice(group_object.user_set.all())
+        # Creamos el analisis de denuncia
         estado, created_e = EstadoAnalisisDenuncia.objects.get_or_create(
             estado="creado", descripcion="Denuncia creada")
         a_denuncia = AnalisisDenuncia()

@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Topico(models.Model):
@@ -94,3 +96,14 @@ class AnalisisDenuncia(models.Model):
 
     def get_absolute_url(self):
         return reverse('analisisdenuncia', kwargs={'pk': self.pk})
+
+
+@receiver(post_save, sender=AnalisisDenuncia)
+def borrar_objeto_denunciado(sender, instance, created, raw, using, **kwargs):
+    estado = EstadoAnalisisDenuncia.objects.get(estado="borrado")
+    if instance.estado == estado:
+        comment_type = ContentType.objects.get(name="comment")
+        if instance.content_type == comment_type:
+            # el comentario se deshabilita
+            instance.is_removed = True
+            instance.save()
