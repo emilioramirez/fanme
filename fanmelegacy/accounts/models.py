@@ -8,6 +8,7 @@ from items.models import Item
 from fanmelegacy.thumbs import ImageWithThumbsField
 from rathings.models import dislike_created, Dislike, Like
 from django.contrib.auth.models import Group
+import random
 
 
 # Create your models here.
@@ -131,6 +132,8 @@ def analisis_denuncias(sender, **kwargs):
         content_type - el contenttype que represena al objeto referenciado
         object_id - el id del objeto
     """
+    g = Group.objects.get(name="moderador")
+    user_moderador = random.choice(g.user_set.all())
     ctype = kwargs['instance'].content_type
     object_id = kwargs['instance'].object_id
     qs = Dislike.objects.filter(content_type=ctype, object_id=object_id)
@@ -142,6 +145,7 @@ def analisis_denuncias(sender, **kwargs):
         a_denuncia.estado = estado
         a_denuncia.content_type = ctype
         a_denuncia.object_id = object_id
+        a_denuncia.moderador = user_moderador
         a_denuncia.save()
 
 dislike_created.connect(analisis_denuncias)
