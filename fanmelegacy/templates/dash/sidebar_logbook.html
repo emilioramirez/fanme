@@ -1,0 +1,40 @@
+{% extends "dash/sidebar.html" %}
+
+{% load dash_filters %}
+
+{% block user_range %}{% endblock %}
+
+{% block sidebar_stats %}
+<div class="sidebar-stadistic">
+    <a href="/dash/fans/">
+        <div class="stadistic-fan sidebar-stadistic-item" title="Podés consultar de que items sos Fan">
+            <div class="stadistic-num">{{ user.persona.items.count }}</div>
+            <div class="stadistic-nom">Fan{% if user.persona.items.count > 1 %}s{% endif %}</div>
+        </div>
+    </a>
+    <a href="/dash/following/">
+        <div class="stadistic-recomendations sidebar-stadistic-item">
+            <div class="stadistic-num">{{ cant_following }}</div>
+            <div class="stadistic-nom">
+                {% if user.persona.following.count > 1 %}
+                    Usuarios que sigo
+                {% else %}
+                    Usuario que sigo
+                {% endif %}
+            </div>
+        </div>
+    </a>
+    <a href="/dash/followers/">
+        <div class="stadistic-comments sidebar-stadistic-item">
+            <div class="stadistic-num">{{ cant_followers }}</div>
+            <div class="stadistic-nom">
+                {% if user.followers.count > 1 %}
+                    Usuarios me siguen
+                {% else %}
+                    Usuario me sigue
+                {% endif %}
+            </div>
+        </div>
+    </a>
+</div>
+{% endblock sidebar_stats %}

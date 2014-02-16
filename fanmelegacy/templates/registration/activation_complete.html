@@ -1,0 +1,14 @@
+{% extends "accounts/base_accounts.html" %}
+
+{% block title %}Activacion completada{% endblock %}
+
+{% block content %}
+<div class="accounts-thanks">
+    <h1>Se ha activado tu cuenta con exito.</h1>
+    <h2>Ya formas parte de FanME.</h2>
+    <p>Puedes <a href='{% url "auth_login" %}'> ingresar</a> con el usuario y contraseña que te registraste.</p>
+</div>
+<div class="accounts-thanks-welcome-image">
+    <img src="{{ STATIC_URL }}images/register-welcome-image.png" alt="Register Welcome Image" />
+</div>
+{% endblock content %}
