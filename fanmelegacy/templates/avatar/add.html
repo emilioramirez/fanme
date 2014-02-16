@@ -19,7 +19,7 @@
     </div>
     <div class="col-md-4">
         {% if not avatars %}
-            <p>{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
+            <p>Todavia no has subido ninguna foto de perfil. Por favor, agrega una ahora.</p>
         {% endif %}
         <form enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}">
             {% csrf_token %}
