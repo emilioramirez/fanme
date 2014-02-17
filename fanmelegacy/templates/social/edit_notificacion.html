@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
     <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pnotify-1.2.0/use for pines style icons/jquery.pnotify.default.icons.css" type="text/css" />
+    <link href="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.default.css" media="all" rel="stylesheet" type="text/css" />
 {% endblock mystylesheet %}
 
 {% block myjavascript %}
@@ -56,6 +59,64 @@
 
             document.getElementById('usuarios').value = usuariosSeleccionados;
         }
+
+        function validacionSubmit(){
+            var respuesta_correcta = true;
+            var fecha_inicio = document.getElementById('id_fecha_desde').value;
+            var fecha_fin = document.getElementById('id_fecha_expiracion').value;
+            var fecha_inicio_as_date = convertDate(fecha_inicio);
+            var fecha_fin_as_date = convertDate(fecha_fin);
+            var today = new Date();
+            if(fecha_inicio_as_date < today)
+            {
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'La fecha de inicio del evento debe ser superior a la de hoy dia.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false;
+            }
+            if(fecha_fin_as_date < fecha_inicio_as_date))
+            {
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'La fecha fin debe ser superior a la de inicio.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false;
+            }
+            var usuariosInvitados = document.getElementById('usuarios').value;
+            if(usuariosSeleccionados.length == 0){
+                $.pnotify({
+                    title: 'Error!',
+                    text: 'Es necesario seleccionar un invitado.',
+                    type: 'error',
+                    hide: false
+                });
+                respuesta_correcta = false
+            }
+            document.getElementById('my-form').onsubmit = function() {
+                return respuesta_correcta;
+            }
+        }
+
+        function convertDate(fecha){
+            var input = fecha.split(" ")[0];
+            var formated = input.split("/")[1] + '/' + input.split("/")[0] + '/' + input.split("/")[2];
+            return new Date(formated);
+        }
+
+        $("#seleccionar_invitados").click(function (e) {
+            var my_elems = document.getElementsByClassName("ui-pnotify ");
+            for(k=my_elems.length-1;k>=0; --k)
+            {
+                if(my_elems[k].innerHTML.indexOf("invitado") != -1) {
+                    my_elems[k].parentElement.removeChild(my_elems[k]);
+                }
+            }
+        });
     </script>
 {% endblock myjavascript %}
 
@@ -108,9 +169,7 @@
                     </div>
                     <input type="hidden" name="usuarios" id="usuarios" value="" />
                     <div style="float:right;">
-                        <input type="submit" value="Guardar" class="btn btn-success" onclick="document.getElementById('my-form').onsubmit = function() {
-                            return true;
-                        }"/>
+                        <input type="submit" value="Guardar" class="btn btn-success" onclick="validacionSubmit()" />
                         <input type="button" value="Cancelar" class="btn btn-danger" onclick="location.href='../../../social/notificaciones';">
                     </div>
                 </form>

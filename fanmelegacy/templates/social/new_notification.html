@@ -54,10 +54,10 @@
             var respuesta_correcta = true;
             var fecha_inicio = document.getElementById('id_fecha_desde').value;
             var fecha_fin = document.getElementById('id_fecha_expiracion').value;
-            var fecha_inicio_as_date = new Date(fecha_inicio);
-            var fecha_fin_as_date = new Date(fecha_fin);
+            var fecha_inicio_as_date = convertDate(fecha_inicio);
+            var fecha_fin_as_date = convertDate(fecha_fin);
             var today = new Date();
-            if(fecha_inicio_as_date > today)
+            if(fecha_inicio_as_date < today)
             {
                 $.pnotify({
                     title: 'Error!',
@@ -90,6 +90,12 @@
             document.getElementById('my-form').onsubmit = function() {
                 return respuesta_correcta;
             }
+        }
+
+        function convertDate(fecha){
+            var input = fecha.split(" ")[0];
+            var formated = input.split("/")[1] + '/' + input.split("/")[0] + '/' + input.split("/")[2];
+            return new Date(formated);
         }
 
         $("#seleccionar_invitados").click(function (e) {
