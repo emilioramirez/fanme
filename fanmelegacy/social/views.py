@@ -166,7 +166,15 @@ def edit_evento(request, evento_id):
                     evento_x_invitado.invitado = invitado
                     evento_x_invitado.save()
                 else:
-                    evento_x_invitado.update()
+                    evento_x_invitado.update(estado='noleido')
+            invitados_guardados = EstadoxInvitado.objects.filter(evento=evento_db)
+            invitados_guardados_lista = []
+            for invitado_guardado in invitados_guardados:
+                invitados_guardados_lista.append(invitado_guardado.invitado)
+            desinvitados = list(set(invitados_guardados_lista).difference(usuarios_invitados))
+            for desinvitado in desinvitados:
+                evento_x_invitado = EstadoxInvitado.objects.filter(evento=evento_db).filter(invitado=desinvitado)
+                evento_x_invitado.delete()
             return HttpResponseRedirect('/social/eventos/')
     else:
         form = EventoForm(instance=evento_db)
