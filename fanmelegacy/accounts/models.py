@@ -35,7 +35,6 @@ class AbstractProfile(models.Model):
         return self.user.comment_comments.exclude(is_removed=True).count()
 
 
-
 class Persona(AbstractProfile):
     fecha_nacimiento = models.DateField()
     sexo = models.CharField(max_length=20)

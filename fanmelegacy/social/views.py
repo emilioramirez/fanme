@@ -897,3 +897,70 @@ def evento_ayuda(request):
     temp = RequestContext(request, {'form_search': searchbox, 'evento': evento,
         'creador': creador, 'lista_invitados': lista_invitados})
     return render_to_response('social/evento_ayuda.html', temp)
+
+
+def user_main_view_notifications_ayuda(request):
+    user = User()
+    user.first_name = "Kodak"
+    user.last_name = "Kodak"
+    empresa = Empresa()
+    empresa.user = user
+    empresa.razon_social = "Kodak"
+    notificaciones_recibidas = []
+    notificacion = Notificacion()
+    notificacion.empresa = user
+    notificaciones_recibidas.append(notificacion)
+    dict = {}
+    for notificacion in notificaciones_recibidas:
+        try:
+            dict[notificacion.empresa].append(notificacion)
+        except KeyError:
+            dict[notificacion.empresa.empresa] = [notificacion]
+            print 'a'
+    return render_to_response('social/user_main_notification_ayuda.html', {
+        'notificaciones_recibidas': dict,
+        'breadcrumb': ["Social", "Notificaciones"]},
+                              context_instance=RequestContext(request))
+
+
+def notification_by_company_ayuda(request):
+    user = User()
+    user.first_name = "Kodak"
+    user.last_name = "Kodak"
+    empresa = Empresa()
+    empresa.user = user
+    empresa.razon_social = "Kodak"
+    notificaciones_recibidas = []
+    notificacion = Notificacion()
+    notificacion.empresa = user
+    notificacion.nombre = "Promo 2x1"
+    notificacion.descripcion = "Llevate dos revelados de fotos al precio de uno"
+    notificacion.fecha_expiracion = datetime.strptime('Mar 8 2014  5:30PM', '%b %d %Y %I:%M%p')
+    notificaciones_recibidas.append(notificacion)
+    notificacion = Notificacion()
+    notificacion.empresa = user
+    notificacion.nombre = "Promoción albumes"
+    notificacion.descripcion = "Con el revelado de mas de 100 fotos te regalamos un album. "
+    notificacion.fecha_expiracion = datetime.strptime('Mar 8 2014  5:30PM', '%b %d %Y %I:%M%p')
+    notificaciones_recibidas.append(notificacion)
+    return render_to_response('social/notifications_by_company_ayuda.html', {
+        'notificaciones_recibidas': notificaciones_recibidas},
+        context_instance=RequestContext(request))
+
+
+def ver_notificacion_ayuda(request):
+    user = User()
+    user.first_name = "Kodak"
+    user.last_name = "Kodak"
+    empresa = Empresa()
+    empresa.user = user
+    empresa.razon_social = "Kodak"
+    notificacion = Notificacion()
+    notificacion.empresa = user
+    notificacion.nombre = "Promo 2x1"
+    notificacion.descripcion = "Llevate dos revelados de fotos al precio de uno"
+    notificacion.fecha_desde = datetime.strptime('Feb 8 2014  5:30PM', '%b %d %Y %I:%M%p')
+    notificacion.fecha_expiracion = datetime.strptime('Mar 8 2014  5:30PM', '%b %d %Y %I:%M%p')
+    return render_to_response('social/ver_notificacion_ayuda.html', {
+        'notificacion': notificacion},
+        context_instance=RequestContext(request))
