@@ -1,0 +1,22 @@
+{% extends "dash/base_dash.html" %}
+
+{% block menuOptions %}
+{% if user.persona %}
+<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li><a href="{% url 'logbook' %}">Logbook</a></li>
+<li class="active"><a href="{% url 'topicos' %}">Topicos</a></li>
+{% else %}
+<li><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+<li><a href="{% url 'dash_planes' %}">Planes</a></li>
+{% endif %}
+{% endblock menuOptions %}
+
+
+{% block dashboard %}
+<div class="well">
+    <h1>Seccion Topicos en construccion</h1>
+</div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+{% endblock sidebar %}

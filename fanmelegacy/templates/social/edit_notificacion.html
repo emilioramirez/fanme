@@ -1,0 +1,149 @@
+{% extends "bussiness/dash_empresa.html" %}
+
+{% load avatar_tags %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet %}
+
+{% block myjavascript %}
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/pnotify-1.2.0/jquery.pnotify.js"></script>
+    <script>
+        var usuariosSeleccionados = new Array();
+
+        function doOnLoad() {
+            var myCalendar = new dhtmlXCalendarObject(["id_fecha_expiracion", "id_fecha_desde"]);
+            myCalendar.setDateFormat(FANMEDATETIMEFORMAT);
+
+            {% for usuario in users_invitados %}
+                var check = document.getElementById("checkbox_" + {{usuario.id}});
+                if(check != null){
+                    check.checked = true
+                    usuariosSeleccionados.push({{usuario.id}});
+                }
+            {% endfor %}
+
+            document.getElementById('usuarios').value = usuariosSeleccionados;
+        }
+
+        function elegirUsuario(checkbox, id){
+            if(checkbox.checked) {
+                usuariosSeleccionados.push(id);
+             }
+             else{
+                var index = usuariosSeleccionados.indexOf(id);
+                if (index > -1) {
+                    usuariosSeleccionados.splice(index, 1);
+                }
+
+             }
+             document.getElementById('usuarios').value = usuariosSeleccionados;
+        }
+
+        function checkTodos(){
+            usuariosSeleccionados.length = 0;
+            var checkBoxes = document.getElementsByTagName("input");
+            for (var i =0; i < checkBoxes.length; i++){
+                if (checkBoxes[i].type == 'checkbox'){
+                    usuariosSeleccionados.push(checkBoxes[i].value);
+                    checkBoxes[i].checked = true;
+                }
+            }
+
+            document.getElementById('usuarios').value = usuariosSeleccionados;
+        }
+    </script>
+{% endblock myjavascript %}
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header"><h1>Editar notificacion</h1></div>
+        <div class="col-md-9 col-md-offset-1">
+            <div class="form-new-notification">
+                <form action="/social/notificacion/edit/{{ notificacion.id }}" method="post" enctype="multipart/form-data" id="my-form">{% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_user_to_id" class="control-label">Nombre:</label>
+                        {{ form.nombre }}
+                        <span class="help-block">{{ form.nombre.errors }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_desde" class="control-label">Fecha inicio:</label>
+                        {{ form.fecha_desde}}
+                        <span class="help-block">{{ form.fecha_desde.errors }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_expiracion" class="control-label">Fecha fin:</label>
+                        {{ form.fecha_expiracion }}
+                        <span class="help-block">{{ form.fecha_expiracion.errors }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_expiracion" class="control-label">Descripcion:</label>
+                        {{ form.descripcion }}
+                        <span class="help-block">{{ form.descripcion.errors }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_expiracion" class="control-label">Invitados:</label>
+                        {{ form.usuarios_to }}
+                        <span class="help-block">{{ form.usuarios_to.errors }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_expiracion" style="margin-left:-5px!important;"></label>
+                        {{ form.imagen }}
+                        <span class="help-block">{{ form.imagen.errors }}</span>
+                    </div>
+                    <div class="form-group">
+                        <button id="seleccionar_invitados" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="document.getElementById('my-form').onsubmit = function() {
+                            return false;
+                        }">
+                          Seleccionar invitados
+                        </button>
+                    </div>
+                    <input type="hidden" name="usuarios" id="usuarios" value="" />
+                    <div style="float:right;">
+                        <input type="submit" value="Guardar" class="btn btn-success" onclick="document.getElementById('my-form').onsubmit = function() {
+                            return true;
+                        }"/>
+                        <input type="button" value="Cancelar" class="btn btn-danger" onclick="location.href='../../../social/notificaciones';">
+                    </div>
+                </form>
+            </div>
+        </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Invitados</h4>
+          </div>
+          <div class="modal-body">
+              {% for invitado in users %}
+                <div style="width: 175px; display: inline-table; margin-bottom: 25px;">
+                    <img src="{% avatar_url invitado 50 %}" style="border: 1px solid #9F9F9F; height: 50px; width: 50px;" alt="">
+                    <span style="margin-left: 5px;">
+                        <input  id="checkbox_{{ invitado.id }}" type="checkbox" name="" value="{{ invitado.id }}" onclick="elegirUsuario(this, {{ invitado.id }});">
+                        {{ invitado.first_name }} {{ invitado.last_name }}
+                    </span>
+                  </div>
+              {% endfor %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="checkTodos();">Seleccionar todos</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Agregar invitados</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+{% endblock dashboard %}
+
+{% block crear %}
+{% endblock %}

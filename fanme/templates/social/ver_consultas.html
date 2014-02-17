@@ -1,0 +1,38 @@
+{% extends "dash/empresa.html" %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="/mymedia/css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptionsSelected %}
+    <ul class="menu-options">
+        <li class="menu-item"><a href="/dash/dashboard/">Dashboard</a></li>
+        <!--<li class="menu-item"><a href="/dash/topicos/">Topicos</a></li>-->
+    </ul>
+{% endblock menuOptionsSelected %}
+
+{% block dashboard %}
+    <div class="title-messages">Consultas</div>
+    <div class="list-content-user-messages">
+        <ul>
+            {% for consulta in consultas_recibidas %}
+                <li class="content-user-messages">
+                    <div class="user-message-image">
+                        {% if consulta.mis_imagenes.count %}
+                            <img src="{{ consulta.first_image }}" alt="Score">
+                        {% else %}
+                            <img src="/mymedia/images/298.png" alt="Score">
+                        {% endif %}
+                    </div>
+                    <div class="user-message-name">
+                        <a href="/social/ver_consultas_item/{{ consulta.id }}">
+                            {{ consulta.nombre }}
+                        </a>
+                    </div>
+                    <div class="user-message-last"></div>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock dashboard %}

@@ -1,0 +1,31 @@
+{% extends "bussiness/dash_empresa.html" %}
+
+{% block menuOptions %}
+{% if user.persona %}
+<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li><a href="{% url 'logbook' %}">Logbook</a></li>
+{% else %}
+<li ><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+<li><a href="{% url 'dash_planes' %}">Planes</a></li>
+{% endif %}
+{% endblock menuOptions %}
+
+{% block dashboard %}
+    <div class="title-messages">Mensajes</div>
+    {% for message in mensajes_recibidos %}
+        <div class="item-content-mess-event">
+            <div class="message-body">
+                <div class="message-usuario">
+                </div>
+            </div>
+            <a href="/social/company_response_message/{{ message.id }}">
+                <div class="message-user-subject">
+                    {{ message.first_name }}
+                </div>
+            </a>
+            <div class="message-descripcion">
+                {{ message.mensaje|truncatewords:30 }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock dashboard %}
