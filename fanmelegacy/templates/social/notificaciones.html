@@ -40,7 +40,7 @@
                         {% for invitado in notificacion.usuarios_to.all %}
                             <li>
                                 <div class='invitados'>
-                                    {{ invitado }}
+                                    {{ invitado.first_name }} {{ invitado.last_name }}
                                 </div>
                             </li>
                         {% endfor %}
@@ -50,12 +50,16 @@
                     <div class="clear"></div>
                 </div>
             </div>
+            <div>
+                <a class="btn btn-success" href="/social/notificacion/edit/{{ notificacion.id }}" >Editar</a>
+                <input type="button" value="Cancelar" class="btn btn-danger" style="margin: 30px 10px;" onclick="location.href='../../../social/notificaciones';">
+            </div>
             {% else %}
             <div class='eventos-list'>
                 {% for notificaciones in notificaciones_enviadas %}
                     <div class='i-content'>
                         <div class="i-title">
-                            {{ notificaciones.nombre }}
+                            <a href='/social/notificaciones/{{ notificaciones.id }}'>{{ notificaciones.nombre }}</a>
                             {% if notificaciones.estado != 'leido' %}
                                 ({{ notificaciones.estado }})
                             {% endif %}
@@ -65,15 +69,15 @@
                             </div>
                         </div>
                         <div class="i-body">
-                            <a href='/social/notificaciones/{{ notificaciones.id }}'>{{ notificaciones.descripcion }}</a> creado por tí.
+                            {{ notificaciones.descripcion }} creado por tí.
                         </div>
                     </div>
                 {% endfor%}
             </div>
+            <div class="row">
+                <a href="/social/new_notification/" class="btn btn-success">Nueva notificacion</a>
+            </div>
             {% endif %}
         </div>
-    </div>
-    <div class="row">
-        <a href="/social/new_notification/" class="btn btn-success">Nueva notificacion</a>
     </div>
 {% endblock dashboard %}

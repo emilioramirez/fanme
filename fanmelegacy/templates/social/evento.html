@@ -129,7 +129,7 @@
                     {% for invitado in lista_invitados %}
                         <li>
                             <div class='invitados'>
-                                {{ invitado }}
+                                {{ invitado.first_name }} {{ invitado.last_name }}
                             </div>
                         </li>
                     {% endfor %}
