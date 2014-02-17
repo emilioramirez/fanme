@@ -1,0 +1,69 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block myjavascript %}
+    <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/ver_notificacion_ayuda_tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+{% endblock myjavascript %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link href="{{ STATIC_URL }}css/tour/prism.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/bootstrap-tour.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/index.css" rel="stylesheet">
+{% endblock mystylesheet-dashboard%}
+
+
+{% block dashboard %}
+    <div class="title-messages">Notificaciones</div>
+    <div class="eventos-content" id="notificacion">
+        <div class='evento'>
+            <div class=''>
+                <div class=''><img src="{{ notificacion.imagen.url }}" alt="Imagen de la notificacion" /></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Nombre</div>
+                <div class='evento-field'>{{ notificacion.nombre }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Descripcion</div>
+                <div class='evento-field'>{{ notificacion.descripcion }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Fecha desde</div>
+                <div class='evento-field'>{{ notificacion.fecha_desde }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Fecha expiracion</div>
+                <div class='evento-field'>{{ notificacion.fecha_expiracion }}</div>
+                <div class="clear"></div>
+            </div>
+            <div class='evento-fields'>
+                <div class='evento-label'>Invitados</div>
+                <div class='evento-field'>
+                    <ul>
+                        <li>
+                            <div class='invitados'>
+                                Santiago DiCristofano
+                            </div>
+                            <div class='invitados'>
+                                Simon Grigoleit
+                            </div>
+                            <div class='invitados'>
+                                Santiago Jara
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+{% endblock dashboard %}

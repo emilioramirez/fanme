@@ -26,7 +26,7 @@
         backdrop: true
       }, {
         element: ".sidebar-stadistic",
-        path: "http://127.0.0.1:8000/social/messages_user_ayuda/"
+        path: "/social/messages_user_ayuda/"
       }
     ]);
     tour.start();
