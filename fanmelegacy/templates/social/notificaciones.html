@@ -40,7 +40,7 @@
                         {% for invitado in notificacion.usuarios_to.all %}
                             <li>
                                 <div class='invitados'>
-                                    {{ invitado }}
+                                    {{ invitado.first_name }} {{ invitado.last_name }}
                                 </div>
                             </li>
                         {% endfor %}
