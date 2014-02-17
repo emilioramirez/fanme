@@ -1,5 +1,7 @@
 {% extends "bussiness/dash_empresa.html" %}
 
+{% load avatar_tags %}
+
 {% block mystylesheet-dashboard %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
 {% endblock mystylesheet-dashboard%}
@@ -11,19 +13,7 @@
             {% for usuario in usuario_consulta_item %}
                 <li class="content-user-messages">
                     <div class="user-message-image">
-                        {% if usuario.persona.avatar %}
-                                <img src="{{ usuario.persona.avatar.url_50x50 }}" alt="Logo" />
-                        {% else %}
-                            {% if usuario.persona %}
-                                {% if usuario.persona.sexo == "M" %}
-                                    <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
-                                {% else %}
-                                    <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
-                                {% endif%}
-                            {% else %}
-                                    <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
-                            {% endif%}
-                        {% endif%}
+                        <img src="{% avatar_url usuario 50 %}" alt="">
                     </div>
                     <div class="user-message-name">
                         <a href="/social/ver_consulta_item_usuario/{{ item_id }}/{{ usuario.id }}">

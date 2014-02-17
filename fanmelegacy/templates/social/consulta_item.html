@@ -1,6 +1,6 @@
 {% extends "social/base_social.html" %}
 
-{% load dash_filters avatar_tags %}
+{% load avatar_tags %}
 
 {% block dashboard %}
 <div class="row">
@@ -12,23 +12,7 @@
             {% for consulta in consulta_item %}
                 <li class="content-user-messages">
                     <div class="user-message-image">
-                        {% if consulta.user_from.persona %}
-                            {% if consulta.user_from.persona.avatar %}
-                                <img src="{{ consulta.user_from.persona.avatar.url_50x50 }}" alt="Logo" />
-                            {% else %}
-                                {% if consulta.user_from.persona.sexo == "M" %}
-                                        <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
-                                {% else %}
-                                    <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
-                                {% endif %}
-                            {% endif%}
-                        {% else %}
-                            {% if consulta.user_from.empresa.avatar %}
-                                <img src="{{ consulta.user_from.empresa.avatar.url_50x50 }}" alt="Logo" />
-                            {%else %}
-                                <img src="{{ STATIC_URL }}images/020.png" alt="Logo" />
-                            {% endif %}
-                        {% endif %}
+                        <img src="{% avatar_url consulta.user_from 50 %}" alt="">
                     </div>
                     <div class="user-message-name">
                         {{ consulta.mensaje }}
