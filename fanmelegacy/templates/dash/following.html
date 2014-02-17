@@ -1,0 +1,35 @@
+{% extends "dash/logbook.html" %}
+
+{% load avatar_tags %}
+
+{% block dashboard %}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+        {% for user in active_followings %}
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="{% avatar_url user 100 %}" alt="{{ user.first_name }} {{ user.last_name }}">
+                    <div class="caption">
+                        <p>
+                            <a href="/dash/logbook/{{ user.id }}">
+                                {% if user.first_name == "" %}
+                                    {{ user.empresa.razon_social }}
+                                {% else %}
+                                    {{ user.first_name }} {{ user.last_name }}
+                                {% endif %}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="panel-footer">
+        {% if user.persona.following.all.count > 0 %}
+        <a href="/dash/dejar_de_seguir_usuarios" class="btn btn-danger" role="button">Dejar de seguir</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock dashboard %}

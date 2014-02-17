@@ -1,0 +1,29 @@
+{% extends "dash/logbook.html" %}
+
+{% load avatar_tags %}
+
+{% block dashboard %}
+    <form action="/dash/dejar_de_seguir_usuarios/" method="post">
+        {% csrf_token %}
+        {% for user in active_followings %}
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="thumbnail">
+                        <img src="{% avatar_url user 50 %}" alt="" />
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name="eliminados" value="{{ user.id }}">
+                        </span>
+                        <label for="eliminados" class="form-control form-control-static">{{ user.first_name }} {{ user.last_name }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <input type="submit" class="btn btn-danger" value="No seguir" class="submit" />
+    </form>
+{% endblock dashboard %}

@@ -1,0 +1,48 @@
+{% extends "dash/dashboard.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet-dashboard%}
+
+{% block menuOptions %}
+{% if user.persona %}
+<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li><a href="{% url 'logbook' %}">Logbook</a></li>
+{% else %}
+<li><a href="{% url 'dash_empresa' %}">Dashboard</a></li>
+<li><a href="{% url 'dash_planes' %}">Planes</a></li>
+{% endif %}
+{% endblock menuOptions %}
+
+{% block dashboard %}
+<div class="row">
+    
+    <div class="page-header"><h1>Consultas</h1></div>
+    <div class="message-body">
+        <div class="message-content-mati">
+            {% if not no_posee_items %}
+            <form action="/social/consulta_a_empresa/{{ company_id }}" method="post">{% csrf_token %}
+                <div class="message-content-fields">
+                    <div class="form-group">
+                        <label for="id_user_to_id" class="control-label">Item:</label>
+                        {{ form_query_message.item }}
+                        <span class="help-block">{{ form_query_message.item.errors }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_user_to_id" class="control-label">Consulta:</label>
+                        {{ form_query_message.consulta }}
+                        <span class="help-block">{{ form_query_message.consulta.errors }}</span>
+                    </div>
+                    <div style="float:right; margin: 10px -25px;">
+                        <input type="submit" value="Crear" onclick=hayMarcador() class="btn btn-success" style="margin-right: 30px;"/>
+                        <input type="button" value="Cancelar" class="btn btn-danger" style="margin-right: 25px; margin-left: -20px;" onclick="location.href='../../dash/dashboard';">
+                    </div>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock dashboard %}

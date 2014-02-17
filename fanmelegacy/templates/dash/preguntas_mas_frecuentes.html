@@ -1,0 +1,137 @@
+{% extends "dash/base_ayuda.html" %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style-icon-images.css" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block register_form %}
+    <p>
+        <input id="password-clear" type="text" value="Password" autocomplete="off" class="accounts-register-form-field"/>
+    </p>
+{% endblock register_form %}
+
+{% block body-help %}
+    <p class="help-titles">Preguntas</p>
+    <ol>
+        <a href="#1"><li class="help-question">¿Qué es FanME?</li><a>
+        <a href="#2"><li class="help-question">¿Cómo me registro?</li><a>
+        <a href="#3"><li class="help-question">¿Qué datos necesito para crear una Cuenta?</li><a>
+        <a href="#4"><li class="help-question">¿Cómo hago si soy un Particular o una Empresa?</li><a>
+        <a href="#5"><li class="help-question">¿Cómo hago para que me recomiende?</li><a>
+        <a href="#6"><li class="help-question">¿Qué tan exactas son las recomendaciones? ¿Como recomienda?</li><a>
+        <a href="#7"><li class="help-question">¿Qué significan las estrellas en FanME?</li><a>
+        <a href="#8"><li class="help-question">¿Cómo cada usuario puede aportar conocimiento a FanME?</li><a>
+        <a href="#9"><li class="help-question">¿Cómo modificar los datos de tu Perfil?</li><a>
+        <a href="#10"><li class="help-question">¿Cómo desactivar mi Cuenta?</li><a>
+        <a href="#11"><li class="help-question">¿Cómo puedo seguir a una Empresa?</li><a>
+        <a href="#12"><li class="help-question">¿Qué es el Dashboard?</li><a>		
+        <a href="#13"><li class="help-question">¿Qué son las recomendaciones?</li><a>
+        <a href="#14"><li class="help-question">¿Qué son los Usuarios que Sigo?</li><a>
+        <a href="#15"><li class="help-question">¿Qué son los Usuarios que me Siguen?</li><a>
+        <a href="#16"><li class="help-question">¿Cómo crear un Evento?</li><a>
+        <a href="#17"><li class="help-question">¿Cómo cancelar un Evento?</li><a>
+        <a href="#18"><li class="help-question">¿Cómo agregar invitados a un Evento?</li><a>
+        <a href="#19"><li class="help-question">¿Qué significa hacerme Fan?</li><a>
+        <a href="#20"><li class="help-question">¿Cómo puedo buscar un Producto o Servicio?</li><a>
+        <a href="#21"><li class="help-question">¿Qué es el Logbook?</li><a>
+        <a href="#22"><li class="help-question">¿Qué datos me muestra el Logbook?</li><a>
+        <a href="#23"><li class="help-question">¿Cómo agrego una foto a mi Perfil?</li><a>
+        <a href="#24"><li class="help-question">¿Cómo cambiar la foto de perfil?</li><a>
+        <a href="#25"><li class="help-question">¿Cómo se ordenan los ítems?</li><a>
+        <a href="#26"><li class="help-question">¿Qué son las Notificaciones?</li><a>
+        <a href="#27"><li class="help-question">¿Cómo crear una Notificación?</li><a>
+        <a href="#28"><li class="help-question">¿Cómo crear un Producto?</li><a>
+        <a href="#29"><li class="help-question">¿Qué datos necesito para crear un Producto?</li><a>
+        <a href="#30"><li class="help-question">¿Cómo enviarles consultas a las Empresas?</li><a>
+        <a href="#31"><li class="help-question">¿Qué se pude comentar?</li><a>
+        <a href="#32"><li class="help-question">¿Cómo comentar?</li><a>  
+        <a href="#33"><li class="help-question">¿Cómo eliminar un comentario?</li><a>
+        <a href="#34"><li class="help-question">¿Cómo denunciar un comentario?</li><a>
+        <a href="#35"><li class="help-question">¿Cómo aumentar mi credibilidad?</li><a>
+        <a href="#36"><li class="help-question">¿Cómo se agrupan los mensajes?</li><a>
+        <a href="#37"><li class="help-question">¿Cómo veo los mensajes que le envié a un Usuario?</li><a>
+    </ol>
+
+    <a name="1"><p class="help-titles">Respuestas</p><a>
+    <ol>
+        <a name="2"><li>¿Qué es FanME?</li></a>
+            <p class="help-answers">FanME es un Sistema que recomienda distintos productos y servicios (item) que te pueden gustar. Esto lo realiza en base a un algoritmo de Inteligencia Artificial.</p>
+        <a name="3"><li>¿Cómo me registro?</li><a>
+            <p class="help-answers">Debes ingresar a la página principal de FanME e ingresar todos los datos solicitados para crear una cuenta.</p>
+        <a name="4"><li>¿Qué datos necesito para crear una Cuenta?</li><a>
+            <p class="help-answers">Debes ingresar: Nombre, Apellido, Fecha de Nacimiento, Sexo, Email y una contraseña para acceder al sistema.</p>
+        <a name="5"><li>¿Cómo hago si soy un Particular o una Empresa?</li><a>
+            <p class="help-answers">Si eres un usuario particular debes crearte la cuenta desde la página principal. En caso de ser una Empresa debes seleccionar '¿Eres una Empresa?' y luego completar todos los datos requeridos.</p>
+        <a name="6"><li>¿Cómo hago para que me recomiende?</li><a>
+            <p class="help-answers">Para que FanME recomiende debes seleccionar primero los tópicos que te gustan, y luego al hacerte Fan de diferentes items el Sistema aplica un algoritmo de recomendación.</p>
+        <a name="7"><li>¿Qué tan exactas son las recomendaciones? ¿Como recomienda?</li><a>
+            <p class="help-answers">En un principio FanME brinda una recomendación  general en base a los iconos seleccionados luego de registrarse. Luego, el sistema va a ir haciendo recomendaciones más específicas de acuerdo a tus gustos, a medida que vayas interaccionando en el sistema, siguiendo usuarios, empresas, haciéndote fan de determinados ítems.</p>
+        <a name="8"><li>¿Qué significan las estrellas en FanME?</li><a>
+			<p class="help-answers">Las estrellas ubicadas en el sidebar debajo de tu foto de perfil, indicando tu nivel de credibilidad. Este nivel puede ir aumentando o disminuyendo de acuerdo a tu participación en el sistema.</p>
+        <a name="9"><li>¿Cómo cada usuario puede aportar conocimiento a FanME?</li><a>
+			<p class="help-answers">Cada usuario aporta conocimiento a FanMe a partir del uso continuo del sistema. EL sistema se va  air retroalimentando del uso que hagas de FanME.</p>
+        <a name="10"><li>¿Cómo modificar los datos de tu Perfil?</li><a>
+			<p class="help-answers">Para modificar los datos sólo hay que ir </p>
+        <a name="11"><li>¿Cómo desactivar mi Cuenta?</li><a>
+			<p class="help-answers">Sólo hay que ir a la sección “” y presionar el botón “Desactivar cuenta”.</p>
+        <a name="12"><li>¿Cómo puedo seguir a una Empresa?</li><a>
+			<p class="help-answers">En el logbook de la empresa, presionar el botón “Seguir”.</p>
+        <a name="13"><li>¿Qué es el Dashboard?</li><a>
+			<p class="help-answers">Es la pantalla de recomendación de FanME, donde se van a ir mostrando las recomendaciones de acuerdo a tus gustos.</p>
+        <a name="14"><li>¿Qué son las recomendaciones?</li><a>
+			<p class="help-answers">Una recomendación es una sugerencia que FanME te brinda, de acuerdo a tus gustos. Esas sugerencias son sobre ítems específicos.</p>
+        <a name="15"><li>¿Qué son los Usuarios que Sigo?</li><a>
+			<p class="help-answers">Son los usuarios a los que decidí seguir ya sea porque tienen gustos similares a los míos o por cualquier razón.</p>
+        <a name="16"><li>¿Qué son los Usuarios que me Siguen?</li><a>
+			<p class="help-answers">Son los usuarios que me siguen (y no necesariamente yo los estoy siguiendo) ya sea porque tienen gustos similares a los míos o por cualquier razón.</p>
+        <a name="17"><li>¿Cómo crear un Evento?</li><a>
+			<p class="help-answers">En el sidebar, realizar clic en el link “Eventos” y luego presionar el botón “Crear evento”.</p>
+        <a name="18"><li>¿Cómo cancelar un Evento?</li><a>
+			<p class="help-answers">En el sidebar, clic en el link “Eventos”, seleccionar el evento que se quiere cancelar y luego presionar el botón “Cancelar evento”. De esta forma, a los usuarios invitados al evento les va a llegar un alerta, indicando que el evento se canceló.</p>
+        <a name="19"><li>¿Cómo agregar invitados a un Evento?</li><a>
+			<p class="help-answers">Una vez estando en la pantalla de creación del Evento, seleccionar todos los usuarios a invitar al evento o bien seleccionar uno por uno. Para esto se puede hacer clic en la opción “Seleccionar todos” o bien tildar cada usuario a invitar.</p>
+        <a name="20"><li>¿Qué significa hacerme Fan?</li><a>
+			<p class="help-answers">Hacerme Fan de un ítem significa que ese ítem me gusta, me interesa y por lo tanto el sistema a partir de eso realizará recomendaciones más específicas y además te va a sugerir empresas o usuarios a seguir y que tengan un gusto similar.</p>
+        <a name="21"><li>¿Cómo puedo buscar un Producto o Servicio?</li><a>
+			<p class="help-answers">Para buscar un producto y/o servicio sólo se debe escribir el nombre o las letras de lo que se quiere buscar en el buscador. El buscador está  ubicado en la parte superior al lado del logo de FanME.</p>
+        <a name="22"><li>¿Qué es el Logbook?</li><a>
+			<p class="help-answers">Es la pantalla donde el Usuario observa su interacción con el sistema y la de los Usuarios que sigue.</p>
+        <a name="23"><li>¿Qué datos me muestra el Logbook?</li><a>
+			<p class="help-answers">El Logbook muestra información como empresas y usuarios a los que seguís, ítems de los que sos fans y además información referida a tu perfil. </p>
+        <a name="24"><li>¿Cómo agregar una foto a mi Perfil?</li><a>
+			<p class="help-answers">Desde el dashboard o desde el logbook, clic en mi nombre en la parte superior derecha. Se va a mostrar la pantalla con los datos de tu cuenta, clic en el botón “Examinar”, cargar tu foto usando el explorador de Windows y luego presionar el botón “Guardar” para confirmar los cambios realizados.</p>
+        <a name="25"><li>¿Cómo cambiar la foto de perfil?</li><a>
+			<p class="help-answers">Desde el dashboard o desde el logbook, clic en mi nombre en la parte superior derecha. Se va a mostrar la pantalla con los datos de tu cuenta, clic en el botón “Examinar”, cargar tu nueva foto usando el explorador de Windows y luego presionar el botón “Guardar” para confirmar los cambios realizados.</p>
+        <a name="26"><li>¿Cómo se ordenan los ítems?</li><a>
+			<p class="help-answers">Los ítems se ordenan de acuerdo a la antigüedad, las recomendaciones más recientes van a ser mostradas primero.</p>
+        <a name="27"><li>¿Qué son las Notificaciones?</li><a>
+			<p class="help-answers">Son mensajes que las empresas van a poder enviar a los usuarios interesados en sus productos y/o servicios.</p>
+        <a name="28"><li>¿Cómo crear una Notificación?</li><a>
+			<p class="help-answers">Una notificación sólo puede ser creada por un usuario de tipo Empresa.  Para esto, la empresa debe hacer clic en el link “Notificaciones” ubicado en el sidebar y luego presionar el botón “Crear notificación”.</p>
+        <a name="29"><li>¿Cómo crear un Producto?</li><a>
+			<p class="help-answers">Para crear un ítem, debes hacer clic en el botón “Crear ítem” ubicado en el sidebar, completar todos los campos necesarios para su creación y luego presionar el botón “Guardar”.</p>
+        <a name="30"><li>¿Qué datos necesito para crear un Producto?</li><a>
+			<p class="help-answers">Para crear un ítem es necesario ingresar como mínimo un nombre, descripción y tópico asociado.</p>
+        <a name="31"><li>¿Cómo enviarles consultas a las Empresas?</li><a>
+			p class="help-answers">Para enviar una consulta a una empresa, primero es necesario seguirla y ser fan de un ítem en el que ella tenga un enlace externo. Luego</p>
+        <a name="32"><li>¿Qué se pude comentar?</li><a>
+			<p class="help-answers">Todos los ítems existentes en el sistema son posibles de comentar.</p>
+        <a name="33"><li>¿Cómo comentar?</li><a>
+			<p class="help-answers">Para comentar sólo hay que ingresar a un determinado ítem, escribir el comentario en la caja de texto y luego presionar el icono del lápiz.</p>
+        <a name="34"><li>¿Cómo eliminar un comentario?</li><a>
+			<p class="help-answers">Para eliminar un comentario, se debe haber escrito un comentario previamente. Posicionarse en el comentario que quiero eliminar y hacer clic en el icono correspondiente a una cruz.
+		No es posible eliminar comentarios de otros usuarios, sólo puedo eliminar los comentarios creados por mi.</p>
+        <a name="35"><li>¿Cómo denunciar un comentario?</li><a>
+			<p class="help-answers">Para denunciar un comentario sólo es necesario posicionarse en el comentario y hacer clic en el icono correspondiente al pulgar hacia abajo.</p>
+		<a name="36"><li>¿Cómo aumentar la credibilidad?</li><a>
+			<p class="help-answers">Para esto es necesario participar activamente en el sistema a través de la creación de ítems, sugerencia de subtópicos, realizar comentarios en ítems, poner me gusta en los comentarios, denunciar comentarios si corresponde, entre otros.</p>
+		<a name="37"><li>¿Cómo se agrupan los mensajes?</li><a>
+			<p class="help-answers">Los mensajes en tu buzón están agrupados por usuario.</p>
+		<a name="38"><li>¿Cómo veo los mensajes que le envié a un Usuario?</li><a>
+			<p class="help-answers">Hacer clic en el sidebar en el link “Mensajes”, en ese momento se va a mostrar una pantalla donde voy a tener los mensajes enviados y recibidos agrupados por usuario. </p>
+    </ol>
+{% endblock body-help %}
+
+{% block sidebar %}
+{% endblock sidebar %}
