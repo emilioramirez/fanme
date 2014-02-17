@@ -1,0 +1,40 @@
+{% extends "items/base_items.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        <div class="page-header">
+            <h1>Nuevo Item</h1>
+        </div>
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Registrar nuevo item</div>
+            <div class="panel-body">
+                <form action="/items/item/register/" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form_register %}
+                        <div class="form-group {% if field.errors %}has-error{% endif %}">
+                            {% if not field.is_hidden %}
+                            <label for="{{ field.id_for_field }}" class="control-label">{{ field.label_tag }}:</label>
+                            {% endif %}
+                            {{ field }}
+                            <span class="help-block">{{ field.errors }}</span>
+                        </div>
+                    {% endfor %}
+                    <div style="float:right;">
+                        <button type="submit" value="crear" name="crear" class="btn btn-success">Crear Item</button>
+                        <input type="button" value="Cancelar" class="btn btn-danger" onclick="location.href='../../../dash/dashboard';">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

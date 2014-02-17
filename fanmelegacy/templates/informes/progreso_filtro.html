@@ -1,0 +1,100 @@
+{% extends "admin/base.html" %}
+{% load is_false_filter %}
+
+{% block title %}'FanMe' | {{ site_title }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">FanMe</a></h1>
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}
+
+{% block extrahead %}
+<script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
+<script src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script>
+$(function () {
+        $('#sexo').highcharts({
+            chart: { type: 'column' },
+            title: {
+                text: 'Cantidad de usuarios creados por sexo',
+            },
+            xAxis: {
+                categories: ['Sexo']
+            },
+            yAxis: {
+                title: {
+                    text: 'Cant. usuarios'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                    name: 'Femenino',
+                    data: [{{sexo_femenino}}],
+                    },
+                    {
+                    name: 'Masculino',
+                    data: [{{sexo_masculino}}],
+                    },
+            ]
+        });
+    });
+
+    $(function () {
+        $('#edad').highcharts({
+            chart: { type: 'column' },
+            title: {
+                text: 'Cantidad de usuarios creados por rango de edad',
+            },
+            xAxis: {
+                categories: ['Rango de edad']
+            },
+            yAxis: {
+                title: {
+                    text: 'Cant. usuarios'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [
+                {% for rango, cant in dict_cant.items %}
+                    {
+                        name: '{{rango}}',
+                        data: [{{cant}},
+                        ]
+                    },
+                {% endfor %}
+            ]
+        });
+    });
+</script>
+{% endblock extrahead %}
+
+{% block content %}
+<div>
+</div>
+<div id="sexo" style="width:80%; height:300px; margin-left:140px;"></div>
+<div style="height: 100px;"></div>
+<div id="edad" style="width:80%; height:300px; margin-left:140px;"></div>
+{% endblock content %}
+

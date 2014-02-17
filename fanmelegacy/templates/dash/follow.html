@@ -1,0 +1,20 @@
+{% extends "dash/base_dash.html" %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+
+{% block dashboard %}
+    <div class="logbook_follow">
+        <p>Para poder visualizar la actividad de este Usuario, debes seguirlo.</p>
+    </div>
+{% endblock dashboard %}
+
+{% block sidebar %}
+    {% with user_to_follow as user %}
+        {% include "dash/sidebar_follow.html" %}
+    {% endwith %}
+{% endblock sidebar %}

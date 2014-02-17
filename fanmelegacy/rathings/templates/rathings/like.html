@@ -1,0 +1,14 @@
+{% comment %}
+Context variables:
+- url: the url for like, when like exist this is a "#"
+- content_type: Contenttype instance of the model to like
+{% endcomment %}
+{% if url == '#' %}
+{{ url }}
+{# DELETE THIS SECTION #}
+{% elif url == '#1' %}
+#
+{# DELETE THIS SECTION #}
+{% else %}
+{{ url }}?ctype={{ content_type.pk }}
+{% endif %}

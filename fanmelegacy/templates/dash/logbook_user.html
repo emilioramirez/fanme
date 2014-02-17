@@ -1,0 +1,16 @@
+{% extends "dash/logbook.html" %}
+
+{% load avatar_tags %}
+
+{% load dash_filters %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+
+{% block sidebar %}
+    {% with user_logbook as user %}
+        {% include "dash/sidebar_logbook_user.html" %}
+    {% endwith %}
+{% endblock sidebar %}
