@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block extrahead %}
+<link href="{{ STATIC_URL }}dist/css/bootstrap.css" rel="stylesheet">
 <script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
 <script src="{{ STATIC_URL }}js/highcharts.js"></script>
 <script src="{{ STATIC_URL }}js/drilldown.js"></script>
@@ -77,5 +78,10 @@ alert("I am an alert box!");
 {% endblock extrahead %}
 
 {% block content %}
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Volver al Menú Principal</a></li>
+    </ol>
+</div>
 <div id="usuarios_activos" style="width:100%; height:400px;"></div>
 {% endblock content %}

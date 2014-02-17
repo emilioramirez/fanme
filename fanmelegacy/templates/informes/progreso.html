@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block extrahead %}
+<link href="{{ STATIC_URL }}dist/css/bootstrap.css" rel="stylesheet">
 <script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
 <script src="{{ STATIC_URL }}js/highcharts.js"></script>
 <script>
@@ -91,6 +92,11 @@ function myFunction()
 
 {% block content %}
 {% if mostrar_form %}
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Volver al Menú Principal</a></li>
+    </ol>
+</div>
 <div>
     Desde:
     <select id="fecha_desde">
@@ -100,15 +106,23 @@ function myFunction()
       <option selected>2011</option>>
     </select>
     <br/>
-    Hasta:
-    <select id="fecha_hasta" style="margin-left: 3px;">
-      <option>2014</option>
-      <option>2013</option>
-      <option>2012</option>
-      <option>2011</option>
-    </select>
+    <div style="margin-top:15px;">
+        Hasta:
+        <select id="fecha_hasta" style="margin-left: 3px;">
+          <option>2014</option>
+          <option>2013</option>
+          <option>2012</option>
+          <option>2011</option>
+        </select>
+    </div>
     <br/>
-    <button style="margin-left:45px;" onclick="myFunction()">Aceptar</button>
+    <button style="margin-left:45px; margin-top:15px;" onclick="myFunction()">Aceptar</button>
+</div>
+{% else %}
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Elegir periodo nuevamente.</a></li>
+    </ol>
 </div>
 {% endif %}
 <div id="usuarios_creados" style="width:100%; height:400px;"></div>

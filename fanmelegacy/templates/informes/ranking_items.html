@@ -102,9 +102,20 @@
 
 {% block content %}
 {% if mostrar_form %}
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Volver al Menú Principal</a></li>
+    </ol>
+</div>
 <div>
     Cant. Items: <input type="text" name="cant" />
     <button onclick="myFunction()">Aceptar</button>
+</div>
+{% else %}
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Volver a elegir la cantidad de items a mostrar.</a></li>
+    </ol>
 </div>
 {% endif %}
 <div id="items" style="width:100%; height:400px;"></div>
