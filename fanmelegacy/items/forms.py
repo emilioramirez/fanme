@@ -11,21 +11,21 @@ class ItemRegisterForm(forms.Form):
         initial='',
         required=True,
         error_messages={'required': 'Es necesario un Nombre'},
-        widget=forms.TextInput(attrs={'class': 'item-registration-name-field'}))
+        widget=forms.TextInput(attrs={'class': 'form-control'}))
     descripcion = forms.CharField(
         label='Descripción (máx. 300 caracteres)',
         initial='',
         required=True,
         error_messages={'required': 'Es necesario una descripción'},
         widget=forms.Textarea
-            (attrs={'class': 'item-registration-description-field'}))
+            (attrs={'class': 'form-control'}))
     topico = forms.ModelChoiceField(
         label='Tópico',
         empty_label="Tópico",
         queryset=Topico.objects.all(),
         error_messages={'required': 'Es necesario un Tópico',
             'invalid_choice': 'Opcion no valida'},
-        widget=forms.Select(attrs={'class': 'item-registration-combo-field'}))
+        widget=forms.Select(attrs={'class': 'form-control'}))
 #    marca = forms.ModelChoiceField(
 #        label='Marca',
 #        empty_label="Marca",
@@ -36,6 +36,7 @@ class ItemRegisterForm(forms.Form):
     imagen = forms.ImageField(
         required=True,
         label='Imagen del Item',
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
         )
 
     def clean_nombre(self):
