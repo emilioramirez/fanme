@@ -31,7 +31,6 @@ class CustomMenu(Menu):
             ),
             items.MenuItem('Informes',
                 children=[
-                    items.MenuItem('Usuarios', '/admin/informes/mypage/'),
                     items.MenuItem('Cantidad de usuarios del sistema',
                          '/admin/informes/progreso/'),
                     items.MenuItem('Fans por topicos',
