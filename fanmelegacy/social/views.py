@@ -578,7 +578,6 @@ def edit_notificacion(request, notificacion_id):
         for invitado in a_split:
             usuario = User.objects.get(id=invitado)
             usuarios_invitados.append(usuario)
-        users_invitados = usuarios_invitados
         if form.is_valid():
             notificacion = form.save(commit=False)
             try:
@@ -588,9 +587,8 @@ def edit_notificacion(request, notificacion_id):
             notificacion.estado = 'actualizado'
             notificacion.save()
             form.save_m2m()
-            invitados = list(set(usuarios_invitados).intersection(notificacion.usuarios_to.all()))
             desinvitados = list(set(notificacion.usuarios_to.all()).difference(usuarios_invitados))
-            for invitado in invitados:
+            for invitado in usuarios_invitados:
                 notificacion.usuarios_to.add(invitado)
             for desinvitado in desinvitados:
                 notificacion.usuarios_to.remove(desinvitado)
