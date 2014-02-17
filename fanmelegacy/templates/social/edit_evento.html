@@ -60,6 +60,8 @@
       $( document ).ready(function() {
         longitud = {{ evento.longitud }};
         latitud = {{ evento.latitud }};
+        document.getElementById('longitud').value = longitud;
+        document.getElementById('latitud').value = latitud;
         myCenter = new google.maps.LatLng(latitud,longitud);
         });
 

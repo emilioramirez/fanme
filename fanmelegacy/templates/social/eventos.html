@@ -65,9 +65,6 @@
                         {% endif%}
                         </div>
                         <div class="i-body">
-                            <div class="thumbnail" style="width: 140px;">
-                                <img src="{{ evento.imagen.url }}" alt="Imagen de Evento">
-                            </div>
                             {{ evento.descripcion }} creado por <a href="/dash/logbook/{{ evento.creador.id }}">{{ evento.creador.first_name }} {{ evento.creador.last_name }}</a>.
                         </div>
                     </div>
