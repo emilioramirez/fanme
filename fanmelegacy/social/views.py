@@ -38,11 +38,11 @@ def eventos(request):
     try:
         eventos_invitado = request.user.eventos_invitado.all().order_by(
             '-fecha_inicio').filter(creador__is_active=True).exclude(estado__exact="finalizado")
-        eventos_noleidos = request.user.eventos_invitado.filter(
-            estado="noleido").filter(creador__is_active=True)
-        for evento in eventos_noleidos:
-            evento.estado = "leido"
-            evento.save()
+        evento_estado_invitado_noleidos = request.user.invitacion_eventos.filter(
+            estado="noleido").filter(evento__creador__is_active=True)
+        for evento_estado_intivado in evento_estado_invitado_noleidos:
+            evento_estado_intivado.estado = "leido"
+            evento_estado_intivado.save()
     except Evento.DoesNotExist:
         eventos_invitado = []
     if eventos_creados or eventos_invitado:
