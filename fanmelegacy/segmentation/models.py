@@ -20,7 +20,16 @@ class Topico(models.Model):
 
         return self.nombre
 
-    def get_all_children(self, include_self=True):
+    def get_all_children_with_parent(self, include_self=True):
+        r = []
+        if include_self:
+            r.append(self)
+        for c in Topico.objects.filter(padre=self):
+            #r.append(c.get_all_children(include_self=False))
+            r.append(c)
+        return r
+
+    def get_all_children_without_parent(self, include_self=True):
         r = []
         for c in Topico.objects.filter(padre=self):
             #r.append(c.get_all_children(include_self=False))
