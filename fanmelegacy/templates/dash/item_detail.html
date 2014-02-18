@@ -7,7 +7,7 @@
                 <div class="item-topico item-topico-{{ item.topico|unicode|split:" "|first|lower }}" title="{{ item.topico|unicode|split:" "|first }}"></div>
             </div>
             <div class="col-md-8"><h4><a href="{% url 'item-detail' item.pk %}">{{ item }}</a></h4></div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="margin-top: 10px;">
                 <img src="{{ STATIC_URL }}images/dashboard-content-item-header-score.png" alt="Score" title="Cantidad de fans">
                 <span>{{ item.cantidad_fans_from_qs }}</span>
             </div>
