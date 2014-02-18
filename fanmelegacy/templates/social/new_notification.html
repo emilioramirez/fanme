@@ -154,15 +154,7 @@
           <div class="modal-body">
               {% for user in users %}
                 <div id="check_div" style="width: 175px; display: inline-table; margin-bottom: 25px;">
-                    {% if user.persona.avatar %}
-                        <img src="{% avatar_url user 50 %}" style="border: 1px solid #9F9F9F; height: 50px; width: 50px;" alt="">
-                    {% else %}
-                        {% if user.persona.sexo == "M" %}
-                            <img src="{{ STATIC_URL }}images/avatar-male.png" alt="Logo" />
-                        {% else %}
-                            <img src="{{ STATIC_URL }}images/avatar-famale.png" alt="Logo" />
-                        {% endif%}
-                    {% endif%}
+                    <img src="{% avatar_url user 50 %}" style="border: 1px solid #9F9F9F; height: 50px; width: 50px;" alt="">
                     <span style="margin-left: 5px;">
                         <input type="checkbox" name="" value="{{ user.id }}" onclick="elegirUsuario(this, {{ user.id }});">
                         {{ user.first_name }} {{ user.last_name }}
