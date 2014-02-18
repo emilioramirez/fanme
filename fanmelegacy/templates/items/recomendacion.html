@@ -40,6 +40,15 @@
                 </div>
             </div>
             {% empty %}
+            {% if user.followers %}
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-10">
+                        <p class="well">Ya has recomendado este ítem a todos tus seguidores.</p>
+                    </div>
+                </div>
+            </div>
+            {% else %}
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-10">
@@ -47,6 +56,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
             <div class="form-group">
                 {% if usuarios %}
