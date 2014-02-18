@@ -499,12 +499,16 @@ def ver_consultas_item(request, item_id):
 
 @login_required(login_url='/accounts/user/')
 def ver_consultas_item_usuario(request, item_id, user_id):
-    searchbox = SearchBox()
     user = User.objects.get(id=user_id)
     item_consultado = Item.objects.get(id=item_id)
-    consulta_item = Consulta.objects.filter(
-        Q(item=item_consultado), Q(user_from=user) | Q(user_to=user))
-    for consulta in consulta_item.all():
+    consultas_user_request_to = user.consultas_enviadas.filter(item=item_consultado).filter(
+        Q(user_from=user), Q(user_to=request.user))
+    consultas_user_request_from = user.consultas_recibidas.filter(item=item_consultado).filter(
+        Q(user_from=request.user), Q(user_to=user))
+    from itertools import chain
+    consultas = sorted(chain(consultas_user_request_to, consultas_user_request_from),
+        key=lambda instance: instance.fecha)
+    for consulta in consultas:
         if consulta.user_from == user:
             consulta.estado = "leido"
             consulta.save()
@@ -513,9 +517,8 @@ def ver_consultas_item_usuario(request, item_id, user_id):
     consultas_noleidas = request.user.consultas_recibidas.filter(
         estado="noleido").count()
     return render_to_response('social/ver_consulta_item_usuario.html', {
-        'form_search': searchbox,
         'usuario': user, 'consultas_noleidas': consultas_noleidas,
-        'consulta_item': consulta_item, 'consulta_form': consulta_form,
+        'consulta_item': consultas, 'consulta_form': consulta_form,
         'item_id': item_id, 'user_id': user_id},
         context_instance=RequestContext(request))
 
