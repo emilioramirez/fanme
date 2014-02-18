@@ -65,7 +65,7 @@
             <div class="row">
                 <div class="col-md-3">
                    <ul class="list-group">
-                      <li class="list-group-item"><span class="badge">{{ item.persona_set.count }}</span>Fan{% if user.persona.items.count > 1 %}s{% endif %}</li>
+                      <li class="list-group-item"><span class="badge">{{ item.cantidad_fans_from_qs }}</span>Fan{% if item.cantidad_fans_from_qs > 1 %}s{% endif %}</li>
                       <li class="list-group-item"><span class="badge">{{ item.recomendacion_set.count }}</span>Recomendaciones</li>
                     </ul>
 
