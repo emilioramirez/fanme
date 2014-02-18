@@ -13,6 +13,7 @@
 {% block extrahead %}
 <script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
 <script src="{{ STATIC_URL }}js/highcharts.js"></script>
+<link href="{{ STATIC_URL }}dist/css/bootstrap.css" rel="stylesheet">
 <script>
 $(function () {
         $('#sexo').highcharts({
@@ -91,6 +92,11 @@ $(function () {
 {% endblock extrahead %}
 
 {% block content %}
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Volver a informe</a></li>
+    </ol>
+</div>
 <div>
 </div>
 <div id="sexo" style="width:80%; height:300px; margin-left:140px;"></div>
