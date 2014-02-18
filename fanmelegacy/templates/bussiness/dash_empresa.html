@@ -18,6 +18,11 @@
 
 {% block dashboard %}
     <div class="result-result">
+        {% if not followers %}
+            <div class="well">
+                <h3>En esta sección podrás ver todos los usuarios que siguen a tu empresa.</h3>
+            </div>
+        {% endif %}
         <div class="result-content">
             <div class="result-body">
                 {% for user_profile in followers %}
