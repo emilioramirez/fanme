@@ -1,6 +1,8 @@
 from math import sqrt
 from items.models import Item
 from accounts.models import Persona
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.comments.models import Comment
 
 # A dictionary of movie critics and their ratings of a small
 # set of movies
@@ -25,7 +27,11 @@ def getMatrix():
     for persona in personas:
         dic = {}
         for item in persona.items.all():
-            com = Item.objects.filter(users_are_comment=persona.user).count()
+            # com = Item.objects.filter(users_are_comment=persona.user).count()
+
+            item_ctype = ContentType.objects.get(name="item")
+            com = Comment.objects.filter(user=persona.user, object_pk=item.pk, content_type=item_ctype).count()
+
             recom_cant = item.recomendacion_set.filter(user_origen=persona.user).count()
             dic[item.nombre] = float(1 + recom_cant + com)
         diccionario[persona.user.username] = dic

@@ -435,7 +435,7 @@ body { padding-top: 70px; }
         }
             .sidebar-content{}
                 .sidebar-user{
-                    width: 100%;
+                    width: 230px;
                     text-align: center;
                 }
                     .logbook-user-image{
@@ -469,8 +469,8 @@ body { padding-top: 70px; }
                         }
                 .sidebar-stadistic{
                     float: left;
-                    /*margin: 0px 15px 0px;*/
-                    width: 100%;
+                    margin: 0px 15px 0px;
+                    width: 200px;
                 }
                 .sidebar-stadistic a{ text-decoration: none;}
                     .sidebar-stadistic-item{
@@ -511,7 +511,7 @@ body { padding-top: 70px; }
                         font-size: 14px;
                         font-weight: bold;
                         height: 36px;
-                        margin: 10px auto 25px;
+                        margin: 10px 0 15px 25px;
                         padding: 9px 0 0 50px;
                         width: 184px;
                     }
