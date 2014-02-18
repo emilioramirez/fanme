@@ -178,8 +178,8 @@ def get_usuarios(anio, mes):
 
 
 def informe_item_filtrado(request):
-    item_id = int(request.GET.get('item_id'))
-    item_seleccionado = Item.objects.get(pk=item_id)
+    nombre_item = request.GET.get('nombre_item')
+    item_seleccionado = Item.objects.get(nombre=nombre_item)
     usuarios = item_seleccionado.fans_por_item.all()
     sexo_femenino, sexo_masculino = get_sexo_count(usuarios)
     dict_cant = get_usuarios_por_rango_edad(usuarios)

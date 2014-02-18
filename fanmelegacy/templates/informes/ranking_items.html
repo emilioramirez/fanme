@@ -36,7 +36,7 @@
             xAxis: {
                 categories: [
                 {% for item, cant_fans in fans_por_item.items %}
-                    '{{item.id}}',
+                    '{{item.nombre}}',
                 {% endfor %}
                 ]
             },
@@ -58,7 +58,7 @@
                     point: {
                         events: {
                             click: function() {
-                                location.href='../detalle?item_id=' + this.category;
+                                location.href='../detalle?nombre_item=' + this.category;
                             }
                         }
                     }
