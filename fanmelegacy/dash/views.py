@@ -310,8 +310,11 @@ def recomendaciones_recibidas(request):
     try:
         request.user.persona
         items_ids = request.user.recomendaciones_recibidas.all().values_list(
-            'item', flat=True).distinct().filter(user_origen__is_active=True)
-        items = Item.objects.filter(id__in=items_ids)
+            'item', flat=True).distinct().filter(user_origen__is_active=True).order_by("-fecha")
+        items_a_devolver = []
+        for item_id in items_ids:
+            item = Item.objects.get(id=item_id)
+            items_a_devolver.append(item)
         rec = request.user.recomendaciones_recibidas.filter(estado="noleido")
         for r in rec:
             r.estado = "leido"
@@ -319,7 +322,7 @@ def recomendaciones_recibidas(request):
     except Persona.DoesNotExist:
         return HttpResponseRedirect(reverse("dash_empresa"))
     return render_to_response('dash/items_stats.html',
-        {'items': items, 'breadcrumb': ["Social", "Recomendaciones", "Recibidas"]},
+        {'items': items_a_devolver, 'breadcrumb': ["Social", "Recomendaciones", "Recibidas"]},
         context_instance=RequestContext(request))
 
 
