@@ -22,8 +22,6 @@ class Topico(models.Model):
 
     def get_all_children(self, include_self=True):
         r = []
-        if include_self:
-            r.append(self)
         for c in Topico.objects.filter(padre=self):
             #r.append(c.get_all_children(include_self=False))
             r.append(c)

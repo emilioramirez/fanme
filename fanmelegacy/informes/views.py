@@ -24,20 +24,25 @@ def my_admin_view(request):
 def fans_por_topicos(request):
     topicos = Topico.objects.filter(padre=None)
     dict_topico = {}
-    category_dict = defaultdict()
+    #category_dict = defaultdict()
     for topico in topicos:
-        item_dict = {}
+        #item_dict = {}
         items_por_topico = Item.objects.filter(topico=topico)
+        subtopicos = topico.get_all_children()
         cant_fans = 0
         for item in items_por_topico:
             cant_fans = cant_fans + item.cantidad_fans
-            item_dict[item] = item.cantidad_fans
+            #item_dict[item] = item.cantidad_fans
+        for subtopico in subtopicos:
+            item_subtopico = Item.objects.filter(topico=subtopico)
+            for item in item_subtopico:
+                cant_fans = cant_fans + item.cantidad_fans
         dict_topico[topico] = cant_fans
-        category_dict[topico] = collections.Counter(item_dict).most_common(10)
+        #category_dict[topico] = collections.Counter(item_dict).most_common(10)
     length = len(dict_topico)
     return render_to_response('informes/fans_por_topico.html',
         {'fans_por_topicos': dict_topico, 'length': length,
-        'items_dict': category_dict},
+        'items_dict': dict_topico},
         context_instance=RequestContext(request))
 
 
