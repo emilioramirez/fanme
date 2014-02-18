@@ -1,0 +1,37 @@
+{% extends "avatar/base.html" %}
+{% load i18n avatar_tags %}
+{% load url from future %}
+
+{% block mystylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block content %}
+<div class="row">
+    <div class="page-header">
+        <h1>Agregar una imagen</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 col-md-offset-2">
+        <p><img src="{% avatar_url user 100 %}" alt=""></p>
+        <p><strong>Foto de perfil actual</strong></p>
+    </div>
+    <div class="col-md-4">
+        {% if not avatars %}
+            <p>Todavia no has subido ninguna foto de perfil. Por favor, agrega una ahora.</p>
+        {% endif %}
+        <form enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}">
+            {% csrf_token %}
+            {% for field in upload_avatar_form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">Seleccionar una imagen</label>
+                    {{ field }}
+                    <span class="help-block">{{ field.errors }}</span>
+                </div>
+            {% endfor %}
+            <p><input class="btn btn-success" type="submit" value="Guardar" /></p>
+        </form>
+    </div>
+</div>
+{% endblock %}

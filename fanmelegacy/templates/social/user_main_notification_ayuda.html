@@ -1,0 +1,41 @@
+{% extends "social/base_social.html" %}
+
+{% load dash_filters avatar_tags %}
+
+{% block mystylesheet %}
+    <link href="{{ STATIC_URL }}css/tour/prism.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/bootstrap-tour.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tour/index.css" rel="stylesheet">
+{% endblock mystylesheet %}
+
+{% block myjavascript %}
+    <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/user_main_notificacion.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+{% endblock myjavascript %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header">
+        <h1>Notificaciones</h1>
+    </div>
+    <div class="list-content-user-messages" id="contenido">
+        <ul>
+            {% for empresa, notificaciones in notificaciones_recibidas.iteritems %}
+                <li class="content-user-messages">
+                    <div class="user-message-image">
+                        <img src="{% avatar_url empresa.user 50 %}" alt="Logo" />
+                    </div>
+                    <div class="user-message-name">
+                        <a href="/social/notifications_by_company/{{ empresa.user.id }}">
+                            {{ empresa.razon_social }}
+                        </a>
+                    </div>
+                    <div class="user-message-last"></div>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock dashboard %}

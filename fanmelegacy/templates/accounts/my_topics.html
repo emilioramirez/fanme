@@ -1,0 +1,98 @@
+{% extends "accounts/base_accounts.html" %}
+
+{% block mystylesheet %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
+{% endblock %}
+
+{% block myjavascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/DragAndDrop/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/DragAndDrop/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/DragAndDrop/jquery.bgiframe-2.1.2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/DragAndDrop/jquery-ui-i18n.min.js"></script>
+    <script type="text/javascript" async="" src="{{ STATIC_URL }}js/DragAndDrop/ga.js"></script>
+    <link class="ui-theme" rel="Stylesheet" type="text/css" href="{{ STATIC_URL }}css/parseTheme.css.php" /><style class="demo-style">
+    #sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
+    #sortable1 li, #sortable2 li { list-style-type: none; margin: 15px; padding: 5px; font-size: 1.2em; width: 34px; }
+    <style>
+    #sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
+    #sortable1 li, #sortable2 li { list-style-type: none; margin: 15px; padding: 5px; font-size: 1.2em; width: 34px; }
+    </style>
+    <script>
+    $(function() {
+        $( "#sortable1, #sortable2" ).sortable({
+            connectWith: ".connectedSortable"
+        }).disableSelection();
+    });
+    </script>
+
+    <script type="text/javascript">
+    function topicos()
+    {
+        var Form = document.getElementById('Form');
+        // Get the UL
+        var ul = document.getElementById("sortable2");
+        // Get the LI in the UL
+        var liNodes = ul.getElementsByTagName("li");
+        // Iterate through the LI's
+        for( var i = 0; i < liNodes.length; i++ )
+        {
+            if(liNodes.item(i).id != "")
+            {
+                var list = document.createElement('input');
+                list.type = 'hidden';
+                list.value = liNodes.item(i).id;
+                list.name = 'listaSeleccionados';
+                Form.appendChild(list);
+            }
+        }
+    }
+
+    $( "#topicos-seleccionados" ).droppable({
+      drop: function( event, ui ) {
+        $(this)
+          $("#siguiente").removeAttr("disabled");
+      }
+    });
+    </script>
+{% endblock %}
+
+
+{% block content %}
+    <div style="color: gray; margin-top: 25px; margin-bottom:5px; text-align: center;"> <!--class="accounts-thanks"-->
+        <h1>Arrastre los tópicos que le gustan</h1>
+    </div>
+    <div class="row">
+        <div class="demo">
+            <div class="drag-and-drop-topics" id="topicos-opciones">
+                <ul id="sortable1" class="connectedSortable">
+                    <li class="imagen-electrodomesticos" id="Tecnologia" title="Tecnología"></li>
+                    <li class="imagen-juegos" id="Juegos" title="Juegos"></li>
+                    <li class="imagen-cine" id="Peliculas" title="Peliculas"></li>
+                    <li class="imagen-ropaMujer" id="Mujer" title="Ropa de Mujer"></li>
+                    <li class="imagen-hogar" id="Hogar" title="Hogar"></li>
+                    <li class="imagen-libros" id="Libros" title="Libros"></li>
+                    <li class="imagen-musica" id="Musica" title="Música"></li>
+                    <li class="imagen-comida" id="Restaurantes" title="Restaurantes"></li>
+                    <li class="imagen-ropaHombre" id="Hombre" title="Ropa de Hombre"></li>
+                    <li></li>
+                </ul>
+            </div>
+            <div class="drag-and-drop-topics" id="topicos-seleccionados">
+                <ul id="sortable2" class="connectedSortable">
+                    <li></li>
+                </ul>
+            </div>
+        </div><!-- End demo -->
+    </div>
+    <div class="row">
+        <div class="col-md-offset-7">
+        <div class="topic-choisses-form">
+            <form id="Form" action="/accounts/topics/" method="post">{% csrf_token %}
+                <input id="siguiente" disabled="true" onclick="topicos()" type="submit" value="Siguiente" class="btn btn-success" />
+            </form>
+        </div>
+        </div>
+    </div>
+{% endblock content %}
+

@@ -1,0 +1,72 @@
+{% extends "bussiness/dash_empresa.html" %}
+
+{% load bussiness_filter %}
+
+{% block mystylesheet %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+{% endblock mystylesheet%}
+
+{% block myjavascript %}
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/prism.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+    <script type="text/javascript">
+        function execute_my_onreturn (json) {
+            if (json.collection_status=='approved'){
+                alert ('Pago acreditado');
+            } else if(json.collection_status=='pending'){
+                alert ('El usuario no completó el pago');
+            } else if(json.collection_status=='in_process'){    
+                alert ('El pago está siendo revisado');    
+            } else if(json.collection_status=='rejected'){
+                alert ('El pago fué rechazado, el usuario puede intentar nuevamente el pago');
+            } else if(json.collection_status==null){
+                alert ('El usuario no completó el proceso de pago, no se ha generado ningún pago');
+            }
+        }
+    </script>
+{% endblock myjavascript %}
+
+{% block menuOptions %}
+{% if user.persona %}
+<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li><a href="{% url 'logbook' %}">Logbook</a></li>
+{% else %}
+<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+<li class="active" ><a href="/bussiness/dash_planes/">Planes</a></li>
+{% endif %}
+{% endblock menuOptions %}
+
+{% block dashboard %}
+<div class="row">
+    <div class="page-header">
+        <h1>Esta por comprar el siguiente plan</h1>
+    </div>
+    <div class="well">
+        <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Plan</th>
+                <th>Descripcion</th>
+                <th>Precio</th>
+                <th>Cantidad de Items</th>
+                <th>Comprar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ plan.nombre }}</td>
+                <td>{{ plan.descripcion }}</td>
+                <td>{{ plan.precio }}</td>
+                <td>{{ plan.cant_items }}</td>
+                <td>
+                    <a href="{{ url }}" name="MP-Checkout" class="lightblue-ar-s-ov" mp-mode="modal" onreturn="execute_my_onreturn">Pagar</a>
+                    <script type="text/javascript" src="http://mp-tools.mlstatic.com/buttons/render.js"></script>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
+{% endblock dashboard %}

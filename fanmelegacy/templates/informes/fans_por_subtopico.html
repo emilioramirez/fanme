@@ -1,0 +1,99 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}'FanMe' | {{ site_title }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">FanMe</a></h1>
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}
+
+{% block extrahead %}
+<script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
+<script src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script src="{{ STATIC_URL }}js/drilldown.js"></script>
+<link href="{{ STATIC_URL }}dist/css/bootstrap.css" rel="stylesheet" />
+</script>
+<script>
+    $(function () {
+        // Create the chart
+        $('#usuarios_activos').highcharts({
+            chart: {
+                type: 'column',
+                events: {
+                    drilldown: function (e) {
+                        if (!e.seriesOptions) {
+                            var chart = this,
+                                drilldowns = {
+                                    {% for topico, items in items_dict.iteritems %}
+                                    '{{topico}}': {
+                                            name: '{{topico}}',
+                                            data: [
+                                            {% for item, cant_fans in items %}
+                                                ['{{item}}', {{cant_fans}}],
+                                            {% endfor %}
+                                            ]
+                                        },
+                                    {% endfor %}
+                                },
+                                series = drilldowns[e.point.name];
+
+                            // Show the loading label
+                            chart.showLoading('Procesando ...');
+
+                            setTimeout(function () {
+                                chart.hideLoading();
+                                chart.addSeriesAsDrilldown(e.point, series);
+                            }, 1000);
+                        }
+                    }
+                }
+            },
+            title: {
+                text: 'Fans por tópicos'
+            },
+            xAxis: {
+                type: 'category'
+            },
+            legend: {
+                enabled: false
+            },
+             plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                    }
+                }
+            },
+            series: [{
+                name: 'Fans por Topico',
+                colorByPoint: true,
+                data: [
+                    {% for topico, cant_fans in fans_por_topicos.items %}
+                    {
+                        name: '{{topico}}',
+                        y: {{cant_fans}},
+                        drilldown: true
+                    },
+                    {% endfor %}
+                ]
+            }],
+            drilldown: {
+                series: []
+            }
+        })
+    });
+</script>
+{% endblock extrahead %}
+
+{% block content %}
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Volver al gráfico de fans por tópicos padres</a></li>
+    </ol>
+</div>
+<div id="usuarios_activos" style="width:100%; height:400px;"></div>
+{% endblock content %}
+

@@ -1,0 +1,76 @@
+{% extends "admin/base.html" %}
+
+{% block title %}'FanMe' | {{ site_title }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">FanMe</a></h1>
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}
+
+{% block extrahead %}
+<link href="{{ STATIC_URL }}dist/css/bootstrap.css" rel="stylesheet">
+<script src="{{ STATIC_URL }}js/jquery-1.10.2.js"></script>
+<script src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script>
+function myFunction()
+{
+alert("I am an alert box!");
+}
+</script>
+<script>
+$(function () {
+        $('#usuarios_activos').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Usuarios activos/inactivos'
+            },
+            xAxis: {
+                categories: [
+                    '2013'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Cant. usuarios'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Usuarios Activos',
+                data: [{{active_users}}]
+            }, {
+                name: 'Usuarios inactivos',
+                data: [{{inactive_users}}]
+            }]
+        });
+    });
+</script>
+{% endblock extrahead %}
+
+{% block content %}
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="javascript:history.go(-1)"><span class="glyphicon glyphicon-arrow-left"></span> Volver al Menú Principal</a></li>
+    </ol>
+</div>
+<div id="usuarios_activos" style="width:100%; height:400px;"></div>
+{% endblock content %}
+

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+
+{% block title %}Registrate en FanME{% endblock title %}
+
+
+{% block mystylesheet %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+{% endblock mystylesheet %}
+
+{% block myjavascript %}
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/bootstrap-tour.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/prism.js"></script>
+    <script src="{{ STATIC_URL }}js/tour/jquery.smoothscroll.js"></script>
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script>
+        function doOnLoad() {
+            var myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
+            myCalendar.setDateFormat(FANMEDATEFORMAT);
+        }
+    </script>
+{% endblock myjavascript %}
+
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+{% block breadcrumb %}{% endblock breadcrumb %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        <div class="accounts-register-welcome-image">
+            <img src="{{ STATIC_URL }}images/register-welcome-image.png" alt="Register Welcome Image" />
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="accounts-register-form">
+            {% block register_form %}{% endblock register_form %}
+        </div>
+    </div>
+</div>
+{% endblock content%}
+

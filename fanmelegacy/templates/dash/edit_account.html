@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% load avatar_tags %}
+
+{% block mystylesheet-dashboard %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/styleMati.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.css"></link>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/codebase/skins/dhtmlxcalendar_dhx_skyblue.css"></link>
+{% endblock mystylesheet-dashboard%}
+
+{% block myjavascript %}
+    <script language="javascript" src="{{ STATIC_URL }}js/myutils.js"></script>
+    <script src="{{ STATIC_URL }}js/codebase/dhtmlxcalendar.js"></script>
+    <script>
+        function doOnLoad() {
+            var myCalendar = new dhtmlXCalendarObject(["id_birth_date"]);
+            myCalendar.setDateFormat(FANMEDATEFORMAT);
+            console.log("asdf");
+        }
+
+        function ConfirmarBaja(){
+            return confirm("¿Esta seguro que desea desactivar su la cuenta?")
+        }
+
+        function ConfirmarActivacion(){
+            return confirm("¿Esta seguro que desea volver activar su cuenta?")
+        }
+    </script>
+{% endblock myjavascript %}
+
+{% block bodystuff %}
+    onload="doOnLoad();"
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="page-header">
+        <h1>Datos de la cuenta</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-md-offset-2">
+        <form action="/dash/edit_account/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if user.persona %}
+            <div class="form-group {% if form_update.first_name.errors %}has-error{% endif %}">
+                <label class="control-label" for="id_first_name">Nombre:</label>
+                {{ form_update.first_name }}
+                <span class="help-block">{{ form_update.first_name.errors }}</span>
+            </div>
+            <div class="form-group {% if form_update.last_name.errors %}has-error{% endif %}">
+                <label for="id_last_name">Apellido:</label>
+                {{ form_update.last_name }}
+                <span class="help-block">{{ form_update.last_name.errors }}</span>
+            </div>
+            <div class="form-group {% if form_update.sex.errors %}has-error{% endif %}">
+                <label for="id_sex">Sexo:</label>
+                {{ form_update.sex }}
+                <span class="help-block">{{ form_update.sex.errors }}</span>
+            </div>
+            <div class="form-group {% if form_update.email.errors %}has-error{% endif %}">
+                <label for="id_email">Email:</label>
+                {{ form_update.email }}
+                <span class="help-block">{{ form_update.email.errors }}</span>
+            </div>
+            <div class="form-group {% if form_update.birth_date.errors %}has-error{% endif %}">
+                <label for="id_birth_date">Fecha de Nacimiento:</label>
+                {{ form_update.birth_date }}
+                <span class="help-block">{{ form_update.birth_date.errors }}</span>
+            </div>
+            {% else %}
+            <div class="form-group {% if form_update.razon_social.errors %}has-error{% endif %}">
+                <label class="control-label" for="id_razon_social">Razon Social:</label>
+                {{ form_update.razon_social }}
+                <span class="help-block">{{ form_update.razon_social.errors }}</span>
+            </div>
+            <div class="form-group {% if form_update.url.errors %}has-error{% endif %}">
+                <label for="id_url">Pagina web:</label>
+                {{ form_update.url }}
+                <span class="help-block">{{ form_update.url.errors }}</span>
+            </div>
+            <div class="form-group {% if form_update.direccion.errors %}has-error{% endif %}">
+                <label for="id_url">Direccion:</label>
+                {{ form_update.direccion }}
+                <span class="help-block">{{ form_update.direccion.errors }}</span>
+            </div>
+            <div class="form-group {% if form_update.rubro.errors %}has-error{% endif %}">
+                <label for="id_sex">Rubro:</label>
+                {{ form_update.rubro }}
+                <span class="help-block">{{ form_update.rubro.errors }}</span>
+            </div>
+            <div class="form-group {% if form_update.email.errors %}has-error{% endif %}">
+                <label for="id_email">Email:</label>
+                {{ form_update.email }}
+                <span class="help-block">{{ form_update.email.errors }}</span>
+            </div>
+            {% endif %}
+            <div class="form-group {% if .errors %}has-error{% endif %}">
+                <input type="submit" value="Guardar" class="btn btn-success"/>
+            </div>
+        </form>
+        
+    </div>
+    <div class="col-md-7">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="thumbnail">
+                    <img class="img-thumbnail" src="{% avatar_url user 100 %}" alt="Avatar">
+                    <div class="caption">
+                        <p>Foto de perfil</p>
+                        <p><a class="btn btn-primary" role="button" href="{% url 'avatar_change' %}">Cambiar tu imagen de perfil</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <p><a class="btn btn-warning" href="/dash/edit_pass/">Cambiar contraseña</a></p>
+                {% if is_active %}
+                <p><a class="btn btn-danger" id="desactivar_cuenta" href="/dash/dar_baja_cuenta/" onclick="return ConfirmarBaja()" >Desactivar cuenta</a></p>
+                {% else %}
+                <p><a class="btn btn-success" id="activar_cuenta" href="/dash/activar_cuenta/" onclick="return ConfirmarActivacion()" >Activar cuenta</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock sidebar %}
